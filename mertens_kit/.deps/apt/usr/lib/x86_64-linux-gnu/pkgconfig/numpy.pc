@@ -1,0 +1,7 @@
+prefix=/usr/lib/python3/dist-packages/numpy/core
+includedir=${prefix}/include
+
+Name: numpy
+Description: NumPy is the fundamental package for scientific computing with Python.
+Version: 1.26.4+ds
+Cflags: -I${includedir}

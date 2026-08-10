@@ -1,0 +1,121 @@
+--- a/fplll/lll.cpp	2023-10-17 21:56:14.000000000 +0800
++++ b/fplll/lll.cpp	2026-07-27 14:42:12.655639783 +0800
+@@ -26,8 +26,18 @@
+ 
+ template <class ZT, class FT>
+ LLLReduction<ZT, FT>::LLLReduction(MatGSOInterface<ZT, FT> &m, double delta, double eta, int flags)
+-    : status(RED_SUCCESS), final_kappa(0), last_early_red(0), n_swaps(0), m(m)
++    : status(RED_SUCCESS), final_kappa(0), last_early_red(0), n_swaps(0), m(m),
++      instrument_iteration(0), instrument_swaps(0), instrument_babai(0),
++      instrument_gso_refresh(0), instrument_size_reductions(0),
++      instrument(std::getenv("FPLLL_INSTRUMENT") != nullptr),
++      instrument_interval(1000), instrument_started(std::chrono::steady_clock::now())
+ {
++  if (const char *value = std::getenv("FPLLL_INSTRUMENT_INTERVAL"))
++  {
++    const long long parsed = std::atoll(value);
++    if (parsed > 0)
++      instrument_interval = parsed;
++  }
+   /* No early reduction in proved mode (i.e. enable_int_gram=true).
+      NOTE: To make this possible, the hypothesis "g(i, j) is valid if
+      0 <= i < n_known_rows and j <= i" in gso.h should be changed and
+@@ -56,6 +66,13 @@
+ 
+   zeros       = 0;
+   n_swaps     = 0;
++  instrument_iteration = 0;
++  instrument_swaps = 0;
++  instrument_babai = 0;
++  instrument_gso_refresh = 0;
++  instrument_size_reductions = 0;
++  instrument_started = std::chrono::steady_clock::now();
++  instrument_report("start", kappa_start);
+   final_kappa = 0;
+   if (verbose)
+     print_params();
+@@ -69,7 +86,7 @@
+   }
+ 
+   if (zeros < d && ((kappa_start > 0 && !babai(kappa_start, kappa_start, size_reduction_start)) ||
+-                    !m.update_gso_row(kappa_start)))
++                    (++instrument_gso_refresh, !m.update_gso_row(kappa_start))))
+   {
+     final_kappa = kappa_start;
+     return false;
+@@ -81,6 +98,9 @@
+ 
+   for (iter = 0; iter < max_iter && kappa < kappa_end - zeros; iter++)
+   {
++    instrument_iteration++;
++    if (instrument && (instrument_iteration % instrument_interval == 0))
++      instrument_report("iteration", kappa);
+     if (kappa > kappa_max)
+     {
+       if (verbose)
+@@ -122,6 +142,7 @@
+     if (ftmp1 > lovasz_tests[siegel ? kappa : kappa - 1])
+     {
+       n_swaps++;
++      instrument_swaps++;
+       // Failure, computes the insertion index
+       int old_k = kappa;
+       for (kappa--; kappa > kappa_min; kappa--)
+@@ -158,21 +179,32 @@
+     m.symmetrize_g();
+ 
+   if (kappa < kappa_end - zeros)
++  {
++    instrument_report("end_failure", kappa);
+     return set_status(RED_LLL_FAILURE);
++  }
+   else
++  {
++    instrument_report("end_success", kappa);
+     return set_status(RED_SUCCESS);
++  }
+ }
+ 
+ template <class ZT, class FT>
+ bool LLLReduction<ZT, FT>::babai(int kappa, int size_reduction_end, int size_reduction_start)
+ {
+   // FPLLL_TRACE_IN("kappa=" << kappa);
++  instrument_babai++;
+   long max_expo = LONG_MAX;
+ 
+   for (int iter = 0;; iter++)
+   {
++    instrument_gso_refresh++;
+     if (!m.update_gso_row(kappa, size_reduction_end - 1))
++    {
++      instrument_report("babai_gso_failure", kappa);
+       return set_status(RED_GSO_FAILURE);
++    }
+ 
+     bool loop_needed = false;
+     for (int j = size_reduction_end - 1; j >= size_reduction_start && !loop_needed; j--)
+@@ -189,6 +221,7 @@
+       long new_max_expo = m.get_max_mu_exp(kappa, size_reduction_end);
+       if (new_max_expo > max_expo - SIZE_RED_FAILURE_THRESH)
+       {
++        instrument_report("babai_failure", kappa);
+         return set_status(RED_BABAI_FAILURE);
+       }
+       max_expo = new_max_expo;
+@@ -204,6 +237,7 @@
+       mu_m_ant.rnd_we(babai_mu[j], babai_expo[j]);
+       if (mu_m_ant.zero_p())
+         continue;
++      instrument_size_reductions++;
+       // Approximate update of the mu_(kappa,k)'s
+       for (int k = size_reduction_start; k < j; k++)
+       {
+@@ -220,6 +254,8 @@
+     }
+     m.row_op_end(kappa, kappa + 1);
+   }
++  if (instrument && (instrument_babai % instrument_interval == 0))
++    instrument_report("babai", kappa);
+   return true;
+ }
+ 

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+if [ -x /usr/bin/python3.12 ]; then
+    exec /usr/bin/python3.12 /usr/bin/f2py "$@"
+fi
+
+cat >&2 <<EOF
+f2py3.12: error: python3.12 is not installed.
+Please run f2py or f2py3 instead, or install the python3.12 package.
+EOF
+
+exit 1
+

@@ -1,0 +1,28 @@
+{
+  "accepted": false,
+  "command": [
+    "fplll",
+    "-a",
+    "lll",
+    "-m",
+    "heuristic",
+    "-f",
+    "longdouble"
+  ],
+  "metadata": {
+    "NU": 1900,
+    "campaign": "hurst1900_warm",
+    "input_sha256": "e4b2202afd26a5ab7716ef95f81b7d768c03611e19357e904b410fae917095b7",
+    "mH": 460,
+    "step": "heuristic_cleanup",
+    "warm_basis_sha256": "e4b2202afd26a5ab7716ef95f81b7d768c03611e19357e904b410fae917095b7"
+  },
+  "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt002.txt",
+  "output_valid": true,
+  "peak_rss_kib": 52972,
+  "retained_valid_failure": true,
+  "returncode": 3,
+  "seconds": 521.3224849159997,
+  "status": "infinite_loop_in_babai",
+  "stderr_tail": "Failure: infinite loop in babai\n"
+}

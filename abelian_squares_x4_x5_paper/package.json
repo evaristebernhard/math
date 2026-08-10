@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "python3 test_verifier.py",
+    "research:trimmed": "python3 research_trimmed_additive.py",
+    "research:x6": "python3 research_x6.py",
+    "research:x6-formulas": "python3 research_x6_candidate_formulas.py",
+    "build": "xelatex -interaction=nonstopmode -halt-on-error main.tex && bibtex main && xelatex -interaction=nonstopmode -halt-on-error main.tex && xelatex -interaction=nonstopmode -halt-on-error main.tex"
+  }
+}

@@ -1,0 +1,50 @@
+\begin{thebibliography}{1}
+
+\bibitem{BjornbergUeltschi2023}
+Jakob~E. Bj{\"o}rnberg and Daniel Ueltschi.
+\newblock Reflection positivity and infrared bounds for quantum spin systems.
+\newblock In {\em 50 Years of the Berezinskii--Kosterlitz--Thouless Theory}.
+  EMS Press, 2023.
+
+\bibitem{BolsDeRoeck2018}
+Alexander Bols and Wojciech De~Roeck.
+\newblock Asymptotic localization in the bose--hubbard model.
+\newblock {\em Communications in Mathematical Physics}, 358:1015--1070, 2018.
+
+\bibitem{Fisher1989}
+Matthew P.~A. Fisher, Peter~B. Weichman, G.~Grinstein, and Daniel~S. Fisher.
+\newblock Boson localization and the superfluid-insulator transition.
+\newblock {\em Physical Review B}, 40:546--570, 1989.
+
+\bibitem{FrohlichPark1978}
+J{\"u}rg Fr{\"o}hlich and Y.~M. Park.
+\newblock Correlation inequalities and the thermodynamic limit for classical
+  and quantum continuous systems.
+\newblock {\em Communications in Mathematical Physics}, 59:235--266, 1978.
+
+\bibitem{Ginibre1970}
+Jean Ginibre.
+\newblock General formulation of griffiths' inequalities.
+\newblock {\em Communications in Mathematical Physics}, 16:310--328, 1970.
+
+\bibitem{Miyao2015}
+Tadahiro Miyao.
+\newblock Reflection positivity and quantum griffiths' inequalities, 2015.
+
+\bibitem{Miyao2016}
+Tadahiro Miyao.
+\newblock Quantum griffiths inequalities.
+\newblock {\em Journal of Statistical Physics}, 164:255--303, 2016.
+
+\bibitem{PolakKopec2007}
+T.~P. Polak and T.~K. Kope{\'c}.
+\newblock Quantum rotor description of the mott-insulator transition in the
+  bose--hubbard model.
+\newblock {\em Physical Review B}, 76:094503, 2007.
+
+\bibitem{Teichmann2009}
+Niklas Teichmann, Dennis Hinrichs, Martin Holthaus, and Andr{\'e} Eckardt.
+\newblock Bose--hubbard phase diagram with arbitrary integer filling.
+\newblock {\em Physical Review B}, 79:100503(R), 2009.
+
+\end{thebibliography}

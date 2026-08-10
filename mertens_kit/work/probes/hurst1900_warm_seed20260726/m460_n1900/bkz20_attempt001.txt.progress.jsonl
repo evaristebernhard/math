@@ -1,0 +1,3 @@
+{"cpu_seconds": null, "elapsed_seconds": 4.9120999392471276e-05, "event": "started", "peak_rss_kib": 0, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 2.7289444106928486e-08, "timeout_seconds": 1800.0}
+{"cpu_seconds": 30.24, "elapsed_seconds": 30.01889875300003, "event": "running", "peak_rss_kib": 58356, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 0.016677165973888904, "timeout_seconds": 1800.0}
+{"cpu_seconds": null, "elapsed_seconds": 30.979037473000062, "event": "completed", "peak_rss_kib": 59084, "stderr_bytes": 102, "stdout_bytes": 0, "timeout_fraction": 0.017210576373888925, "timeout_seconds": 1800.0}

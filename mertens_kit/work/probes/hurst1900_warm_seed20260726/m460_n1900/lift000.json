@@ -1,0 +1,49 @@
+{
+  "NUY": 8,
+  "active_set_sha256": "96f5179eaa89e18758be4245eb71071d986e5b03eb619e8cce63899648b9f33f",
+  "determinant": "1",
+  "dimension": 461,
+  "exact_division_remainders": 0,
+  "inputs": {
+    "source_basis": {
+      "path": "work/probes/qcal_seed20260726/m460_n900/base_basis.txt",
+      "sha256": "d706f3e40ad843cfe9842d489d3c59b7e417b31c64a47f996584d4932deb7d7d"
+    },
+    "source_meta": {
+      "path": "work/probes/qcal_seed20260726/m460_n900/base_meta.json",
+      "sha256": "bbdca5624f0fab128bad11a8c882a16942b7ad368634b08dc39522c2f2d29d9d"
+    },
+    "source_reduced": {
+      "path": "work/probes/qcal_seed20260726/m460_n900/lll.txt",
+      "sha256": "48ee6e1ec76772a6e2c9e1e94874d4f5d7244aa8519211d105900a10aba535fb"
+    },
+    "target_basis": {
+      "path": "work/probes/hurst1900_warm_seed20260726/m460_n1900/base_basis.txt",
+      "sha256": "7d8687907177730343e82704558cc8f9307b93a2a7aad827f215981460799b6f"
+    },
+    "target_meta": {
+      "path": "work/probes/hurst1900_warm_seed20260726/m460_n1900/base_meta.json",
+      "sha256": "81823e2c4a798fce755d04d886021c385462ec9489288bca4cecf384d004a18c"
+    }
+  },
+  "mH": 460,
+  "operation": "structured_unimodular_lift",
+  "outputs": {
+    "transform": {
+      "path": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lift_transform000.txt",
+      "sha256": "be7a192bc7b89fd974d55daafea4cbf184a2de48def8669001897424cdfa9af4"
+    },
+    "warm_basis": {
+      "path": "work/probes/hurst1900_warm_seed20260726/m460_n1900/warm_basis000.txt",
+      "sha256": "e4b2202afd26a5ab7716ef95f81b7d768c03611e19357e904b410fae917095b7"
+    }
+  },
+  "parity": "VERIFIED",
+  "schema": 1,
+  "source_NU": 900,
+  "source_reconstruction_differences": 0,
+  "source_stage": "bt2015",
+  "target_NU": 1900,
+  "target_reconstruction_differences": 0,
+  "target_stage": "hurst"
+}

@@ -1,0 +1,34 @@
+\section{Audit: routes that must not be silently reused}
+
+This section records approaches explored during the project that are either false or not yet justified.  Keeping them in the source is important because several of them look deceptively natural.
+
+\subsection{A false Loewner bridge}
+Let $\delta=\beta+\gamma$ and consider
+\[
+H_{\beta,\gamma}(Y,Z)
+=\left(Y^\beta Z^{2\gamma}Y^\beta\right)^{1/(2\delta)}.
+\]
+A tempting strategy was to combine Ando's two-factor inequality with
+\begin{equation}
+H_{\beta,\gamma}(Y,Z)
+\stackrel{?}{\preceq}
+\frac{\beta Y+\gamma Z}{\beta+\gamma}.
+\label{eq:false-loewner}
+\end{equation}
+\statusF{} This Loewner inequality is false even for $2\times2$ positive definite matrices; numerical counterexamples were found during the audit.  Hence no proof should invoke \eqref{eq:false-loewner}.  An exact rational/algebraic counterexample should eventually be stored in an appendix for reproducibility.
+
+\subsection{``The angular maximizer is commuting''}
+Another attempted shortcut was to show that, for fixed spectra, the violation ratio is maximized at commuting orientations.  \statusF{} Reduced two-angle optimization finds noncommuting local and sometimes global maximizers for fixed spectra, although the observed maximal ratio remains below one.  Thus ``the worst point is commuting'' is too strong and cannot serve as a proof strategy.
+
+\subsection{Premature use of a numerical-radius bridge}
+The candidate dimension-free estimate \eqref{eq:candidate-abc} suggested trying to strengthen Bhatia--Davis from
+\[
+2\|ABC\|\le\|A^2B+BC^2\|
+\]
+to a numerical-radius estimate.  \statusW{} No fully audited argument for the required numerical-radius bridge has been retained.  In particular, operator-norm and numerical-radius bounds must not be interchanged without a separate theorem.
+
+\subsection{Withdrawn rectangular AGM manipulation}
+\statusF{} An earlier scratch derivation used a rectangular arithmetic--geometric mean inequality with the Gram factors on the wrong side.  That step was explicitly withdrawn during the audit.  The only Bhatia--Davis form used in the retained manuscript is the standard square-matrix estimate leading to \eqref{eq:bd-bridge}; see \cite{BhatiaDavis1993}.
+
+\subsection{Numerics are not a classification theorem}
+\statusN{} Large random searches, ill-conditioned tests, and reduced two-angle global optimization have so far found no $m=3,n=2$ counterexample.  This strongly motivates the positive conjecture but does not rule out a thin algebraic counterexample family.  All formal claims in this manuscript are therefore independent of these computations.

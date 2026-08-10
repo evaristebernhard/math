@@ -1,0 +1,2419 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conditional}[theorem]{Conditional theorem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Caution}
+
+\newcommand{\F}{\mathbf F}
+\newcommand{\PP}{\mathbf P}
+\newcommand{\ZZ}{\mathbf Z}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\cI}{\mathcal I}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Rel}{\operatorname{Rel}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\divi}{\operatorname{div}}
+
+\title[The $u(8)$ problem for nodal octics]{The $u(8)$ Problem for Nodal Octic Surfaces:\\Divisible Codes and Geometric Obstructions}
+\author{Jizheng Chen}
+\address{Department of Mathematics, Chang'an University, Middle Section of South Second Ring Road, Xi'an, Shaanxi 710064, People's Republic of China}
+\email{1253183582@qq.com}
+
+\author{Chaoyu Hu}
+\address{School of Automation, Hangzhou Dianzi University, No.~1158, No.~2 Street, Baiyang Subdistrict, Qiantang District, Hangzhou, Zhejiang 310018, People's Republic of China}
+\email{evaristebernhardwiener@gmail.com}
+\subjclass[2020]{Primary 14J17; Secondary 14J70, 14M12, 94B05.}
+\keywords{$u(8)$, maximal number of nodes, nodal octic surface, even set of nodes, divisible code, symmetric determinantal representation, MacWilliams identities}
+\date{August 9, 2026}
+
+\begin{document}
+
+\begin{abstract}
+Let $u(8)$ denote the maximal number of nodes on a complex octic surface in $\PP^3$.  The known bounds are $168\le u(8)\le174$, and we study the possible counterexamples to $u(8)=168$ through the strict even-node code.  The Beauville--Endra\ss\ dimension estimate, shortening, the Griesmer bound, and the classification of minimal even sets reduce a hypothetical octic with at least $169$ nodes to three possible minimum weights: $48$, $64$, and $72$.  We exclude the weight-$72$ branch.  At weight $64$, every strict even set is a reduced transverse $CI(4,4,4)$ with a symmetric determinantal equation $F_8=q_0q_2-q_1^2$; when $64$ is the minimum weight, MacWilliams identities force at least $533$ such words.  Incidence counting then selects pairs meeting in $32$ or $28$ nodes, corresponding to residual distances $32$ and $36$.  For residual distance $32$ we prove a common-pencil bound and exclude the one-dimensional common-net comparison.  For residual distance $36$, disjoint determinant nets define a six-quartic map to a threefold in a smooth quadric fourfold; we exclude the finite normal quadratic target and the finite cubic target with isolated singularities.  At weight $48$ we prove the trade-off $A_{64}+21A_{48}\ge533$ and an intersection bound for reduced contact quadrics.  These results isolate explicit remaining geometries in the $u(8)$ problem, but do not prove $u(8)\le168$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+For a degree-$d$ surface in $\PP^3$ with only ordinary double points, let $u(d)$ denote the maximal possible number of nodes.  Endra\ss\ constructed an octic with $168$ nodes~\cite{Endrass168}, while Miyaoka's inequality gives the upper bound $u(8)\le174$~\cite{Miyaoka}.  Thus
+\[
+168\le u(8)\le174.
+\]
+The octic problem is to decide whether the lower bound is sharp.  Equivalently, one must exclude nodal octics with $169,170,\ldots,174$ nodes.
+
+Our approach starts from strict even sets of nodes.  If $X\subset\PP^3$ is a nodal octic with node set $\Sigma$, its strict even sets form an $8$-divisible binary code $K\subset\F_2^\Sigma$.  The Beauville--Endra\ss\ estimate gives $\dim K\ge |\Sigma|-150$.  Consequently a counterexample to $u(8)=168$ carries, after shortening, an $8$-divisible $[169,19]$ code.  The Griesmer bound and Endra\ss' classification of minimal even sets then force its minimum weight to be
+\[
+48,\qquad64,\qquad72.
+\]
+This three-branch reduction is the organizing principle of the paper.  We eliminate the weight-$72$ branch and derive geometric obstructions in the weight-$64$ and weight-$48$ branches.
+
+The use of binary codes for nodal surfaces has a substantial history.  It appears in Beauville's work on nodal quintics~\cite{BeauvilleMax}, in the sextic problem of Jaffe--Ruberman~\cite{JaffeRuberman}, and in the geometry of contact and symmetric determinantal constructions~\cite{CataneseBabbage,CC,CataneseTonoli}.  The present paper combines this coding-theoretic viewpoint with low-degree projective geometry for octic surfaces.
+
+The central geometric input concerns weight $64$ and is independent of the high-node hypothesis: every strict even set of $64$ nodes on an octic is a reduced transverse $CI(4,4,4)$ and is the corank-two locus of a symmetric $2\times2$ determinantal representation of the octic.  When $64$ is the minimum weight, an exact MacWilliams identity forces at least $533$ such presentations.  Incidence counting then permits a choice of base presentation with residual distance $32$ or $36$.  At residual distance $32$ we prove a common-pencil bound and exclude the one-dimensional common-net comparison.  At residual distance $36$, disjoint determinant nets produce a six-quartic map from the blow-up of their $28$ common points to a threefold in a smooth quadric fourfold.  For normal targets the numerical possibilities are $(m,e)=(2,9)$ and $(3,6)$; we exclude the finite normal quadratic target and the finite cubic target with isolated singularities.
+
+The other two branches require different mechanisms.  A fifth-degree MacWilliams certificate excludes minimum distance $72$.  At minimum distance $48$ we prove $24\le d(R)\le48$ for the first residual code, the exact trade-off $A_{64}+21A_{48}\ge533$, and an intersection theorem for distinct reduced contact quadrics.  The resulting statements substantially narrow the possible counterexamples to $u(8)=168$, but they do not eliminate all of them.  The remaining residual-$32$, residual-$36$, and weight-$48$ configurations are stated explicitly below.
+
+\subsection{From codewords to geometry}
+The argument moves repeatedly between coding theory and projective geometry, so we record the translation used throughout.  A strict even set is represented by its characteristic vector in $K$; its Hamming weight is therefore the number of nodes in the set.  Fixing a codeword $c$ and passing to the residual code means forgetting the nodes of $c$ and measuring how another even set differs from it outside $\supp(c)$.  Consequently an intersection number between two supports becomes a residual weight, and the discrete residual weights $32$ and $36$ become the two geometric overlap patterns studied later.
+
+In the weight-$64$ case this combinatorial information has a specific geometric form.  Theorem~\ref{thm:det64} identifies every such support with the transverse base locus of a net of quartics and writes the octic as a $2\times2$ symmetric determinant.  Thus a second weight-$64$ word is not merely a second subset of nodes: it is a second determinant presentation of the same surface.  Comparing two words therefore means comparing two quartic nets.  Their common nodes are blown up to remove the base locus, and the combined quartics define a morphism whose quadratic relations encode the compatibility of the two determinant presentations.  This is the geometric reason that code intersections lead to quadrics, blow-ups, and, in residual distance $36$, to the target analysis inside $\PP^5$.
+
+The three minimum-weight branches are treated by different mechanisms.  Weight $72$ is eliminated by a positivity-versus-sign contradiction in MacWilliams averaging.  Weight $64$ is studied through determinantal presentations and their pairwise comparison.  Weight $48$ is treated through contact quadrics together with coding-theoretic counting.  The sections below follow this order.
+
+\subsection{Main results}
+Our results may be summarized as follows.
+
+\begin{theorem}[Coding reduction and exclusion of the minimum-distance-$72$ branch]\label{thm:intro72}
+Assume $169\le\nu\le174$.  After shortening outside any prescribed low-weight configuration whose span has dimension at most $19$ and whose support union has size at most $104$, there is an $8$-divisible binary code
+\[
+C\subset\F_2^{169},\qquad \dim C=19,
+\]
+containing that configuration.  There is no such code with minimum distance $72$.  Equivalently, in the high-node reduction the branch $d(K)=72$ is impossible.
+\end{theorem}
+
+\begin{theorem}[Weight-$64$ determinant and residual structure]\label{thm:intro64}
+Every strict even set $W$ of weight $64$ is the reduced transverse complete intersection
+\[
+W=V(q_0,q_1,q_2)=CI(4,4,4)
+\]
+of three quartics satisfying
+\[
+F_8=q_0q_2-q_1^2.
+\]
+This statement does not require $64$ to be the global minimum weight.  If the strict code has minimum weight $64$, then for a fixed minimum word the first residual code has minimum distance
+\[
+32,\quad36,\quad\text{or }40,
+\]
+and its minimum lift pair belongs to one of the four local profiles $32$, $36$, $40A$, and $40B$ described in Section~\ref{sec:res64}.  Globally, the abundance and incidence of minimum words allow the base word to be chosen so that the residual distance is $32$ or $36$.  The residual-$32$ branch is treated using the complete allowed octic weight spectrum and the geometric residual-triangle analysis of Section~\ref{sec:triangle}.
+\end{theorem}
+
+\begin{theorem}[Many determinant presentations]\label{thm:intro-many}
+Every $8$-divisible $[169,19,64]$ code has at least
+\[
+A_{64}\ge533
+\]
+minimum words.  Among them some two meet in at least $28$ coordinates.  If no two meet in $32$ coordinates, then at least $5743$ unordered pairs meet in exactly $28$ coordinates, and some minimum word has at least $22$ such neighbours.
+\end{theorem}
+
+Thus the minimum-weight-$64$ problem is not the study of a single determinant representation.  It is a many-presentations problem forced by coding theory.  The global coding/incidence reduction leaves residual distances $32$ and $36$: the former is the residual-triangle geometry of Section~\ref{sec:triangle}, while the latter admits the following global compression.
+
+\begin{theorem}[Residual-$36$ global reduction]\label{thm:intro36}
+Let two weight-$64$ determinant presentations in the residual-$36$ branch have common block $A$ of length $28$, and let
+\[
+Y=\operatorname{Bl}_A\PP^3,
+\qquad
+D=4H-\sum_{a\in A}E_a.
+\]
+If their determinant nets are disjoint, the associated six quartics define a generically finite map to a threefold $X'$ contained in a smooth quadric fourfold.  One has
+\[
+D^3=36,
+\qquad
+g(D_1\cap D_2)=33
+\]
+for general $D_i\in|D|$.  If $X'$ is normal and a general codimension-two linear section is smooth, writing $X'\sim mH_Q$ and $e=\deg\phi$ gives
+\[
+me=18,
+\qquad
+(m,e)=(2,9)\ \text{or}\ (3,6).
+\]
+Moreover, the finite normal $(2,9)$ target is impossible; the finite $(3,6)$ case is impossible when $X'$ has only isolated singularities.  Hence a finite normal target surviving residual distance $36$ can only be a cubic target with positive-dimensional singular locus.
+\end{theorem}
+
+The proof is given in Section~\ref{sec:comparison}.  What remains at residual distance $36$ is confined to finite cubic targets with positive-dimensional singular locus, nonfinite maps, and nonnormal targets.
+
+\begin{theorem}[Minimum-distance-$48$ trade-off and pair structure]\label{thm:intro48}
+In the minimum-distance-$48$ branch, for a fixed weight-$48$ word in the shortened code the first residual code is a $4$-divisible $[121,18]$ code with
+\[
+24\le d(R)\le48,
+\]
+and its minimum lift pair belongs to an explicit list of ten profiles.  Globally one has the exact trade-off
+\[
+A_{64}+21A_{48}\ge533.
+\]
+If $A_{48}\ge22$, then two weight-$48$ words meet in $16$ or $24$ nodes.  If $A_{48}\le17$, then two weight-$64$ words meet in $28$, $32$, or $40$ nodes; for $18\le A_{48}\le21$, the additional overlap $24$ may occur.  Every weight-$64$ word appearing here has the symmetric determinantal $CI(4,4,4)$ structure of Theorem~\ref{thm:intro64}.  Finally, if two distinct weight-$48$ even sets have unique reduced contact quadrics with no common plane component, then their intersection has at most $16$ nodes.
+\end{theorem}
+
+\subsection{Scope and remaining cases}
+The results above do not establish the final bound $u(8)\le168$.  In the minimum-weight-$64$ branch, the global coding and incidence arguments reduce the problem to residual distances $32$ and $36$.  For residual distance $32$, the common-pencil bound and the full $k=1$ comparison are proved; the $k=0$ six-quartic compatibility remains open.  For residual distance $36$, Theorem~\ref{thm:r36global} excludes the finite normal quadratic target and the finite cubic target with isolated singularities, while finite cubic targets with positive-dimensional singular locus, nonfinite maps, and nonnormal targets remain.  In the minimum-weight-$48$ branch, the trade-off and incidence results reduce the problem to a short list of pair geometries, which are not all excluded.  These are the precise boundaries of the present contribution to the $u(8)$ problem.
+
+\section{Reduction of the \texorpdfstring{$u(8)$}{u(8)} problem to three code weights}\label{sec:codes}
+We work over the complex numbers.  Put $k=\mathbb C$, $S=k[x_0,x_1,x_2,x_3]$, and let $X=(F_8=0)\subset\PP^3$ be an octic surface with only ordinary double points.  Let $\Sigma=\operatorname{Sing}(X)$ and $|\Sigma|=\nu$.  We write $H$ for the hyperplane class and use the same symbol for its pullback to any resolution or blow-up considered below.
+
+For completeness, recall the geometric meaning of the code.  Let $\pi:\widetilde X\to X$ be the minimal resolution and let $E_p$ be the exceptional curve over a node $p$.  A subset $W\subset\Sigma$ is a strict even set if $\sum_{p\in W}E_p$ is divisible by two in $\operatorname{Pic}(\widetilde X)$.  Symmetric difference makes the strict even sets a binary linear code
+\[
+K\subset\F_2^\Sigma.
+\]
+Its Hamming weight is $|W|$.  For an octic, strict even sets have weights divisible by eight~\cite{EndrassMinimal}; hence $K$ is $8$-divisible.  This is the basic bridge from the geometry of the resolution to the arithmetic restrictions used below.
+
+We use the Beauville--Endra\ss\ dimension estimate, in the form extracted from the divisor-class-group estimate of Endra\ss~\cite{EndrassDouble},
+\[
+\dim K\ge\nu-150.
+\]
+In particular, when $169\le\nu\le174$, the dimension is at least $19,20,\ldots,24$ respectively.
+
+\begin{lemma}[Shortening while preserving a configuration]\label{lem:shorten}
+Let $D\subset K$ be a prescribed subcode with $\dim D\le19$ whose support union has cardinality at most $104$.  In the range $169\le\nu\le174$, one can shorten on $\nu-169$ coordinates outside $\supp(D)$ and then pass to a $19$-dimensional subcode containing $D$.  Thus every configuration considered below may be studied inside an $8$-divisible code
+\[
+C\subset\F_2^{169},\qquad \dim C=19.
+\]
+\end{lemma}
+
+\begin{proof}
+At most five shortening steps are required.  Since the prescribed support union uses at most $104$ coordinates, at least $65$ coordinates lie outside it after reaching length $169$, hence every shortening coordinate can be chosen off the prescribed configuration.  A shortening decreases length by one and dimension by at most one.  Starting from $\dim K\ge\nu-150$, the resulting code still has dimension at least $19$.  Choose a $19$-dimensional subcode containing $D$.
+\end{proof}
+
+\begin{warning}[Allowed weights]
+In the minimum-distance-$64$ case, coding theory alone permits
+\[
+0,64,72,80,88,96,104,112,120,128,136,144,152,160,168.
+\]
+In particular, omitting the weights $88,96,104,112$ requires additional geometric input beyond $8$-divisibility.  Endra\ss' Corollary~\cite[Cor.~1.11]{EndrassMinimal} does not provide such an exclusion for octics: its table excludes strict weight $56$ in degree $8$, whereas the entries $88,96,104,112$ occur in the degree-$10$ column.  We therefore retain the full displayed spectrum throughout the minimum-$64$ coding arguments.
+\end{warning}
+
+\begin{proposition}[Low-weight trichotomy]\label{prop:trichotomy}
+In the high-node reduction, the minimum distance of the strict even-node code belongs to
+\[
+\{48,64,72\}.
+\]
+\end{proposition}
+
+\begin{proof}
+First shorten arbitrarily from length $\nu$ to length $169$.  The dimension bound leaves a code of dimension at least $19$; choose any $19$-dimensional subcode $C_0$.  Shortening and passage to a subcode cannot decrease minimum distance, so
+\[
+d(C_0)\ge d(K).
+\]
+If $d(K)\ge80$, then $C_0$ would be a binary $[169,19,\ge80]$ code.  The Griesmer bound gives
+\[
+169\ge g_2(19,80):=\sum_{i=0}^{18}\left\lceil\frac {80}{2^i}\right\rceil=172,
+\]
+a contradiction.  Hence
+\[
+d(K)<80.
+\]
+
+Now choose a minimum word $c\in K$.  Its support has size $d(K)<80<104$, so Lemma~\ref{lem:shorten} may be applied while preserving $c$.  The resulting $19$-dimensional length-$169$ code $C$ contains $c$ and is a subcode of the shortened strict code; therefore
+\[
+d(C)\ge d(K)
+\quad\text{and}\quad
+ d(C)\le\wt(c)=d(K),
+\]
+so $d(C)=d(K)$.  Finally, Endra\ss' classification of minimal even sets on octics~\cite{EndrassMinimal}, together with $8$-divisibility, says that the only possible minimum weights below $80$ are
+\[
+48,\qquad64,\qquad72.
+\]
+\end{proof}
+
+\section{Excluding the weight-72 branch}\label{sec:w72}
+This branch is the cleanest place to see the coding mechanism.  After fixing a minimum word, every residual word has two lifts back to $C$.  The allowed octic weights restrict those lift pairs to a finite list.  We construct a polynomial that is nonpositive on every nonzero allowed residual state, while MacWilliams identities force its average to be strictly positive.  The contradiction eliminates the branch without invoking any additional projective geometry.
+
+Assume throughout this section that $d(C)=72$, and fix $c\in C$ with $\wt(c)=72$.  Restriction to the complement of $\supp(c)$ induces an injection
+\[
+C/\langle c\rangle\hookrightarrow\F_2^{97}.
+\]
+Indeed, a kernel class has a representative $x$ supported inside $\supp(c)$, so $\wt(x)\le72$.  Since $d(C)=72$, a nonzero such representative has weight exactly $72$; its support must then equal the $72$-element support of $c$, hence $x=c$ and its class in $C/\langle c\rangle$ is zero.  Thus the restriction is injective.  Hence the residual code
+\[
+R=\Res(C;c)
+\]
+has parameters $[97,18]$.
+
+For a residual word of weight $r$, its two lifts are $x$ and $x+c$.  If the overlap of $x$ with $c$ is $a$, then the overlap of $x+c$ with $c$ is $72-a$.  Exchanging the two lifts if necessary, we may therefore write
+\[
+a=|\supp(x)\cap\supp(c)|,
+\qquad 0\le a\le36.
+\]
+The lift pair $x,x+c$ has weights
+\[
+w_1=r+a,
+\qquad
+w_2=r+72-a.
+\]
+Let
+\[
+K_j^{(n)}(w)=\sum_i(-1)^i\binom wi\binom{n-w}{j-i}
+\]
+be the binary Krawtchouk polynomial and set
+\[
+T_j(r,a)=K_j^{(169)}(w_1)+K_j^{(169)}(w_2).
+\]
+The sum is essential: the two lifts contribute together to MacWilliams averaging.
+
+\begin{proposition}[Exact fifth-degree certificate]\label{prop:cert72}
+Define
+\[
+P_{72}(r,a)=7280+1840K_1^{(97)}(r)+196T_2(r,a)+44T_3(r,a)+7T_4(r,a)+T_5(r,a).
+\]
+Here an allowed state is a pair $(r,a)$ with $0\le r\le97$ and $0\le a\le36$ for which the two lift weights
+\[
+r+a,\qquad r+72-a
+\]
+belong to
+\[
+\{0\}\cup\{72,80,88,\ldots,168\},
+\]
+with the zero residual represented by $(r,a)=(0,0)$.  There are exactly $61$ such states, one zero and $60$ nonzero.  For every nonzero allowed residual state $(r,a)$ one has
+\[
+P_{72}(r,a)\le0,
+\]
+whereas
+\[
+P_{72}(0,0)=1\,349\,517\,312=5148\cdot2^{18}.
+\]
+\end{proposition}
+
+The verification is a finite exact integer computation; the reproducible table is recorded in Appendix~\ref{app:cert}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:intro72}]
+Average over the $2^{18}$ words of $R$.  The ordinary MacWilliams identity gives
+\[
+\mathbb E_R K_1^{(97)}(r)=A_1(R^\perp)\ge0.
+\]
+Each residual word corresponds to the two lifts $x$ and $x+c$ in $C$.  Consequently, for $j\ge2$,
+\[
+\mathbb E_R T_j(r,a)
+=2A_j(C^\perp)\ge0.
+\]
+Substituting these identities into the definition of $P_{72}$ yields the exact average formula
+\[
+\begin{aligned}
+\mathbb E_RP_{72}
+={}&7280+1840A_1(R^\perp)+392A_2(C^\perp)+88A_3(C^\perp)\\
+&\qquad+14A_4(C^\perp)+2A_5(C^\perp)
+\ge7280.
+\end{aligned}
+\]
+By Proposition~\ref{prop:cert72}, every nonzero residual state contributes a nonpositive value, while the zero state contributes
+\[
+P_{72}(0,0)=1\,349\,517\,312.
+\]
+Hence
+\[
+\mathbb E_RP_{72}
+\le\frac{1\,349\,517\,312}{2^{18}}=5148,
+\]
+contradicting the preceding lower bound.
+\end{proof}
+
+\section{Weight 64: symmetric determinant presentations}\label{sec:det64}
+We now make the first essential passage from coding theory to geometry.  A codeword of weight $64$ initially records only a distinguished set of $64$ nodes.  The strict-even condition, however, determines a half-divisor on the resolution of the octic.  Riemann--Roch forces sections of the corresponding degree-four system, and Endra\ss' stability analysis then turns those sections into three quartics satisfying a determinantal identity.  In this way the discrete datum of a weight-$64$ word becomes a concrete projective model that can be compared with the models arising from other words.
+
+The determinant structure of a weight-$64$ strict even set does not require $64$ to be the global minimum weight.  This point is useful again in the minimum-distance-$48$ branch.
+
+\begin{theorem}[Automatic determinant presentation]\label{thm:det64}
+Let $W$ be a strict even set of $64$ nodes on a nodal octic surface.  Then there exist quartics $q_0,q_1,q_2$ such that
+\[
+F_8=q_0q_2-q_1^2
+\]
+and
+\[
+W=V(q_0,q_1,q_2)
+\]
+scheme-theoretically.  The complete intersection is reduced and transverse.
+\end{theorem}
+
+\begin{proof}
+Let $\pi:\widetilde X\to X$ be the minimal resolution and write $E_W$ for the sum of the exceptional curves over $W$.  The strict-even condition makes
+\[
+L:=\frac{4H-E_W}{2}
+\]
+an integral divisor class on $\widetilde X$.  Endra\ss' Riemann--Roch formula gives $\chi(L)=4$.  Moreover
+\[
+K_{\widetilde X}-L=\frac{4H+E_W}{2},
+\]
+so Serre duality and the cohomology symmetry~\cite[Lem.~4.1]{EndrassMinimal} give
+\[
+h^2(L)=h^0\!\left(\frac{4H+E_W}{2}\right)=h^0(L).
+\]
+Consequently
+\[
+4=2h^0(L)-h^1(L),
+\]
+and therefore $h^0(L)\ge2$.
+
+We now use Endra\ss' terminology for the quadratic contact system associated with $W$; this is the stability notion of~\cite[Def.~3.1 and Prop.~3.3]{EndrassMinimal}, not slope stability of a vector bundle.  In the present situation the relevant degree is $v=4$.  Since $h^0(L)\ge2$, Proposition~3.3(i) shows that $W$ is not stable in degree four.  If it were semistable, Proposition~3.3(ii) would say that the reduced fixed surface $B_W$ cuts out $W$ and that the residual quadratic system contains a square.  Because we are not in the stable case, the residual system is nonempty; because $W\ne\varnothing$, the fixed surface is also nonempty.  A nonzero square has positive even degree, so the decomposition of a degree-four contact surface forces
+\[
+\deg B_W=2.
+\]
+Thus a reduced quadric would cut out $W$.  Proposition~\cite[Prop.~3.8]{EndrassMinimal} gives weight
+\[
+8(8-2)=48
+\]
+for a strict even set cut out by a reduced quadric on an octic, contradicting $|W|=64$.  Hence $W$ is unstable in degree four.
+
+Apply now~\cite[Prop.~3.6]{EndrassMinimal}.  In its proof the unstable quadratic system supplies quartics $q_0,q_1,q_2$ and a polynomial $\alpha$ of degree
+\[
+2v-s=2\cdot4-8=0
+\]
+with
+\[
+\alpha F_8=q_0q_2-q_1^2.
+\]
+Since Proposition~3.6 specifies a polynomial of degree $2v-s=0$, the coefficient $\alpha$ is a nonzero constant.  After rescaling one quartic we obtain
+\[
+F_8=q_0q_2-q_1^2.
+\]
+The construction makes all three quartics vanish on $W$.
+
+If their common zero locus contained a curve $\Gamma$, then along $\Gamma$ one would have $q_0=q_1=q_2=0$, and hence
+\[
+dF_8=q_2\,dq_0+q_0\,dq_2-2q_1\,dq_1=0.
+\]
+Thus $\Gamma\subset\operatorname{Sing}X$, contradicting the assumption that $X$ has only isolated nodes.  Therefore $q_0,q_1,q_2$ form a regular sequence.  Their common zero scheme has length
+\[
+4^3=64.
+\]
+It contains the $64$ distinct points of $W$, so
+\[
+V(q_0,q_1,q_2)=W
+\]
+scheme-theoretically.  In particular the complete intersection is reduced.  Finally, at a point $p\in W$, if the three linear parts of $q_0,q_1,q_2$ were dependent, then the quadratic tangent cone $\ell_0\ell_2-\ell_1^2$ of $F_8$ would have rank at most two, contradicting that $p$ is an ordinary double point.  Thus the three differentials are independent and the complete intersection is transverse.
+\end{proof}
+
+It is convenient to write
+\[
+M_W=\begin{pmatrix}q_0&q_1\\ q_1&q_2\end{pmatrix},
+\qquad \det M_W=F_8.
+\]
+Thus each strict weight-$64$ word produces a symmetric $2\times2$ determinantal representation of the same octic.
+
+\section{Weight 64: local residual profiles}\label{sec:res64}
+Once a weight-$64$ word $c$ is fixed, the residual code measures how other even sets meet its support.  Concretely, if another word $x$ meets $c$ in $a$ nodes and contributes $r$ nodes outside $c$, then the pair $x,x+c$ has weights $r+a$ and $r+64-a$.  Thus a statement about the residual minimum distance is simultaneously a statement about the possible intersection sizes of determinant presentations.  The purpose of this section is to reduce those possibilities to four local overlap profiles before the global incidence argument removes two of them.
+
+Assume in this section that $d(C)=64$, and fix $c\in C$ with $\wt(c)=64$.  Restriction outside $\supp(c)$ induces
+\[
+C/\langle c\rangle\longrightarrow\F_2^{105}.
+\]
+This map is injective.  Indeed, if a class in the kernel has a representative $x$ supported inside $\supp(c)$, then
+\[
+\wt(x)\le64.
+\]
+Since $d(C)=64$, a nonzero such $x$ must have weight exactly $64$; because its support is contained in the $64$-element support of $c$, this forces $x=c$, which is zero in the quotient.  Therefore
+\[
+R=\Res(C;c)=[105,18].
+\]
+For a nonzero residual word $y$ of weight $r$, choose a lift $x$ and let
+\[
+a=|\supp(x)\cap\supp(c)|\le32.
+\]
+Then
+\[
+\wt(x)=r+a,
+\qquad
+\wt(x+c)=r+64-a.
+\]
+Because both lift weights are multiples of $8$, their sum $2r+64$ is divisible by $8$.  Hence $2r$ is divisible by $8$, so $r$ is divisible by $4$ and $R$ is $4$-divisible.  Since $y\ne0$, neither lift is $0$ or $c$, so both are nonzero codewords and each has weight at least $64$.  Adding the two lift weights gives
+\[
+2r+64=(r+a)+(r+64-a)\ge128,
+\]
+whence
+\[
+r\ge32.
+\]
+Thus $d(R)\ge32$.
+
+\begin{proposition}[Residual upper bound]\label{prop:res64upper}
+Let
+\[
+P_R(w)=4480+3008K_1^{(105)}(w)+748K_2^{(105)}(w)+212K_3^{(105)}(w)
++27K_4^{(105)}(w)+5K_5^{(105)}(w).
+\]
+For every allowed nonzero $4$-divisible weight $w\ge44$,
+\[
+P_R(w)\le0,
+\]
+and
+\[
+P_R(0)=656\,015\,360.
+\]
+Consequently
+\[
+d(R)\in\{32,36,40\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Suppose that $d(R)\ge44$.  The exact values of $P_R$ on the allowed $4$-divisible weights from $44$ through $104$ are nonpositive; they are listed in Appendix~\ref{app:cert}.  On the other hand, MacWilliams' identities give
+\[
+\begin{aligned}
+\frac1{|R|}\sum_{y\in R}P_R(\wt y)
+={}&4480+3008A_1(R^\perp)+748A_2(R^\perp)\\
+&+212A_3(R^\perp)+27A_4(R^\perp)+5A_5(R^\perp)\\
+\ge{}&4480.
+\end{aligned}
+\]
+Since $|R|=2^{18}$ and every nonzero word contributes a nonpositive value,
+\[
+\frac1{|R|}\sum_{y\in R}P_R(\wt y)
+\le \frac{P_R(0)}{2^{18}}
+=\frac{656\,015\,360}{262\,144}
+=2502.5,
+\]
+a contradiction.  We already know that $R$ is $4$-divisible and $d(R)\ge32$, so the only remaining possibilities below $44$ are $32,36,40$.
+\end{proof}
+
+Let $y$ be a minimum residual word.  Interchanging the two lifts if necessary, take $a\le32$ and hence
+\[
+w_1=r+a\le w_2=r+64-a.
+\]
+Both $w_1,w_2$ are nonzero multiples of $8$ at least $64$, and
+\[
+w_1+w_2=2r+64.
+\]
+Thus:
+\begin{itemize}[leftmargin=*]
+\item if $r=32$, the sum is $128$, so $(w_1,w_2)=(64,64)$ and $a=32$;
+\item if $r=36$, the sum is $136$, so $(w_1,w_2)=(64,72)$ and $a=28$;
+\item if $r=40$, the sum is $144$, so either $(w_1,w_2)=(64,80)$ with $a=24$, or $(72,72)$ with $a=32$.
+\end{itemize}
+These are the following exhaustive local profiles:
+\[
+\begin{array}{c|c|c|c}
+\text{branch}&d(R)&\text{lift weights}&\text{common block size}\\\hline
+32&32&(64,64)&32\\
+36&36&(64,72)&28\\
+40A&40&(64,80)&24\\
+40B&40&(72,72)&\text{no second }64\text{-word in the chosen pair}.
+\end{array}
+\]
+For the first three branches, if $W_c,W_x$ are the two weight-$64$ supports, the four Venn blocks have sizes
+\[
+(73,32,32,32),\qquad
+(69,36,36,28),\qquad
+(65,40,40,24),
+\]
+respectively.
+
+The four rows above are local profiles for a fixed base word.  For the global argument, Section~\ref{sec:many} uses the abundance and incidence of weight-$64$ words to choose the base word so that the actual residual distance is $32$ or $36$.  Thus the $40A/40B$ profiles need no additional global interpretation.
+
+\section{Residual distance 32: the determinant triangle}\label{sec:triangle}
+The residual value $32$ has a particularly symmetric geometric meaning.  Starting from two weight-$64$ words meeting in $32$ nodes, their sum is again a weight-$64$ word.  The three supports therefore form a triangle of pairwise unions of three disjoint $32$-point blocks.  By the preceding section, each side of this triangle carries its own quartic determinant net.  The problem is no longer to classify a single even set, but to determine whether three transverse $CI(4,4,4)$ presentations of the same octic can coexist with this prescribed incidence pattern.
+
+The $d(R)=32$ branch produces three weight-$64$ words whose three pairwise-only blocks all have size $32$.  Equivalently, the shortened code contains a two-dimensional subcode
+\[
+H=\langle c_1,c_2\rangle
+\]
+whose three nonzero words all have weight $64$.  Throughout this section we retain the complete allowed octic weight spectrum, including weights $88,96,104,112$.  The resulting split-MacWilliams analysis gives the following compensation theorem.
+
+\begin{theorem}[High-weight compensation in a residual triangle]\label{thm:triangle-highweights}
+Let $C\subset\F_2^{169}$ be an $8$-divisible $[169,19,64]$ code containing a two-dimensional subcode $H$ whose three nonzero words have weight $64$.  Then
+\[
+A_{88}+A_{96}\ge65,
+\qquad
+A_{88}+3A_{96}\ge185.
+\]
+In particular
+\[
+\max\{A_{88},A_{96}\}\ge47,
+\]
+and one has the useful dichotomy
+\[
+A_{96}\ge41\qquad\text{or}\qquad A_{88}\ge65.
+\]
+Moreover, either some nonzero $H$-coset contains both a weight-$64$ word and a word of weight $88$ or $96$, or
+\[
+A_{88}+A_{96}\ge471.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the same four blocks $(73,32,32,32)$ as above, but now retain the complete allowed weight set
+\[
+\{0,64,72,80,88,96,104,112,120,128,136,144,152,160,168\}.
+\]
+Inverting the four orbit-weight equations and quotienting only by translation by $H$ leaves $1594$ nonzero split-weight states.  On these states we use the split Krawtchouk orbit sums $\Phi_{\mathbf j}$ of total degree at most eight.  Exact nonnegative dual certificates give the rational lower bounds
+\[
+A_{88}+A_{96}\ge
+\frac{640241160775953104}{10^{16}}
+>64
+\]
+and
+\[
+A_{88}+3A_{96}\ge
+\frac{184184146429569024}{10^{15}}
+>184.
+\]
+The two left-hand sides are integers, proving the first two inequalities.  The displayed consequences are immediate.
+
+For the final dichotomy, delete from the finite state list only those $H$-coset states which simultaneously contain a word of weight $64$ and a word of weight $88$ or $96$; this leaves $1395$ states.  A third exact nonnegative split-MacWilliams dual certificate gives
+\[
+A_{88}+A_{96}\ge
+\frac{470440954987064448}{10^{15}}
+>470.
+\]
+Hence the absence of a mixed coset forces $A_{88}+A_{96}\ge471$.  All three certificates use exact integer arithmetic.  Machine-readable certificates and independent verifier scripts are provided as supplementary computational material.
+\end{proof}
+
+For geometric interpretation, write the three disjoint $32$-point blocks as $A,B,C$.  The three supports are
+\[
+A\cup B,\qquad A\cup C,\qquad B\cup C.
+\]
+The corresponding determinant nets are three-dimensional subspaces of quartics.  The split-MacWilliams estimates above show that such a triangle must coexist with substantial high-weight structure, but the comparison problem itself is geometric.  From this point on we use only the three determinant nets and their common base blocks.
+
+We first derive the common-pencil bound directly from the determinant geometry.  Put
+\[
+k:=\dim(V_{AB}\cap V_{AC}).
+\]
+We shall prove below that
+\[
+\boxed{k\le1.} \tag{CP}\label{eq:CP}
+\]
+Thus the former ``common-pencil input'' is not an external hypothesis.
+
+\begin{proposition}[Exclusion of the $k=1$ comparison]\label{prop:triangle-k1}
+In the residual-$32$ triangle one has
+\[
+\dim(V_{AB}\cap V_{AC})\ne1.
+\]
+Combined with the common-pencil bound, this gives
+\[
+\boxed{V_{AB}\cap V_{AC}=0.}
+\]
+\end{proposition}
+
+\begin{proof}
+Assume $V_{AB}\cap V_{AC}=\langle q\rangle$ and put $W=V_{AB}+V_{AC}$, so $\dim W=5$.  The difference of the two determinant quadrics is a nonzero quadratic relation on $W$.  Every exceptional plane over a point of $A$ maps linearly to a plane contained in its zero locus.  A smooth quadric threefold in $\PP^4$ contains no plane, hence the relation has rank at most four.
+
+Suppose first that $\langle q\rangle$ is non-isotropic for both determinant forms.  After completing squares,
+\[
+F=\lambda q^2+u_1u_2=\mu q^2+v_1v_2.
+\]
+If $\lambda\ne\mu$, the difference relation has rank five.  Hence $\lambda=\mu$ and $u_1u_2=v_1v_2$.  Unique factorization gives
+\[
+u_1=ab,\qquad u_2=cd,\qquad v_1=ac,\qquad v_2=bd,
+\]
+with
+\[
+\deg a=\deg d=\alpha,
+\qquad
+\deg b=\deg c=\beta,
+\qquad
+\alpha+\beta=4.
+\]
+The common block is
+\[
+A=V(q,a,d)\cup V(q,b,c).
+\]
+The two pieces are disjoint: at a common point one would have $a=b=c=d=0$, so all four product quartics would have zero first jet and the determinant nets would fail transversality.  Transversality also makes the two pieces reduced complete intersections of lengths $4\alpha^2$ and $4\beta^2$.  Thus
+\[
+32=|A|\ge4(\alpha^2+\beta^2),
+\]
+forcing $\alpha=\beta=2$.
+
+Hence $a,b,c,d$ are quadrics and
+\[
+F=\lambda q^2+abcd,
+\qquad \lambda\ne0,
+\]
+the latter because otherwise $X$ would be singular along a curve.  Each of $a,b,c,d$ is therefore a contact quadric.  A reduced one gives a strict weight-$48$ word, impossible in the minimum-$64$ branch.  Thus all four would have to be double planes.  Two distinct underlying planes give distinct weak weight-$28$ words: equality would place all $28$ nodes on the intersection line; then the octic and both normal derivatives would vanish identically along that line, contradicting isolated singularities.  Their symmetric difference is therefore a nonzero strict word of weight at most $56$.  Hence all four double planes would have the same support, making the four product quartics proportional.  This contradicts the dimensions of the determinant nets.
+
+If $q$ is isotropic for exactly one determinant form, the normal forms
+\[
+qu+v^2,
+\qquad
+\lambda q^2+xy
+\]
+have rank-five difference, again impossible.
+
+It remains to treat the case where $q$ is isotropic for both forms.  Write
+\[
+F=qu+v^2=qu'+(v')^2,
+\]
+so
+\[
+(v-v')(v+v')=q(u'-u). \tag{K1}
+\]
+We first show that $q$ is squarefree.  If an irreducible factor $r$ occurred with multiplicity at least two, then $dq=0$ on the surface $r=0$.  The two quartics $u,v$ have a common zero on this positive-degree projective surface unless they have a common curve, in which case the determinant base locus is already positive-dimensional.  At such a zero the first jets of $q,u,v$ have rank at most two, contradicting transversality of $V(q,u,v)$.
+
+Now let $r$ be an irreducible factor of the squarefree quartic $q$.  By (K1), $r$ divides one of $v-v'$ and $v+v'$.  It cannot divide both, since then $r\mid v,v'$ and $V(r,u)$ would give a positive-dimensional part of $V(q,u,v)$.
+
+If irreducible factors of $q$ occur on both sides, write $q=rs$ with $r,s$ nonconstant and coprime, where
+\[
+r\mid(v-v'),\qquad s\mid(v+v').
+\]
+On the curve $V(r,s)$ one has $v=v'=0$ and $dq=0$.  The quartic $u$ has a zero on this positive-degree curve unless it vanishes identically on a component, which would again give a base curve.  At such a zero the first jets of $q,u,v$ have rank at most two, contradicting transversality.
+
+Thus all irreducible factors of $q$ divide the same one of $v-v'$ and $v+v'$.  Since both sides have degree four, say
+\[
+v-v'=cq
+\]
+for a constant $c$.  Cancelling $q$ in (K1) gives
+\[
+u'-u=c(v+v'),
+\]
+so $v',u'\in\langle q,u,v\rangle$ and hence the two determinant nets coincide.  This contradicts the residual-triangle setup.  The case $q\mid(v+v')$ is identical.
+
+All isotropy types are impossible, proving the proposition.
+\end{proof}
+
+\subsection{Blow-up and the degree-four dichotomy}
+The blow-up used here has a simple purpose: the quartics in the two nets all vanish on the common block $A$, so on $\PP^3$ they define only a rational map.  Blowing up $A$ separates their first-order directions and converts the combined quartic system into a base-point-free linear system.  Its intersection numbers then measure how much room is available for the two determinant presentations to differ.
+
+Put
+\[
+W:=V_{AB}+V_{AC}\subset S_4
+\]
+and blow up the common block,
+\[
+Y=\operatorname{Bl}_A\PP^3,
+\qquad
+D=4H-\sum_{a\in A}E_a.
+\]
+At every point of $A$ the two transverse $CI(4,4,4)$ presentations have independent first-order jets.  Outside $A$, the common base locus of the two nets is
+\[
+(A\cup B)\cap(A\cup C)=A,
+\]
+so the system $W$ has no base point on $Y$, and $D$ is nef.  Moreover
+\[
+D^3=4^3-|A|=32>0. \tag{CP1}\label{eq:CP1}
+\]
+We can now prove \eqref{eq:CP}.  The case $k=3$ would give $V_{AB}=V_{AC}$ and hence equal base loci, forcing $B=C$, impossible.  Suppose $k=2$.  Then $\dim W=4$, so $W$ defines a morphism
+\[
+\phi_W:Y\longrightarrow\PP(W^*)\simeq\PP^3
+\]
+with $D=\phi_W^*\cO(1)$.  The two determinant expressions of $F$ define rank-three ternary quadratic forms $Q_{AB}$ and $Q_{AC}$ supported on the two distinct hyperplanes $V_{AB},V_{AC}\subset W$.  They cannot be the same quadratic form on $W$: equality would force their one-dimensional radicals, hence the two hyperplanes, to coincide.  Thus
+\[
+Q_{AB}-Q_{AC}\ne0
+\]
+is a genuine quadratic relation among the four sections of $W$.  Consequently $\phi_W(Y)$ lies in a quadric surface in $\PP^3$ and has dimension at most two.  But then $D^3=0$, contradicting \eqref{eq:CP1}.  Therefore $k\le1$.
+
+If a degree-$e$ surface $P_e$ contains $A$, its strict transform has class
+\[
+eH-\sum_{a\in A}E_a
+\]
+and therefore
+\[
+D^2\cdot\widetilde P_e=16e-32. \tag{T1}\label{eq:T1}
+\]
+
+We also record the numerical liaison structure of the common block.  The $h$-vector of $CI(4,4,4)$ is
+\[
+c=(1,3,6,10,12,12,10,6,3,1).
+\]
+Since $A,B,C$ are pairwise linked by complete intersections of this type, the standard liaison formula (see, for example,~\cite{Migliore}) gives
+\[
+\boxed{h_A=h_B=h_C=:h,\qquad h_i+h_{9-i}=c_i.} \tag{T1a}\label{eq:T1a}
+\]
+Define the quartic defect
+\[
+\delta:=h^1(\cI_A(4))=32-H_A(4).
+\]
+Then
+\[
+\dim I_A(4)=35-H_A(4)=3+\delta. \tag{T1b}\label{eq:T1b}
+\]
+Because $\dim W=6-k$ and $W\subset I_A(4)$,
+\[
+k+\delta\ge3. \tag{T1c}\label{eq:T1c}
+\]
+Together with \eqref{eq:CP}, this gives $\delta\ge2$.  When $\delta=2$, necessarily $k=1$ and hence
+\[
+W=I_A(4),\qquad \dim W=5. \tag{T1d}\label{eq:T1d}
+\]
+Moreover, if $A$ lies on no quadric, \eqref{eq:T1a} and the Macaulay $O$-sequence condition~\cite{StanleyHilbert} leave exactly two possibilities at defect two:
+\[
+(1,3,6,9,11,1,1,0,0,0),
+\qquad
+(1,3,6,10,10,2,0,0,0,0). \tag{T1e}\label{eq:T1e}
+\]
+The first has a unique cubic through $A$; the second has no cubic.  These are the two defect-two candidates.
+
+The minimal degree of an equation of $A$ is one of $1,2,3,4$.  The arguments below completely treat the plane and quadratic cases and the two defect-two cubic/primitive candidates.  Higher-defect cubic and primitive candidates are recorded separately at the end of the section rather than being silently absorbed into the defect-two calculation.
+
+If $e=1$, \eqref{eq:T1} equals $-16$, contradicting nefness.  We treat the remaining cases separately.
+
+\subsection{The quadratic carrier}
+Assume a reduced quadric $Q=(q=0)$ contains $A$.  On its strict transform (or on the minimal resolution when $Q$ is a cone) put
+\[
+L=D|_{\widetilde Q}.
+\]
+The quadric is smooth at every point of $A$; otherwise the multiplicity-two contribution at such a point would make the relevant nef intersection negative.  Consequently
+\[
+L^2=32-32=0,
+\qquad
+L\cdot E_a=1. \tag{T2}\label{eq:T2}
+\]
+The restricted system is base-point free.  Its image cannot be a surface because $L^2=0$, and it is not a point because $L\cdot E_a=1$.  In the Stein factorization
+\[
+\widetilde Q\longrightarrow B\longrightarrow\PP(W^*)
+\]
+let $M_B$ be the line bundle defining the second map.  From \eqref{eq:T2},
+\[
+1=L\cdot E_a=\deg(E_a\to B)\deg M_B.
+\]
+Both factors are positive integers, hence $B\simeq\PP^1$ and $\deg M_B=1$.  The restriction image is a line and therefore
+\[
+\operatorname{rank}\bigl(W\to H^0(Q,\cO_Q(4))\bigr)=2,
+\qquad
+\dim(W\cap qS_2)=3. \tag{T3}\label{eq:T3}
+\]
+This argument also applies to a quadric cone and to a reduced union of two planes; a double plane was already excluded by the plane intersection calculation.
+
+Write
+\[
+K=W\cap qS_2=qT_2,
+\qquad \dim T_2=3.
+\]
+For either three-dimensional determinant net $U=V_{AB}$ or $V_{AC}$, dimension counting gives $\dim(U\cap K)\ge1$.  If this dimension were at least two, then modulo $q$ the net would have only one quotient direction and the binary determinant would become a square:
+\[
+F|_Q=c\,r^2.
+\]
+Here $c\ne0$, since otherwise the integral octic would contain $Q$ as a component.  Thus $Q$ would be a contact quadric, and Endra\ss' contact-quadric theorem would produce a strict weight-$48$ even set, contradicting $d(K)=64$.  Hence
+\[
+\dim(V_{AB}\cap K)=\dim(V_{AC}\cap K)=1. \tag{T4}\label{eq:T4}
+\]
+
+Both determinant nets therefore map surjectively to the two-dimensional quotient $W/K$.  The quadratic form $F|_Q$ has rank two there; rank one would again make $Q$ a contact quadric.  Choose common lifts $s,t\in W$ so that
+\[
+F\equiv st\pmod q.
+\]
+After completing squares, the two nets can be written
+\[
+U=\langle s+qa,qb,t+qc\rangle,
+\qquad
+V=\langle s+qa',qb',t+qc'\rangle
+\]
+with
+\[
+F=(s+qa)(t+qc)-(qb)^2
+ =(s+qa')(t+qc')-(qb')^2. \tag{T5}\label{eq:T5}
+\]
+In particular
+\[
+A=V(q,s,t)=CI(2,4,4).
+\]
+Subtracting the two expressions in \eqref{eq:T5} and dividing by $q$ gives
+\[
+(a-a')t+(c-c')s
+ +q(ac-b^2-a'c'+b'^2)=0.
+\]
+Since $(q,s,t)$ is a regular sequence of degrees $(2,4,4)$, its Koszul syzygies force constants $\lambda,\mu$ such that
+\[
+a-a'=\lambda q,
+\qquad
+c-c'=\mu q,
+\]
+and, modulo $q$,
+\[
+\lambda t+\mu s=b^2-b'^2=(b-b')(b+b'). \tag{T6}\label{eq:T6}
+\]
+If $\lambda=\mu=0$, the two nets coincide, contrary to the residual-triangle setup.  Choose $u=\lambda t+\mu s$, an independent member $v$ of the pencil, and put
+\[
+k=b-b',\qquad \ell=b+b'.
+\]
+Then
+\[
+A=V(q,u,v)=V(q,k,v)\sqcup V(q,\ell,v). \tag{T7}\label{eq:T7}
+\]
+Both pieces are $CI(2,2,4)$ schemes of length $16$.  Since $A$ is reduced, overlap or nonreduced degeneration in \eqref{eq:T7} would itself produce a linear or quadratic common factor.
+
+It remains to use compatibility of the two determinant identities.  Rewriting them as
+\[
+F=ST-q^2b^2=S'T'-q^2b'^2,
+\]
+with
+\[
+S'=S-\lambda q^2,
+\qquad
+T'=T-\mu q^2,
+\]
+gives
+\[
+b^2-b'^2=\mu S+\lambda T-\lambda\mu q^2. \tag{T8}\label{eq:T8}
+\]
+If $\lambda\mu\ne0$, choose $\rho^2=\lambda\mu$ and set
+\[
+Q_0=\rho q,
+\qquad S_0=\mu S,
+\qquad T_0=\lambda T.
+\]
+Equation \eqref{eq:T8} becomes
+\[
+S_0+T_0=Q_0^2+b^2-b'^2,
+\qquad
+\lambda\mu F=S_0T_0-Q_0^2b^2.
+\]
+On either quadric $Q_0=b+\varepsilon b'$ with $\varepsilon=\pm1$, the first identity reduces to
+\[
+S_0+T_0=2bQ_0.
+\]
+Substituting this into the second identity gives
+\[
+\lambda\mu F
+=S_0T_0-\frac{(S_0+T_0)^2}{4}
+=-\frac{(S_0-T_0)^2}{4}.
+\]
+Thus every nonzero reduced member arising this way is a contact quadric.  If, say, $\mu=0$ and $\lambda\ne0$, then $b^2-b'^2=\lambda T$; on $b+\varepsilon b'=0$ one has $T=0$ and
+\[
+F=-(qb)^2.
+\]
+The other one-sided case is symmetric.  A reduced contact member contradicts $d(K)=64$.  A nonzero nonreduced quadric is a double plane; two distinct such double planes give weak weight-$28$ words whose symmetric difference is a nonzero strict word of weight at most $56$, again impossible, while uniqueness of the minimal weak contact plane rules out two equations hiding the same weak word.  Hence the quadratic-carrier case is completely excluded.
+
+\subsection{The defect-two cubic-contact candidate}
+Assume now that $\delta=2$ and that $A$ is the first case in \eqref{eq:T1e}.  Then $A$ has a unique cubic equation $p$ and
+\[
+h_A=(1,3,6,9,11,1,1,0,0,0),
+\qquad
+I_A(4)=pS_1+\langle q\rangle.
+\]
+The two determinant nets force a contact-cubic equation
+\[
+F=q^2+pG_5.
+\]
+On $p=0$ the octic cuts a doubled $(3,4)$ curve and, in the transverse case, a weak even set
+\[
+\Omega=V(p,q,G_5),
+\qquad |\Omega|=60.
+\]
+Let $t=|B\cap\Omega|$.  Since $A\subset\Omega$, the weak symmetric difference with $Z_{AB}$ has weight $60-2t$.  The weak-even weight classification for octics~\cite{EndrassMinimal} leaves
+\[
+t=0\quad\text{or}\quad t=16. \tag{T9}\label{eq:T9}
+\]
+
+If $t=16$, the symmetric difference has the minimal weak weight $28$ and is cut by a contact plane $\ell=0$:
+\[
+F=r^2+\ell H_7.
+\]
+When the plane cubic $\Gamma=(p=\ell=0)$ is integral, $q^2=r^2$ on $\Gamma$ has a uniform sign; after adjusting it,
+\[
+r=q+\ell a_3+pa_1.
+\]
+Comparison and completion of squares give
+\[
+F=Q^2+(p\ell)B_4.
+\]
+The corresponding weight-$64$ complete intersection splits as
+\[
+Z=V(p\ell,Q,B_4)=Z_p\cup Z_\ell,
+\]
+with lengths $48$ and $16$, and $A\subset Z_p=CI(3,4,4)$.  The required Hilbert-vector input follows directly from \eqref{eq:T1e}: the defect-two cubic candidate has middle entry
+\[
+h_A(4)=11.
+\]
+On the other hand
+\[
+h_{CI(3,4,4)}=(1,3,6,9,10,9,6,3,1).
+\]
+If $T$ is the residual of $A$ in $Z_p$, the socle-degree-eight liaison formula gives
+\[
+h_T(i)=h_{CI(3,4,4)}(i)-h_A(8-i).
+\]
+At $i=4$ this is
+\[
+h_T(4)=10-11=-1,
+\]
+impossible.  Thus the transverse $t=16$ case is excluded.  If $\Gamma$ is reducible or nonreduced, or the sign changes between components, the factorization of $p|_\ell$ produces a linear or quadratic component and returns to a case already excluded.
+
+If $t=0$, one obtains three weak weight-$60$ sets
+\[
+\Omega_A=A\sqcup D,
+\qquad
+\Omega_B=B\sqcup D,
+\qquad
+\Omega_C=C\sqcup D,
+\qquad |D|=28.
+\]
+For any weak weight-$60$ word $w$, put
+\[
+L_3=\frac{3H-E_w}{2}.
+\]
+Riemann--Roch gives $\chi(L_3)=6$.  Endra\ss' stability alternative says that either $h^0(L_3)>0$ and $w$ is cut by a contact cubic, or the complementary degree-five system is unstable and produces a controlling surface of degree
+\[
+2\cdot5-8=2,
+\]
+which returns to the quadratic case.  It remains to treat the case where all three weak $60$-sets are cut by contact cubics.
+
+The remaining cubic case is controlled by a direct Hilbert calculation.  For
+\[
+\Omega_A=A\sqcup D=CI(3,4,5)
+\]
+the complete-intersection $h$-vector is
+\[
+h_{CI(3,4,5)}=(1,3,6,9,11,11,9,6,3,1).
+\]
+Liaison with the defect-two vector of $A$ gives
+\[
+h_D(i)=h_{CI(3,4,5)}(i)-h_A(9-i),
+\]
+so
+\[
+\boxed{h_D=(1,3,6,8,10,0,0,0,0,0).} \tag{T10}\label{eq:T10}
+\]
+Hence
+\[
+\dim I_D(3)=20-18=2,
+\qquad
+\dim I_D(4)=35-28=7. \tag{T11}\label{eq:T11}
+\]
+The three contact cubic equations all lie in the two-dimensional space $I_D(3)$.  If they span only one line, the cubic contact system is already nonprimitive.  Otherwise choose two independent cubics $p_1,p_2$.  If $\gcd(p_1,p_2)=1$, then the eight quartics
+\[
+p_1S_1+p_2S_1
+\]
+are linearly independent: a relation $\ell_1p_1+\ell_2p_2=0$ would force $p_1\mid\ell_2$, impossible by degrees.  Thus
+\[
+8\le\dim I_D(4)=7,
+\]
+a contradiction.  Therefore $p_1,p_2$ have a nonconstant common factor.  Since they are independent cubics, that factor has degree one or two.  We obtain a common plane or quadric factor and return to the already excluded low-degree cases.  Thus the $t=0$ defect-two branch is completely closed without an additional degeneration hypothesis.
+
+\subsection{The defect-two primitive five-quartic candidate}
+Assume that $\delta=2$ and that $A$ is the second case in \eqref{eq:T1e}.  Then
+\[
+h_A=(1,3,6,10,10,2,0,0,0,0),
+\qquad I_A(2)=I_A(3)=0.
+\]
+Equation \eqref{eq:T1d} gives directly
+\[
+\boxed{W=I_A(4),\qquad \dim W=5.}
+\]
+Thus the primitive Hilbert input is exactly the defect-two numerical candidate, not an additional hypothesis.  The common octic relation maps
+\[
+\operatorname{Bl}_A\PP^3\longrightarrow Q^3\subset\PP^4
+\]
+into a quadric threefold.  Each exceptional plane maps linearly to a plane, while a smooth quadric threefold contains no plane; after discarding the already nonprimitive lower-rank cases, the quadratic relation has rank three or four.
+
+In rank four choose coordinates so that
+\[
+f_1f_2=f_3f_4.
+\]
+Unique factorization gives
+\[
+f_1=ab,\quad f_3=ac,\quad f_2=cd,\quad f_4=bd,
+\]
+with
+\[
+\deg a=\deg d=\alpha,
+\qquad
+\deg b=\deg c=\beta,
+\qquad
+\alpha+\beta=4.
+\]
+The vertex fibre contains $V(a,d)$ and $V(b,c)$, so at least one pair is defined in degree at most two.  In the clean reduced case the length identity is
+\[
+32=4(\alpha^2+\beta^2),
+\]
+which together with $\alpha+\beta=4$ forces $\alpha=\beta=2$ and recovers exactly the $16+16$ splitting of \eqref{eq:T7}.  Degenerate cases produce an even lower linear or quadratic factor.
+
+In rank three the relation is
+\[
+f_1f_2=f_3^2,
+\]
+and unique factorization gives
+\[
+f_1=ha^2,
+\qquad f_3=hab,
+\qquad f_2=hb^2.
+\]
+If $\deg h=2$ there is an explicit controlling quadric; if $h$ is a unit, then $a,b$ are quadrics and the vertex fibre contains $V(a,b)$.  Common factors or nonreduced degenerations again produce degree at most two.  Thus the primitive quartic case reduces to the already excluded quadratic case.
+
+\begin{corollary}[Defect-two residual-triangle candidates]\label{cor:triangle}
+In the residual-triangle branch, all configurations with quartic defect $\delta=2$ are impossible.  More precisely, the unique defect-two cubic candidate is eliminated by the $t=16$ liaison contradiction and the $t=0$ Hilbert-factor argument, while the unique defect-two primitive candidate reduces to the quadratic branch.
+\end{corollary}
+
+\begin{proof}
+The two possibilities are exactly the vectors in \eqref{eq:T1e}, and they were eliminated in the preceding two subsections.
+\end{proof}
+
+\begin{remark}[Higher-defect triangle candidates]\label{rem:trianglehigher}
+The half-$CI(4,4,4)$ symmetry and the Macaulay $O$-sequence condition give $31$ numerical candidates after the $\delta=0,1$ cases are removed by distinctness and \eqref{eq:CP}: eight have a quadratic equation, eighteen have cubic equations, and five are primitive in degrees at most three.  Proposition~\ref{prop:triangle-k1} eliminates the entire $k=1$ comparison independently of this numerical classification.  The residual triangle is therefore reduced to the single $k=0$ six-quartic comparison, expressed as a low-rank quadric-pencil/relative-contact compatibility problem.
+\end{remark}
+
+\section{Global abundance of weight-64 determinant presentations}\label{sec:many}
+The preceding sections ask what can happen near one chosen minimum word.  The next step is global: a high-dimensional divisible code cannot contain only a few weight-$64$ words.  A MacWilliams linear-programming identity forces hundreds of them, and elementary incidence counting then guarantees that some pair has unusually large overlap.  This is the point at which abundance in the code becomes a geometric selection principle: instead of analyzing every local residual profile, we choose a determinant presentation having a neighbour in one of the geometrically tractable overlap patterns.
+
+The precise coding statement is as follows.
+
+\begin{theorem}[Minimum-word lower bound]\label{thm:A64}
+If $C$ is an $8$-divisible $[169,19,64]$ code, then
+\[
+A_{64}\ge533.
+\]
+If $\dim C\ge20$, then
+\[
+A_{64}\ge2353.
+\]
+\end{theorem}
+
+\begin{proof}
+Put
+\[
+\widehat K_j^{(169)}(w):=\frac{K_j^{(169)}(w)}{\binom{169}{j}}
+\]
+and consider
+\[
+P(w)=\lambda+\sum_{j=1}^5\mu_j\widehat K_j^{(169)}(w),
+\]
+with
+\[
+\lambda=\frac{455}{131072},\qquad
+(\mu_1,\ldots,\mu_5)=
+\left(
+\frac{19435}{131072},
+\frac{173901}{65536},
+\frac{2173171}{65536},
+\frac{114782941}{524288},
+\frac{541119579}{524288}
+\right).
+\]
+On the complete allowed weight set
+\[
+0,64,72,80,88,96,104,112,120,128,136,144,152,160,168
+\]
+the exact values of $P$ are respectively
+\[
+1287,1,0,0,0,0,0,-1,-6,-21,-56,-126,-252,-462,-792.
+\]
+Averaging over $C$ and using MacWilliams gives
+\[
+\frac1{|C|}\sum_{c\in C}P(\wt c)
+=\lambda+\sum_{j=1}^5
+ \frac{\mu_j}{\binom{169}{j}}A_j(C^\perp).
+\]
+Since every $\mu_j$ is positive, comparison with the preceding value table yields, when $|C|=2^{19}$,
+\[
+\begin{aligned}
+A_{64}={}&533+A_{112}+6A_{120}+21A_{128}\\
+&+56A_{136}+126A_{144}+252A_{152}\\
+&+462A_{160}+792A_{168}\\
+&+2^{19}\sum_{j=1}^5
+\frac{\mu_j}{\binom{169}{j}}A_j(C^\perp).
+\end{aligned}
+\]
+All terms after $533$ are nonnegative, proving $A_{64}\ge533$.  If $\dim C\ge20$, the same computation with $|C|\ge2^{20}$ gives the constant term
+\[
+2^{20}\lambda-1287=2353,
+\]
+and hence $A_{64}\ge2353$.
+\end{proof}
+
+For distinct minimum words $u,v$,
+\[
+\wt(u+v)=128-2|\supp(u)\cap\supp(v)|.
+\]
+Since $u+v$ is again an allowed codeword, the intersection sizes are strongly quantized.
+
+\begin{theorem}[Incidence theorem]\label{thm:incidence}
+Among $533$ minimum words:
+\begin{enumerate}[label=(\roman*)]
+\item some pair has intersection at least $28$;
+\item if no pair has intersection $32$, then at least $5743$ unordered pairs have intersection exactly $28$;
+\item in that case some minimum word has at least $22$ neighbours meeting it in $28$ coordinates.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+It is enough to work with any $533$ minimum words.  For each coordinate $p\in\{1,\ldots,169\}$ let $m_p$ be the number of chosen words containing $p$.  Since every word has weight $64$,
+\[
+\sum_{p=1}^{169}m_p=533\cdot64=34112=169\cdot201+143.
+\]
+The convexity of $m\mapsto\binom m2$ shows that, among integer sequences with this fixed sum, $\sum_p\binom{m_p}{2}$ is minimized when $143$ of the $m_p$ equal $202$ and the remaining $26$ equal $201$.  Hence
+\[
+\sum_p\binom{m_p}{2}
+\ge 26\binom{201}{2}+143\binom{202}{2}
+=3\,425\,643.
+\]
+Double counting gives
+\[
+\sum_p\binom{m_p}{2}
+=\sum_{\{x,y\}}|\supp(x)\cap\supp(y)|,
+\]
+where the second sum runs over the
+\[
+\binom{533}{2}=141\,778
+\]
+unordered pairs of chosen minimum words.
+
+For distinct weight-$64$ words $x,y$,
+\[
+\wt(x+y)=128-2|\supp(x)\cap\supp(y)|.
+\]
+Since $x+y$ is a nonzero codeword of weight at least $64$ and its weight is divisible by $8$, the possible intersections are
+\[
+0,4,8,12,16,20,24,28,32.
+\]
+If every pair met in at most $24$ coordinates, then
+\[
+\sum_{\{x,y\}}|x\cap y|
+\le24\binom{533}{2}
+=3\,402\,672,
+\]
+contradicting the lower bound $3\,425\,643$.  This proves (i).
+
+Assume now that no pair meets in $32$ coordinates, and let $e_{28}$ be the number of pairs meeting in $28$.  Every other pair then meets in at most $24$, so
+\[
+3\,425\,643
+\le24\binom{533}{2}+4e_{28}.
+\]
+Therefore
+\[
+e_{28}\ge
+\left\lceil\frac{3\,425\,643-3\,402\,672}{4}\right\rceil
+=5743.
+\]
+The graph whose vertices are the $533$ minimum words and whose edges are the $28$-intersection pairs has average degree
+\[
+\frac{2e_{28}}{533}>21.5,
+\]
+so some vertex has degree at least $22$.  This proves (ii) and (iii).
+\end{proof}
+
+\begin{corollary}[Global reduction to residual distance $32$ or $36$]\label{cor:global3236}
+In every $8$-divisible $[169,19,64]$ code there is a weight-$64$ word $c$ for which
+\[
+d\bigl(\Res(C;c)\bigr)\in\{32,36\}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorems~\ref{thm:A64} and~\ref{thm:incidence}, choose distinct weight-$64$ words $c,x$ with
+\[
+|\supp(c)\cap\supp(x)|=32\quad\text{or}\quad28.
+\]
+The restriction of $x$ to the complement of $\supp(c)$ is a nonzero residual word of weight
+\[
+64-|\supp(c)\cap\supp(x)|=32\quad\text{or}\quad36.
+\]
+Section~\ref{sec:res64} showed that every such residual code has minimum distance at least $32$.  Thus, in the first case its minimum distance is $32$, while in the second it is either $32$ or $36$.  In either case the stated conclusion follows.
+\end{proof}
+
+\begin{remark}
+Theorems~\ref{thm:A64}--\ref{cor:global3236} remove the local $40A$ and $40B$ profiles from the global proof: one may choose a base word whose residual distance is $32$ or $36$.  The $32$ alternative is the residual-triangle branch treated geometrically in Section~\ref{sec:triangle}; its analysis below uses the complete allowed octic weight spectrum.
+\end{remark}
+
+\section{Residual distance 36: the six-quartic comparison}\label{sec:comparison}
+Residual distance $36$ corresponds to two weight-$64$ determinant sets meeting in $28$ nodes.  When their quartic nets are disjoint, the six quartics form a six-dimensional linear system.  Their two determinant equations give a quadratic relation among these six sections, so after blowing up the common $28$-point base locus the resulting map lands naturally in a quadric fourfold in $\PP^5$.  The strategy of this section is to replace a complicated comparison of two presentations on $\PP^3$ by the birational geometry of this single map: intersection theory determines the possible degree of its image, and the geometry of planes on the target then eliminates the generic finite cases.
+
+One of the two global minimum-$64$ outlets is residual distance $36$.  In this branch two weight-$64$ determinant sets have the form
+\[
+Z=A\sqcup B,
+\qquad
+E=A\sqcup C,
+\qquad
+|A|=28,
+\qquad
+|B|=|C|=36.
+\]
+Let $\mathcal U,\mathcal V\subset H^0(\PP^3,\cO(4))$ be their three-dimensional determinant nets.  We first extract a global consequence when
+\[
+\mathcal U\cap\mathcal V=0.
+\]
+
+\subsection{Three auxiliary tools}
+Before constructing the six-quartic map, we isolate three facts that will be used only at the final exclusion stage.  The first controls how many exceptional planes can lie over two target planes meeting along a smooth line.  The second converts simple ramification along disjoint curves into an Euler-characteristic deficit.  The third is a finite linear-algebra classification of invariant Lagrangian planes in the singular rank-four quadric pencil.  Readers interested first in the global geometry may pass directly to Theorem~\ref{thm:r36global} and return to these lemmas when they are invoked.
+
+\begin{lemma}[Sheet bound along a smooth plane intersection]\label{lem:r36sheet}
+Let $f:Y\to X$ be a finite morphism of degree $e$ from a smooth threefold to a normal threefold.  Let $\Pi_1,\Pi_2\subset X$ be planes meeting along a line $\ell$ whose generic point lies in $X_{\mathrm{reg}}$.  Suppose that $n_i$ pairwise disjoint prime divisors of $Y$ map isomorphically onto $\Pi_i$ for $i=1,2$.  Then
+\[
+n_1+n_2\le e.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\eta$ be the generic point of $\ell$.  The local ring $\cO_{X,\eta}$ is regular of dimension two.  Since $f$ is finite and $Y$ is smooth, the semilocal ring of $Y$ above $\eta$ is Cohen--Macaulay of dimension two; hence, by the maximal Cohen--Macaulay criterion over a regular local ring, it is free of rank $e$ over $\cO_{X,\eta}$.  Thus the scheme-theoretic fibre over $\eta$ has total length $e$.  Every divisor mapping isomorphically to one of the two planes contributes a distinct degree-one point of this fibre, because the source divisors are pairwise disjoint.  Therefore $n_1+n_2\le e$.
+\end{proof}
+
+\begin{lemma}[Euler deficit for disjoint simple ramification]\label{lem:eulerdeficit}
+Let $f:S\to S'$ be a finite morphism of degree $e$ between smooth projective complex surfaces.  Assume that the ramification divisor is
+\[
+R_f=R_1+\cdots+R_N,
+\]
+where the $R_i$ are pairwise disjoint smooth curves, every ramification index is two at the generic point of $R_i$, each restriction $R_i\to B_i:=f(R_i)$ is an isomorphism, and there is no other ramification.  Then
+\[
+\chi_{\mathrm{top}}(S)=e\,\chi_{\mathrm{top}}(S')-\sum_{i=1}^N\chi_{\mathrm{top}}(B_i).
+\]
+This remains valid when distinct branch curves meet.
+\end{lemma}
+
+\begin{proof}
+For a point $p\in S'$, let $k(p)$ be the number of branch curves $B_i$ through $p$.  Because the ramification curves in $S$ are disjoint, the simple ramification points lying above an intersection of branch curves are distinct.  Hence the set-theoretic fibre has cardinality $e-k(p)$.  Integrating this constructible function with respect to topological Euler characteristic gives
+\[
+\chi_{\mathrm{top}}(S)=\int_{S'}(e-k(p))\,d\chi
+=e\,\chi_{\mathrm{top}}(S')-\sum_i\chi_{\mathrm{top}}(B_i),
+\]
+where the last equality is the additivity of the indicator functions of the $B_i$.  Since $R_i\simeq B_i$, the same formula may equivalently be written with the $R_i$.
+\end{proof}
+
+\begin{lemma}[Invariant Lagrangians in the rank-three pencil]\label{lem:r36rank3}
+Let $V$ be a six-dimensional complex vector space, let $B_0$ be a nondegenerate symmetric form, and let $T$ be $B_0$-self-adjoint.  Suppose that for an eigenvalue $\lambda$ one has
+\[
+\dim\ker(T-\lambda)=3,
+\]
+and that $T$ admits an invariant $B_0$-Lagrangian three-space.  Then the Jordan type of $T$ is one of
+\[
+(J_2,J_1,J_1)_\lambda+(J_2)_\mu,
+\qquad
+(J_2,J_1,J_1)_\lambda+(J_1,J_1)_\mu,
+\]
+\[
+(J_4,J_1,J_1)_\lambda,
+\qquad
+(J_3,J_2,J_1)_\lambda,
+\qquad
+(J_2,J_2,J_2)_\lambda.
+\tag{R3J}\label{eq:r3jordan}
+\]
+In the first, third, and fourth cases there are exactly two invariant Lagrangian three-spaces.  In the second case there are exactly four; they may be written
+\[
+L_\varepsilon\oplus M_\delta,
+\qquad \varepsilon,\delta\in\{+,-\},
+\]
+so that for each fixed $\delta$ the two spaces $L_+\oplus M_\delta$ and $L_-\oplus M_\delta$ meet in a two-dimensional vector space containing nonzero components from two distinct primary summands.  In the last case the eigenspace $\ker(T-\lambda)$ itself is a Lagrangian three-space.
+\end{lemma}
+
+\begin{proof}
+The primary summands of a self-adjoint operator for distinct eigenvalues are mutually orthogonal and nondegenerate.  Polynomial projectors decompose every invariant subspace into its primary parts.  If an invariant subspace is Lagrangian, then its part in each primary summand is isotropic; the half-dimension bound in each nondegenerate summand, together with equality after summing over all summands, forces every primary summand to have even dimension and the Lagrangian to occupy half of it.
+
+Put $N=T-\lambda$ on the $\lambda$-primary part.  Since $\dim\ker N=3$, this primary part has exactly three Jordan blocks.  Its dimension is therefore either four, with partition $(2,1,1)$, or six, with partition
+\[
+(4,1,1),\qquad(3,2,1),\qquad(2,2,2).
+\]
+In the four-dimensional case the complementary primary summand has dimension two and is either a single $J_2$ block or a semisimple $J_1\oplus J_1$ block.  This proves the list~\eqref{eq:r3jordan}.
+
+It remains to count the invariant isotropic half-spaces.  Use standard self-adjoint Jordan chains, normalized so that a chain $u_1,\ldots,u_m$ has $B_0(u_i,u_j)=\delta_{i+j,m+1}$, with distinct primary blocks mutually orthogonal.
+
+For the $(J_2,J_1,J_1)_\lambda$ part write $e_2\mapsto e_1\mapsto0$ and let $g,h$ span the two one-dimensional blocks, normalized by $B_0(g,g)=B_0(h,h)=1$.  The invariant isotropic two-spaces are exactly
+\[
+L_\pm=\langle e_1,g\pm i h\rangle.
+\]
+Indeed, an invariant two-space containing a vector with nonzero $e_2$-coefficient also contains $e_1$, and the two then pair nontrivially.  Thus the space lies in the kernel, where isotropy leaves precisely the two displayed choices.  A $J_2$ complementary block has a unique invariant isotropic line, while a semisimple nondegenerate two-space has exactly two isotropic lines $M_\pm$.  This gives respectively two and four invariant Lagrangians, and in the four-space case the stated intersections are immediate.
+
+For $(J_4,J_1,J_1)_\lambda$, with chain $e_4\mapsto e_3\mapsto e_2\mapsto e_1\mapsto0$, the only invariant Lagrangians are
+\[
+\langle e_1,e_2,g\pm ih\rangle.
+\]
+A cyclic invariant three-space would have a generator with nonzero $e_3$-coefficient, but then $B_0(v,Nv)\ne0$, so it cannot be isotropic.
+
+For $(J_3,J_2,J_1)_\lambda$, use chains $e_3\mapsto e_2\mapsto e_1\mapsto0$ and $f_2\mapsto f_1\mapsto0$, together with a nondegenerate vector $g$.  An isotropic two-space in the three-dimensional kernel must be $\langle e_1,f_1\rangle$.  Invariance and isotropy then leave exactly
+\[
+\langle e_1,f_1,e_2\pm ig\rangle.
+\]
+Finally, for $(J_2,J_2,J_2)_\lambda$ the entire eigenspace is totally isotropic and has dimension three, hence is Lagrangian.
+\end{proof}
+
+\begin{lemma}[Invariant Lagrangians in the rank-four pencil]\label{lem:r36lagrangian}
+Let $V$ be a six-dimensional complex vector space, let $B_0$ be a nondegenerate symmetric form, and let $T$ be $B_0$-self-adjoint.  Suppose that for an eigenvalue $\lambda$ the space
+\[
+K=\ker(T-\lambda)
+\]
+has dimension two, is totally isotropic for $B_0$, and satisfies $K\subset\operatorname{im}(T-\lambda)$.  If $T$ admits an invariant $B_0$-Lagrangian three-space, then the Jordan type of $T$ is one of
+\[
+(J_2,J_2)_\lambda+(J_2)_\mu,\qquad
+(J_2,J_2)_\lambda+(J_1,J_1)_\mu,\qquad
+(J_2,J_4)_\lambda,\qquad
+(J_3,J_3)_\lambda. \tag{LJ}\label{eq:lagjordan}
+\]
+For standard self-adjoint Jordan chains, the invariant Lagrangians are exactly the following:
+\begin{enumerate}[label=(\alph*)]
+\item for $(J_2,J_2)_\lambda+(J_2)_\mu$, the three spaces $L_0\oplus M,L_+\oplus M,L_-\oplus M$, where
+\[
+L_0=\langle e_1,f_1\rangle,\qquad
+L_\pm=\langle e_1\pm i f_1,e_2\pm i f_2\rangle
+\]
+and $M$ is the unique invariant isotropic line in the $\mu$-block;
+\item for $(J_2,J_2)_\lambda+(J_1,J_1)_\mu$, the six spaces $L_i\oplus M_\varepsilon$, where $i\in\{0,+,-\}$ and $M_\pm$ are the two isotropic lines in the semisimple $\mu$-space;
+\item for $(J_2,J_4)_\lambda$, the three spaces
+\[
+L_0=\langle e_1,f_1,f_2\rangle,\qquad
+L_\pm=\langle f_3\pm i e_2,f_2\pm i e_1,f_1\rangle;
+\]
+\item for $(J_3,J_3)_\lambda$, the four spaces
+\[
+A_\pm=\langle e_1,f_1,e_2\pm i f_2\rangle,
+\qquad
+B_\pm=\langle e_3\pm i f_3,e_2\pm i f_2,e_1\pm i f_1\rangle.
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The mutually orthogonal primary summands of a self-adjoint operator are nondegenerate.  Any invariant subspace decomposes into its primary parts.  If the subspace is Lagrangian, each primary part must have half the dimension of the corresponding primary summand; in particular every primary summand has even dimension.  On the $\lambda$-primary part put $N=T-\lambda$.  Since $\dim\ker N=2$, there are exactly two $\lambda$-Jordan blocks.  The inclusion $K\subset\operatorname{im}N$ forces both blocks to have size at least two.  If the $\lambda$-primary part has dimension four, the blocks therefore have sizes $(2,2)$ and the remaining two-dimensional primary summand is either $J_2$ or $J_1\oplus J_1$.  If it has dimension six, the only partitions into two parts at least two are $(2,4)$ and $(3,3)$.  This proves \eqref{eq:lagjordan}.
+
+It remains to determine the invariant isotropic half-spaces.  On a Jordan chain $u_1,\ldots,u_m$ choose the standard self-adjoint form $B_0(u_i,u_j)=\delta_{i+j,m+1}$.  For the $(J_2,J_2)$ primary part, an invariant two-space either equals the kernel $\langle e_1,f_1\rangle$ or is cyclic of length two, generated by a vector whose top coefficients are $(a,b)$; isotropy gives $a^2+b^2=0$, hence the two signs listed above.  A $J_2$ block has one invariant isotropic line, while a semisimple nondegenerate two-space has exactly two isotropic lines over $\mathbb C$.  This gives (a) and (b).
+
+For $(J_2,J_4)$, an invariant Lagrangian has kernel dimension two or one.  In the first case it contains $K$ and isotropy forces the third generator to be $f_2$; in the second it is cyclic of length three and may be generated by $f_3+a e_2$, with isotropy $1+a^2=0$.  This gives (c).  For $(J_3,J_3)$ the same dichotomy gives either $K$ together with $e_2+a f_2$, or a cyclic space generated by $e_3+a f_3$; again $1+a^2=0$.  This gives (d) and proves exhaustiveness.
+\end{proof}
+
+\subsection{The six-quartic map}
+We now return to the main geometric line of the argument.
+
+\begin{theorem}[Six-quartic reduction at residual distance $36$]\label{thm:r36global}
+Put
+\[
+Y=\operatorname{Bl}_A\PP^3,
+\qquad
+D=4H-\sum_{a\in A}E_a.
+\]
+If $\mathcal U\cap\mathcal V=0$, the six quartics in $\mathcal U\oplus\mathcal V$ define a base-point-free morphism
+\[
+\phi:Y\longrightarrow X'\subset Q^4\subset\PP^5,
+\]
+where $Q^4$ is a smooth quadric and $\phi$ is generically finite.  Writing
+\[
+X'\sim mH_Q,
+\qquad e=\deg\phi,
+\]
+one has
+\[
+me=18.
+\]
+Moreover, for general $D_1,D_2\in|D|$ the curve $C=D_1\cap D_2$ has genus $33$.  If $X'$ is normal, then
+\[
+\boxed{(m,e)=(2,9)\quad\text{or}\quad(3,6).}
+\]
+If $m=2$, $\phi$ is finite, and $X'$ is normal, then no such morphism exists.  If $m=3$, $\phi$ is finite, and $X'$ has only isolated singularities, then no such morphism exists.  Consequently a finite normal target surviving the residual-$36$ disjoint-net branch can only be a cubic target with positive-dimensional singular locus.
+\end{theorem}
+
+\begin{proof}
+Each determinant identity gives a nondegenerate ternary quadratic form on its net.  Since the nets are disjoint, their difference is a nondegenerate quadratic form on the six-dimensional space $\mathcal U\oplus\mathcal V$; hence its zero locus is a smooth quadric fourfold $Q^4\subset\PP^5$.  The common base locus of the six quartics is exactly $A$.  At every point of $A$ either determinant net has three independent first jets because the corresponding $CI(4,4,4)$ is transverse.  Thus after blowing up $A$ the system is base-point free and defines the displayed morphism.
+
+On $Y$ one has
+\[
+D^3=4^3-|A|=36>0,
+\]
+so the image is three-dimensional and $\phi$ is generically finite.  Since $\operatorname{Pic}(Q^4)=\ZZ H_Q$, the image is a divisor $X'\sim mH_Q$.  Therefore
+\[
+D^3=e\deg(X')=2me,
+\]
+which gives $me=18$.
+
+The canonical class of the blow-up is
+\[
+K_Y=-4H+2\sum_{a\in A}E_a,
+\]
+and the standard intersection rules give
+\[
+K_Y\cdot D^2=-64+56=-8.
+\]
+Adjunction for a general complete-intersection curve $C=D_1\cap D_2$ yields
+\[
+2g(C)-2=(K_Y+2D)\cdot D^2=-8+72=64,
+\]
+so $g(C)=33$.
+
+Assume now that $X'$ is normal.  A general codimension-two linear section avoids the singular locus and is a smooth complete-intersection curve of type $(2,m)$ in $\PP^3$, hence has genus $(m-1)^2$.  The induced map from $C$ has degree $e=18/m$.  Riemann--Hurwitz gives
+\[
+64=e\,2m(m-2)+R=36(m-2)+R,
+\qquad R\ge0.
+\]
+Thus $m\le3$.  The case $m=1$ would place $X'$ in a hyperplane of $\PP^5$, giving a linear relation among the six quartics, contrary to $\dim(\mathcal U\oplus\mathcal V)=6$.  Hence $(m,e)=(2,9)$ or $(3,6)$.
+
+We first treat the finite quadratic-target case.  Suppose $m=2$ and $\phi$ is finite, so $X'=Q_0\cap Q_1$ is an intersection of two quadrics and $e=9$.  For every $a\in A$, the exceptional plane $E_a\simeq\PP^2$ is mapped isomorphically to a plane $\Pi_a\subset X'$, because $D|_{E_a}\simeq\cO_{\PP^2}(1)$.  At most nine exceptional divisors can dominate the same target plane, so the $28$ exceptional divisors produce at least four distinct planes in $X'$.
+
+Let $B_0$ be the nondegenerate form defining the smooth quadric $Q_0$, and put $T=B_0^{-1}B_1$.  A plane $\PP(L)\subset X'$ is a three-dimensional subspace $L$ that is maximal isotropic for $B_0$ and isotropic for $B_1$.  Hence $L=L^{\perp_{B_0}}$ and
+\[
+B_0(Tx,y)=B_1(x,y)=0\qquad(x,y\in L),
+\]
+so $TL\subset L$.  If every eigenspace of the self-adjoint operator $T$ were one-dimensional, its generalized eigenspaces would be pairwise orthogonal nondegenerate primary blocks, each consisting of a single Jordan block.  An invariant Lagrangian decomposes among these primary blocks; dimension $3=\frac12\dim V$ forces, on every block, the unique invariant subspace of half the block dimension.  Thus there would be at most one invariant Lagrangian.  Since $X'$ contains several planes, some eigenspace has dimension at least two.  Equivalently, the pencil contains a quadric $Q_\lambda$ of rank at most four.
+
+If $\operatorname{rank}Q_\lambda\le3$, its projective radical has dimension at least two.  Its intersection with an independent pencil member is positive-dimensional and lies in $\operatorname{Sing}(X')$, so the singular locus is already positive-dimensional.
+
+Assume therefore that $\operatorname{rank}Q_\lambda=4$.  Choose coordinates in the six-dimensional quartic space so that
+\[
+Q_\lambda=f_1f_2-f_3f_4,
+\]
+with two radical coordinates.  Unique factorization gives
+\[
+f_1=ga,\qquad f_3=gc,\qquad f_2=cd,\qquad f_4=ad,
+\]
+where
+\[
+\deg g=\deg d=\alpha>0,
+\qquad
+\deg a=\deg c=\beta>0,
+\qquad
+\alpha+\beta=4.
+\]
+Thus the positive-dimensional scheme $V(g,d)$ is mapped by the six quartics into the radical line $L=\PP(\ker Q_\lambda)$.  Blowing up the finite base set $A$ does not remove its positive-dimensional strict transform.  Since $\phi$ is finite, it cannot contract a curve; hence the image is one-dimensional and therefore $L\subset X'$.  The gradient of $Q_\lambda$ vanishes along $L$, so
+\[
+L\subset\operatorname{Sing}(X').
+\]
+This proves that every finite quadratic target has positive-dimensional singular locus.
+
+If $X'$ is normal, ranks at most two are impossible because they produce a singular locus of codimension at most one.  We next exclude rank three without counting fibres over its singular conic.  The corresponding eigenspace has dimension three, so Lemma~\ref{lem:r36rank3} applies.  In the types
+\[
+(J_2,J_1,J_1)_\lambda+(J_2)_\mu,
+\qquad
+(J_4,J_1,J_1)_\lambda,
+\qquad
+(J_3,J_2,J_1)_\lambda
+\]
+there are only two target planes, incompatible with the four distinct planes already forced by the $28$ exceptional divisors.  In type $(J_2,J_2,J_2)_\lambda$, Lemma~\ref{lem:r36rank3} identifies the three-dimensional eigenspace $K$ as a Lagrangian.  Hence $\PP(K)\subset Q_0\cap Q_1=X'$, and along this plane the gradients of the two quadrics are dependent; thus $\PP(K)$ is a codimension-one singular locus, contradicting normality.
+
+It remains only the type $(J_2,J_1,J_1)_\lambda+(J_1,J_1)_\mu$.  Lemma~\ref{lem:r36rank3} gives exactly four target planes $\PP(L_\varepsilon\oplus M_\delta)$.  For each fixed $\delta$, the two choices of $\varepsilon$ meet along a line whose vector space contains components from the two distinct primary summands.  Such a generic point cannot be an eigenvector of $T$, so the line has smooth generic point on $X'$.  Applying Lemma~\ref{lem:r36sheet} to the two pairs gives at most $9+9=18$ exceptional divisors in total, contradicting $|A|=28$.  Thus rank three is impossible and only the rank-four singular-line model remains.
+
+We now exclude that model.  Let $K=\ker(T-\lambda)$ be the two-dimensional radical vector space.  Since $\PP(K)\subset Q_0$, the restriction of $B_0$ to $K$ is zero.  If $N=T-\lambda$ on the $\lambda$-primary part, then self-adjointness gives $K^\perp=\operatorname{im}N$, and hence $K\subset\operatorname{im}N$.  Lemma~\ref{lem:r36lagrangian} therefore gives the four possible Jordan types and the complete list of their invariant Lagrangian planes.
+
+We shall also use Lemma~\ref{lem:r36sheet}.  In the present degree-nine situation, if two common planes $\Pi_i,\Pi_j\subset X'$ meet along a line whose generic point is smooth on $X'$, and $n_i,n_j$ exceptional divisors map to them, then
+\[
+n_i+n_j\le9. \tag{R36-S}\label{eq:r36sheet}
+\]
+A point $[x]\in X'$ is singular exactly when the gradients of the two defining quadrics are dependent, equivalently when $Tx=\rho x$ for some eigenvalue $\rho$.  Hence every intersection line used below has smooth generic point: it either contains a genuine generalized eigenvector or mixes two distinct primary summands.
+
+For $(J_2,J_2)_\lambda+(J_2)_\mu$, Lemma~\ref{lem:r36lagrangian} gives three planes $\Pi_0,\Pi_\pm$.  Applying \eqref{eq:r36sheet} to $\Pi_0\cap\Pi_+$ and $\Pi_0\cap\Pi_-$ gives total multiplicity at most $18$.  For $(J_2,J_2)_\lambda+(J_1,J_1)_\mu$, there are six planes $\Pi_{i,\varepsilon}$; applying \eqref{eq:r36sheet} to
+\[
+(\Pi_{+,+},\Pi_{+,-}),\quad(\Pi_{-,+},\Pi_{-,-}),
+\]
+and to
+\[
+(\Pi_{0,\varepsilon},\Pi_{+,\varepsilon}),\quad
+(\Pi_{0,\varepsilon},\Pi_{-,\varepsilon})
+\qquad(\varepsilon=\pm)
+\]
+and summing counts every multiplicity twice, so the total is at most $27$.  For $(J_2,J_4)_\lambda$, the three planes $\PP(L_0),\PP(L_\pm)$ give total multiplicity at most $18$ from the two intersections with $\PP(L_0)$.  Finally, for $(J_3,J_3)_\lambda$, the two smooth-line pairs $(\PP(A_+),\PP(B_+))$ and $(\PP(A_-),\PP(B_-))$ give total multiplicity at most $18$.
+
+In every Jordan type fewer than $28$ exceptional planes can occur, a contradiction.  Therefore the finite normal quadratic target $(m,e)=(2,9)$ is impossible.
+
+It remains to exclude the stated finite cubic-target case.  Suppose $m=3$, $\phi$ is finite, and $X'$ has isolated singularities.  Since $X'=Q^4\cap V(C_3)$ is Gorenstein,
+\[
+K_{X'}=-H_{X'}.
+\]
+The finite-map canonical formula gives an effective ramification divisor
+\[
+R_\phi=K_Y-\phi^*K_{X'}\sim K_Y+D=\sum_{a\in A}E_a.
+\]
+An effective nonexceptional prime divisor on $Y$ has positive intersection with $H^2$, whereas the displayed class has $H^2$-degree zero.  Hence $R_\phi$ has no nonexceptional component; independence of the exceptional classes then gives
+\[
+R_\phi=\sum_{a\in A}E_a.
+\]
+Thus every exceptional plane is a simple ramification divisor and maps linearly, hence isomorphically, to a plane in $X'$.
+
+Choose a general hyperplane section $S'=X'\cap H'$ avoiding $\operatorname{Sing}(X')$.  Then $S'$ is a smooth $(2,3)$ K3 surface, so $e(S')=24$.  Its inverse image $S=\phi^{-1}(S')$ is the strict transform of a general smooth quartic through the $28$ points of $A$, hence is the blow-up of a quartic K3 surface at those points and
+\[
+e(S)=24+28=52.
+\]
+The restricted degree-six map $S\to S'$ has reduced ramification divisor equal to the disjoint union of the $28$ curves $E_a\cap S\simeq\PP^1$, each mapping isomorphically to a smooth branch line on $S'$, and there is no other ramification.  In characteristic zero, ramification coefficient one gives simple ramification along the generic point of each such curve.  Lemma~\ref{lem:eulerdeficit} therefore applies, including at intersections of distinct branch lines, and gives
+\[
+e(S)=6e(S')-\sum_{a\in A}e(E_a\cap S)
+=6\cdot24-28\cdot2=88,
+\]
+a contradiction.
+\end{proof}
+
+\begin{remark}
+The theorem does not eliminate residual distance $36$ completely.  In the disjoint-net case, the finite normal quadratic target is completely excluded.  Thus the remaining normal outlets are finite cubic targets with positive-dimensional singular locus and nonfinite maps; nonnormal targets remain separate.
+\end{remark}
+
+\subsection{Local obstructions for the degenerate outlets}
+The global map argument deliberately stops once the target becomes nonnormal, nonfinite, or singular in positive dimension.  For those cases it is useful to return to the two original complete intersections and compare their Cayley--Bacharach relations directly.  The next lemmas isolate the resulting saturation defect; they are auxiliary local obstructions rather than part of the degree calculation above.
+
+Put
+\[
+U=A\sqcup B\sqcup C,
+\qquad
+J=I_Z+I_E,
+\qquad
+Q_A=I_A/J.
+\]
+For a zero-dimensional projective scheme $T$ write
+\[
+R_T=S/I_T,
+\qquad
+\omega_T:=\operatorname{Ext}^3_S(R_T,S(-4)),
+\]
+and let $\Rel_T(d)$ denote the space of linear relations among the degree-$d$ evaluation functionals on $T$.
+
+\begin{lemma}[J1: canonical-module gluing]\label{lem:J1}
+There is a natural exact sequence
+\[
+0\to\omega_A\to\omega_Z\oplus\omega_E\to\omega_U\to Q_A^\vee\to0.
+\]
+For degree-eight relation spaces this gives
+\[
+0\to\Rel_A(8)\to k\lambda_Z\oplus k\lambda_E\to\Rel_U(8)\to(Q_A)_8^\vee\to0,
+\]
+where $\lambda_Z$ and $\lambda_E$ are the Jacobian-residue relations of the two $CI(4,4,4)$ schemes.
+\end{lemma}
+
+\begin{proof}
+The scheme-theoretic union/intersection identities give two exact sequences of graded $S$-modules,
+\[
+0\longrightarrow R_U\longrightarrow R_Z\oplus R_E
+\longrightarrow S/J\longrightarrow0
+\]
+and, since $J^{\mathrm{sat}}=I_A$,
+\[
+0\longrightarrow Q_A\longrightarrow S/J\longrightarrow R_A\longrightarrow0.
+\]
+Apply $\operatorname{Ext}^{\bullet}_S(-,S(-4))$.  The coordinate rings of the zero-dimensional projective schemes are one-dimensional Cohen--Macaulay modules, so the lower Ext groups vanish in the required range, while the finite-length module $Q_A$ is converted by graded Matlis duality into $Q_A^\vee$.  Splicing the two resulting long exact sequences gives
+\[
+0\to\omega_A\to\omega_Z\oplus\omega_E\to\omega_U\to Q_A^\vee\to0.
+\]
+
+Because $Z$ and $E$ are $CI(4,4,4)$ schemes, adjunction gives
+\[
+\omega_Z\simeq R_Z(8),
+\qquad
+\omega_E\simeq R_E(8).
+\]
+For a reduced point scheme $T$, local duality identifies the degree $-d$ part of $\omega_T$ with $\Rel_T(d)$.  Moreover the degree-eight relation space of a transverse $CI(4,4,4)$ is one-dimensional and is generated by its Cayley--Bacharach/Jacobian residue vector
+\[
+\lambda_Z(p)=\frac1{J_Z(p)},
+\qquad
+\lambda_E(p)=\frac1{J_E(p)}.
+\]
+Taking degree $-8$ in the canonical-module sequence therefore gives the displayed exact sequence of relation spaces.
+\end{proof}
+
+\begin{lemma}[J2: orientation noncoherence]\label{lem:J2}
+Assume $A$ imposes independent conditions on octics and $D_0:=B\sqcup C$ has a nonzero degree-eight relation.  If the two local Jacobian orientations on $A$ are not globally coherent, then
+\[
+(Q_A)_8\ne0.
+\]
+\end{lemma}
+
+\begin{proof}
+Extension by zero identifies
+\[
+\Rel_{D_0}(8)
+=\ker\bigl(\Rel_U(8)\longrightarrow k^A\bigr).
+\]
+We first justify the orientation normalization.  Choose bases of the two determinant nets and let $Q_Z,Q_E$ be the corresponding nondegenerate ternary quadratic forms whose evaluation on the three quartic entries gives the common octic equation $F_8$.  At $p\in A$, let $L_Z(p)$ and $L_E(p)$ be the $3\times3$ matrices of first jets of these bases; transversality says that they are invertible, and
+\[
+J_Z(p)=\det L_Z(p),
+\qquad
+J_E(p)=\det L_E(p).
+\]
+The quadratic tangent cone of $F_8$ at $p$ is obtained by substituting these first jets into $Q_Z$ or $Q_E$.  Taking determinants of the resulting quadratic forms gives, up to the same universal nonzero convention factor,
+\[
+\det\!\operatorname{Hess}_p(F_8)
+=\det(Q_Z)J_Z(p)^2
+=\det(Q_E)J_E(p)^2.
+\]
+Thus the ratio $J_E(p)^2/J_Z(p)^2=\det(Q_Z)/\det(Q_E)$ is independent of $p$.  Choose $\lambda\in k^\times$ with
+\[
+\lambda^2=\frac{\det(Q_Z)}{\det(Q_E)}.
+\]
+Then at every common point
+\[
+J_E(p)=\varepsilon_p\lambda J_Z(p),
+\qquad
+\varepsilon_p\in\{\pm1\}.
+\]
+Changing either global basis only changes $\lambda$ and possibly all signs simultaneously, so the condition that the signs $\varepsilon_p$ are constant is intrinsic.  Hence a nonzero combination
+\[
+a\lambda_Z+b\lambda_E
+\]
+vanishes on all of $A$ if and only if the signs $\varepsilon_p$ are constant on $A$.  Equivalently,
+\[
+\langle\lambda_Z,\lambda_E\rangle\cap\Rel_{D_0}(8)\ne0
+\]
+if and only if the two orientations are globally coherent.
+
+Now assume they are not coherent and choose $0\ne\rho\in\Rel_{D_0}(8)$.  Since $A$ imposes independent conditions on octics, $\Rel_A(8)=0$.  By Lemma~\ref{lem:J1}, the class of $\rho$ in
+\[
+\Rel_U(8)/\langle\lambda_Z,\lambda_E\rangle\simeq(Q_A)_8^\vee
+\]
+is nonzero.  Therefore $(Q_A)_8\ne0$.
+\end{proof}
+
+\begin{warning}
+Lemma~\ref{lem:J2} is a degree-eight saturation-defect statement.  It does not imply an automatic defect in degrees $\le3$.
+\end{warning}
+
+There is also a bundle-theoretic obstruction that is useful in one regular local-comparison regime.  After cancelling the two Cayley--Bacharach relations on the common block, the remaining degree-eight defect is encoded in the Casnati--Catanese object associated with the presentation.  We use only a specific piece of its Beilinson--Horrocks decomposition.  By a \emph{coupled degree-$0/1$ block} we mean a contribution with multiplicities $n_0,n_1>0$ whose corresponding cohomology sheaf fits into the filtration displayed in the proof below.  The following statement concerns only that configuration and makes no exhaustiveness claim about other Horrocks decompositions.
+
+\begin{theorem}[Coupled Beilinson--Horrocks obstruction]\label{thm:regular}
+A coupled degree-$0/1$ Horrocks block cannot occur in the residual-$36$ comparison, nor in the analogous residual-$40A$ local profile.
+\end{theorem}
+
+\begin{proof}
+Write the $K$-class of the relevant Casnati--Catanese object in the form
+\[
+[\mathcal E]
+=n_0[\Omega^1]+n_1[\Omega^1(-1)]
+ +\sum_{a\ge2}n_a[\mathcal O(-a)],
+\qquad n_0,n_1>0,
+\]
+and put $x_a=4-a$.  After twisting by $\mathcal O(4)$, the determinant degree is four, hence
+\[
+\sum_{a\ge2}x_an_a+8n_0+5n_1=4. \tag{BH1}\label{eq:BH1}
+\]
+The corank-two length gives the cubic Chern-character identity
+\[
+\sum_{a\ge2}x_a^3n_a+44n_0+5n_1
+=\begin{cases}
+10,&\text{for the residual-$36$ / weight-$72$ union},\\
+4,&\text{for the residual-$40A$ / weight-$80$ union}.
+\end{cases} \tag{BH2}\label{eq:BH2}
+\]
+Minimality excludes summands with $a\ge7$.  Subtracting \eqref{eq:BH1} from \eqref{eq:BH2} and collecting the $a=6$ term yields respectively
+\[
+n_6=n_2+6n_0-1
+\qquad\text{or}\qquad
+n_6=n_2+6n_0.
+\]
+Since $n_0\ge1$ and $n_2\ge0$, either of the preceding formulas immediately gives
+\[
+n_6>3n_0. \tag{BH3}\label{eq:BH3}
+\]
+
+On the other hand, the coupled degree-$0/1$ component has a filtration
+\[
+0\longrightarrow\Omega^1(-1)^{\oplus n_1}
+\longrightarrow\mathcal H_\mu
+\longrightarrow\Omega^1{}^{\oplus n_0}
+\longrightarrow0.
+\]
+Because
+\[
+H^0(\Omega^1(1))=H^1(\Omega^1(1))=0,
+\]
+the rows arising from the $\mathcal O(-6)$ summands can pair nontrivially only with the rank-$3n_0$ quotient supplied by $\Omega^1{}^{\oplus n_0}$.  Nondegeneracy of the symmetric presentation therefore requires
+\[
+n_6\le3n_0,
+\]
+contradicting \eqref{eq:BH3}.  Hence no genuinely coupled degree-$0/1$ block occurs.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:regular} is used only as a standalone obstruction to the genuinely coupled degree-$0/1$ block.  No exhaustiveness statement for all Horrocks decompositions is needed or claimed in this paper.
+\end{remark}
+
+\iffalse
+% Supplementary QT/Smith material is retained in the source for research use
+% but omitted from the submission text; see SUPPLEMENTARY_QT_SMITH_STATUS_2026-08-09.md.
+\section{A conditional QT identity inside residual distance $36$}\label{sec:QT}
+This section is supplementary to the global argument.  It isolates one nonregular residual-$36$ configuration and proves a conditional comparison identity, but it is not intended to close the residual-$36$ branch.  Assume that $X$ is normal, connected, projective, and integral.  Let
+\[
+M,N\in\Sym_2(S_4),\qquad \det M=\det N=F_8,
+\]
+and suppose the comparison is governed by an irreducible quartic Smith carrier
+\[
+T=(\tau=0).
+\]
+Let $L_M=\operatorname{coker}(M)$ and $L_N=\operatorname{coker}(N)$ on $X$.
+
+\subsection{Canonical self-duality}
+For classes $\bar u,\bar v\in L_M$, define
+\[
+q_M(\bar u,\bar v)=u^t\adj(M)v\pmod F.
+\]
+Since $M\adj(M)=FI_2$, the expression is independent of the chosen lifts.  On the smooth locus of $X$ it is nondegenerate, hence by reflexive extension gives
+\[
+L_M\simeq L_M^\vee(4),
+\]
+and similarly for $N$.
+
+Suppose now that the Smith-border comparison produces:
+\begin{enumerate}[label=(\roman*)]
+\item a morphism $\sigma:L_M(-2)\to L_N$, equivalently a global half-section $s$ of the relative rank-one reflexive sheaf;
+\item the Weil divisor relation
+\[
+2\divi(s)=\divi(\tau|_X);
+\]
+\item a quadratic free lift $Q\in\operatorname{Mat}_2(S_2)$ with
+\[
+\det Q=\tau.
+\]
+\end{enumerate}
+
+\begin{theorem}[QT-lift]\label{thm:QT}
+Under the preceding assumptions, after replacing $N$ by $-N$ if necessary,
+\[
+\boxed{\tau N=QMQ^t},
+\qquad
+\boxed{QM=N\adj(Q)^t}.
+\]
+In particular, compatibility with the canonical linking forms follows from the square-divisor relation and is not an additional hypothesis.
+\end{theorem}
+
+\begin{proof}
+The canonical self-dualities identify the square of the relative half-section with a section of $\cO_X(4)$.  Its divisor is $\divi(\tau|_X)$, so the quotient by $\tau|_X$ is a nowhere-vanishing regular function on the normal projective integral surface $X$.  Hence
+\[
+s^{[2]}=c\,\tau|_X
+\]
+for some $c\in k^\times$.  Equivalently, in the canonical function-field linking forms,
+\[
+\lambda_N(\sigma u,\sigma v)=c\tau\lambda_M(u,v).
+\]
+Because $Q$ is a free lift of the same morphism $\sigma$, the difference of the two rational matrices represents the zero pairing on the cokernels and therefore has no pole along $F=0$:
+\[
+Q^tN^{-1}Q-c\tau M^{-1}\in\operatorname{Mat}_2(S).
+\]
+Both terms are homogeneous of total degree zero, since $2-4+2=0$ and $4-4=0$.  The difference is symmetric, so there is a constant matrix $H\in\Sym_2(k)$ such that
+\[
+Q^tN^{-1}Q=c\tau M^{-1}+H.
+\]
+
+Clearing denominators gives
+\[
+Q^t\adj(N)Q=c\tau\adj(M)+FH.
+\]
+Since $X$ is integral and $T$ has degree four, $F$ and $\tau$ are coprime.  Restrict the cleared identity to the generic point of the irreducible quartic $T$.  There $F\ne0$, $\adj(N)$ is invertible, and $Q$ has rank one because $\det Q=\tau$.  Thus
+\[
+Q^t\adj(N)Q=FH
+\quad\text{on }T
+\]
+shows $\rank H\le1$.  If $H\ne0$, then $H$ has rank one; choose a nonzero constant vector $k\in\ker H$.  The left-hand side is then a nonzero rank-one matrix on a dense open subset of $T$, and for rank-one $Q$ with invertible $A=\adj(N)$ one has
+\[
+\ker(Q^tAQ)=\ker Q.
+\]
+Hence $Qk=0$ on a dense open subset of $T$.  Its two entries are homogeneous quadrics.  Because $T$ is an irreducible quartic hypersurface, a quadric vanishing identically on $T$ must be zero.  Therefore $Qk\equiv0$ globally, so $Q$ has a constant kernel and $\det Q\equiv0$, contradicting $\det Q=\tau\ne0$.  Thus $H=0$.
+
+Taking determinants gives $c^2=1$.  Replacing $N$ by $-N$ changes the sign of the quadratic form but not its determinant, so we may take $c=1$.  Inverting the resulting equality yields
+\[
+\tau N=QMQ^t.
+\]
+Multiplication by $\adj(Q)^t$ gives the second identity.
+\end{proof}
+
+\subsection{The auxiliary quadric}
+For the Smith-border outlet we use the symmetric form of the quadratic lift.  Write
+\[
+M=\begin{pmatrix}x&y\\y&z\end{pmatrix},
+\qquad
+Q=\begin{pmatrix}a&b\\b&c\end{pmatrix},
+\qquad
+\tau=\det Q=ac-b^2.
+\]
+The elementary $2\times2$ identity
+\[
+QMQ+\tau\adj(M)=\operatorname{tr}(QM)Q \tag{Q1}\label{eq:Q1}
+\]
+combined with $\tau N=QMQ$ shows that $\tau$ divides $\operatorname{tr}(QM)$.  Indeed, modulo the prime ideal $(\tau)$ the matrix $Q$ has generic rank one and is nonzero, while the left-hand side $QMQ$ vanishes by QT.  Since $\operatorname{tr}(QM)$ has degree six, there is a unique quadratic form $h$ such that
+\[
+ax+2by+cz=h\tau. \tag{Q2}\label{eq:Q2}
+\]
+Substitution into \eqref{eq:Q1} gives the strict polynomial identity
+\[
+N=hQ-\adj(M). \tag{Q3}\label{eq:Q3}
+\]
+If $h=0$, then $N=-\adj(M)$ and the two corank-two schemes coincide, which is incompatible with the residual-$36$ configuration.  Hence $h\ne0$.  We call
+\[
+H=(h=0)
+\]
+the auxiliary quadric.
+
+\begin{conditional}[Exclusion of a normal nodal quartic Smith carrier]\label{thm:smith}
+Assume that two transverse weight-$64$ presentations $M,N$ are in the residual-$36$ configuration, so their corank-two schemes $W_M,W_N$ meet in a reduced set
+\[
+A=W_M\cap W_N,
+\qquad |A|=28,
+\]
+and their residual symmetric difference
+\[
+R=(W_M\setminus A)\sqcup(W_N\setminus A)
+\]
+has length $72$.  Assume that the nonregular Smith carrier $T=(\tau=0)$ is irreducible, normal, and has only ordinary nodes.  Assume further that the Smith-border construction supplies the three inputs of Theorem~\ref{thm:QT} and its bordered matrix $\Psi$ whose corank-two scheme is $R$, with a symmetric quadratic lift $Q$ for which
+\[
+\Delta:=V(a,b,c)
+\]
+is a reduced transverse eight-point scheme.  Then the configuration does not exist.
+\end{conditional}
+
+\begin{proof}
+We divide the argument into four steps.
+
+\emph{Step 1: separation from the Smith-node scheme.}
+Fix $p\in\Delta$ and let $\mathfrak m$ be its local maximal ideal.  Since $p$ is an ordinary node of the quartic carrier,
+\[
+Q\in\mathfrak m,
+\qquad
+\tau\in\mathfrak m^2\setminus\mathfrak m^3.
+\]
+Suppose first that $p\in W_M\setminus W_N$.  Then $M\in\mathfrak m$ while $N(p)$ has rank one.  Hence
+\[
+\operatorname{ord}_{\mathfrak m}(\tau N)=2,
+\qquad
+\operatorname{ord}_{\mathfrak m}(QMQ^t)\ge3,
+\]
+contradicting QT.  If instead $p\in W_N\setminus W_M$, then the left-hand side $\tau N$ has order at least three, whereas the quadratic initial term of $QMQ^t$ is
+\[
+Q_1M(p)Q_1^t.
+\]
+Write the rank-one symmetric matrix $M(p)$ as $vv^t$.  Because $\det Q_1$ is the nondegenerate quadratic initial form of $\tau$, the vector $Q_1v$ cannot vanish identically; hence the displayed quadratic initial term is nonzero.  This is again a contradiction.  Since the residual scheme $R$ is precisely the corank-two scheme of the bordered comparison matrix away from the common block, we obtain
+\[
+\Delta\cap R=\varnothing. \tag{Q4}\label{eq:Q4}
+\]
+
+We next show $\Delta\cap\operatorname{Sing}X=\varnothing$.  At $p\in\Delta$ the bordered matrix $\Psi$ supplied by the Smith-border construction has $a=b=c=0$.  Write $a_1,b_1,c_1$ for their linear parts and $u,v$ for the two border entries.  Since $da,db,dc$ are linearly independent, the linear part of $F=\det\Psi$ is
+\[
+c_1u(p)^2-2b_1u(p)v(p)+a_1v(p)^2.
+\]
+If $p$ were singular on $X$, this linear form would vanish identically.  Independence of $a_1,b_1,c_1$ then forces
+\[
+u(p)=v(p)=0.
+\]
+Thus $\Psi(p)$ would have rank at most one, putting $p$ in its corank-two scheme $R$, contrary to \eqref{eq:Q4}.  Therefore
+\[
+\Delta\cap\operatorname{Sing}X=\varnothing. \tag{Q5}\label{eq:Q5}
+\]
+In particular $A\cap\Delta=\varnothing$.
+
+\emph{Step 2: the common $28$ points lie on the auxiliary quadric.}
+At $p\in A$ both $M(p)$ and $N(p)$ vanish.  Equation \eqref{eq:Q3} gives
+\[
+h(p)Q(p)=0.
+\]
+By \eqref{eq:Q5}, $p\notin\Delta$ and hence $Q(p)\ne0$, so $h(p)=0$.  Thus $A\subset H$.  Conversely, if $p\in W_M\cap H$, then \eqref{eq:Q3} gives
+\[
+N(p)=-\adj(M(p))=0,
+\]
+so $p\in W_N$.  Since $W_M$ and $W_N$ are reduced transverse complete intersections, this gives the scheme-theoretic equality
+\[
+W_M\cap H=A=W_N\cap H. \tag{Q6}\label{eq:Q6}
+\]
+On $H$ one has $N=-\adj(M)$; adjugation is a linear involution on the three-dimensional space of symmetric $2\times2$ entries.  Hence the two quartic nets restrict to the same three-dimensional system on $H$.
+
+\emph{Step 3: smooth and reducible auxiliary quadrics.}
+Suppose first that $H\simeq\PP^1\times\PP^1$ is smooth.  The three restricted quartic entries are sections of $\cO_H(4,4)$ with zero-dimensional base scheme exactly $A$; a base curve would make $F$ singular along that curve.  Let $\mathcal K$ be the kernel in
+\[
+0\longrightarrow\mathcal K\longrightarrow\cO_H^{\oplus3}
+\longrightarrow\cI_{A,H}(4,4)\longrightarrow0. \tag{Q7}\label{eq:Q7}
+\]
+Then
+\[
+c_1(\mathcal K)=(-4,-4),
+\qquad
+c_2(\mathcal K)=(4,4)^2-|A|=32-28=4.
+\]
+Thus the discriminant is
+\[
+4c_2-c_1^2=16-32=-16<0,
+\]
+so $\mathcal K$ is unstable.  Let $\cO_H(-r,-s)$ be a saturated destabilizing line subbundle.  Since it maps to the trivial rank-three bundle, $r,s\ge0$, while the slope inequality gives $r+s<4$.  Writing the quotient as $\cI_Z(r-4,s-4)$ and comparing $c_2$ gives
+\[
+4=4r+4s-2rs+|Z|. \tag{Q8}\label{eq:Q8}
+\]
+The case $(r,s)=(0,0)$ would be a constant syzygy among the three quartic entries and is excluded by minimality.  Equation \eqref{eq:Q8} leaves only $(r,s)=(1,0)$ or $(0,1)$, with $Z=\varnothing$.  In the first case the extension class lies in
+\[
+\operatorname{Ext}^1_H\!\bigl(\cO_H(-3,-4),\cO_H(-1,0)\bigr)
+=H^1\bigl(H,\cO_H(2,4)\bigr)=0,
+\]
+and the other ruling is symmetric.  Hence, up to exchanging the two rulings,
+\[
+\mathcal K\simeq\cO_H(-1,0)\oplus\cO_H(-3,-4). \tag{Q9}\label{eq:Q9}
+\]
+Restricting the trace relation \eqref{eq:Q2} to $H$ gives a syzygy
+\[
+(a,2b,c)|_H\in H^0(H,\mathcal K(2,2)).
+\]
+Under \eqref{eq:Q9}, the second summand has no section after twisting by $(2,2)$.  Therefore
+\[
+(a,2b,c)|_H=\rho(\ell_1,\ell_2,\ell_3)
+\]
+with a nonconstant section $\rho$ of type $(1,2)$ (or $(2,1)$ after exchanging rulings).  Along the curve $(\rho=0)$ all of $a,b,c$ vanish, so
+\[
+\tau=ac-b^2,
+\qquad d\tau=c\,da+a\,dc-2b\,db
+\]
+vanish there.  The quartic carrier is singular along a curve, contradicting normality and the assumption of isolated nodes.
+
+Now suppose $H=P_1\cup P_2$ is the union of two planes.  Put $r_i=|A\cap P_i|$, counting points on the intersection line on both sides if necessary.  Since $r_1+r_2\ge28$, one plane contains at least $14$ points.  On such a plane $P$ the kernel sequence is
+\[
+0\to\mathcal K_P\to\cO_P^{\oplus3}
+\to\cI_{A\cap P,P}(4)\to0,
+\]
+so
+\[
+c_1(\mathcal K_P)=-4,
+\qquad c_2(\mathcal K_P)=16-r\le2.
+\]
+Negative discriminant gives a destabilizing $\cO_P(-d)$ with $d<2$.  The case $d=0$ is again a constant syzygy, hence $d=1$.  The quotient is $\cI_Z(-3)$, and Chern classes give
+\[
+c_2(\mathcal K_P)=3+|Z|\ge3,
+\]
+a contradiction.  If $H=2P$ is a double plane, all $28$ base points lie on $P$ and the same calculation gives
+\[
+c_2(\mathcal K_P)=16-28=-12,
+\]
+whereas every nonconstant destabilizing possibility gives $c_2\ge3$.  Hence neither reducible rank-two case occurs.
+
+\emph{Step 4: the quadric cone.}
+Let $H$ be a rank-three quadric cone and let
+\[
+\pi:\mathbb F_2\to H
+\]
+be its minimal resolution.  Write $C_0^2=-2$, let $f$ be a ruling fibre, and put
+\[
+L=C_0+2f,
+\qquad L^2=2.
+\]
+If the vertex does not belong to $A$, the pullback net has no common exceptional component and
+\[
+0\to\mathcal K\to\cO_{\mathbb F_2}^{\oplus3}
+\to\cI_A(4L)\to0,
+\]
+with
+\[
+c_1(\mathcal K)=-4L,
+\qquad c_2(\mathcal K)=16L^2-28=4.
+\]
+Using a polarization $L+\varepsilon f$ and letting $\varepsilon>0$ be sufficiently small, the negative discriminant forces a saturated line subbundle
+\[
+\cO_{\mathbb F_2}(-aC_0-bf)\hookrightarrow\mathcal K,
+\qquad a,b\ge0.
+\]
+Writing the quotient as an ideal sheaf twist and comparing the slope and $c_2$ leaves, apart from the constant-syzygy case, exactly
+\[
+(a,b,|Z|)=(0,1,0),\qquad(1,0,2),\qquad(1,1,0).
+\]
+For all three possibilities, after twisting by $2L$ the complementary quotient has no global section.  Hence the trace syzygy must lie in the destabilizing line and its three components acquire a common nonconstant factor.  As in the smooth case, $T$ is then singular along a curve.
+
+If the cone vertex belongs to $A$, transversality makes all three quartic entries vanish exactly once along the exceptional curve $C_0$.  Removing this common component leaves three sections of
+\[
+4L-C_0=3C_0+8f
+\]
+with residual base length $27$.  The new kernel has
+\[
+c_1=-(3C_0+8f),
+\qquad
+c_2=(3C_0+8f)^2-27=30-27=3.
+\]
+The same perturbed-slope analysis leaves only the nonconstant destabilizing type $\cO(-f)$.  Again the quotient has no section after the trace twist, so $(a,2b,c)$ has a common curve factor and $T$ is nonnormal.  This contradiction excludes the cone.
+
+Every possible rank of the nonzero auxiliary quadric $H$ has now been excluded, proving the theorem.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:smith} is deliberately conditional only at the Smith-border construction.  It does not cover reducible, nonnormal, multicomponent, or embedded Smith divisors, and it does not prove exhaustiveness of the residual-$36$ nonregular outlets.
+\end{remark}
+
+\fi
+
+\section{Weight 48: contact quadrics and the 48/64 trade-off}\label{sec:w48}
+The geometry at weight $48$ is different from the determinant geometry at weight $64$.  Endra\ss' theorem associates to a minimum weight-$48$ even set a unique reduced contact quadric: along that quadric the octic equation becomes a square modulo the quadric equation.  Thus the basic geometric object is now a contact surface rather than a net of quartics.  The coding argument below shows why this branch still interacts strongly with weight $64$: if there are not many contact quadrics, the MacWilliams identity forces many weight-$64$ determinant presentations instead.
+
+Assume in this section that $d(C)=48$.  We use Endra\ss' minimal-even-set theorem~\cite{EndrassMinimal}: a weight-$48$ strict even set is cut by a unique reduced contact quadric.
+
+Fix a weight-$48$ word $c$.  Restriction outside $\supp(c)$ induces
+\[
+C/\langle c\rangle\hookrightarrow\F_2^{121}.
+\]
+Indeed, if a kernel class has a representative supported in $\supp(c)$, then its weight is at most $48$; the minimum-distance assumption forces every nonzero such representative to equal $c$, hence the class is zero.  Therefore
+\[
+R=\Res(C;c)=[121,18].
+\]
+For a residual word of weight $r$, choose the lift with overlap $a\le24$.  Its two lifts have weights
+\[
+r+a,
+\qquad
+r+48-a.
+\]
+Both are multiples of $8$, so $R$ is $4$-divisible.  Both nonzero lifts have weight at least $48$, which gives $r\ge24$ and hence $d(R)\ge24$.
+
+\begin{proposition}[First residual bound]\label{prop:w48res}
+The polynomial
+\[
+P_{48}(r)=-(r-52)(r-60)(r-64)(r-72)(r-76)
+\]
+has the Krawtchouk expansion on length $121$
+\[
+P_{48}
+=9885K_0+4635K_1+1079K_2+225K_3
+ +\frac{129}{4}K_4+\frac{15}{4}K_5,
+\]
+so all Krawtchouk coefficients are nonnegative.  The residual code satisfies
+\[
+24\le d(R)\le48.
+\]
+\end{proposition}
+
+\begin{proof}
+The lower bound was proved above.  Suppose $d(R)\ge52$.  Since $R$ is $4$-divisible, every nonzero residual weight belongs to
+\[
+52,56,60,\ldots,120.
+\]
+The displayed factorization shows directly that
+\[
+P_{48}(r)\le0
+\]
+on this entire set.  MacWilliams' identities and the nonnegative Krawtchouk coefficients give
+\[
+\begin{aligned}
+\frac1{|R|}\sum_{y\in R}P_{48}(\wt y)
+={}&9885+4635A_1(R^\perp)+1079A_2(R^\perp)\\
+&+225A_3(R^\perp)+\frac{129}{4}A_4(R^\perp)
+ +\frac{15}{4}A_5(R^\perp)\\
+\ge{}&9885.
+\end{aligned}
+\]
+But the sign pattern implies that only the zero word can contribute positively, and
+\[
+P_{48}(0)=1\,092\,648\,960.
+\]
+Since $|R|=2^{18}$,
+\[
+\frac1{|R|}\sum_{y\in R}P_{48}(\wt y)
+\le\frac{1\,092\,648\,960}{2^{18}}
+=4168.125,
+\]
+a contradiction.  Thus $d(R)\le48$.
+\end{proof}
+
+To enumerate the minimum lift pair, the degree-$8$ strict gap from Endra\ss excludes weight $56$ but does not exclude $88,96,104,112$.  Thus the relevant global lift weights are
+\[
+\mathcal W_{48}^{\mathrm{lift}}
+=\{0,48,64,72,80,88,96,104,112,120,128,136,144,152,160,168\}.
+\]
+Combining this with $24\le r\le48$, $0\le a\le24$, and
+\[
+w_1=r+a,\qquad w_2=r+48-a
+\]
+gives, by a finite exact enumeration, precisely the ten minimum profiles
+\[
+\begin{array}{c|c|c}
+r&a&(\wt x,\wt(x+c))\\\hline
+24&24&(48,48)\\
+32&16&(48,64)\\
+36&12&(48,72)\\
+40&8&(48,80)\\
+40&24&(64,64)\\
+44&4&(48,88)\\
+44&20&(64,72)\\
+48&0&(48,96)\\
+48&16&(64,80)\\
+48&24&(72,72).
+\end{array}
+\]
+
+The ordinary and two-block split MacWilliams relaxations do not force $A_{48}>1$ once the complete octic weight set is used.  The correct global replacement for a direct minimum-word abundance theorem is the following exact trade-off with weight $64$.
+
+\begin{theorem}[The $48/64$ trade-off]\label{thm:trade4864}
+For the shortened strict octic code $C\subset\F_2^{169}$ of dimension $19$ in the minimum-distance-$48$ branch,
+\[
+\boxed{A_{64}+21A_{48}\ge533.}
+\]
+More precisely,
+\[
+\begin{aligned}
+A_{64}+21A_{48}
+={}&533+A_{112}+6A_{120}+21A_{128}+56A_{136}\\
+&+126A_{144}+252A_{152}+462A_{160}+792A_{168}\\
+&+2^{19}\sum_{j=1}^5
+\frac{\mu_j}{\binom{169}{j}}A_j(C^\perp),
+\end{aligned}
+\]
+where the positive coefficients $\mu_j$ are those of Theorem~\ref{thm:A64}.
+\end{theorem}
+
+\begin{proof}
+Use the same degree-five polynomial $P$ as in Theorem~\ref{thm:A64}.  On the complete strict octic spectrum
+\[
+0,48,64,72,80,88,96,104,112,120,128,136,144,152,160,168
+\]
+its exact values are
+\[
+1287,21,1,0,0,0,0,0,-1,-6,-21,-56,-126,-252,-462,-792.
+\]
+MacWilliams averaging gives
+\[
+\frac1{|C|}\sum_{c\in C}P(\wt c)
+=\lambda+\sum_{j=1}^5\frac{\mu_j}{\binom{169}{j}}A_j(C^\perp),
+\]
+with $|C|=2^{19}$ and $2^{19}\lambda=1820$.  Rearranging yields the displayed identity.  Every term after $533$ is nonnegative.
+\end{proof}
+
+\begin{corollary}[Global pair classification in the weight-$48$ branch]\label{cor:w48pairs}
+Put $M=A_{48}$.  Then:
+\begin{enumerate}[label=(\roman*)]
+\item if $M\ge22$, two weight-$48$ words meet in $16$ or $24$ coordinates;
+\item if $18\le M\le21$, two weight-$64$ words meet in $24$, $28$, $32$, or $40$ coordinates;
+\item if $M\le17$, two weight-$64$ words meet in $28$, $32$, or $40$ coordinates.
+\end{enumerate}
+Every weight-$64$ word in (ii) and (iii) is a reduced transverse $CI(4,4,4)$ with a symmetric determinant presentation by Theorem~\ref{thm:det64}.
+\end{corollary}
+
+\begin{proof}
+For (i), choose $22$ weight-$48$ supports.  Their total point-word incidence is $22\cdot48=1056$.  Convexity gives
+\[
+\sum_{W<W'}|W\cap W'|
+\ge127\binom62+42\binom72
+=2787.
+\]
+If every pair met in at most $12$ coordinates, the left side would be at most
+\[
+12\binom{22}{2}=2772,
+\]
+a contradiction.  For two distinct weight-$48$ words,
+\[
+\wt(W+W')=96-2|W\cap W'|.
+\]
+Minimum distance $48$, $8$-divisibility, and the strict octic exclusion of weight $56$ therefore leave
+\[
+|W\cap W'|\in\{0,4,8,12,16,24\},
+\]
+proving (i).
+
+If $M\le21$, Theorem~\ref{thm:trade4864} gives $A_{64}\ge92$.  Choose $92$ weight-$64$ supports.  Their total incidence is $5888$, and convexity gives
+\[
+\sum_{Z<Z'}|Z\cap Z'|
+\ge27\binom{34}{2}+142\binom{35}{2}
+=99637.
+\]
+This exceeds $20\binom{92}{2}$, so some pair meets in at least $24$ coordinates.  Since
+\[
+\wt(Z+Z')=128-2|Z\cap Z'|
+\]
+and the global minimum is $48$, the possible intersections at least $24$ are
+\[
+24,28,32,40;
+\]
+the value $36$ would give the forbidden strict weight $56$.  This proves (ii).
+
+If $M\le17$, then $A_{64}\ge176$.  For $176$ weight-$64$ supports, convexity gives
+\[
+\sum_{Z<Z'}|Z\cap Z'|
+\ge59\binom{66}{2}+110\binom{67}{2}
+=369765
+>24\binom{176}{2}=369600.
+\]
+Thus some pair meets in more than $24$ coordinates, and the same discrete list leaves only $28,32,40$.
+\end{proof}
+
+\begin{remark}[The isolated-$48$ extreme]\label{rem:isolated48}
+If $A_{48}=1$, then Theorem~\ref{thm:trade4864} gives $A_{64}\ge512$.  For any $512$ weight-$64$ supports, convexity gives
+\[
+\sum_{Z<Z'}|Z\cap Z'|
+\ge18\binom{193}{2}+151\binom{194}{2}
+=3\,160\,375.
+\]
+The excess over the baseline $24\binom{512}{2}=3\,139\,584$ is $20\,791$.  A pair with intersection at least $28$ contributes at most $40-24=16$ to this excess, while all other pairs contribute at most zero.  Hence at least
+\[
+\left\lceil\frac{20\,791}{16}\right\rceil=1300
+\]
+unordered pairs meet in at least $28$ coordinates.  Therefore some weight-$64$ determinant presentation has at least six such neighbours.  Thus an isolated weight-$48$ word is not an unstructured outlet.
+\end{remark}
+
+\begin{theorem}[Intersection theorem for contact quadrics]\label{thm:contact48}
+Let $W,W'$ be distinct weight-$48$ strict even sets, and let $Q,Q'$ be their unique reduced contact quadrics.  If $Q$ and $Q'$ have no common plane component, then
+\[
+|W\cap W'|\le16.
+\]
+In particular, an intersection of size $24$ forces a common plane component.
+\end{theorem}
+
+\begin{proof}
+Write the two contact presentations as
+\[
+F=A^2+qB=A'^2+q'B',
+\qquad
+\deg A=\deg A'=4,
+\qquad
+\deg B=\deg B'=6,
+\]
+where $Q=(q=0)$ and $Q'=(q'=0)$.  Since the reduced quadrics are distinct and have no common plane component, $q$ and $q'$ are coprime and
+\[
+C:=Q\cap Q'
+\]
+is a scheme-theoretic complete intersection of total degree four.
+
+Let $\Gamma$ be an irreducible component of $C_{\mathrm{red}}$, of degree $e_\Gamma$, and let $m_\Gamma$ be its multiplicity in $C$.  Every point of $W\cap W'$ lying on $\Gamma$ satisfies
+\[
+q=q'=A=A'=0.
+\]
+There are two cases.
+
+If $A|_\Gamma\not\equiv0$, the common nodes on $\Gamma$ are among the zeros of the quartic $A|_\Gamma$.  Hence there are at most
+\[
+4e_\Gamma
+\]
+such nodes.
+
+Suppose instead that $A|_\Gamma\equiv0$.  Then $\Gamma\subset X$.  At a general point of $\Gamma$ the differential of the contact equation gives
+\[
+dF=B\,dq=B'\,dq'. \tag{W1}\label{eq:W1}
+\]
+If $dq$ and $dq'$ were generically linearly independent, \eqref{eq:W1} would force $B=B'=0$, hence $dF=0$ along the whole component, contradicting the isolated singularities of $X$.  Therefore $dq$ and $dq'$ are generically dependent along $\Gamma$, so
+\[
+m_\Gamma\ge2.
+\]
+Moreover $dq$ cannot vanish generically on $\Gamma$: for a reduced quadric this can happen only along the singular line of a union of two planes, and then $q=A=dq=0$ would again force $dF=0$ along that line.  Thus the singular points of $X$ lying on $\Gamma$ are cut out by
+\[
+B|_\Gamma=0.
+\]
+Since $B$ is a sextic, this contributes at most
+\[
+6e_\Gamma
+\]
+common nodes.
+
+Let $E_1$ be the sum of the reduced degrees of the first type of components and $E_2$ the corresponding sum for the second type.  The second type occurs with multiplicity at least two in the complete intersection $C$, so
+\[
+E_1+2E_2\le4.
+\]
+Consequently
+\[
+|W\cap W'|
+\le4E_1+6E_2
+=4(E_1+2E_2)-2E_2
+\le16.
+\]
+\end{proof}
+
+\section{Consequences for u(8) and remaining cases}\label{sec:open}
+The initial coding reduction shows that any counterexample to $u(8)=168$ must have strict-code minimum weight $48$, $64$, or $72$.  Section~\ref{sec:w72} eliminates the weight-$72$ branch.  Thus only the weight-$64$ and weight-$48$ branches remain.
+
+In the minimum-weight-$64$ branch, Theorems~\ref{thm:A64} and~\ref{thm:incidence} bypass the local $40A/40B$ profiles: at least $533$ symmetric determinant presentations coexist, and one may choose a base presentation with residual distance
+\[
+\boxed{32\text{ or }36}.
+\]
+The residual-$32$ analysis proves the common-pencil bound and excludes the full $k=1$ comparison, leaving the $k=0$ six-quartic low-rank compatibility.  At residual distance $36$, Theorem~\ref{thm:r36global} excludes the finite normal quadratic target and the finite cubic target with isolated singularities; the remaining outlets are finite cubic targets with positive-dimensional singular locus, nonfinite maps, and nonnormal targets.
+
+In the minimum-weight-$48$ branch, the same degree-five MacWilliams polynomial yields
+\[
+A_{64}+21A_{48}\ge533,
+\]
+so the global geometry is forced toward either multiple contact quadrics or many weight-$64$ determinant presentations.  The remaining pair geometries are those left by Theorem~\ref{thm:trade4864}, Corollary~\ref{cor:w48pairs}, and Theorem~\ref{thm:contact48}.
+
+Consequently, proving that these residual-$32$, residual-$36$, and weight-$48$ configurations cannot occur would establish $u(8)\le168$, and hence $u(8)=168$ together with Endra\ss' construction.  The present paper supplies the reductions and exclusions above but does not complete this final step.
+
+\appendix
+\section{Exact finite certificates}\label{app:cert}
+All finite certificates used in the paper are exact integer computations; no floating-point decisions are involved.
+
+\subsection{Weight 72}
+For each allowed residual weight $r$ and overlap $a$, compute the two lift weights
+\[
+w_1=r+a,
+\qquad
+w_2=r+72-a,
+\]
+and evaluate the polynomial $P_{72}$ of Proposition~\ref{prop:cert72}.  The zero state has value
+\[
+P_{72}(0,0)=1\,349\,517\,312.
+\]
+For each nonzero residual weight, maximize over all allowed overlaps $a$.  The exact normalized maxima are
+\[
+\begin{array}{c|rrrrrrrr}
+r&36&40&44&48&52&56&60&64\\\hline
+2^{-20}\max_a P_{72}(r,a)&0&0&0&0&0&0&0&0
+\end{array}
+\]
+and
+\[
+\begin{array}{c|rrrrrrrr}
+r&68&72&76&80&84&88&92&96\\\hline
+2^{-20}\max_a P_{72}(r,a)&0&-1&-2&-7&-12&-27&-42&-77.
+\end{array}
+\]
+Thus all $60$ nonzero allowed states are nonpositive.
+
+\subsection{Weight 64 residual}
+For
+\[
+P_R(w)=4480+3008K_1+748K_2+212K_3+27K_4+5K_5
+\]
+on length $105$, the exact values on the allowed nonzero $4$-divisible weights $w\ge44$ are
+\[
+\begin{array}{c|rrrrrrrr}
+w&44&48&52&56&60&64&68&72\\\hline
+P_R(w)&0&-32768&0&0&0&0&-196608&-1146880
+\end{array}
+\]
+and
+\[
+\begin{array}{c|rrrr}
+w&76&80&84&88\\\hline
+P_R(w)&-3932160&-10321920&-22937600&-45416448
+\end{array}
+\]
+and
+\[
+\begin{array}{c|rrrr}
+w&92&96&100&104\\\hline
+P_R(w)&-82575360&-140574720&-227082240&-351436800.
+\end{array}
+\]
+In particular every such value is nonpositive, while
+\[
+P_R(0)=656\,015\,360.
+\]
+This is the exact certificate used to exclude residual minimum distance at least $44$.
+
+\subsection{Weight 48}
+For the first residual, the polynomial
+\[
+-(r-52)(r-60)(r-64)(r-72)(r-76)
+\]
+has the nonnegative Krawtchouk expansion displayed in Proposition~\ref{prop:w48res}.  Exact evaluation gives
+\[
+P_{48}(0)=1\,092\,648\,960,
+\qquad
+\frac{P_{48}(0)}{2^{18}}=4168.125<9885,
+\]
+which is the finite certificate used in the proof.
+
+\subsection{Supplementary computational verification}
+The three split-MacWilliams certificates used in Theorem~\ref{thm:triangle-highweights}, together with the finite Hilbert-vector and liaison checks used in the residual-triangle analysis, are supplied in machine-readable form with independent verifier scripts.  The accompanying supplementary manifest records the precise theorem-to-script correspondence and SHA-256 identifiers.  All submission-level verifiers use exact integer or rational arithmetic; exploratory computations not used in the proofs are explicitly separated from the submission test suite.
+
+\begin{thebibliography}{99}
+\bibitem{BeauvilleMax}
+A. Beauville,
+\emph{Sur le nombre maximum de points doubles d'une surface dans $\PP^3$ ($\mu(5)=31$)},
+in Journ\'ees de G\'eom\'etrie Alg\'ebrique d'Angers, Juillet 1979, Sijthoff \& Noordhoff, Alphen aan den Rijn, 1980, 207--215.
+
+\bibitem{CC}
+G. Casnati and F. Catanese,
+\emph{Even sets of nodes are bundle symmetric},
+J. Differential Geom. \textbf{47} (1997), 237--256; Erratum \textbf{50} (1998), 415.
+
+\bibitem{CataneseBabbage}
+F. Catanese,
+\emph{Babbage's conjecture, contact of surfaces, symmetric determinantal varieties and applications},
+Invent. Math. \textbf{63} (1981), 433--466.
+
+\bibitem{CataneseTonoli}
+F. Catanese and F. Tonoli,
+\emph{Even sets of nodes on sextic surfaces},
+J. Eur. Math. Soc. (JEMS) \textbf{9} (2007), 705--737.
+
+\bibitem{Endrass168}
+S. Endra\ss,
+\emph{A projective surface of degree eight with 168 nodes},
+J. Algebraic Geom. \textbf{6} (1997), 325--334.
+
+\bibitem{EndrassMinimal}
+S. Endra\ss,
+\emph{Minimal even sets of nodes},
+J. Reine Angew. Math. \textbf{503} (1998), 87--108.
+
+\bibitem{EndrassDouble}
+S. Endra\ss,
+\emph{On the divisor class group of double solids},
+Manuscripta Math. \textbf{99} (1999), 341--358.
+
+\bibitem{JaffeRuberman}
+D. B. Jaffe and D. Ruberman,
+\emph{A sextic surface cannot have $66$ nodes},
+J. Algebraic Geom. \textbf{6} (1997), 151--168.
+
+\bibitem{MacWilliamsSloane}
+F. J. MacWilliams and N. J. A. Sloane,
+\emph{The Theory of Error-Correcting Codes},
+North-Holland, Amsterdam, 1977.
+
+\bibitem{Migliore}
+J. C. Migliore,
+\emph{Introduction to Liaison Theory and Deficiency Modules},
+Progress in Mathematics, vol.~165, Birkh\"auser Boston, Boston, MA, 1998.
+
+\bibitem{Miyaoka}
+Y. Miyaoka,
+\emph{The maximal number of quotient singularities on surfaces with given numerical invariants},
+Math. Ann. \textbf{268} (1984), 159--171.
+
+\bibitem{StanleyHilbert}
+R. P. Stanley,
+\emph{Hilbert functions of graded algebras},
+Adv. Math. \textbf{28} (1978), 57--83.
+\end{thebibliography}
+
+\end{document}

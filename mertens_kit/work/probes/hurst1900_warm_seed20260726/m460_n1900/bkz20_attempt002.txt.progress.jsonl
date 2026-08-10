@@ -1,0 +1,5 @@
+{"cpu_seconds": null, "elapsed_seconds": 8.121899918478448e-05, "event": "started", "peak_rss_kib": 0, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 4.512166621376916e-08, "timeout_seconds": 1800.0}
+{"cpu_seconds": 29.84, "elapsed_seconds": 30.047129345999565, "event": "running", "peak_rss_kib": 111532, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 0.016692849636666424, "timeout_seconds": 1800.0}
+{"cpu_seconds": 59.83, "elapsed_seconds": 60.084766216999924, "event": "running", "peak_rss_kib": 111532, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 0.03338042567611107, "timeout_seconds": 1800.0}
+{"cpu_seconds": 89.9, "elapsed_seconds": 90.11806314000023, "event": "running", "peak_rss_kib": 111536, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 0.05006559063333346, "timeout_seconds": 1800.0}
+{"cpu_seconds": null, "elapsed_seconds": 100.29250355399927, "event": "completed", "peak_rss_kib": 111964, "stderr_bytes": 37, "stdout_bytes": 0, "timeout_fraction": 0.055718057529999594, "timeout_seconds": 1800.0}

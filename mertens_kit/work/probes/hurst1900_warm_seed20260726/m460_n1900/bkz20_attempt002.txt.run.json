@@ -1,0 +1,35 @@
+{
+  "accepted": true,
+  "command": [
+    "fplll",
+    "-a",
+    "bkz",
+    "-b",
+    "20",
+    "-f",
+    "mpfr",
+    "-bkzmaxloops",
+    "1",
+    "-p",
+    "256",
+    "-nolll"
+  ],
+  "metadata": {
+    "NU": 1900,
+    "backend": "mpfr",
+    "beta": 20,
+    "campaign": "hurst1900_warm",
+    "mH": 460,
+    "no_lll": true,
+    "parent_lll_sha256": "69f8c1572084f2726e3f3ff947a59b6daae5ec7211ea9045f3eca38e8eb6030b",
+    "single_tour": true
+  },
+  "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/bkz20_attempt002.txt",
+  "output_valid": true,
+  "peak_rss_kib": 111964,
+  "retained_valid_failure": false,
+  "returncode": 8,
+  "seconds": 100.28866668199953,
+  "status": "completed_by_limit",
+  "stderr_tail": "Failure: loops limit exceeded in BKZ\n"
+}

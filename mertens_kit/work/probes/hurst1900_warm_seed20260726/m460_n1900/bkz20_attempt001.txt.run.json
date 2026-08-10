@@ -1,0 +1,33 @@
+{
+  "accepted": false,
+  "command": [
+    "fplll",
+    "-a",
+    "bkz",
+    "-b",
+    "20",
+    "-f",
+    "longdouble",
+    "-bkzmaxloops",
+    "1",
+    "-nolll"
+  ],
+  "metadata": {
+    "NU": 1900,
+    "backend": "longdouble",
+    "beta": 20,
+    "campaign": "hurst1900_warm",
+    "mH": 460,
+    "no_lll": true,
+    "parent_lll_sha256": "69f8c1572084f2726e3f3ff947a59b6daae5ec7211ea9045f3eca38e8eb6030b",
+    "single_tour": true
+  },
+  "output": null,
+  "output_valid": false,
+  "peak_rss_kib": 59084,
+  "retained_valid_failure": false,
+  "returncode": -6,
+  "seconds": 30.97438850800063,
+  "status": "infinite_loop_in_babai",
+  "stderr_tail": "terminate called after throwing an instance of 'std::runtime_error'\n  what():  infinite loop in babai\n"
+}

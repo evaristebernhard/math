@@ -1,0 +1,58 @@
+\section{Problem and literature boundary}
+
+Let $A_1,A_2,A_3\in\mathbb H_+^n$ and let $p_i>1$ satisfy
+\[
+\frac1{p_1}+\frac1{p_2}+\frac1{p_3}=1.
+\]
+Write
+\[
+\alpha=\frac1{p_1},\qquad \beta=\frac1{p_2},\qquad \gamma=\frac1{p_3},
+\qquad \alpha+\beta+\gamma=1,
+\]
+and set
+\[
+X=A_1^{p_1},\qquad Y=A_2^{p_2},\qquad Z=A_3^{p_3}.
+\]
+The three-factor Matrix Young problem asks whether
+\begin{equation}
+ s_j\!\left(X^\alpha Y^\beta Z^\gamma\right)
+ \le
+ \lambda_j\!\left(\alpha X+\beta Y+\gamma Z\right),
+ \qquad j=1,\dots,n.
+ \label{eq:MY}
+\end{equation}
+For $m=2$, Ando's matrix Young inequality gives the corresponding two-factor statement; see \cite{Ando1995}.
+
+The multivariable conjecture in the form relevant here was recorded by Lin in the context of Hua determinant inequalities \cite{Lin2024}.  Pang subsequently disproved the conjecture in two complementary directions \cite{Pang2026}:
+\begin{itemize}[leftmargin=2em]
+\item for every $m\ge4$, failure already occurs for $2\times2$ real rank-one orthogonal projections, and the failure is at the largest eigenvalue;
+\item for $m=3$, a $3\times3$ real positive semidefinite counterexample exists, with failure at the second eigenvalue.
+\end{itemize}
+Consequently the cell
+\[
+\boxed{m=3,\qquad n=2}
+\]
+is a natural unresolved boundary case: increasing either the number of factors or the matrix dimension is already known to allow failure.
+
+\subsection{Target formulation for the project}
+Throughout the project we put
+\[
+P=X^\alpha Y^\beta Z^\gamma,
+\qquad
+S=\alpha X+\beta Y+\gamma Z,
+\]
+and seek
+\begin{equation}
+ s_1(P)\le\lambda_1(S),
+ \qquad
+ s_2(P)\le\lambda_2(S),
+ \label{eq:two-targets}
+\end{equation}
+for all $X,Y,Z\in\mathbb H_+^2$ and all positive weights $\alpha,\beta,\gamma$ summing to one.
+
+\subsection{Current project-level assessment}
+The work completed so far does not close \eqref{eq:two-targets} in full.  It does, however, remove several large boundary families and reduce any interior extremal counterexample to a small set of scalar parameters.  The equal-weight slice
+\[
+\alpha=\beta=\gamma=\frac13
+\]
+is substantially more rigid and is the recommended first target for completion.

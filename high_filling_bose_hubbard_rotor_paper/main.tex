@@ -1,0 +1,738 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\setlist{nosep}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\nbar}{\bar n}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\diver}{\operatorname{div}}
+
+\title{High-Filling Bose--Hubbard Models on Graphs:\\
+Uniform Rotor Comparison, Infrared-Regular Normal Forms,\\
+and a Fourth-Order Obstruction}
+
+\author{
+Jizheng Chen$^{1,*}$ \qquad Tianrun Yu$^{2,*}$ \qquad Chaoyu Hu$^{3,\dagger}$\\[0.7em]
+\small $^1$Department of Mathematics, Chang'an University, Xi'an, China\\
+\small $^2$College of Control Science and Engineering, Zhejiang University, Hangzhou, China\\
+\small $^3$School of Automation, Hangzhou Dianzi University, Hangzhou, China\\[0.5em]
+\small $^*$These authors contributed equally.\\
+\small $^\dagger$Corresponding author: \texttt{evaristebernhardwiener@gmail.com}
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The high-filling Bose--Hubbard model is commonly reduced to a quantum rotor by replacing the bosonic amplitude by its mean value. We establish a finite-graph version of this reduction that keeps the physical one-sided number space and does not impose an a priori cutoff on number fluctuations. The resulting quadratic-form comparison is uniform in graph size and controls number moments, bad-number tails, and the error made when the normalized bosonic annihilation operator is replaced by the phase shift. On a symmetric finite number window we derive the complete second-order normal form. The particle--hole odd first-order term admits an exact completion of squares and satisfies a graph-uniform resolvent estimate, while the direct second-order term is a total double commutator plus a phase-force square. The induced second-order phase potential has an explicit neutral-character expansion and can be compared, through Ginibre monotonicity, with a standard rotor of slightly reduced stiffness. Finally, a three-site classical principal-symbol calculation shows that an all-order ferromagnetic closure fails at fourth order. These results rigorously delimit both the validity and the structural limitations of the high-filling rotor approximation. No thermodynamic Bose--Einstein condensation statement is claimed.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Bose--Hubbard model; quantum rotor; high filling; operator comparison; infrared estimate; double commutator; Griffiths--Ginibre inequality.
+
+\section{Introduction}
+
+The Bose--Hubbard Hamiltonian is a standard lattice model for interacting bosons and for the superfluid--Mott transition \cite{Fisher1989}. At a large integer filling $\nbar$, one writes the local occupation as $\nbar+M_x$ and heuristically replaces the normalized annihilation operator by a phase shift. This leads to the compact $U(1)$ quantum rotor. The reduction is widely used in effective-action calculations and in the analysis of Josephson-junction-type systems; see, for example, \cite{PolakKopec2007,Teichmann2009}. Its rigorous content, however, depends on what is being compared: energies, quadratic forms, correlation functions, or low-energy spectral data.
+
+The purpose of this paper is deliberately narrower than a derivation of thermodynamic long-range order. We isolate a package of finite-graph statements that can be proved without assuming condensation and without introducing a number cutoff in the basic comparison. We then compute the finite-window normal form through second order and identify algebraic mechanisms that prevent the most obvious infrared losses. The same calculation also exhibits a sharp limitation: the generalized ferromagnetic structure visible at second order does not persist to all orders.
+
+Our main results are as follows.
+\begin{enumerate}
+    \item On the physical half-line $M_x\ge -\nbar$, the amplitude defect $A_x-S_x$ is bounded pointwise by $|M_x|/\nbar$. This yields a graph-uniform lower form bound by a quantum rotor with slightly weakened stiffness, together with number-moment and tail estimates.
+    \item On a symmetric finite number window, the hopping term has a complete second-order expansion. The first-order particle--hole odd term is an anticommutator with a real phase field; it can be completed into a magnetic square and satisfies a resolvent estimate whose constant is independent of graph volume and of the smallest nonzero graph momentum.
+    \item The direct second-order term is a total double commutator plus the square of the phase force. After combining it with the square-completion correction, the remaining phase potential is relatively bounded by the original rotor potential.
+    \item On regular graphs, the second-order phase potential has a neutral-character expansion with nonnegative couplings. Standard Ginibre--Griffiths monotonicity therefore compares it with a standard rotor having renormalized stiffness.
+    \item A three-site classical elimination shows that at order $\nbar^{-4}$ a character with the opposite sign appears. Thus a naive all-order ferromagnetic expansion is already false at the principal-symbol level.
+\end{enumerate}
+
+The work does \emph{not} prove convergence of all correlation functions from the Bose--Hubbard model to the rotor, a volume-uniform Gaussian domination estimate for the full amplitude model, or a new Bose--Einstein condensation regime. These limitations are part of the mathematical statement rather than technical qualifications hidden in the proofs.
+
+\paragraph{Relation to earlier work.}
+The high-filling quantum-rotor description of the Bose--Hubbard model is standard in the physics literature \cite{PolakKopec2007,Teichmann2009}. Our contribution is not the heuristic mapping itself, but the finite-graph operator estimates and the explicit protected normal form. The correlation comparison in \cref{sec:characters} uses the general Ginibre framework \cite{Ginibre1970,FrohlichPark1978,Miyao2016} and related quantum-rotor positivity methods; it is quoted as a standard input rather than claimed as a new correlation inequality. The estimates are also conceptually distinct from asymptotic localization results such as \cite{BolsDeRoeck2018}.
+
+\section{Models and notation}
+
+Let $G=(V,E)$ be a finite undirected graph of maximum degree $\Delta$. When regularity is needed, the common degree is denoted by $q$. Each undirected edge is assigned an arbitrary orientation $e=(x,y)$; all final expressions are orientation independent.
+
+The compact rotor at one site acts on $\ell^2(\mathbb Z)$. We use the number operator
+\[
+M\lvert m\rangle=m\lvert m\rangle
+\]
+and the bilateral shift
+\[
+S\lvert m\rangle=\lvert m-1\rangle.
+\]
+On an edge $e=(x,y)$, set
+\begin{equation}
+T_e=S_x^\dagger S_y,
+\qquad
+\cA_e=2-T_e-T_e^\dagger=2-2\cos(\theta_x-\theta_y).
+\label{eq:Aedge}
+\end{equation}
+The rotor Hamiltonian is
+\begin{equation}
+H_0=H_c+V,
+\qquad
+H_c=\frac U2\sum_x M_x^2,
+\qquad
+V=J\sum_e\cA_e.
+\label{eq:H0}
+\end{equation}
+
+For the physical high-filling block model, the local number deviation satisfies $M_x\ge-\nbar$. The lowering shift is the partial isometry
+\[
+S\lvert-\nbar\rangle=0,
+\qquad
+S\lvert m\rangle=\lvert m-1\rangle\quad(m>-\nbar).
+\]
+Define
+\begin{equation}
+A_x=S_x\sqrt{1+M_x/\nbar},
+\label{eq:Ax}
+\end{equation}
+and
+\begin{equation}
+H_{\nbar}=\frac U2\sum_xM_x^2
++J\sum_{e=(x,y)}(A_x-A_y)^\dagger(A_x-A_y).
+\label{eq:Hn}
+\end{equation}
+On a $q$-regular graph and in the zero-total-deviation sector $\sum_xM_x=0$, the onsite part coming from $\sum_e(A_x^\dagger A_x+A_y^\dagger A_y)$ is an additive constant. This is the sector in which the comparison with $H_0$ will be used.
+
+\section{A cutoff-free rotor comparison}
+
+\begin{lemma}[Single-site amplitude defect]
+Let $D=A-S$ on the physical one-site Hilbert space. Then
+\begin{equation}
+D^\dagger D\le \frac{M^2}{\nbar^2}.
+\label{eq:defect}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Away from the bottom state,
+\[
+D=S\bigl(\sqrt{1+M/\nbar}-1\bigr).
+\]
+For $t\ge-1$,
+\[
+(\sqrt{1+t}-1)^2
+=\frac{t^2}{(\sqrt{1+t}+1)^2}
+\le t^2.
+\]
+At the bottom state the left-hand side vanishes, so the same spectral inequality holds everywhere.
+\end{proof}
+
+\begin{theorem}[Uniform quadratic-form comparison]
+For every $0<\kappa<1$,
+\begin{equation}
+H_{\nbar}\ge
+\left(\frac U2-\frac{2J\Delta}{\kappa\nbar^2}\right)\sum_xM_x^2
++J(1-\kappa)Q_{\mathrm{ph}},
+\label{eq:formcomparison}
+\end{equation}
+where
+\begin{equation}
+Q_{\mathrm{ph}}:=\sum_{e=(x,y)}(S_x-S_y)^\dagger(S_x-S_y).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write
+\[
+A_x-A_y=(S_x-S_y)+(D_x-D_y).
+\]
+The elementary inequality
+\[
+\|u+v\|^2\ge(1-\kappa)\|u\|^2-\kappa^{-1}\|v\|^2
+\]
+gives the phase term in \eqref{eq:formcomparison}. Moreover,
+\[
+\sum_e(D_x-D_y)^\dagger(D_x-D_y)
+\le 2\Delta\sum_xD_x^\dagger D_x
+\le \frac{2\Delta}{\nbar^2}\sum_xM_x^2
+\]
+by \eqref{eq:defect}. Substitution into \eqref{eq:Hn} proves the claim.
+\end{proof}
+
+A convenient consequence is obtained when $\nbar^2\ge8J\Delta/U$. Choosing
+\[
+\kappa=\frac{8J\Delta}{U\nbar^2}
+\]
+yields
+\begin{equation}
+H_{\nbar}\ge
+\frac U4\sum_xM_x^2
++J\left(1-\frac{8J\Delta}{U\nbar^2}\right)Q_{\mathrm{ph}}.
+\label{eq:convenientform}
+\end{equation}
+
+\begin{corollary}[Moments, tails, and observable replacement]
+Assume that $G$ is $q$-regular, work in the sector $\sum_xM_x=0$, and let $\Psi$ be a ground state of $H_{\nbar}$. Under $\nbar^2\ge8J\Delta/U$,
+\begin{align}
+\frac1{|V|}\sum_x\langle M_x^2\rangle_\Psi
+&\le \frac{4\Delta J}{U},
+\label{eq:moment}\\
+\frac1{|V|}\sum_x\langle(A_x-S_x)^\dagger(A_x-S_x)\rangle_\Psi
+&\le \frac{4\Delta J}{U\nbar^2},
+\label{eq:obsreplace}\\
+\frac1{|V|}\sum_x\langle\one_{\{|M_x|>K\}}\rangle_\Psi
+&\le \frac{4\Delta J}{UK^2}.
+\label{eq:tails}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+Use the product number state $M_x=0$ as a trial state. Each edge contributes at most $2J$, hence
+\[
+E_0\le2J|E|\le J\Delta|V|.
+\]
+Equation \eqref{eq:convenientform} then gives \eqref{eq:moment}. Equation \eqref{eq:obsreplace} follows from \eqref{eq:defect}, and \eqref{eq:tails} follows from
+\[
+\one_{\{|M|>K\}}\le M^2/K^2.
+\]
+\end{proof}
+
+The estimates are uniform in $|V|$ and do not use a spectral gap. They are form comparisons; they do not by themselves imply convergence of all low-energy correlations to those of the compact rotor.
+
+\section{Finite-window normal form}
+
+Fix $K\ge1$ and let $P_K$ project onto
+\[
+\operatorname{span}\{\lvert m\rangle:-K\le m\le K\}.
+\]
+Write $P_K^{(V)}$ for its tensor product over the graph. All identities in this section concern the compressed matrix elements
+\[
+P_K^{(V)}H_{\nbar}P_K^{(V)}
+\]
+of the original physical operators. We do not rebuild the Hamiltonian from $P_KA_xP_K$, because that different operation produces number-window boundary projectors. Assume $\nbar\ge2(K+1)$, so the Taylor expansion is uniform on the window. For $e=(x,y)$, define
+\begin{equation}
+q_e=M_x+M_y,
+\qquad
+d_e=M_x-M_y,
+\qquad
+T_e=S_x^\dagger S_y.
+\label{eq:qd}
+\end{equation}
+
+\begin{lemma}[Second-order hopping expansion]
+On the compressed two-site window,
+\begin{equation}
+A_x^\dagger A_y
+=T_e\left[1+\frac{q_e+1}{2\nbar}-\frac{(d_e+1)^2}{8\nbar^2}\right]+R_e,
+\label{eq:hoppingexpansion}
+\end{equation}
+with
+\begin{equation}
+\|R_e\|\le C\frac{(K+1)^3}{\nbar^3}.
+\label{eq:remainderedge}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The nonzero matrix element of $P_K^{(V)}A_x^\dagger A_yP_K^{(V)}$ equals that of the compressed $T_e$ multiplied by
+\[
+\sqrt{\left(1+\frac{M_x+1}{\nbar}\right)\left(1+\frac{M_y}{\nbar}\right)}.
+\]
+The claimed expression is the Taylor expansion of $\sqrt{(1+s)(1+t)}$ at $(0,0)$, whose linear part is $(s+t)/2$ and quadratic part is $-(s-t)^2/8$. The third derivatives are uniformly bounded for $|s|,|t|\le1/2$. Both sides vanish on transitions that leave the window. Thus the identity concerns the compressed product $A_x^\dagger A_y$, not a product of separately compressed amplitudes.
+\end{proof}
+
+\begin{theorem}[Complete second-order Hamiltonian expansion]
+Let
+\[
+H_{\nbar,K}:=P_K^{(V)}H_{\nbar}P_K^{(V)}.
+\]
+If $G$ is $q$-regular and we restrict to $\sum_xM_x=0$, then, up to an additive constant,
+\begin{equation}
+H_{\nbar,K}=H_{0,K}+\nbar^{-1}H_1+\nbar^{-2}H_2+R_3,
+\label{eq:normalform}
+\end{equation}
+where
+\begin{align}
+H_1&=\frac12K_J+D_{\mathrm{odd}},
+&K_J&=-J\sum_e(T_e+T_e^\dagger),
+\label{eq:H1}\\
+D_{\mathrm{odd}}
+&=-\frac J2\sum_eq_e(T_e+T_e^\dagger)
+=\frac J2\sum_eq_e\cA_e,
+\label{eq:Dodd}\\
+H_2&=\frac J8\sum_e\left[T_e(d_e+1)^2+(d_e+1)^2T_e^\dagger\right],
+\label{eq:H2}\\
+\|R_3\|&\le CJ|E|\frac{(K+1)^3}{\nbar^3}.
+\label{eq:R3}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Compress \eqref{eq:Hn} as a whole and insert \eqref{eq:hoppingexpansion} and its adjoint into the cross-hopping terms. The onsite identity
+\[
+P_K^{(V)}A_x^\dagger A_xP_K^{(V)}
+=P_K^{(V)}\left(1+\frac{M_x}{\nbar}\right)P_K^{(V)}
+\]
+remains exact; this is why the Hamiltonian is not reconstructed from separately compressed amplitudes. Since $q_e$ commutes with $T_e$ and
+\[
+\sum_eq_e=q\sum_xM_x=0,
+\]
+the first-order coefficient separates into $K_J/2$ and $D_{\mathrm{odd}}$. The second-order coefficient is \eqref{eq:H2}; summing the edge remainders gives \eqref{eq:R3}.
+\end{proof}
+
+\begin{proposition}[Particle--hole cancellation]
+On the symmetric window define $C\lvert m\rangle=\lvert-m\rangle$. Then
+\[
+CH_0C^*=H_0,
+\qquad
+CK_JC^*=K_J,
+\qquad
+CD_{\mathrm{odd}}C^*=-D_{\mathrm{odd}}.
+\]
+Consequently, for every particle--hole even source $X$ and every $\beta>0$,
+\begin{equation}
+\langle D_{\mathrm{odd}}\rangle_{\beta,H_0-hX}=0.
+\label{eq:phcancellation}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+One has $CMC^*=-M$ and $CSC^*=S^\dagger$. Thus $T_e$ is exchanged with $T_e^\dagger$, $\cA_e$ is fixed, and $q_e$ changes sign. The Gibbs density of $H_0-hX$ commutes with $C$, so the trace of the odd operator $D_{\mathrm{odd}}$ vanishes.
+\end{proof}
+
+\section{The odd term: completion of squares and a graph-uniform resolvent bound}
+
+Define the real multiplication operators
+\begin{equation}
+b_x=\frac J2\sum_{e\ni x}\cA_e.
+\label{eq:bx}
+\end{equation}
+
+\begin{proposition}[Phase-defect representation]
+In the $q$-regular zero-charge sector,
+\begin{equation}
+D_{\mathrm{odd}}=\frac12\sum_x\{b_x,M_x\}.
+\label{eq:anticomm}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For an edge $e=(x,y)$, the total edge charge $q_e=M_x+M_y$ commutes with $\cA_e$. Summing the two incidence contributions gives
+\[
+\frac J4\{\cA_e,q_e\}=\frac J2q_e\cA_e,
+\]
+which is exactly the edge term in \eqref{eq:Dodd}.
+\end{proof}
+
+\begin{proposition}[Exact completion of squares]
+With $\varepsilon=\nbar^{-1}$,
+\begin{equation}
+\frac U2\sum_xM_x^2+\varepsilon D_{\mathrm{odd}}
+=\frac U2\sum_x\left(M_x+\frac{\varepsilon b_x}{U}\right)^2
+-\frac{\varepsilon^2}{2U}\sum_xb_x^2.
+\label{eq:squarecompletion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expand each noncommutative square. The cross term is $\frac\varepsilon2\{M_x,b_x\}$; no commutativity between $M_x$ and $b_x$ is required.
+\end{proof}
+
+In the angle representation, \eqref{eq:squarecompletion} is a Schr\"odinger operator with a real magnetic vector potential. The standard diamagnetic inequality therefore compares its ground-state energy with the same scalar potential and zero vector potential. The statement remains valid in the zero-total-charge sector because taking the modulus preserves invariance under common angle shifts.
+
+\begin{theorem}[Composite infrared estimate]
+Let $\Omega>0$ be the normalized ground state of $H_0$ in the zero-total-charge sector, set $K_0=H_0-E_0$, and let $K_{0,\perp}^{-1}$ denote the inverse on $\Omega^\perp$. For real edge coefficients $u_e$, define
+\begin{equation}
+\cO(u)=\sum_{e=(x,y)}u_e(M_x+M_y)\cA_e.
+\label{eq:Ou}
+\end{equation}
+Then
+\begin{equation}
+\left\langle \cO(u)\Omega,
+K_{0,\perp}^{-1}\cO(u)\Omega\right\rangle
+\le \frac{4\Delta}{U}\sum_e|u_e|^2
+\langle\Omega,\cA_e\Omega\rangle
+\le \frac{16\Delta}{U}\sum_e|u_e|^2.
+\label{eq:infrared}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Set
+\[
+B_x(\theta)=\sum_{e\ni x}u_e\cA_e(\theta).
+\]
+Since each $\cA_e$ depends only on $\theta_x-\theta_y$, the full divergence satisfies
+\[
+\sum_x\partial_{\theta_x}B_x=0.
+\]
+Hence $\cO(u)=-iB\cdot\nabla$. The ground-state transform gives
+\[
+\langle f\Omega,K_0f\Omega\rangle
+=\frac U2\int|\nabla f|^2\Omega^2.
+\]
+Integration by parts yields
+\[
+\langle f\Omega,\cO(u)\Omega\rangle
+=\frac i2\int\Omega^2B\cdot\nabla\overline f.
+\]
+Optimizing the resolvent variational formula gives an upper bound by $(2U)^{-1}\int|B|^2\Omega^2$. Finally,
+\[
+|B|^2\le2\Delta\sum_e|u_e|^2\cA_e^2,
+\qquad
+\cA_e^2\le4\cA_e\le16,
+\]
+which proves \eqref{eq:infrared}.
+\end{proof}
+
+The important feature of \eqref{eq:infrared} is the absence of the graph spectral gap. The composite density--phase operator has a built-in transport cancellation; estimating it only by operator norm would lose this structure.
+
+\section{The direct second-order term}
+
+\begin{lemma}[Edge double commutator]
+For $C_e=M_x^2+M_y^2$,
+\begin{equation}
+T_e(d_e+1)^2+(d_e+1)^2T_e^\dagger
+=\frac14[C_e,[C_e,T_e+T_e^\dagger]].
+\label{eq:doublecommedge}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The shift $T_e$ changes $d_e$ by two and changes $C_e$ by $2(d_e+1)$. Thus
+\[
+[C_e,T_e]=2T_e(d_e+1),
+\]
+and a second commutator gives $4T_e(d_e+1)^2$. Taking the adjoint gives the $T_e^\dagger$ term with the displayed ordering.
+\end{proof}
+
+\begin{theorem}[Global normal form]
+The operator $H_2$ in \eqref{eq:H2} satisfies
+\begin{equation}
+H_2=-\frac1{8U^2}[H_c,[H_c,V]],
+\label{eq:H2comm1}
+\end{equation}
+and
+\begin{equation}
+H_2=-\frac1{8U^2}[H_0,[H_0,V]]
++\frac1{8U}|\nabla_\theta V|^2.
+\label{eq:H2comm2}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Equation \eqref{eq:H2comm1} follows by summing \eqref{eq:doublecommedge} and using
+\[
+V=2J|E|-J\sum_e(T_e+T_e^\dagger).
+\]
+Since $[H_c,V]=[H_0,V]$,
+\[
+[H_c,[H_c,V]]=[H_0,[H_0,V]]-[V,[H_0,V]].
+\]
+For $H_c=-(U/2)\Delta_\theta$,
+\[
+[V,[H_c,V]]=U|\nabla_\theta V|^2,
+\]
+which proves \eqref{eq:H2comm2}.
+\end{proof}
+
+Combining the phase-force term in \eqref{eq:H2comm2} with the negative scalar correction in \eqref{eq:squarecompletion} defines
+\begin{equation}
+W_{\mathrm{sc}}
+=\frac1{8U}|\nabla_\theta V|^2
+-\frac1{2U}\sum_xb_x^2.
+\label{eq:Wscdef}
+\end{equation}
+
+\begin{proposition}[Relative phase bound]
+Pointwise on the phase torus,
+\begin{equation}
+|W_{\mathrm{sc}}|\le \frac{J\Delta}{U}V.
+\label{eq:relativephase}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+Q_x=\sum_{y\sim x}\left(e^{i(\theta_x-\theta_y)}-1\right).
+\]
+Then
+\[
+\partial_{\theta_x}V=2J\,\operatorname{Im}Q_x,
+\qquad
+b_x=-J\,\operatorname{Re}Q_x,
+\]
+so
+\[
+W_{\mathrm{sc}}
+=\frac{J^2}{2U}\sum_x
+\left[(\operatorname{Im}Q_x)^2-(\operatorname{Re}Q_x)^2\right].
+\]
+By Cauchy--Schwarz,
+\[
+|Q_x|^2
+\le \deg(x)\sum_{y\sim x}|e^{i(\theta_x-\theta_y)}-1|^2
+=\deg(x)\sum_{y\sim x}\cA_{xy}.
+\]
+Summing over $x$ yields
+\[
+\sum_x|Q_x|^2\le \frac{2\Delta}{J}V,
+\]
+which gives \eqref{eq:relativephase}.
+\end{proof}
+
+Thus $\nbar^{-2}W_{\mathrm{sc}}$ is relatively of size $J/(U\nbar^2)$ compared with the principal phase potential. The statement is pointwise and volume independent.
+
+\section{Neutral-character structure at second order}
+\label{sec:characters}
+
+\begin{proposition}[Character expansion]
+If $G$ is $q$-regular, then
+\begin{equation}
+W_{\mathrm{sc}}
+=-\frac{J^2}{4U}\sum_x(Q_x^2+\overline{Q}_x^{\,2}),
+\label{eq:WscQ}
+\end{equation}
+and
+\begin{equation}
+W_{\mathrm{sc}}
+=\frac{J^2q}{U}\sum_x\sum_{y\sim x}\cos(\theta_x-\theta_y)
+-\frac{J^2}{2U}\sum_x\sum_{y,z\sim x}\cos(2\theta_x-\theta_y-\theta_z)
++\mathrm{const}.
+\label{eq:Wsccharacters}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first formula follows from
+\[
+(\operatorname{Im}Q)^2-(\operatorname{Re}Q)^2
+=-\frac12(Q^2+\overline Q^{\,2}).
+\]
+Expanding $Q_x^2$ and taking real parts gives
+\[
+Q_x^2+\overline Q_x^{\,2}
+=2\sum_{y,z\sim x}\cos(2\theta_x-\theta_y-\theta_z)
+-4q\sum_{y\sim x}\cos(\theta_x-\theta_y)
++2q^2.
+\]
+\end{proof}
+
+Consequently, up to an additive constant, the phase Hamiltonian through order $\nbar^{-2}$ can be written as
+\begin{equation}
+V_{\mathrm{eff}}
+=J_*\sum_e\cA_e
+-\frac{J^2}{2U\nbar^2}
+\sum_x\sum_{y,z\sim x}\cos(2\theta_x-\theta_y-\theta_z),
+\label{eq:Veff}
+\end{equation}
+where
+\begin{equation}
+J_*=J-\frac{qJ^2}{U\nbar^2}.
+\label{eq:Jstar}
+\end{equation}
+Every new character in \eqref{eq:Veff} is neutral: its integer coefficients sum to zero. Its Hamiltonian coefficient has the ferromagnetic sign.
+
+\begin{proposition}[Standard Ginibre monotonicity for neutral characters]
+Consider a finite-volume quantum rotor
+\begin{equation}
+H(\bm J)
+=\frac U2\sum_xM_x^2
+-\sum_\gamma J_\gamma\cos(\gamma\cdot\theta),
+\qquad
+\sum_x\gamma_x=0,
+\qquad
+J_\gamma\ge0.
+\label{eq:ginibresetup}
+\end{equation}
+For neutral $\eta$, the finite-temperature expectation
+$\langle\cos(\eta\cdot\theta)\rangle$ is nondecreasing in every coupling $J_\gamma$. The same is true for zero-temperature limit states.
+\end{proposition}
+
+\begin{proof}[Standard input]
+A Trotter discretization in imaginary time has nonnegative Fourier coefficients both for the rotor heat kernel and for $\exp(tJ_\gamma\cos(\gamma\cdot\theta))$. Ginibre's positive-function cone gives the second correlation inequality for the resulting classical compact-abelian spin system \cite{Ginibre1970,FrohlichPark1978}. Passing to the Trotter and zero-temperature limits gives the statement; see also quantum formulations such as \cite{Miyao2016,Miyao2015,BjornbergUeltschi2023}. We use this as an external positivity theorem rather than as a new result.
+\end{proof}
+
+\begin{corollary}[Comparison with a weakened standard rotor]
+If $J_*>0$, then for every pair $x,y$,
+\begin{equation}
+\langle\cos(\theta_x-\theta_y)\rangle_{V_{\mathrm{eff}}}
+\ge
+\langle\cos(\theta_x-\theta_y)\rangle_{\text{standard rotor of stiffness }J_*}.
+\label{eq:rotorcomparison}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Start from the standard rotor with stiffness $J_*$ and turn on the nonnegative neutral couplings in \eqref{eq:Veff} one at a time. The preceding monotonicity statement yields \eqref{eq:rotorcomparison}.
+\end{proof}
+
+\section{A fourth-order obstruction to all-order ferromagnetic closure}
+
+The preceding section concerns the second-order effective phase potential. It is natural, but incorrect, to conjecture that all higher-order density eliminations preserve the same sign structure. The following three-site principal-symbol calculation gives a strict counterexample.
+
+Consider the path $0$--$1$--$2$. Set $\theta_0=0$, $\theta_1=a$, $\theta_2=b$, $c_1=\cos a$, and $c_2=\cos(b-a)$. Under $m_0+m_1+m_2=0$, define
+\begin{equation}
+\cH_\varepsilon
+=\frac U2\sum_{i=0}^2m_i^2
+-K_0\left[
+\sqrt{(1+\varepsilon m_0)(1+\varepsilon m_1)}\,c_1
++\sqrt{(1+\varepsilon m_1)(1+\varepsilon m_2)}\,c_2
+\right].
+\label{eq:classical3site}
+\end{equation}
+
+\begin{theorem}[Three-site fourth-order obstruction]
+The local minimizer near $m=0$ has
+\begin{align}
+m_0&=\frac{K_0(c_1-2c_2)}{6U}\varepsilon
++\frac{K_0^2c_1c_2}{8U^2}\varepsilon^3
++O(\varepsilon^5),
+\label{eq:m0exp}\\
+m_1&=\frac{K_0(c_1+c_2)}{6U}\varepsilon
+-\frac{K_0^2c_1c_2}{4U^2}\varepsilon^3
++O(\varepsilon^5),
+\label{eq:m1exp}
+\end{align}
+and the minimized energy equals
+\begin{align}
+E_{\mathrm{eff}}
+={}&-K_0(c_1+c_2)
++\frac{K_0^2\varepsilon^2}{12U}
+(-c_1^2+c_1c_2-c_2^2)
+\notag\\
+&+\frac{K_0^3\varepsilon^4}{32U^2}
+c_1c_2(c_1+c_2)
++O(\varepsilon^6).
+\label{eq:Eeff4}
+\end{align}
+The $\varepsilon^4$ term contains
+\begin{equation}
++\frac{K_0^3\varepsilon^4}{128U^2}\cos(a+b),
+\label{eq:wrongsign}
+\end{equation}
+which has the opposite sign from a ferromagnetic Hamiltonian term $-\lambda\cos(a+b)$ with $\lambda\ge0$.
+\end{theorem}
+
+\begin{proof}
+Write $m_2=-m_0-m_1$ and solve the two stationary equations with the ansatz
+\[
+m_0=a_1\varepsilon+a_3\varepsilon^3+O(\varepsilon^5),
+\qquad
+m_1=b_1\varepsilon+b_3\varepsilon^3+O(\varepsilon^5).
+\]
+Coefficient matching gives \eqref{eq:m0exp}--\eqref{eq:m1exp}. Substitution yields \eqref{eq:Eeff4}. Finally,
+\begin{align*}
+c_1c_2(c_1+c_2)
+={}&\frac12\cos a+\frac12\cos(a-b)
++\frac14\cos(a+b)+\frac14\cos(a-2b)\\
+&+\frac14\cos(3a-b)+\frac14\cos(3a-2b),
+\end{align*}
+which proves \eqref{eq:wrongsign}.
+\end{proof}
+
+The theorem is intentionally stated as a classical principal-symbol obstruction. It does not by itself identify the complete fourth-order quantum effective Hamiltonian. It does rule out arguments asserting that the density-amplitude expansion is sign-preserving at every order for purely algebraic reasons.
+
+\begin{lemma}[Neutral characters are controlled by local gradients]
+Let $\gamma\in\mathbb Z^V$ satisfy $\sum_x\gamma_x=0$ and suppose $\supp\gamma$ lies in a connected finite subgraph $X$. Then
+\begin{equation}
+1-\cos(\gamma\cdot\theta)
+\le C_{\gamma,X}\sum_{e\subset X}
+\bigl[1-\cos(\nabla_e\theta)\bigr].
+\label{eq:neutralgradient}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Choose an integer flow $c_e$ on a spanning tree of $X$ with $\diver c=\gamma$. Then
+\[
+\gamma\cdot\theta=\sum_ec_e\nabla_e\theta.
+\]
+The inequalities
+\[
+|e^{in\phi}-1|\le |n|\,|e^{i\phi}-1|
+\]
+and a telescoping product bound give
+\[
+|e^{i\gamma\cdot\theta}-1|
+\le \sum_e|c_e|\,|e^{i\nabla_e\theta}-1|.
+\]
+Squaring and applying Cauchy--Schwarz proves \eqref{eq:neutralgradient}.
+\end{proof}
+
+\section{Scope, limitations, and possible extensions}
+
+The results establish a rigorous and graph-uniform structural approximation, but they stop short of a complete low-energy equivalence. Three distinctions are essential.
+\begin{itemize}
+    \item The cutoff-free comparison controls quadratic forms, moments, and tails. It does not imply convergence of the full spectrum or of arbitrary correlation functions.
+    \item The second-order character comparison applies to the effective compact-rotor Hamiltonian. It is not a Gaussian domination theorem for the original amplitude model.
+    \item The fourth-order obstruction concerns the classical principal symbol. It invalidates an all-order sign conjecture but does not preclude perturbative control by other mechanisms.
+\end{itemize}
+
+A stronger theorem would require one of two additional ingredients: either a volume-uniform source estimate that transfers rotor infrared bounds to the amplitude model, or a direct norm-resolvent/low-energy-subspace comparison in a parameter regime with controlled number tails. Neither statement follows from the present normal form alone.
+
+The package nevertheless supplies a reusable diagnostic for other gapless bosonic lattice models: odd density--phase couplings should first be tested for an anticommutator representation and a ground-state-transform estimate, while direct even corrections should be tested for total commutators before they are bounded in operator norm.
+
+\appendix
+
+\section{Coefficient audit}
+
+For convenience, we collect the normalization used throughout the paper:
+\begin{align}
+H_{\nbar}
+&=\frac U2\sum_xM_x^2
++J\sum_e(A_x-A_y)^\dagger(A_x-A_y),
+\label{eq:audit1}\\
+H_0
+&=\frac U2\sum_xM_x^2+J\sum_e\cA_e,
+\qquad
+\cA_e=2-T_e-T_e^\dagger,
+\label{eq:audit2}\\
+D_{\mathrm{odd}}
+&=\frac J2\sum_eq_e\cA_e,
+\qquad
+b_x=\frac J2\sum_{e\ni x}\cA_e,
+\label{eq:audit3}\\
+H_2
+&=\frac J8\sum_e\left[T_e(d_e+1)^2+(d_e+1)^2T_e^\dagger\right],
+\label{eq:audit4}\\
+H_2
+&=-\frac1{8U^2}[H_0,[H_0,V]]
++\frac1{8U}|\nabla_\theta V|^2,
+\label{eq:audit5}\\
+W_{\mathrm{sc}}
+&=-\frac{J^2}{4U}\sum_x(Q_x^2+\overline Q_x^{\,2}),
+\qquad
+J_*=J-\frac{qJ^2}{U\nbar^2}.
+\label{eq:audit6}
+\end{align}
+Changing the coefficient of the phase-gradient term from $J$ to $J/2$ requires a global replacement of $J$ in every hopping, force-square, and stiffness-renormalization formula. Mixing the two conventions produces the factor-of-two inconsistencies that motivated the normalization audit underlying this version.
+
+\section{Statements not claimed}
+
+For clarity, this paper does not claim any of the following:
+\begin{itemize}
+    \item a new thermodynamic Bose--Einstein condensation exponent or density regime;
+    \item volume-uniform Gaussian domination for the original high-filling amplitude model;
+    \item removal of the finite number window in the second-order operator-norm expansion;
+    \item an all-order ferromagnetic effective Hamiltonian;
+    \item identification of the complete fourth-order quantum normal form.
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

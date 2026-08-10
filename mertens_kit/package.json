@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "python3 s09_dual_filter_prototype.py --m 5 --N 2 --bits 160 --external 8 --dual-k 3 --dual-window 16"
+  }
+}

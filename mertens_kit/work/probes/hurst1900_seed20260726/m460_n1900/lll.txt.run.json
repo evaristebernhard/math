@@ -1,0 +1,24 @@
+{
+  "accepted": false,
+  "command": [
+    "fplll",
+    "-a",
+    "lll",
+    "-m",
+    "wrapper"
+  ],
+  "metadata": {
+    "NU": 1900,
+    "campaign": "hurst1900",
+    "mH": 460,
+    "seed": 20260726,
+    "step": "lll"
+  },
+  "output": null,
+  "output_valid": false,
+  "peak_rss_kib": 93964,
+  "returncode": -15,
+  "seconds": 1245.1601826149997,
+  "status": "truncated_or_invalid_matrix",
+  "stderr_tail": ""
+}

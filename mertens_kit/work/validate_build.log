@@ -1,0 +1,4 @@
+[02] stage=validate mH=140 NEV=20000 T=18047.1
+[02] A_H=1.3008  B_full=2.7307  nats=613  tilt: lam=486735 L_H_pred=1.3007 (100.0%)
+[02] wrote validate_basis.txt (dim 141) + validate_meta.json  (0s)
+[02] 下一步:  bash s03_reduce.sh validate

@@ -1,0 +1,31 @@
+\begin{thebibliography}{IKW16}
+
+\bibitem[And95]{Ando1995}
+Tsuyoshi Ando.
+\newblock Matrix young inequalities.
+\newblock In {\em Operator Theory: Advances and Applications}, volume~75, pages
+  33--38. 1995.
+
+\bibitem[BD93]{BhatiaDavis1993}
+Rajendra Bhatia and Chandler Davis.
+\newblock More matrix forms of the arithmetic-geometric mean inequality.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  14(1):132--136, 1993.
+
+\bibitem[IKW16]{IsraelKrahmerWard2016}
+Arie Israel, Felix Krahmer, and Rachel Ward.
+\newblock An arithmetic--geometric mean inequality for products of three
+  matrices.
+\newblock {\em Linear Algebra and its Applications}, 488:1--12, 2016.
+
+\bibitem[Lin24]{Lin2024}
+Minghua Lin.
+\newblock On some extensions of the hua determinant inequality and a question
+  of poon.
+\newblock {\em Linear Algebra and its Applications}, 698:181--188, 2024.
+
+\bibitem[Pan26]{Pang2026}
+Zhekai Pang.
+\newblock Counterexamples to a multivariable matrix young conjecture, 2026.
+
+\end{thebibliography}

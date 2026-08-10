@@ -1,0 +1,22 @@
+{
+  "anisotropic_best_by_box": [],
+  "anisotropic_best_by_runtime_p2": [],
+  "anisotropic_best_by_sphere_runtime_p2": [],
+  "anisotropic_pareto_samples": [],
+  "cutoff_count": 2000,
+  "fixed_m_best_by_box": [],
+  "fixed_m_best_by_runtime_p2": [],
+  "fixed_m_best_by_sphere_runtime_p2": [],
+  "margin_requested": 0.001,
+  "schema": 1,
+  "target_base": 1.826054,
+  "target_used": 1.827054,
+  "uniform_best_by_box": [],
+  "uniform_best_by_gh_sphere": [],
+  "uniform_best_by_runtime_p2": [],
+  "uniform_best_by_runtime_p3": [],
+  "uniform_best_by_sphere_runtime_p2": [],
+  "uniform_best_by_sphere_runtime_p3": [],
+  "weight_sum": 1.7576878181077022,
+  "weights_count": 2000
+}

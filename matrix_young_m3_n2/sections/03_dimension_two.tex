@@ -1,0 +1,102 @@
+\section{Dimension-two structure}
+
+\subsection{Hyperbolic reformulation of the two eigenvalue inequalities}
+\begin{proposition}[Exact two-by-two reformulation \statusR]
+Let
+\[
+s_1(P)=\rho e^L,\qquad s_2(P)=\rho e^{-L},
+\]
+and
+\[
+\lambda_1(S)=\Delta e^h,\qquad \lambda_2(S)=\Delta e^{-h},
+\]
+where $L,h\ge0$.  Then the two desired inequalities in \eqref{eq:two-targets} are jointly equivalent to
+\begin{equation}
+\boxed{
+|L-h|\le \log\frac{\Delta}{\rho}.
+}
+\label{eq:hyperbolic-slack}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Since $s_1(P)s_2(P)=\det P=\rho^2$ and $\lambda_1(S)\lambda_2(S)=\det S=\Delta^2$, the displayed parametrizations are exact.  The inequalities
+\[
+\rho e^L\le \Delta e^h,
+\qquad
+\rho e^{-L}\le \Delta e^{-h}
+\]
+are respectively equivalent to
+\[
+L-h\le\log(\Delta/\rho),
+\qquad
+-(L-h)\le\log(\Delta/\rho).
+\]
+Combining them gives \eqref{eq:hyperbolic-slack}.  The right side is nonnegative by \eqref{eq:det-slack}.
+\end{proof}
+
+This formulation separates the problem into an anisotropy mismatch $|L-h|$ and a determinant slack $\log(\Delta/\rho)$.
+
+\subsection{Scale-stationary normalization}
+The following reduction is useful when studying a hypothetical interior maximizer of either ratio
+\[
+R_j(X,Y,Z)=\frac{s_j(X^\alpha Y^\beta Z^\gamma)}{\lambda_j(\alpha X+\beta Y+\gamma Z)}.
+\]
+
+\begin{lemma}[Stationary scaling condition \statusR]\label{lem:stationary-scaling}
+Fix the shapes of three positive definite matrices $X_1,X_2,X_3$ and vary only positive scalar multipliers $c_i$.  Suppose $R_j(c_1X_1,c_2X_2,c_3X_3)$ has an interior stationary point and the relevant eigenvalue of
+\[
+S(c)=\sum_{i=1}^3\alpha_i c_iX_i
+\]
+is simple, with normalized eigenvector $v$.  Then
+\begin{equation}
+ c_i\langle v,X_iv\rangle=\lambda_j(S(c)),\qquad i=1,2,3.
+\label{eq:stationary-rayleigh}
+\end{equation}
+\end{lemma}
+\begin{proof}
+The numerator is multiplied by $\prod_i c_i^{\alpha_i}$.  Hence the derivative of its logarithm with respect to $\log c_i$ is $\alpha_i$.  By Hellmann--Feynman,
+\[
+\frac{\partial}{\partial\log c_i}\log\lambda_j(S(c))
+=\frac{\alpha_i c_i\langle v,X_iv\rangle}{\lambda_j(S(c))}.
+\]
+Stationarity of $\log R_j$ gives \eqref{eq:stationary-rayleigh}.
+\end{proof}
+
+After dividing all three scaled matrices by $\lambda_j(S(c))$ and choosing $v=e_1$, one may therefore write
+\begin{equation}
+B_i=
+\begin{pmatrix}
+1&a_i\\
+\overline{a_i}&b_i
+\end{pmatrix}>0,
+\qquad
+\sum_{i=1}^3\alpha_i a_i=0,
+\label{eq:stationary-normal-form}
+\end{equation}
+and
+\[
+\sum_{i=1}^3\alpha_i B_i=\diag(1,s).
+\]
+For the $j=1$ problem one has $s\le1$; for the $j=2$ problem one has $s\ge1$.
+
+\subsection{Bloch/Pauli parameterization}
+Every Hermitian $2\times2$ matrix has a representation
+\[
+X=x_0I+x\,n_x\cdot\sigma,
+\]
+where $n_x\in S^2$ and $\sigma=(\sigma_1,\sigma_2,\sigma_3)$ denotes the Pauli matrices.  Thus a triple of fixed spectra depends geometrically only on the Gram variables
+\[
+u=n_x\cdot n_y,\qquad v=n_y\cdot n_z,\qquad w=n_x\cdot n_z,
+\]
+which satisfy
+\begin{equation}
+1+2uvw-u^2-v^2-w^2\ge0.
+\label{eq:gram-region}
+\end{equation}
+The boundary of \eqref{eq:gram-region} is exactly the coplanar case and can be parameterized by two angles,
+\[
+u=\cos a,\qquad v=\cos b,\qquad w=\cos(a-b).
+\]
+
+\paragraph{Working reduction.}
+\statusW{} A Hessian calculation carried out during the project indicates that, for fixed spectra and weights, an extremum of either violation ratio can be pushed to the Gram boundary, which would reduce the complex Hermitian problem to real symmetric triples.  This is a promising reduction, but the present manuscript does not yet promote it to theorem status: the Hessian argument should be independently rewritten and checked before publication.

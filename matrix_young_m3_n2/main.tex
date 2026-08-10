@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\psd}{\mathbb{H}_{+}}
+\newcommand{\Tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\smin}{s_{2}}
+\newcommand{\smax}{s_{1}}
+\newcommand{\lamax}{\lambda_{1}}
+\newcommand{\lamin}{\lambda_{2}}
+\newcommand{\statusL}{\textcolor{blue!70!black}{[L]}}
+\newcommand{\statusR}{\textcolor{green!50!black}{[R]}}
+\newcommand{\statusW}{\textcolor{orange!80!black}{[W]}}
+\newcommand{\statusN}{\textcolor{purple!70!black}{[N]}}
+\newcommand{\statusF}{\textcolor{red!70!black}{[F]}}
+
+\title{The Three-Factor Matrix Young Problem in Dimension Two\\
+\large Working manuscript, rigorous reductions, and proof audit}
+\author{Working research notes}
+\date{7 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the unresolved low-dimensional cell of the multivariable Matrix Young conjecture with three factors and matrix size two.  Pang recently showed that the conjecture fails for every $m\ge4$ already for $2\times2$ real rank-one projections, and also fails for $m=3$ in dimension $3$, at the second singular-value/eigenvalue index.  Thus $(m,n)=(3,2)$ is a natural boundary case.  These notes collect the work completed so far, with a strict status audit.  In particular, we separate literature results, internally rigorous reductions, working lemmas that still require an independent proof audit, numerical evidence, and routes that have already been falsified.
+\end{abstract}
+
+\paragraph{Status convention.}
+\statusL{} = established literature result; \statusR{} = rigorous derivation retained in the present notes; \statusW{} = working lemma or proof chain not yet independently closed; \statusN{} = numerical/experimental evidence only; \statusF{} = route falsified or withdrawn.
+
+\tableofcontents
+
+\input{sections/01_problem}
+\input{sections/02_closed_reductions}
+\input{sections/03_dimension_two}
+\input{sections/04_equal_weight}
+\input{sections/05_general_weights}
+\input{sections/06_failed_routes}
+\input{sections/07_open_work}
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

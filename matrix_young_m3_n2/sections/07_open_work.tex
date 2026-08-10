@@ -1,0 +1,71 @@
+\section{Work map and publication-level gaps}
+
+The project should now be advanced in the following order.
+
+\subsection*{Priority A: close the equal-weight $j=2$ trace-sign inequality}
+The sharp remaining normalized statement is \eqref{eq:J2}:
+\[
+\Tr(P^*P)\ge 1+d^2,
+\qquad
+P=B_1^{1/3}B_2^{1/3}B_3^{1/3},
+\qquad
+1<d\le s,
+\]
+under \eqref{eq:j2-normal}.  There are two serious routes:
+\begin{enumerate}[leftmargin=2.2em]
+\item \textbf{Hua/H\"older route.}  Find a contractive rescaling that converts $\det(I-P^*P)$ into an instance of the generalized H\"older eigenvalue inequalities discussed around Hua determinant inequalities; compare \cite{Lin2024}.
+\item \textbf{Explicit $2\times2$ route.}  Use Cayley--Hamilton to write
+\[
+B_i^{1/3}=a_iI+b_iB_i
+\]
+and expand $\Tr(P^*P)-1-d^2$ under $q_1+q_2+q_3=0$.  Search for a decomposition into commutator squares and manifestly nonnegative scalar terms.
+\end{enumerate}
+
+\subsection*{Priority B: independently audit the equal-weight $j=1$ candidate}
+Prove or disprove \eqref{eq:candidate-abc}.  If it is true, identify the shortest legitimate bridge from Bhatia--Davis or from an Araki--Lieb--Thirring/three-factor AGM inequality.  Israel--Krahmer--Ward prove a noncommutative AGM for averaged products of up to three matrices \cite{IsraelKrahmerWard2016}; their result is related but is not identical to the fixed ordered-product inequality needed here.
+
+If \eqref{eq:candidate-abc} fails in higher dimension but survives for $2\times2$, the failure mechanism itself may explain why $(m,n)=(3,2)$ is exceptional.
+
+\subsection*{Priority C: complete the real-symmetric reduction audit}
+Rewrite the Pauli/Gram Hessian argument from scratch.  Either prove that a maximal violation ratio can always be pushed to the boundary
+\[
+1+2uvw-u^2-v^2-w^2=0,
+\]
+or produce a counterexample to that reduction.  Once certified, the remaining angular geometry has only two real variables.
+
+\subsection*{Priority D: return to arbitrary weights}
+After the equal-weight case is settled, use the successful proof to determine which features survive when $1/3$ is replaced by $(\alpha,\beta,\gamma)$.  The likely final mechanisms are:
+\begin{itemize}[leftmargin=2em]
+\item determinant slack plus anisotropy control via \eqref{eq:hyperbolic-slack};
+\item a weighted analogue of the equal-weight trace-sign inequality;
+\item or a weighted two-angle scalar inequality after real-symmetric reduction.
+\end{itemize}
+
+\subsection{What would constitute a complete paper?}
+A publication-ready result need not necessarily prove the entire general-weight conjecture.  The following outcomes are already mathematically coherent paper targets:
+\begin{enumerate}[leftmargin=2.2em]
+\item a proof of the full $(m,n)=(3,2)$ cell, giving the sharp positive boundary between Pang's two counterexample regimes;
+\item a complete equal-weight theorem together with equality classification and a structural $2\times2$ proof;
+\item a counterexample in the remaining cell, together with the minimal parameter mechanism;
+\item or a new dimension-free three-factor norm inequality such as \eqref{eq:candidate-abc}, if independently proved, plus its relation to Matrix Young.
+\end{enumerate}
+
+\subsection{Current status table}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\toprule
+Component & Status & Main remaining issue\\
+\midrule
+Literature boundary & \statusL{} & none\\
+Commuting / scalar / adjacent-equal & \statusR{} & equality audit only\\
+Determinant-hyperbolic reformulation & \statusR{} & none\\
+Scale-stationary normalization & \statusR{} & boundary/non-simple cases to package\\
+Complex $\to$ real-symmetric extremizer & \statusW{} & independent Hessian audit\\
+Equal weight, $j=1$ & \statusW{} & prove/disprove \eqref{eq:candidate-abc}\\
+Equal weight, $j=2$ & \statusR{} reduction & prove trace-sign \eqref{eq:J2}\\
+General weights, $j=1$ & open & main global inequality\\
+General weights, $j=2$ & open & determinant transfer / weighted trace sign\\
+Numerical search & \statusN{} & no counterexample found\\
+\bottomrule
+\end{tabularx}
+\end{center}

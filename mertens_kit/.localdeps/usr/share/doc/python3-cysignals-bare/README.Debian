@@ -1,0 +1,36 @@
+Debian specific setup
+=====================
+
+The core part of the `cysignals' Cython package comes in different flavours.
+Each flavour is distributed within a distinct Debian package, and these cannot
+be co-installed.
+
+At the time of writing, there are two flavours: the `bare' flavour is built
+against no specific library and is meant for generic usage; the `pari' flavour
+is additionally built against the PARI/GP library (version 2.8 or higher) and
+has a hard-dependency on the PARI/GP runtime library package, and is used by
+the Sage[Math] umbrella software (from where `cysignals' has been extracted).
+To be clear, the `pari' flavour contains (i.e. is a superset of) the `bare'
+flavour. Their respective Debian packages are both a concretization of the
+virtual Debian package `python-cysignals', their respective flavour being
+appended as suffix (with a dash) to their package name, as expected:
+`python-cysignals-bare' and `python-cysignals-pari'.
+
+For Debian packages that must (runtime-)depend on `cysignals':
+
+- if your usage does not require the PARI/GP Computer Algebra System (CAS),
+  then you must depend on the virtual Debian package `python-cysignals';
+- otherwise, you must explicitly depend on the concrete Debian package
+  `python-cysignals-pari'.
+
+This approach helps users to avoid installing a full CAS whenever such a big
+(not to say Huge) machinery is not necessary.
+
+The suite of tests and the simple example furnished by the upstream team are
+distributed `as-is' within the Debian package `python-cysignals-doc'. At the
+time of writing, this material does not involved the PARI/GP CAS, even so the
+tests require the debugging tool `cysignals-CSI' as distributed in the Debian
+package `cysignals-tools' to be performed properly; straightforward Makefile
+scripts to run them are provided.
+
+ -- Jerome Benoit <calculus@rezozer.net>  Sun, 02 Oct 2016 23:57:03 +0000

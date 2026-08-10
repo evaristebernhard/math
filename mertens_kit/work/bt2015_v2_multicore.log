@@ -1,0 +1,14 @@
+[04     5.1s] stage=bt2015 dim=581 checkpoints=3 jobs=12 MPFR=384b tail=12
+[04    47.0s] decoder bt2015_bkz20.txt: f64=1.3069 (71.7%) | mpfr=1.2487 (68.5%) | tail=128 | 40.6s
+[04    47.0s] decoder bt2015_bkz30.txt: f64=1.2954 (71.1%) | mpfr=1.3138 (72.1%) | tail=128 | 36.8s
+[04    47.0s] decoder bt2015_bkz40.txt: f64=1.2733 (69.8%) | mpfr=1.2747 (69.9%) | tail=128 | 29.9s
+[04    47.0s] base candidates=18384 directions=16
+[04    63.7s] heavy best=1.3138/A_H=1.8232=72.1% (tilt=1.6689)
+[04    81.8s] 2D AP best_mid=1.3410 (mid_mass=2.4383) tested~1,026,560 kept_unique=8,777
+[04    87.4s] full top5=[1.336013, 1.330422, 1.327053, 1.313074, 1.312462]
+[04    87.4s] 
+[04    87.4s] === bt2015 SEARCH RESULT ===
+[04    87.4s] h=1.336013042 at |y|~10^230.5
+[04    87.4s] h_H=1.324566/A_H=1.823164=72.7% harvest=+0.011447
+[04    87.4s] target 1.6383: not reached
+[04    87.4s] saved bt2015_results.json; next: python3 s05_certify.py bt2015

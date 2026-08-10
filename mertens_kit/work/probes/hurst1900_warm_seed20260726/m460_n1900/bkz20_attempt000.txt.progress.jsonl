@@ -1,0 +1,2 @@
+{"cpu_seconds": null, "elapsed_seconds": 6.0259999372647144e-05, "event": "started", "peak_rss_kib": 0, "stderr_bytes": 0, "stdout_bytes": 0, "timeout_fraction": 3.3477777429248414e-08, "timeout_seconds": 1800.0}
+{"cpu_seconds": null, "elapsed_seconds": 17.747913461998905, "event": "completed", "peak_rss_kib": 57876, "stderr_bytes": 102, "stdout_bytes": 0, "timeout_fraction": 0.009859951923332725, "timeout_seconds": 1800.0}

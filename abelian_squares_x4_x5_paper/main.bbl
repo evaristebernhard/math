@@ -1,0 +1,66 @@
+\begin{thebibliography}{10}
+
+\bibitem{BrownJungicPoelstra2014}
+Tom~C. Brown, Veselin Jungic, and Andrew Poelstra.
+\newblock On double 3-term arithmetic progressions.
+\newblock {\em INTEGERS}, 14:A43, 2014.
+
+\bibitem{CassaigneRichommeSaariZamboni2011}
+Julien Cassaigne, Gwena{\"e}l Richomme, Kalle Saari, and Luca~Q. Zamboni.
+\newblock Avoiding abelian powers in binary words with bounded abelian
+  complexity.
+\newblock {\em International Journal of Foundations of Computer Science},
+  22(4):905--920, 2011.
+
+\bibitem{Dekking1979}
+F.~M. Dekking.
+\newblock Strongly non-repetitive sequences and progression-free sets.
+\newblock {\em Journal of Combinatorial Theory, Series A}, 27(2):181--185,
+  1979.
+
+\bibitem{FMMS2026}
+Szil{\'a}rd~Zsolt Fazekas, Adam Mammoliti, Robert Merca{\c{s}}, and Jamie
+  Simpson.
+\newblock Binary words containing few abelian squares, 2026.
+\newblock arXiv:2604.23188v1, 25 April 2026.
+
+\bibitem{FiciPuzynina2023}
+Gabriele Fici and Svetlana Puzynina.
+\newblock Abelian combinatorics on words: A survey.
+\newblock {\em Computer Science Review}, 47:100532, 2023.
+
+\bibitem{FiciSaarela2014}
+Gabriele Fici and Aleksi Saarela.
+\newblock On the minimum number of abelian squares in a word.
+\newblock {\em Dagstuhl Reports}, 4(3):34--35, 2014.
+\newblock Combinatorics and Algorithmics of Strings, Dagstuhl Seminar 14111.
+
+\bibitem{HalbeisenHungerbuhler2000}
+Lorenz Halbeisen and Norbert Hungerb{\"u}hler.
+\newblock An application of van der waerden's theorem in additive number
+  theory.
+\newblock {\em Integers}, 0:A07, 2000.
+
+\bibitem{Keranen1992}
+Veikko Ker{\"a}nen.
+\newblock Abelian squares are avoidable on 4 letters.
+\newblock In {\em Automata, Languages and Programming}, volume 623 of {\em
+  Lecture Notes in Computer Science}, pages 41--52. Springer, 1992.
+
+\bibitem{PirilloVarricchio1994}
+Giuseppe Pirillo and Stefano Varricchio.
+\newblock On uniformly repetitive semigroups.
+\newblock {\em Semigroup Forum}, 49(1):125--130, 1994.
+
+\bibitem{RaoRosenfeld2018}
+Micha{\"e}l Rao and Matthieu Rosenfeld.
+\newblock Avoiding two consecutive blocks of same size and same sum over
+  $\mathbb{Z}^2$.
+\newblock {\em SIAM Journal on Discrete Mathematics}, 32(4):2381--2397, 2018.
+
+\bibitem{Vukusic2026}
+Ingrid Vukusic.
+\newblock A lebesgue integral variant of the additive square problem.
+\newblock {\em The American Mathematical Monthly}, 133(4):371--375, 2026.
+
+\end{thebibliography}

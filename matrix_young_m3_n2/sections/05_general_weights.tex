@@ -1,0 +1,57 @@
+\section{General weights: what remains after the reductions}
+
+For arbitrary positive $\alpha,\beta,\gamma$ with sum one, the project has not yet found a single identity as rigid as the cubic equal-weight structure.  Nevertheless, the general problem has already been reduced in several useful ways.
+
+\subsection{Interior extremizers have a common Rayleigh normalization}
+By the scale-stationary condition, a hypothetical interior extremizer can be normalized so that
+\[
+B_i=\begin{pmatrix}1&a_i\\ \overline a_i&b_i\end{pmatrix},
+\qquad
+\alpha a_1+\beta a_2+\gamma a_3=0,
+\]
+and
+\[
+\alpha B_1+\beta B_2+\gamma B_3=\diag(1,s).
+\]
+For the top-eigenvalue problem $s\le1$, whereas for the bottom-eigenvalue problem $s\ge1$.  Thus any genuinely new obstruction must already survive a shared Rayleigh-quotient normalization.
+
+\subsection{Two-dimensional determinant coupling}
+The identity
+\[
+s_1(P)s_2(P)=\det P
+\]
+means that the $j=1$ and $j=2$ inequalities are not independent in dimension two.  The exact formulation \eqref{eq:hyperbolic-slack} says that both are controlled by a single anisotropy mismatch.  A successful estimate for $L-h$ that uses the determinant slack \eqref{eq:det-slack} would close both indices at once.
+
+\subsection{Rayleigh-envelope candidates}
+During the project the following stronger inequalities were identified as natural candidates:
+\begin{align}
+ s_1(X^\alpha Y^\beta Z^\gamma)
+ &\stackrel{?}{\le}
+ \max_{\|v\|=1}
+ (v^*Xv)^\alpha(v^*Yv)^\beta(v^*Zv)^\gamma,
+ \label{eq:Eplus}\\
+ s_2(X^\alpha Y^\beta Z^\gamma)
+ &\stackrel{?}{\le}
+ \min_{\|v\|=1}
+ (v^*Xv)^\alpha(v^*Yv)^\beta(v^*Zv)^\gamma.
+ \label{eq:Eminus}
+\end{align}
+If both held, scalar weighted Young applied pointwise in $v$ would prove the Matrix Young inequalities immediately.  However, these envelope statements are stronger than the original target and are currently \statusW{} rather than established lemmas.  They should not be used as hidden assumptions.
+
+\subsection{Rank-one boundary}
+\statusW{} The project derived a geometric argument suggesting that three rank-one factors satisfy the $m=3,n=2$ inequality, in contrast with Pang's $m\ge4$ rank-one counterexample mechanism.  The argument passes through the projective geometry of three lines in $\mathbb C^2$.  Because the covering-radius step has not yet received a separate proof audit, this result is recorded as a working lemma rather than as a closed theorem in the present source.
+
+\subsection{Relation to Hua determinant inequalities}
+Lin's 2024 paper develops Young-type eigenvalue inequalities alongside extensions of the Hua determinant inequality \cite{Lin2024}.  Its discussion of generalized H\"older eigenvalue inequalities for contractive matrix products is structurally close to the determinant-sign expression
+\[
+\det(I-P^*P)=1-\Tr(P^*P)+\det(P)^2
+\]
+that appears in the normalized $2\times2$ $j=2$ problem.  A serious next literature step is therefore to test whether an appropriate contractive rescaling converts the remaining trace-sign inequality into a direct consequence of the Hua/H\"older machinery, rather than expanding matrix cube roots by hand.
+
+\subsection{Current general-weight bottlenecks}
+At present the general-weight problem has two main unresolved parts:
+\begin{enumerate}[leftmargin=2.2em]
+\item prove the top singular-value inequality for genuinely noncommuting, full-rank $2\times2$ triples away from the scalar and commuting boundaries;
+\item transfer that control, together with determinant slack, to the bottom singular value, or derive a direct normalized trace-sign inequality analogous to \eqref{eq:J2}.
+\end{enumerate}
+The equal-weight case should be treated as the model problem from which the correct general-weight scalar inequality is to be inferred.

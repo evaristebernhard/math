@@ -1,0 +1,31 @@
+{
+  "accepted": true,
+  "command": [
+    "fplll",
+    "-a",
+    "bkz",
+    "-b",
+    "40",
+    "-f",
+    "dpe",
+    "-bkzmaxloops",
+    "1"
+  ],
+  "metadata": {
+    "NU": 900,
+    "backend": "dpe",
+    "beta": 40,
+    "mH": 460,
+    "parent_lll_sha256": "48ee6e1ec76772a6e2c9e1e94874d4f5d7244aa8519211d105900a10aba535fb",
+    "probe": "qcal",
+    "seed": 20260726,
+    "single_tour": true
+  },
+  "output": "work/probes/qcal_seed20260726/m460_n900/bkz40.txt",
+  "output_valid": true,
+  "peak_rss_kib": 113160,
+  "returncode": 8,
+  "seconds": 69.75402687599853,
+  "status": "completed_by_limit",
+  "stderr_tail": "Failure: loops limit exceeded in BKZ\n"
+}

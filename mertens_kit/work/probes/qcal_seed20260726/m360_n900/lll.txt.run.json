@@ -1,0 +1,24 @@
+{
+  "accepted": true,
+  "command": [
+    "fplll",
+    "-a",
+    "lll",
+    "-m",
+    "wrapper"
+  ],
+  "metadata": {
+    "NU": 900,
+    "mH": 360,
+    "probe": "qcal",
+    "seed": 20260726,
+    "step": "lll"
+  },
+  "output": "work/probes/qcal_seed20260726/m360_n900/lll.txt",
+  "output_valid": true,
+  "peak_rss_kib": 67212,
+  "returncode": 0,
+  "seconds": 94.4963083640032,
+  "status": "completed",
+  "stderr_tail": ""
+}

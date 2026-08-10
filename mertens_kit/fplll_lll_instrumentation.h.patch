@@ -1,0 +1,67 @@
+--- a/fplll/lll.h	2023-10-17 21:56:14.000000000 +0800
++++ b/fplll/lll.h	2026-07-27 14:42:12.439628986 +0800
+@@ -20,6 +20,8 @@
+ 
+ #include "gso.h"
+ #include "gso_interface.h"
++#include <chrono>
++#include <cstdlib>
+ 
+ FPLLL_BEGIN_NAMESPACE
+ 
+@@ -85,6 +87,7 @@
+   inline bool early_reduction(int start, int size_reduction_start = 0);
+   inline void print_params();
+   inline bool set_status(int new_status);
++  inline void instrument_report(const char *phase, int kappa);
+ 
+   MatGSOInterface<ZT, FT> &m;
+   FT delta, eta, swap_threshold;
+@@ -98,6 +101,14 @@
+   vector<long> babai_expo;
+   ZT ztmp1;
+   FT mu_m_ant, ftmp1;
++  long long instrument_iteration;
++  long long instrument_swaps;
++  long long instrument_babai;
++  long long instrument_gso_refresh;
++  long long instrument_size_reductions;
++  bool instrument;
++  long long instrument_interval;
++  std::chrono::steady_clock::time_point instrument_started;
+ };
+ 
+ template <class ZT, class FT>
+@@ -115,13 +126,31 @@
+ 
+   for (int k = kappa_min; k < kappa_end; k++)
+   {
+-    if ((k > 0 && !babai(k, k, size_reduction_start)) || !m.update_gso_row(k))
++    if ((k > 0 && !babai(k, k, size_reduction_start)) ||
++        (++instrument_gso_refresh, !m.update_gso_row(k)))
+       return false;
+   }
+   return set_status(RED_SUCCESS);
+ }
+ 
+ template <class ZT, class FT>
++inline void LLLReduction<ZT, FT>::instrument_report(const char *phase, int kappa)
++{
++  if (!instrument)
++    return;
++  const auto elapsed = std::chrono::duration<double>(
++      std::chrono::steady_clock::now() - instrument_started).count();
++  std::cerr << "FPLLL_INSTRUMENT phase=" << phase
++            << " iteration=" << instrument_iteration
++            << " swap_count=" << instrument_swaps
++            << " babai_count=" << instrument_babai
++            << " gso_refresh_count=" << instrument_gso_refresh
++            << " size_reduction_count=" << instrument_size_reductions
++            << " kappa=" << kappa
++            << " elapsed=" << elapsed << std::endl;
++}
++
++template <class ZT, class FT>
+ inline bool LLLReduction<ZT, FT>::early_reduction(int start, int size_reduction_start)
+ {
+   m.lock_cols();

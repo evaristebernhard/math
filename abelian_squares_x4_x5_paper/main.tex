@@ -1,0 +1,1561 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+\setlist{itemsep=2pt,topsep=4pt}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\AS}{\operatorname{AS}}
+\newcommand{\thetaas}{\vartheta}
+\newcommand{\ra}{r_a}
+\newcommand{\ind}{\mathbf 1}
+
+\title{Binary Words with Few Abelian Squares: Four and Five Occurrences of a Letter and Run-Length Structure}
+\author{Jizheng Chen\thanks{These authors contributed equally. Department of Mathematics, Chang'an University, Xi'an, Shaanxi 710064, People's Republic of China. Email: \texttt{1253183582@qq.com}.}
+\and
+Tianrun Yu\thanks{These authors contributed equally. College of Control Science and Engineering, Zhejiang University, Hangzhou, Zhejiang, People's Republic of China. Email: \texttt{waldinglawtergk548@gmail.com}.}
+\and
+Chaoyu Hu\thanks{Corresponding author. School of Automation, Hangzhou Dianzi University, Hangzhou, Zhejiang 310018, People's Republic of China. Email: \texttt{evaristebernhardwiener@gmail.com}.}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\thetaas(w)$ denote the number of distinct Abelian-square factors of a binary word $w$, and let
+\[
+ M(x,n)=\min\{\thetaas(w): |w|=n,\ |w|_a=x\}.
+\]
+Fazekas, Mammoliti, Merca\c{s}, and Simpson recently determined $M(x,n)$ for $x\le3$ and proposed an explicit extremal construction for general Parikh vectors. We determine the next two cases. For $n\ge5$,
+\[
+ M(4,n)=1+\left\lfloor\frac{n-2}{4}\right\rfloor,
+\]
+and for $n\ge6$,
+\[
+ M(5,n)=\left\lfloor\frac{n+1}{4}\right\rfloor.
+\]
+We also classify all minimising words.  For four occurrences with $n\ge8$, equality forces a $1+3$ run pattern; for five occurrences with $n\ge7$, a four-$a$ balancing lemma leads to a run-rigidity theorem.  Beyond these fixed-minority cases, we give an exact rank-window criterion for positive-gap encodings $E(g)=ab^{g_1}\cdots ab^{g_m}$.  We prove that weakly monotone positive gap sequences satisfy $\thetaas(E(g))\ge\lfloor |E(g)|/2\rfloor-1$, and that every positive-gap word with no Abelian square containing four occurrences of $a$ satisfies the conjectured fixed-Parikh lower bound.  These are additional sufficient regimes for the broader conjecture; the general case remains open.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords.} Abelian square; combinatorics on words; Parikh vector; extremal word; binary word.
+
+\smallskip
+\noindent\textbf{2020 Mathematics Subject Classification.} 68R15, 05A05.
+
+\section{Introduction}
+
+A finite word $u$ is an \emph{Abelian square} if $u=xy$ with $x$ and $y$ having the same Parikh vector. We count distinct Abelian-square factors as words, not occurrences. Abelian repetition avoidance has a classical history, including work of Dekking and Ker\"anen \cite{Dekking1979,Keranen1992}; for a broader survey of Abelian combinatorics on words, see \cite{FiciPuzynina2023}. The problem considered here is different from avoidance: we ask how few distinct Abelian-square factor-words a binary word can contain under a prescribed Parikh vector.
+
+Fici and Saarela conjectured that every binary word of length $n$ contains at least $\lfloor n/4\rfloor$ distinct Abelian squares \cite{FiciSaarela2014}; see also \cite{FMMS2026} for the fixed-Parikh formulation used here. Fazekas, Mammoliti, Merca\c{s}, and Simpson \cite{FMMS2026} refined the problem by fixing the Parikh vector. For
+\[
+ M(x,n)=\min\{\thetaas(w):|w|=n,\ |w|_a=x\},
+\]
+they determined $x=0,1,2,3$ and introduced an \emph{effective word} which they conjectured to minimise the number of Abelian squares for every non-boundary Parikh vector.
+
+We settle the next two values.
+
+\begin{theorem}[Four occurrences]\label{thm:x4-main}
+We have $M(4,4)=2$. For every $n\ge5$,
+\[
+ M(4,n)=1+\left\lfloor\frac{n-2}{4}\right\rfloor.
+\]
+For $n\ge8$ all minimisers are given, up to reversal, by Theorem~\ref{thm:x4-classification}.
+\end{theorem}
+
+The case $x=5$ is the next fixed-minority case after $x=4$ and exhibits a different equality mechanism: balanced wings force an Abelian square containing four occurrences of the minority letter.
+
+\begin{theorem}[Five occurrences]\label{thm:x5-main}
+We have $M(5,5)=2$. For every $n\ge6$,
+\[
+ M(5,n)=\left\lfloor\frac{n+1}{4}\right\rfloor.
+\]
+Every minimiser has at most two $a$-runs, and all minimisers are given, up to reversal, by Theorem~\ref{thm:x5-classification}.
+\end{theorem}
+
+The formulae agree exactly with the effective-word upper bounds of \cite[Theorem~12]{FMMS2026}. The main work below is therefore the lower bounds and the rigidity of equality.
+
+We also record two consequences of the run-length viewpoint.  For positive-gap words
+\[
+ E(g)=ab^{g_1}\cdots ab^{g_m},
+\]
+Section~\ref{sec:general-run-length} gives an exact rank-window criterion.  It yields the bound $\thetaas(E(g))\ge\lfloor |E(g)|/2\rfloor-1$ for weakly monotone gap sequences and proves the conjectured fixed-Parikh lower bound whenever no Abelian-square factor contains four occurrences of $a$.  These statements concern the positive-gap encoding above and do not settle the unrestricted fixed-Parikh conjecture.
+
+The proof is organised accordingly.  We first record the two-occurrence input and an escape lemma used in both fixed-minority cases.  We then treat four occurrences, followed by the lower bound, rigidity, and complete classification for five occurrences.  The general run-length consequences are collected after the fixed-$x$ arguments, and the final section discusses computational audits and the connection with additive squares.
+
+\section{Preliminaries and the two-a input}
+
+For a word $w$, let $\AS(w)$ be the set of its distinct Abelian-square factors and put
+\[
+ \thetaas(w)=|\AS(w)|.
+\]
+We write $\ra(w)$ for the number of maximal runs of $a$ in $w$.
+
+The main external structural input is the case of two occurrences from \cite{FMMS2026}.  For a few small boundary values we also use the already known cases with at most three occurrences.
+
+\begin{theorem}[Fazekas--Mammoliti--Merca\c{s}--Simpson]\label{thm:two-a}
+Let $v$ contain exactly two occurrences of $a$ and let $N=|v|\ge3$. Then
+\[
+ \thetaas(v)\ge \left\lfloor\frac{N-2}{2}\right\rfloor.
+\]
+If
+\[
+ v=b^i a b^j a b^k
+\]
+attains equality, then one of $i,k$ is zero and $j$ is odd. The complete equality statement is \cite[Theorem~7]{FMMS2026}.
+\end{theorem}
+
+The same elementary analysis gives the following exact description, which we record for repeated use.
+
+\begin{lemma}[Exact two-$a$ count]\label{lem:two-a-count}
+For
+\[
+ U(i,j,k)=b^i a b^j a b^k
+\]
+define
+\[
+ \mathcal I(i,j,k)=
+ \bigl\{(x,z)\in\mathbb Z^2:
+ 0\le x\le i,\ 0\le z\le k,\ |x-z|\le j,\ x+z\equiv j\pmod2\bigr\}.
+\]
+Then
+\[
+ \thetaas(U(i,j,k))
+ =\left\lfloor\frac{\max\{i,j,k\}}2\right\rfloor+|\mathcal I(i,j,k)|.
+\]
+\end{lemma}
+
+\begin{proof}
+The zero-$a$ Abelian squares are exactly
+\[
+ b^2,b^4,\ldots,b^{2\lfloor\max\{i,j,k\}/2\rfloor}.
+\]
+Every square containing an $a$ must contain both occurrences and has the unique form
+\[
+ b^x a b^j a b^z,\qquad 0\le x\le i,\quad0\le z\le k.
+\]
+Its two halves contain one $a$ each precisely when the midpoint lies in the middle $b^j$ block. Equating the numbers of $b$ in the two halves gives $|x-z|\le j$, while even total length is equivalent to $x+z\equiv j\pmod2$. Thus the admissible factors are exactly the points of $\mathcal I(i,j,k)$.
+\end{proof}
+
+We use the following elementary construction repeatedly. If two consecutive occurrences of $a$ are separated by $h$ copies of $b$, then
+\begin{equation}\label{eq:gap-square}
+ \begin{cases}
+ ab^h a,&h\text{ even},\\
+ bab^h a,&h\text{ odd and a }b\text{ is available on the left},\\
+ ab^h ab,&h\text{ odd and a }b\text{ is available on the right}
+ \end{cases}
+\end{equation}
+is an Abelian square. We refer to these as \emph{gap squares}.
+
+\begin{lemma}[Wing escape]\label{lem:wing-escape}
+Let a binary word contain exactly four or five occurrences of $a$, and let $a_1,a_2,a_3,a_4$ denote its first four occurrences in order. Let
+\[
+ P=b^i a_1 b^h a_2 b^k
+\]
+be the factor ending immediately before $a_3$ and containing exactly $a_1,a_2$. Suppose that the ambient word has at least three $a$-runs.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item There is an Abelian square in the ambient word which is not in $\AS(P)$.
+\item If $P$ attains the two-$a$ minimum of Theorem~\ref{thm:two-a}, then there are at least two distinct Abelian squares outside $\AS(P)$, with the unique exception
+\[
+ w=abababa,\qquad P=abab.
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Every two-$a$ square in $P$ uses $a_1,a_2$, hence its two occurrences of $a$ are separated by exactly $h$ copies of $b$. Let $r$ denote the gap between $a_3$ and $a_4$; when a fifth occurrence exists, let $s$ denote the gap between $a_4$ and $a_5$.
+
+We first prove (i). If $k=0$ and $h>0$, then $a_2a_3=aa$ is new. If $k=h=0$, the first three occurrences belong to one run. Having at least three $a$-runs is then possible only in the five-$a$ case, with $r>0$ and $s>0$. A gap square on $(a_3,a_4)$ exists because the right extension through the positive gap $s$ is available; its internal gap is $r>0$, whereas the two occurrences in $P$ are adjacent, so it is new.
+
+Assume now $k>0$. If $k$ is even, $ab^k a$ on $(a_2,a_3)$ is a gap square. If $k$ is odd and $h>0$, use $bab^k a$; if $k$ is odd, $h=0$, and $r>0$, use $ab^k ab$. Whenever $k\ne h$, the resulting square is new because its internal gap differs from that of every two-$a$ factor in $P$.
+
+The only unhandled odd case with $k\ne h$ is $h=r=0$. Then the first two and the next two occurrences form two adjacent pairs separated by $b^k$. The three-run hypothesis forces a fifth occurrence with $s>0$. If $s$ is even, $ab^s a$ on $(a_4,a_5)$ is new; if $s$ is odd and there is a trailing $b$, use $ab^s ab$. If $s$ is odd and the word ends at $a_5$, then
+\[
+ a^2b^k a^2b
+\]
+is a four-$a$ Abelian square, using the first letter of the positive $b^s$ block, and is automatically outside $\AS(P)$.
+
+It remains for (i) that $k=h>0$. If $r=0$, then $a_3a_4=aa$ is new. If $r>0$ and $r\ne h$, a gap square on $(a_3,a_4)$ is available because $k>0$ supplies a left $b$ when $r$ is odd, and its different internal gap makes it new. Finally suppose $r=h$. If $h$ is even, then
+\[
+ ab^h ab^h ab^h a
+\]
+is a four-$a$ Abelian square. If $h$ is odd and a $b$ is available immediately before $a_1$ or immediately after $a_4$, adjoining that $b$ to the same four-$a$ factor gives an Abelian square. If no such $b$ is available and a fifth occurrence follows immediately, then $a_4a_5=aa$ is new. In the remaining four-$a$ endpoint case the word begins with $a_1$ and ends with $a_4$; the factor $bab^h a$ on $(a_2,a_3)$ is then new because $P$ begins with $a_1$. This proves (i).
+
+For (ii), Theorem~\ref{thm:two-a} gives $h$ odd and either $i=0$ or $k=0$.
+
+Assume first $k=0$. The square $aa$ on $(a_2,a_3)$ is new. If $r>0$ is even, $ab^r a$ is a second new square. If $r$ is odd and a right $b$ follows $a_4$, use $ab^r ab$. If $r$ is odd and no such right $b$ exists, then
+\[
+ b^d aa b^d,\qquad d=\min\{h,r\}>0,
+\]
+formed around the central pair $a_2a_3$, is a second square. If $r=0$, the first three occurrences $a_2,a_3,a_4$ lie in one run. The three-run hypothesis then forces the five-$a$ case with $s>0$. For even $s$, the gap square $ab^s a$ on $(a_4,a_5)$ is a second word. For odd $s$ with a trailing $b$, use $ab^s ab$. If $s$ is odd and the word ends at $a_5$, put $d=\min\{h,s\}$. If $d=h$, then
+\[
+ ab^h a^3b^h
+\]
+is a four-$a$ square; if $d=s$, then
+\[
+ b^s a^3b^s a
+\]
+is one. In either case it is distinct from $aa$.
+
+Now assume $i=0$ and $k>0$. A first new gap square $Q$ on $(a_2,a_3)$ is $ab^k a$ for even $k$ and $bab^k a$ for odd $k$. Let $R$ be the analogous gap square on $(a_3,a_4)$, using the left $b$ supplied by $k>0$ when $r$ is odd. If $R\ne Q$, these are the required two new words. If $R=Q$, then necessarily $r=k$. The ordinary square
+\[
+ ab^k ab^k
+\]
+formed from $a_2,a_3$ and the following block $b^r$ is a second new word unless $h=k$, because the only two occurrences in $P$ are separated by $h$.
+
+Thus only
+\[
+ h=k=r
+\]
+remains; these numbers are odd. The first new word is $bab^h a$. If $h\ge3$, then
+\[
+ b^2ab^h ab
+\]
+is another Abelian square: its two halves contain one occurrence of $a$ each, the two leading copies of $b$ are available inside the gap before $a_2$, and the trailing copy of $b$ is available inside the gap after $a_3$. This word cannot occur in $P$, which begins with $a_1$. Hence only $h=1$ remains. The first four occurrences form $abababa$. If a $b$ follows $a_4$, then $abababab$ is a second new square; if a fifth occurrence follows immediately, then $aa$ is a second new square. Therefore the only failure is the four-$a$ word $w=abababa$ with $P=abab$.
+\end{proof}
+
+\section{Four occurrences of a}
+
+Write
+\begin{equation}\label{eq:x4-gaps}
+ w=b^{r_0}a b^{r_1}a b^{r_2}a b^{r_3}a b^{r_4},
+ \qquad m=n-4.
+\end{equation}
+Set
+\[
+ L=b^{r_0}a b^{r_1}a b^{r_2},
+ \qquad
+ R=b^{r_2}a b^{r_3}a b^{r_4},
+\]
+and
+\[
+ X=r_0+r_1+r_2,\qquad Y=r_2+r_3+r_4.
+\]
+After reversal assume $X\ge Y$. Since $X+Y=m+r_2$,
+\begin{equation}\label{eq:x4-long-wing}
+ X\ge\left\lceil\frac{m+r_2}{2}\right\rceil\ge\left\lceil\frac m2\right\rceil.
+\end{equation}
+Put
+\[
+ T_4(n)=1+\left\lfloor\frac{n-2}{4}\right\rfloor
+       =1+\left\lfloor\frac{m+2}{4}\right\rfloor.
+\]
+
+\begin{lemma}[Four-$a$ wing deficit]\label{lem:x4-deficit}
+We have
+\[
+ \left\lfloor\frac X2\right\rfloor\ge T_4(n)-1,
+\]
+except when
+\[
+ m\equiv2\pmod4,\qquad r_2=0,\qquad X=Y=m/2,
+\]
+in which case
+\[
+ \left\lfloor\frac X2\right\rfloor=T_4(n)-2.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $m=4q+s$, $0\le s\le3$, and use \eqref{eq:x4-long-wing}. The least possible values of $\lfloor X/2\rfloor$ in the four residue classes are respectively $q,q,q,q+1$, while $T_4(n)-1$ is $q,q,q+1,q+1$. Thus a deficit can occur only for $m=4q+2$ and $X=2q+1$. Since $X+Y=m+r_2$ and $X\ge Y$, this forces $r_2=0$ and $X=Y=2q+1$.
+\end{proof}
+
+\begin{proposition}[The four-$a$ lower bound]\label{prop:x4-lower}
+For $n\ge5$ and $|w|_a=4$,
+\[
+ \thetaas(w)\ge T_4(n).
+\]
+\end{proposition}
+
+\begin{proof}
+For $n=5,6,7$, exchange the two letters and use the already known cases $x=1,2,3$ of \cite{FMMS2026}; the values are respectively $1,2,2$, which agree with $T_4(n)$. Assume henceforth $n\ge8$.
+
+By Theorem~\ref{thm:two-a},
+\[
+ \thetaas(L)\ge\left\lfloor\frac X2\right\rfloor.
+\]
+Outside the exceptional case of Lemma~\ref{lem:x4-deficit}, there is nothing to prove unless
+\[
+ \thetaas(L)=\left\lfloor\frac X2\right\rfloor=T_4(n)-1.
+\]
+Then $L$ is a two-$a$ minimiser. Hence $r_1$ is odd and one of $r_0,r_2$ is zero. If $r_2=0$, the square $aa$ formed by the second and third occurrences is new. If $r_0=0$ and $r_2>0$, apply \eqref{eq:gap-square} to the second and third occurrences: use $ab^{r_2}a$ for even $r_2$ and $bab^{r_2}a$ for odd $r_2$. The resulting word is not in $L$; when $r_2=r_1$ is odd, this follows because $L$ has no $b$ before its first occurrence of $a$. Thus $\thetaas(w)\ge T_4(n)$.
+
+In the exceptional case write $m=4q+2$. Then $r_2=0$ and
+\[
+ r_0+r_1=r_3+r_4=2q+1.
+\]
+Consequently the whole word $w$ is an Abelian square: its two halves, cut between the second and third occurrences of $a$, each contain two occurrences of $a$ and $2q+1$ copies of $b$. This four-$a$ square is not in $L$. If $\thetaas(L)\ge q+1$, it completes the bound. If $\thetaas(L)=q$, then $L$ is extremal, so $r_1$ is positive and odd; the central $aa$ is another new square. Hence $\thetaas(w)\ge q+2=T_4(n)$ in every case.
+\end{proof}
+
+The effective-word construction of \cite[Theorem~12]{FMMS2026} supplies the matching upper bound.
+
+\subsection{Central concentration}
+
+\begin{lemma}[Central concentration]\label{lem:x4-aaa}
+Let $n\ge8$, $|w|_a=4$, and $\thetaas(w)=T_4(n)$. Then $w$ contains $a^3$.
+\end{lemma}
+
+\begin{proof}
+Assume that $w$ contains no factor $a^3$.
+
+First suppose $\ra(w)\ge3$. Outside the exceptional case of Lemma~\ref{lem:x4-deficit}, the long wing $L$ contains at least $T_4(n)-1$ squares. If it contains at least $T_4(n)+1$, the desired strict inequality is immediate. If it contains exactly $T_4(n)$, Lemma~\ref{lem:wing-escape}(i) gives another square. If it contains $T_4(n)-1$, then $L$ is extremal and Lemma~\ref{lem:wing-escape}(ii) gives two further squares. Its unique exception is the word $abababa$ of length $7$, which is excluded by $n\ge8$. Thus $\thetaas(w)>T_4(n)$.
+
+In the exceptional case, $r_2=0$ and the balance identity from Proposition~\ref{prop:x4-lower} holds. Since $a^3$ is absent, both $r_1$ and $r_3$ are positive. The three words
+\[
+ aa,\qquad baab,\qquad w
+\]
+are distinct Abelian squares outside $\AS(L)$. Indeed, the first two have internal $a$-gap zero, whereas the two occurrences of $a$ in $L$ are separated by $r_1>0$; the last word contains all four occurrences of $a$. Since $L$ contains at least $T_4(n)-2$ squares, again $\thetaas(w)>T_4(n)$.
+
+It remains to treat $\ra(w)=2$. Since $a^3$ is absent, both runs have length two. After reversal choose the orientation with $s\ge t$ and write
+\[
+ w=b^s a^2 b^q a^2 b^t,\qquad q\ge1.
+\]
+Then the long wing is
+\[
+ L=b^s a^2 b^q.
+\]
+Its two occurrences of $a$ are adjacent, so $L$ is not a two-$a$ minimiser by Theorem~\ref{thm:two-a}. The exceptional case of Lemma~\ref{lem:x4-deficit} is impossible because the shared gap is $q>0$. Hence $\thetaas(L)\ge T_4(n)$.
+
+If $s+t>0$, then a four-$a$ square occurs outside $L$: for even $q$ use
+\[
+ a^2b^q a^2,
+\]
+while for odd $q$ use
+\[
+ ba^2b^q a^2
+\]
+when $s>0$, and
+\[
+ a^2b^q a^2b
+\]
+when $t>0$. Thus the total is strictly larger than $T_4(n)$. If $s=t=0$, then $q=n-4\ge4$ and the word contains $aa$ and the pure squares $b^2,\ldots,b^{2\lfloor q/2\rfloor}$, so
+\[
+ \thetaas(w)\ge1+\left\lfloor\frac q2\right\rfloor
+ >1+\left\lfloor\frac{q+2}{4}\right\rfloor=T_4(q+4).
+\]
+Thus no word without $a^3$ is extremal.
+\end{proof}
+
+Thus, up to reversal, every minimiser with $n\ge8$ has the form
+\begin{equation}\label{eq:W4}
+ W_4(s,q,t)=b^s a b^q a^3 b^t.
+\end{equation}
+
+\subsection{Exact counting and equality for four occurrences}
+
+\begin{proposition}[Exact count for the $1+3$ family]\label{prop:x4-count}
+Let $W_4(s,q,t)$ be as in \eqref{eq:W4}. Put
+\[
+ B=\max\{s,q,t\},\qquad u=\min\{s,q\},
+\]
+and
+\[
+ A(s,q)=
+ \begin{cases}
+ 0,&q=0,\\
+ \left\lfloor\dfrac{u+1}{2}\right\rfloor,&q>0\text{ odd},\\
+ \left\lfloor\dfrac u2\right\rfloor+1,&q>0\text{ even},
+ \end{cases}
+\]
+\[
+ C(s,q,t)=
+ \begin{cases}
+ 0,&t<q,\\
+ \min\{s,t-q\}+1,&t\ge q.
+ \end{cases}
+\]
+Then
+\[
+ \thetaas(W_4(s,q,t))
+ =1+\left\lfloor\frac B2\right\rfloor+A(s,q)+C(s,q,t).
+\]
+\end{proposition}
+
+\begin{proof}
+Every Abelian square contains an even number of occurrences of $a$, so the possible counts are $0,2,4$.
+
+The zero-$a$ squares are exactly
+\[
+ b^2,b^4,\ldots,b^{2\lfloor B/2\rfloor},
+\]
+contributing $\lfloor B/2\rfloor$ words.
+
+For two occurrences of $a$, the adjacent pairs inside the $a^3$ block contribute only the word $aa$. Any other two-$a$ factor must use the isolated occurrence and the first occurrence in the $a^3$ block, and therefore has the form
+\[
+ b^x a b^q a,
+ \qquad 0\le x\le s.
+\]
+By Lemma~\ref{lem:two-a-count}, this is an Abelian square exactly when
+\[
+ x\le q,\qquad x\equiv q\pmod2.
+\]
+Thus $0\le x\le u$, and the number of such factors is
+\[
+ \begin{cases}
+ \lfloor(u+1)/2\rfloor,&q\text{ odd},\\
+ \lfloor u/2\rfloor+1,&q>0\text{ even}.
+ \end{cases}
+\]
+When $q=0$ the isolated occurrence merges with the $a^3$ block and there is no additional two-$a$ word beyond $aa$. This gives $A(s,q)$.
+
+A four-$a$ square must contain all four occurrences and hence has the form
+\[
+ b^x a b^q a^3 b^z,
+ \qquad0\le x\le s,\quad0\le z\le t.
+\]
+The midpoint must lie between the first and second occurrences in the $a^3$ block so that each half contains two occurrences of $a$. Equality of the half-lengths is
+\[
+ x+q+2=z+2,
+\]
+that is, $z=x+q$. Hence such squares exist exactly when $t\ge q$, and then
+\[
+ 0\le x\le\min\{s,t-q\},
+\]
+which gives $C(s,q,t)$ choices. The three classes are disjoint by their number of occurrences of $a$.
+\end{proof}
+
+\begin{lemma}[Integer optimisation for $x=4$]\label{lem:x4-optimisation}
+Fix $N=s+q+t\ge4$ and set
+\[
+ F_4(s,q,t)=1+\left\lfloor\frac{\max\{s,q,t\}}2\right\rfloor+A(s,q)+C(s,q,t).
+\]
+Then
+\[
+ F_4(s,q,t)\ge1+\left\lfloor\frac{N+2}{4}\right\rfloor.
+\]
+Equality holds, up to reversal of the corresponding word, exactly for the triples in Table~\ref{tab:x4-triples}.
+\end{lemma}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c}
+\toprule
+$n$ & $(s,q,t)$ representatives \\
+\midrule
+$4k$ & $(0,2k-1,2k-3)$ \\
+$4k+1$ & $(0,2k-1,2k-2)$ \\
+$4k+2$ & $(0,2k-1,2k-1)$, $(0,2k+1,2k-3)$, $(1,2k-1,2k-2)$, $(2,2k-1,2k-3)$ \\
+$4k+3$ & $(0,2k+1,2k-2)$, $(2,2k-1,2k-2)$ \\
+\bottomrule
+\end{tabular}
+\caption{Equality triples for $W_4(s,q,t)$, where $s+q+t=n-4$.}
+\label{tab:x4-triples}
+\end{table}
+
+\begin{proof}
+Put
+\[
+ H=\left\lfloor\frac{N+2}{4}\right\rfloor,
+\]
+so the desired minimum is $1+H$.
+
+If $q=0$, then
+\[
+ F_4(s,0,t)=2+\left\lfloor\frac{\max\{s,t\}}2\right\rfloor+\min\{s,t\}.
+\]
+For fixed $N=s+t$, the last two terms are minimised when one of $s,t$ is zero, hence
+\[
+ F_4(s,0,t)\ge2+\left\lfloor\frac N2\right\rfloor>1+H.
+\]
+
+Assume $q>0$. Set
+\[
+ u=\min\{s,q\},\qquad v=\max\{s,q\},\qquad
+ M=\max\{v,t\},\qquad d=|v-t|.
+\]
+Then
+\[
+ v+t=N-u,\qquad M=\frac{N-u+d}{2},
+\]
+with $d\equiv N-u\pmod2$.
+
+Suppose first that $q$ is even. Since
+\[
+ A(s,q)=\left\lfloor\frac u2\right\rfloor+1,
+\]
+we have
+\[
+ F_4-1\ge
+ \left\lfloor\frac M2\right\rfloor+\left\lfloor\frac u2\right\rfloor+1.
+\]
+For fixed $N,u$ the right-hand side is smallest for the least admissible $d$. For $u=2,3,4,5$, its excess over $H$, with the columns indexed by $N\bmod4$, is
+\[
+\begin{array}{c|cccc}
+ u\backslash(N\bmod4)&0&1&2&3\\ \hline
+2&1&2&1&1\\
+3&1&1&1&1\\
+4&2&2&1&2\\
+5&2&2&1&1
+\end{array}
+\]
+Replacing $u$ by $u+4$ decreases the least possible $M$ by $2$ and increases $\lfloor u/2\rfloor+1$ by $2$, so the excess cannot decrease. Thus equality is impossible for $u\ge2$.
+
+If $u=0$, then $s=0$. The only floor-borderline is $N\equiv2\pmod4$ with $d=0$, which gives $q=t=N/2$; this number is odd, contradicting the assumption that $q$ is even. If $u=1$, then $s=1$. The only borderlines are $N\equiv2,3\pmod4$. For $N\equiv3$, $d=0$ gives $q=t=(N-1)/2$, again odd. For $N\equiv2$, the least choice is $\{q,t\}=\{2r,2r+1\}$. The even member must be $q=2r$, so $t=q+1$ and
+\[
+ C(1,q,t)=2,
+\]
+which makes the actual value strict. Hence equality requires $q$ odd.
+
+For odd $q$,
+\[
+ A(s,q)=\left\lceil\frac u2\right\rceil,
+\]
+so
+\[
+ F_4-1\ge
+ \left\lfloor\frac M2\right\rfloor+\left\lceil\frac u2\right\rceil.
+\]
+For $u=3,4,5,6$, the excess of this lower bound over $H$ is
+\[
+\begin{array}{c|cccc}
+ u\backslash(N\bmod4)&0&1&2&3\\ \hline
+3&1&1&1&1\\
+4&1&1&0&1\\
+5&2&2&1&1\\
+6&1&2&1&1
+\end{array}
+\]
+and increasing $u$ by $4$ cannot decrease the excess. The unique possible borderline is
+\[
+ N\equiv2\pmod4,\qquad u=4,\qquad d=0.
+\]
+Because $q$ is odd, $u=4$ cannot equal $q$, so $s=4$ and $q=v=t$. Then $C(s,q,t)=1$, making the actual value strict. Hence equality forces $u\le2$.
+
+If $u=q$, then $q$ is a positive odd integer at most $2$, so $q=1$. This also gives no equality. If $s=0$ or $t=0$, then
+\[
+ F_4=2+\left\lfloor\frac{N-1}{2}\right\rfloor>1+H.
+\]
+If $s,t>0$, then $A\ge1$ and $C\ge1$, while $\max\{s,t\}\ge\lceil(N-1)/2\rceil$, so
+\[
+ F_4\ge3+\left\lfloor\frac{\lceil(N-1)/2\rceil}{2}\right\rfloor>1+H;
+\]
+the final inequality follows by checking $N$ modulo $4$. Consequently every equality triple has
+\[
+ s=u\in\{0,1,2\},\qquad q>s,\qquad q\text{ odd}.
+\]
+
+It remains only to solve these three values of $s$.
+
+If $s=0$, then
+\[
+ F_4=
+ \begin{cases}
+ 1+(q-1)/2,&t<q,\\
+ 2+\lfloor t/2\rfloor,&t\ge q.
+ \end{cases}
+\]
+In the first branch equality is equivalent to $q=2H+1$. Writing $N=4r+\rho$ gives
+\[
+\begin{array}{c|c}
+\rho&(s,q,t)\\ \hline
+0&(0,2r+1,2r-1)\\
+1&(0,2r+1,2r)\\
+2&(0,2r+3,2r-1)\\
+3&(0,2r+3,2r)
+\end{array}
+\]
+In the branch $t\ge q$, equality requires $\lfloor t/2\rfloor=H-1$. Together with $q=N-t$ odd and $t\ge q$, this leaves only
+\[
+ N\equiv2\pmod4,\qquad (s,q,t)=(0,2r+1,2r+1).
+\]
+
+If $s=1$, then $A=1$. When $t=q$, write $q=2r+1$; then $N=4r+3$ and
+\[
+ F_4=r+3>r+2=1+H.
+\]
+When $t>q$, one has $C=2$ and the value is even larger. Thus equality requires $t<q$, where
+\[
+ F_4=2+(q-1)/2.
+\]
+Hence $q=2H-1$. The inequality $t=N-1-q<q$ is compatible only with
+\[
+ N\equiv2\pmod4,\qquad (s,q,t)=(1,2r+1,2r).
+\]
+
+If $s=2$, again $A=1$. When $t=q$, write $q=2r+1$; then $N=4r+4$ and
+\[
+ F_4=r+3>r+2=1+H.
+\]
+When $t>q$, $C\ge2$, so the inequality remains strict. Thus $t<q$, and equality again gives $q=2H-1$. The admissible residue classes are
+\[
+ N\equiv2\pmod4:\quad (s,q,t)=(2,2r+1,2r-1),
+\]
+and
+\[
+ N\equiv3\pmod4:\quad (s,q,t)=(2,2r+1,2r).
+\]
+Collecting the cases and translating $N=n-4$ gives exactly Table~\ref{tab:x4-triples}. Direct substitution verifies every listed triple.
+\end{proof}
+
+\begin{theorem}[All four-$a$ minimisers]\label{thm:x4-classification}
+For $n=4$ the unique minimiser is $a^4$. For $n=5,6,7$, respectively, the minimisers are
+\[
+ aaaba,\quad aabaa,\quad abaaa,
+\]
+\[
+ aaabab,\quad abaaab,\quad baaaba,\quad babaaa,
+\]
+and
+\[
+ aaabbba,\quad aabbbaa,\quad abababa,\quad abbbaaa.
+\]
+For $n\ge8$, the minimisers are, up to reversal:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item if $n=4k$,
+\[
+ ab^{2k-1}a^3b^{2k-3};
+\]
+\item if $n=4k+1$,
+\[
+ ab^{2k-1}a^3b^{2k-2};
+\]
+\item if $n=4k+2$,
+\[
+ ab^{2k-1}a^3b^{2k-1},\quad
+ ab^{2k+1}a^3b^{2k-3},\quad
+ bab^{2k-1}a^3b^{2k-2},\quad
+ b^2ab^{2k-1}a^3b^{2k-3};
+\]
+\item if $n=4k+3$,
+\[
+ ab^{2k+1}a^3b^{2k-2},\quad
+ b^2ab^{2k-1}a^3b^{2k-2}.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For $n=4,5,6,7$ the displayed lists are obtained by direct inspection of the possible positions of the $0,1,2,3$ occurrences of $b$, respectively. For $n\ge8$, Lemma~\ref{lem:x4-aaa} shows that every minimiser belongs, after reversal, to $W_4(s,q,t)$. Apply Lemma~\ref{lem:x4-optimisation} and translate Table~\ref{tab:x4-triples} into words.
+\end{proof}
+
+\section{Five occurrences of a: the exact minimum}
+
+Write
+\begin{equation}\label{eq:x5-gaps}
+ w=b^{g_0}a b^{g_1}a b^{g_2}a b^{g_3}a b^{g_4}a b^{g_5},
+ \qquad B=n-5.
+\end{equation}
+Put
+\[
+ X=g_0+g_1+g_2,\qquad Y=g_3+g_4+g_5,
+\]
+and after reversal assume $X\ge Y$. Here $X+Y=B$, so $X\ge\lceil B/2\rceil$. Let
+\[
+ P=b^{g_0}a b^{g_1}a b^{g_2},
+\qquad
+ T_5(n)=\left\lfloor\frac{n+1}{4}\right\rfloor
+       =\left\lfloor\frac{B+6}{4}\right\rfloor.
+\]
+
+\begin{lemma}[Five-$a$ wing deficit]\label{lem:x5-deficit}
+We have
+\[
+ \left\lfloor\frac X2\right\rfloor\ge T_5(n)-1,
+\]
+except when
+\[
+ B\equiv2\pmod4,\qquad X=Y=B/2,
+\]
+in which case
+\[
+ \left\lfloor\frac X2\right\rfloor=T_5(n)-2.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $B=4q+s$, $0\le s\le3$. The least possible $X$ is $2q,2q+1,2q+1,2q+2$ in the four residue classes, while $T_5(n)-1$ is $q,q,q+1,q+1$. The only deficit occurs for $B=4q+2$ and $X=2q+1$. Since $X+Y=B$ and $X\ge Y$, this is equivalent to $X=Y=B/2$.
+\end{proof}
+
+\subsection{The balancing lemma}
+
+\begin{lemma}[Four-$a$ balancing lemma]\label{lem:balancing}
+If
+\[
+ g_0+g_1+g_2=g_3+g_4+g_5,
+\]
+then $w$ contains an Abelian square with exactly four occurrences of $a$.
+\end{lemma}
+
+\begin{proof}
+First seek a square containing the first four occurrences of $a$. Such a factor has the form
+\[
+ b^x a b^{g_1}a b^{g_2}a b^{g_3}a b^z,
+ \qquad0\le x\le g_0,\quad0\le z\le g_4.
+\]
+Splitting between the middle two occurrences, the factor is an Abelian square exactly when
+\[
+ D=x+g_1-g_3-z
+\]
+satisfies
+\[
+ |D|\le g_2,\qquad D\equiv g_2\pmod2.
+\]
+The attainable values of $D$ form the integer interval
+\[
+ I_1=[g_1-g_3-g_4,\ g_0+g_1-g_3].
+\]
+The balance identity rewrites its right endpoint as
+\[
+ g_0+g_1-g_3=g_4+g_5-g_2\ge-g_2,
+\]
+so $I_1$ cannot lie completely to the left of $[-g_2,g_2]$.
+
+If $I_1$ lies completely to the right, then
+\[
+ g_1-g_3-g_4>g_2.
+\]
+For the last four occurrences of $a$, the corresponding interval is
+\[
+ I_2=[g_2-g_4-g_5,\ g_1+g_2-g_4],
+\]
+with target parity lattice $\{-g_3,-g_3+2,\ldots,g_3\}$. The left inequality
+\[
+ g_2-g_4-g_5\le g_3
+\]
+is automatic from nonnegativity and the balance identity. The right inequality
+\[
+ g_3\le g_1+g_2-g_4
+\]
+is equivalent, using balance, to $g_0\le g_5$, which follows from the strict right-side condition above. Hence $g_3\in I_2$, and $g_3$ has the required parity.
+
+The only remaining way for $I_1$ to meet $[-g_2,g_2]$ but miss the parity lattice is for the intersection to consist of a single interior integer of the wrong parity. The endpoints $\pm g_2$ themselves have the required parity, so this singleton cannot be produced by clipping a longer interval at an endpoint of $[-g_2,g_2]$; it must be all of $I_1$. Since the length of $I_1$ is $g_0+g_4$, this forces $g_0=g_4=0$. The balance identity becomes $g_1+g_2=g_3+g_5$, and again
+\[
+ g_2-g_5\le g_3\le g_1+g_2,
+\]
+so $g_3\in I_2$. Thus one of the first or last four occurrences always forms an Abelian square.
+\end{proof}
+
+\begin{proposition}[The five-$a$ lower bound]\label{prop:x5-value}
+For every $n\ge6$,
+\[
+ M(5,n)=T_5(n)=\left\lfloor\frac{n+1}{4}\right\rfloor.
+\]
+\end{proposition}
+
+\begin{proof}
+The effective word of \cite[Theorem~12]{FMMS2026} gives the upper bound. For $n=6$, exchange the two letters and use the known case $M(1,6)=1$. Assume $n\ge7$.
+
+Outside the exceptional case of Lemma~\ref{lem:x5-deficit}, there is nothing to prove unless
+\[
+ \thetaas(P)=\left\lfloor\frac X2\right\rfloor=T_5(n)-1.
+\]
+Then $P$ is extremal, hence $g_1$ is odd and one of $g_0,g_2$ vanishes. If $g_2=0$, the square $aa$ formed by the second and third occurrences is new. If $g_0=0$ and $g_2>0$, the gap square on the second and third occurrences is new: use $ab^{g_2}a$ for even $g_2$ and $bab^{g_2}a$ for odd $g_2$; in the latter case the word cannot occur in $P$ because $P$ starts with $a$. Hence $\thetaas(w)\ge T_5(n)$.
+
+In the exceptional case write $B=4q+2$ and $X=Y=2q+1$. Then $\thetaas(P)\ge q=T_5(n)-2$. If $\thetaas(P)\ge q+2$, we are done. If $\thetaas(P)=q+1$, Lemma~\ref{lem:balancing} supplies a new four-$a$ square. If $\thetaas(P)=q$, then $P$ is extremal; the same boundary argument supplies a new two-$a$ square, and Lemma~\ref{lem:balancing} supplies a four-$a$ square. These two new words are distinct because they contain different numbers of occurrences of $a$. Thus $\thetaas(w)\ge q+2=T_5(n)$.
+\end{proof}
+
+\section{Run rigidity for five occurrences}
+
+The next result is the main equality-rigidity statement.
+
+\begin{lemma}[Odd near-extremal interior wing]\label{lem:near-extremal-odd}
+Let
+\[
+ P=b^i a b^j a b^k,\qquad i,k>0,\qquad i+j+k=2q+1.
+\]
+If $\thetaas(P)\le q+1$, then
+\[
+ (i,j,k)=(1,2q-1,1).
+\]
+\end{lemma}
+
+\begin{proof}
+By reversal assume $i\ge k$.
+
+First suppose $j\ge i$. Then $|x-z|\le j$ is automatic on the whole rectangle $[0,i]\times[0,k]$. Hence
+\[
+ |\mathcal I(i,j,k)|\ge
+ \left\lfloor\frac{(i+1)(k+1)}2\right\rfloor,
+\]
+and therefore
+\[
+ \thetaas(P)\ge
+ \left\lfloor\frac j2\right\rfloor+
+ \left\lfloor\frac{(i+1)(k+1)}2\right\rfloor.
+\]
+If $ik\ge4$, then
+\[
+ (i+1)(k+1)=ik+i+k+1\ge i+k+5.
+\]
+Using $i+j+k=2q+1$ and $\lfloor u/2\rfloor\ge(u-1)/2$ gives
+\[
+ \thetaas(P)\ge\frac{j-1+i+k+4}{2}=q+2.
+\]
+Thus $ik\le3$. Since $i\ge k\ge1$ and $(i,k)\ne(1,1)$, the only remaining pairs are $(2,1)$ and $(3,1)$. For $(2,1)$ the odd-total condition makes $j$ even, and
+\[
+ \thetaas(P)\ge \frac j2+3=q+2.
+\]
+For $(3,1)$ it makes $j$ odd, and
+\[
+ \thetaas(P)\ge \frac{j-1}{2}+4=q+2.
+\]
+Hence $\thetaas(P)\le q+1$ forces $i=k=1$, and then $j=2q-1$.
+
+Now suppose $i\ge j$; recall also that $i\ge k$. On the slice $z=0$, the admissible points are
+\[
+ (x,0),\qquad 0\le x\le j,\qquad x\equiv j\pmod2,
+\]
+so this slice contains $\lfloor j/2\rfloor+1$ points. For every $z=1,\ldots,k$, the point
+\[
+ (|j-z|,z)
+\]
+is admissible: its first coordinate lies in $[0,i]$, its distance from $z$ is at most $j$, and the parity condition is automatic. Consequently
+\[
+ |\mathcal I(i,j,k)|\ge \left\lfloor\frac j2\right\rfloor+k+1.
+\]
+Together with the pure $b$-squares this gives
+\[
+ \thetaas(P)\ge
+ \left\lfloor\frac i2\right\rfloor+
+ \left\lfloor\frac j2\right\rfloor+k+1.
+\]
+Write $\varepsilon_r\in\{0,1\}$ for the parity of $r$. Since
+\[
+ q+1=\frac{i+j+k+1}{2},
+\]
+the inequality $\thetaas(P)\le q+1$ implies
+\[
+ k+1\le \varepsilon_i+\varepsilon_j\le2.
+\]
+Hence $k=1$ and both $i,j$ are odd.
+
+If $i=j$, then the $z=0$ and $z=1$ slices each contain $(j+1)/2$ admissible points, so
+\[
+ \thetaas(P)\ge \frac{j-1}{2}+j+1>j+1=q+1
+\]
+unless $j=1$. If $i>j$, then $i\ge j+2$, and the $z=1$ slice contains the even points $0,2,\ldots,j+1$. Therefore
+\[
+ |\mathcal I(i,j,1)|\ge \frac{j+1}{2}+\frac{j+3}{2}=j+2,
+\]
+and
+\[
+ \thetaas(P)\ge\frac{i-1}{2}+j+2
+ >\frac{i+j+2}{2}=q+1,
+\]
+a contradiction. Thus the only possibility in this second case is $i=j=k=1$, which is again $(1,2q-1,1)$ with $q=1$.
+\end{proof}
+
+\begin{theorem}[Run rigidity]\label{thm:run-rigidity}
+Let $n\ge7$, $|w|_a=5$, and $\ra(w)\ge3$. Then
+\[
+ \thetaas(w)\ge M(5,n)+1.
+\]
+\end{theorem}
+
+\begin{proof}
+Let $P$ be the long two-$a$ wing from the previous section and write $T=T_5(n)$.
+
+Outside the balanced deficit-two case, $\lfloor X/2\rfloor\ge T-1$. If $\thetaas(P)\ge T+1$, there is nothing to prove. If $\thetaas(P)=T$, Lemma~\ref{lem:wing-escape}(i) supplies one further square. If $\thetaas(P)=T-1$, then $P$ is extremal and Lemma~\ref{lem:wing-escape}(ii) supplies two further squares. The unique exception in that lemma has only four occurrences of $a$, so it cannot occur here. Hence $\thetaas(w)\ge T+1$.
+
+Now assume the balanced case
+\[
+ B=4q+2,\qquad X=Y=2q+1,
+\]
+so the wing minimum is $q=T-2$. Write
+\[
+ e=\thetaas(P)-q.
+\]
+If $e\ge3$, the wing alone has at least $T+1$ squares. If $e=2$, the wing has $T$ squares and Lemma~\ref{lem:balancing} gives one new four-$a$ square.
+
+Suppose $e=1$. First assume that $P$ has a boundary occurrence of $a$. If $g_2=0$ and $g_1>0$, then the adjacent second and third occurrences give the new square $aa$. If $g_2=g_1=0$, then the first three occurrences form one run; since the whole word has at least three $a$-runs, necessarily $g_3>0$ and $g_4>0$, and a gap square on the third and fourth occurrences is new because its internal gap is positive whereas the two occurrences in $P$ are adjacent.
+
+It remains in the boundary case that $g_0=0$ and $g_2>0$. Since $X=g_1+g_2=2q+1$ is odd, one has $g_2\ne g_1$. If $g_2$ is even, $ab^{g_2}a$ on the second and third occurrences is new. If $g_2$ is odd and $g_1>0$, use $bab^{g_2}a$. If $g_2$ is odd and $g_1=0$, then use $ab^{g_2}ab$ when $g_3>0$; when $g_3=0$, the run hypothesis forces $g_4>0$, and with $d=\min\{g_2,g_4\}$ the factor $b^d aa b^d$ around the adjacent third and fourth occurrences is a new two-$a$ square. Thus every boundary case supplies a new square with at most two occurrences of $a$; together with the four-$a$ balancing square this gives two distinct new words. If both ends of $P$ contain $b$, Lemma~\ref{lem:near-extremal-odd} gives
+\[
+ P=bab^{2q-1}ab.
+\]
+For $q\ge2$, the third occurrence produces the new square $baba$, whose internal gap is $1$ rather than $2q-1$; together with the balancing square this is enough. For $q=1$, if any of $g_3,g_4,g_5$ is at least $2$, then the pure square $b^2$ is new because $P=babab$ contains no adjacent pair of $b$. Otherwise balance forces
+\[
+ (g_0,g_1,g_2,g_3,g_4,g_5)=(1,1,1,1,1,1),
+\]
+and the two distinct four-$a$ squares $abababab$ and $babababa$ lie outside $P$.
+
+Finally let $e=0$. Then $P$ is extremal, so $g_1$ is odd and either $g_0=0$ or $g_2=0$.
+
+Assume first $g_0=0$ and $g_2>0$. Balance gives $g_2$ even because $g_1+g_2=2q+1$. The square $ab^{g_2}a$ on the second and third occurrences is new. A second new two-$a$ square comes from the third and fourth occurrences by \eqref{eq:gap-square}. If its word coincides with the first, then $g_3=g_2$, and the ordinary square
+\[
+ ab^{g_2}ab^{g_2}
+\]
+is a distinct replacement. Lemma~\ref{lem:balancing} supplies a third, four-$a$, word.
+
+Now assume $g_2=0$. The central $aa$ is new. If $g_3>0$, a second new zero- or two-$a$ square is obtained as follows: for even $g_3$ use $ab^{g_3}a$; for odd $g_3$ with $g_4>0$ use $ab^{g_3}ab$; for odd $g_3$ with $g_4=0$, use
+\[
+ b^d aa b^d,\qquad d=\min\{g_1,g_3\}>0.
+\]
+If $g_3=0$, then the run hypothesis forces $g_4>0$. For even $g_4$ use $ab^{g_4}a$. For odd $g_4$ with $g_5>0$ use $ab^{g_4}ab$.
+
+It remains only when
+\[
+ g_3=g_5=0,\qquad g_4=2q+1.
+\]
+If $g_0>0$, then $g_0+g_1=2q+1$. The only way $P$ could already contain the pure square $b^{2q}$ is $g_0=2q$ and $g_1=1$. But then Lemma~\ref{lem:two-a-count} gives the $q$ pure $b$-squares together with the additional two-$a$ square $baba$, corresponding to $(x,z)=(1,0)$, contradicting $e=0$. Hence $b^{2q}$ is a second new square. If $g_0=0$, then $g_1=2q+1$ and
+\[
+ w=ab^{2q+1}a^3b^{2q+1}a.
+\]
+Besides $aa$, this word contains the two distinct four-$a$ squares
+\[
+ ab^{2q+1}a^3b^{2q+1},\qquad
+ b^{2q+1}a^3b^{2q+1}a.
+\]
+Thus in every $e=0$ subcase at least three squares escape the wing: the two explicitly constructed zero- or two-$a$ squares together with a four-$a$ square from Lemma~\ref{lem:balancing}, except in the final symmetric subcase where the two four-$a$ squares are displayed directly. This proves $\thetaas(w)\ge T+1$.
+\end{proof}
+
+\section{Classification for five occurrences}
+
+By Theorem~\ref{thm:run-rigidity}, a minimiser has one or two $a$-runs. Up to reversal, a two-run word has run sizes $1+4$ or $2+3$.
+
+For $u\ge0$ define
+\[
+ C_q(u)=\#\{x\in\mathbb Z:0\le x\le u,\ x\equiv q\pmod2\}.
+\]
+Thus
+\[
+ C_q(u)=
+ \begin{cases}
+ \lfloor u/2\rfloor+1,&q\text{ even},\\
+ \lfloor(u+1)/2\rfloor,&q\text{ odd}.
+ \end{cases}
+\]
+
+\subsection{The 1+4 family is never extremal}
+
+\begin{proposition}[Exact count for the $1+4$ family]\label{prop:x5-14}
+Let
+\[
+ V(s,q,t)=b^s a b^q a^4 b^t,\qquad q\ge1,
+\]
+and put $M=\max\{s,q,t\}$ and $u=\min\{s,q\}$. Then
+\[
+ \thetaas(V(s,q,t))
+ =\left\lfloor\frac M2\right\rfloor+\min\{q,t\}+C_q(u)+2.
+\]
+In particular,
+\[
+ \thetaas(V(s,q,t))\ge M(5,|V|)+1.
+\]
+\end{proposition}
+
+\begin{proof}
+The pure $b$-squares contribute $\lfloor M/2\rfloor$. The adjacent pairs inside the block $a^4$ contribute only the word $aa$.
+
+A two-$a$ square using the isolated occurrence and the block must use the first occurrence of the $a^4$ block. It has the form
+\[
+ b^x a b^q a,
+ \qquad0\le x\le s,
+\]
+and Lemma~\ref{lem:two-a-count} gives the conditions $x\le q$ and $x\equiv q\pmod2$. Hence these squares contribute $C_q(u)$ words.
+
+A four-$a$ square lying entirely in the $a^4$ run and its adjacent $b$-blocks has the form
+\[
+ b^x a^4b^x,
+ \qquad0\le x\le\min\{q,t\},
+\]
+so these contribute $\min\{q,t\}+1$ words, including $a^4$. There is no further four-$a$ square using the isolated occurrence: such a factor would have to contain the isolated occurrence and the first three occurrences of the $a^4$ block, so its midpoint would lie between the first and second occurrences inside that block. Equality of the two half-lengths would then force $x+q=0$, impossible because $q\ge1$. This proves the exact formula.
+
+It remains to compare it with $M(5,|V|)$. Put
+\[
+ B=s+q+t,\qquad r=\min\{q,t\}.
+\]
+If $r\ge1$, then
+\[
+ B=s+\max\{q,t\}+r\le2M+r.
+\]
+Writing $M=2a+\varepsilon$, $\varepsilon\in\{0,1\}$, we obtain
+\[
+ \left\lfloor\frac{B+2}{4}\right\rfloor
+ \le a+\left\lfloor\frac{2\varepsilon+r+2}{4}\right\rfloor
+ \le a+r
+ =\left\lfloor\frac M2\right\rfloor+r.
+\]
+If $r=0$, then $t=0$ because $q\ge1$. In this case $B=M+u$ and
+\[
+ C_q(u)\ge\left\lceil\frac u2\right\rceil.
+\]
+Therefore
+\[
+ \left\lfloor\frac M2\right\rfloor+C_q(u)
+ \ge\left\lfloor\frac{M+u}{2}\right\rfloor
+ \ge\left\lfloor\frac{B+2}{4}\right\rfloor,
+\]
+where the last inequality holds for every $B\ge1$. In both cases,
+\[
+ \left\lfloor\frac M2\right\rfloor+r+C_q(u)
+ \ge\left\lfloor\frac{B+2}{4}\right\rfloor.
+\]
+Consequently
+\[
+ \thetaas(V)
+ \ge2+\left\lfloor\frac{B+2}{4}\right\rfloor
+ =1+\left\lfloor\frac{B+6}{4}\right\rfloor
+ =M(5,|V|)+1.
+\]
+\end{proof}
+
+\subsection{The 2+3 and one-run families}
+
+Let
+\begin{equation}\label{eq:W5}
+ W_5(s,q,t)=b^s a^2 b^q a^3 b^t,\qquad q\ge1.
+\end{equation}
+
+\begin{proposition}[Exact count for the $2+3$ family]\label{prop:x5-23}
+Put $M=\max\{s,q,t\}$ and $u=\min\{s,q\}$. Then
+\[
+ \thetaas(W_5(s,q,t))
+ =\left\lfloor\frac M2\right\rfloor
+  +u+1
+  +\ind_{2\mid q}
+  +C_q(u)
+  +\ind_{t\ge q}.
+\]
+\end{proposition}
+
+\begin{proof}
+Again every Abelian square contains $0,2$, or $4$ occurrences of $a$.
+
+The zero-$a$ squares contribute $\lfloor M/2\rfloor$.
+
+For two occurrences, the first run gives the nested squares
+\[
+ b^x a^2b^x,
+ \qquad0\le x\le u,
+\]
+contributing $u+1$ words. The adjacent pairs inside the $a^3$ block give only $aa$, already included at $x=0$. A two-$a$ factor crossing the separating block must use the last occurrence of the first run and the first occurrence of the second run; it is exactly
+\[
+ ab^q a,
+\]
+which is an Abelian square precisely when $q$ is even. This gives $\ind_{2\mid q}$.
+
+For four occurrences there are two possible contiguous choices. The first consists of the two occurrences in the first run and the first two occurrences in the second run. Such a factor has the form
+\[
+ b^x a^2b^q a^2,
+ \qquad0\le x\le s.
+\]
+Its midpoint lies in the separating $b^q$ block. If $y$ copies of $b$ from that block lie in the left half, equality of half-lengths is
+\[
+ x+2+y=q-y+2,
+\]
+so $2y=q-x$. Thus $x\le q$ and $x\equiv q\pmod2$, giving exactly $C_q(u)$ words.
+
+The second four-$a$ choice consists of the last occurrence in the first run and all three occurrences in the second run. Such a factor has the form
+\[
+ ab^q a^3b^z.
+\]
+The midpoint must lie between the first and second occurrences of the $a^3$ block, and equality of half-lengths gives $z=q$. Hence this contributes one further word exactly when $t\ge q$. These classes are disjoint, proving the formula.
+\end{proof}
+
+\begin{proposition}[One $a$-run]\label{prop:x5-one-run}
+For $s,t\ge0$,
+\[
+ \thetaas(b^s a^5b^t)=2+\left\lfloor\frac{\max\{s,t\}}2\right\rfloor.
+\]
+\end{proposition}
+
+\begin{proof}
+The only non-pure distinct Abelian squares are $aa$ and $a^4$. Indeed, a factor with two occurrences cannot be extended by positive $b$-blocks on both sides because every pair of consecutive occurrences lies inside the single run, and a factor with four occurrences similarly reduces to the word $a^4$. The remaining squares are
+\[
+ b^2,b^4,\ldots,b^{2\lfloor\max\{s,t\}/2\rfloor}.
+\]
+\end{proof}
+
+\begin{lemma}[Integer optimisation for $x=5$]\label{lem:x5-optimisation}
+Let $q\ge1$ and $s+q+t=n-5$. The value in Proposition~\ref{prop:x5-23} is at least
+\[
+ T_5(n)=\left\lfloor\frac{n+1}{4}\right\rfloor.
+\]
+Equality holds, up to reversal, exactly for the $2+3$ families in Table~\ref{tab:x5-triples}. The one-run value of Proposition~\ref{prop:x5-one-run} reaches $T_5(n)$ exactly when $n\equiv3\pmod4$ and $s=t=(n-5)/2$.
+\end{lemma}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c}
+\toprule
+$n$ & $(s,q,t)$ representatives for $b^sa^2b^qa^3b^t$ \\
+\midrule
+$4k$ & $(0,2k-1,2k-4)$ \\
+$4k+1$ & $(0,2k-1,2k-3)$ \\
+$4k+2$ & $(0,2k-1,2k-2)$ \\
+$4k+3$ & $(0,2k-1,2k-1)$, and $(0,2k+1,2k-3)$ for $k\ge2$ \\
+\bottomrule
+\end{tabular}
+\caption{Equality triples for the $2+3$ family.}
+\label{tab:x5-triples}
+\end{table}
+
+\begin{proof}
+Write
+\[
+ N=s+q+t=n-5,
+ \qquad
+ T=\left\lfloor\frac{N+6}{4}\right\rfloor=T_5(n).
+\]
+Let $u=\min\{s,q\}$ and $M=\max\{s,q,t\}$.
+
+We first show that equality forces $s=0$. Suppose $s\ge1$. Since $q\ge1$, we have $u\ge1$ and $C_q(u)\ge1$. If $v=\max\{s,q\}$, then $v+t=N-u$, so
+\[
+ M=\max\{v,t\}\ge\left\lceil\frac{N-u}{2}\right\rceil.
+\]
+Hence Proposition~\ref{prop:x5-23} gives
+\[
+ \thetaas(W_5)
+ \ge \left\lfloor\frac M2\right\rfloor+u+2
+ \ge \left\lfloor\frac{N-u}{4}\right\rfloor+u+2.
+\]
+Write $N-u=4a+r$ with $0\le r\le3$. The last expression is $a+u+2$, whereas
+\[
+ T+1=a+\left\lfloor\frac{r+u+6}{4}\right\rfloor+1.
+\]
+For $u\ge1$ and $0\le r\le3$,
+\[
+ \left\lfloor\frac{r+u+6}{4}\right\rfloor\le u+1,
+\]
+so $\thetaas(W_5)\ge T+1$. Thus equality forces $s=0$.
+
+Set $s=0$. Then $u=0$ and
+\[
+ C_q(0)=
+ \begin{cases}
+ 1,&q\text{ even},\\
+ 0,&q\text{ odd}.
+ \end{cases}
+\]
+If $q$ is even, then
+\[
+ \thetaas(W_5)
+ \ge \left\lfloor\frac{\lceil N/2\rceil}{2}\right\rfloor+3.
+\]
+For $N=4r,4r+1,4r+2,4r+3$, this lower bound equals respectively
+\[
+ r+3,\quad r+3,\quad r+3,\quad r+4,
+\]
+whereas $T$ equals
+\[
+ r+1,\quad r+1,\quad r+2,\quad r+2.
+\]
+Thus an equality triple must have $q$ odd.
+
+For odd $q$ the formula reduces to
+\[
+ \thetaas(W_5)=
+ 1+\left\lfloor\frac{\max\{q,t\}}2\right\rfloor+\ind_{t\ge q}.
+\]
+If $t<q$, then
+\[
+ \thetaas(W_5)=1+\frac{q-1}{2},
+\]
+so equality with $T$ is equivalent to $q=2T-1$. Writing $N=4r+\rho$ gives
+\[
+\begin{array}{c|c}
+\rho&(s,q,t)\\ \hline
+0&(0,2r+1,2r-1)\\
+1&(0,2r+1,2r)\\
+2&(0,2r+3,2r-1)\\
+3&(0,2r+3,2r)
+\end{array}
+\]
+whenever the exponents are nonnegative.
+
+If $t\ge q$, then
+\[
+ \thetaas(W_5)=2+\left\lfloor\frac t2\right\rfloor.
+\]
+Equality is equivalent to
+\[
+ \left\lfloor\frac t2\right\rfloor=T-2,
+\]
+so $t\in\{2T-4,2T-3\}$. Together with $q=N-t$ odd and $t\ge q$, this has a solution only for
+\[
+ N\equiv2\pmod4,\qquad (s,q,t)=(0,2r+1,2r+1).
+\]
+Translating $N=n-5$ gives exactly Table~\ref{tab:x5-triples}.
+
+For one run, put $N=s+t=n-5$. Proposition~\ref{prop:x5-one-run} is minimised when
+\[
+ \max\{s,t\}=\left\lceil\frac N2\right\rceil.
+\]
+For $N=4r,4r+1,4r+2,4r+3$, the minimum one-run values are respectively
+\[
+ r+2,\quad r+2,\quad r+2,\quad r+3,
+\]
+while $T$ is
+\[
+ r+1,\quad r+1,\quad r+2,\quad r+2.
+\]
+Hence equality occurs exactly for $N\equiv2\pmod4$, equivalently $n\equiv3\pmod4$. In that case $N$ is even and equality in the balancing of $s,t$ forces
+\[
+ s=t=N/2=(n-5)/2.
+\]
+\end{proof}
+
+\begin{theorem}[All five-$a$ minimisers]\label{thm:x5-classification}
+For $n\ge5$, the minimisers are, up to reversal:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item if $n=4k$ with $k\ge2$,
+\[
+ a^2b^{2k-1}a^3b^{2k-4};
+\]
+\item if $n=4k+1$ with $k\ge2$,
+\[
+ a^2b^{2k-1}a^3b^{2k-3};
+\]
+\item if $n=4k+2$ with $k\ge1$,
+\[
+ a^2b^{2k-1}a^3b^{2k-2};
+\]
+\item if $n=4k+3$,
+\[
+ a^2b^{2k-1}a^3b^{2k-1},
+\]
+\[
+ a^2b^{2k+1}a^3b^{2k-3}
+\]
+when the exponent is nonnegative, together with
+\[
+ b^{2k-1}a^5b^{2k-1}.
+\]
+\end{enumerate}
+The isolated case $n=5$ is $a^5$.
+\end{theorem}
+
+\begin{proof}
+For $n=5$ the unique word is $a^5$. For $n=6$ there is only one occurrence of $b$, so every word with five occurrences of $a$ has at most two $a$-runs; Propositions~\ref{prop:x5-14}, \ref{prop:x5-23}, and \ref{prop:x5-one-run} give the stated two minimisers directly. Assume $n\ge7$. Then Theorem~\ref{thm:run-rigidity} reduces the problem to one or two $a$-runs. Proposition~\ref{prop:x5-14} excludes the $1+4$ split, and Lemma~\ref{lem:x5-optimisation} classifies the $2+3$ and one-run equality cases.
+\end{proof}
+
+\section{General run-length consequences}\label{sec:general-run-length}
+
+The proofs for four and five occurrences suggest separating Abelian squares by the number of occurrences of $a$ that they contain.  In this section a square containing exactly $2k$ occurrences of $a$ will be called a \emph{rank-$k$ square}.  We work with the positive-gap encoding below, allowing an arbitrary number of occurrences of $a$, and record a general rank-window criterion together with two consequences: a strong bound for weakly monotone gap sequences, and a compensation theorem when rank-two squares are absent.
+
+Put
+\[
+ F(t)=\left\lfloor\frac{t+2}{4}\right\rfloor.
+\]
+Let
+\[
+ E(g)=ab^{g_1}ab^{g_2}\cdots ab^{g_m},
+ \qquad g_i\ge1,
+\]
+and write $S=\sum_{i=1}^m g_i$.  Thus $E(g)$ has Parikh vector $(m,S)$.  Label its occurrences of $a$, from left to right, by $a_1,\ldots,a_m$.
+
+\begin{lemma}[Positive-gap rank-window criterion]\label{lem:positive-rank-window}
+Fix $k\ge1$ with $2k\le m$, and let $1\le i\le m-2k+1$.  Consider the window $a_i,\ldots,a_{i+2k-1}$ of $2k$ consecutive occurrences of $a$.  Set
+\[
+ p_i=\begin{cases}0,&i=1,\\ g_{i-1},&i>1,\end{cases}
+ \qquad
+ c_i=g_{i+k-1},
+ \qquad
+ q_i=g_{i+2k-1},
+\]
+and
+\[
+ \Delta_i^{(k)}
+ =\sum_{r=0}^{k-1}g_{i+r}
+  -\sum_{r=k}^{2k-1}g_{i+r}.
+\]
+There exists an Abelian-square factor of $E(g)$ containing exactly the occurrences $a_i,\ldots,a_{i+2k-1}$ if and only if
+\[
+ -(p_i+q_i)\le \Delta_i^{(k)}\le 2c_i.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $u$ be the number of copies of $b$ taken from the gap immediately to the left of $a_i$, let $v$ be the number taken from the gap immediately to the right of $a_{i+2k-1}$, and let $t$ be the number of copies of $b$ from the central gap $b^{c_i}$ lying in the left half.  Write
+\[
+ L=\sum_{r=0}^{k-2}g_{i+r},
+ \qquad
+ R=\sum_{r=k}^{2k-2}g_{i+r}.
+\]
+The two halves automatically contain $k$ occurrences of $a$, and equality of their $b$-counts is
+\[
+ u+L+t=(c_i-t)+R+v.
+\]
+Put $\alpha=c_i-t$ and $\beta=q_i-v$.  Then
+\[
+ \Delta_i^{(k)}=2\alpha-\beta-u,
+\]
+where
+\[
+ 0\le\alpha\le c_i,\qquad
+ 0\le\beta\le q_i,\qquad
+ 0\le u\le p_i.
+\]
+Since $q_i\ge1$, the integers $\beta+u$ fill the whole interval $[0,p_i+q_i]$.  For a fixed $\alpha$ the attainable values therefore form
+\[
+ [\,2\alpha-(p_i+q_i),\,2\alpha\,]\cap\mathbb Z.
+\]
+Because $p_i+q_i\ge1$, the intervals for consecutive values of $\alpha$ have no missing integer between them.  Their union, for $0\le\alpha\le c_i$, is exactly
+\[
+ [-(p_i+q_i),\,2c_i]\cap\mathbb Z,
+\]
+which proves the criterion.
+\end{proof}
+
+\begin{lemma}[Periodic block count]\label{lem:periodic-block-count}
+Let $h\ge1$ and put $P_h=ab^h$.  If a binary word contains $P_h^L$ as a factor, then it contains at least
+\[
+ C(h)\left\lfloor\frac{L-1}{2}\right\rfloor
+ +\mathbf 1_{2\mid L}B(h)
+\]
+distinct Abelian-square factor-words containing at least one occurrence of $a$, where
+\[
+ C(h)=\left\lceil\frac{(h+1)^2}{2}\right\rceil,
+ \qquad
+ B(h)=\left\lfloor\frac h2\right\rfloor+1.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $k<L/2$.  Inside $P_h^L$, choose $2k$ consecutive occurrences of $a$ with one full gap $b^h$ available on each side.  A factor using boundary trims $u,v\in\{0,\ldots,h\}$ is an Abelian square exactly when
+\[
+ u+v\equiv h\pmod2;
+\]
+the inequality in the rank-window criterion is automatic because $|u-v|\le h$.  The number of admissible pairs is
+\[
+ C(h)=\#\{(u,v)\in\{0,\ldots,h\}^2:u+v\equiv h\pmod2\}
+ =\left\lceil\frac{(h+1)^2}{2}\right\rceil.
+\]
+Different pairs give different factor-words.  Different $k$ give different numbers of occurrences of $a$, and hence different words.  If $L$ is even, the top rank $k=L/2$ uses all $L$ occurrences of $a$; fixing the left trim to be zero and varying the right trim in the required parity class gives $B(h)$ further words.
+\end{proof}
+
+\begin{theorem}[Weakly monotone gaps]\label{thm:monotone-gaps}
+Suppose that $g_1,\ldots,g_m$ is weakly monotone.  Then
+\[
+ \boxed{\thetaas(E(g))\ge
+ \left\lfloor\frac{m+S}{2}\right\rfloor-1.}
+\]
+In particular, if $m\ge3$, then
+\[
+ \thetaas(E(g))\ge F(m)+F(S).
+\]
+\end{theorem}
+
+\begin{proof}
+It is enough to treat the nondecreasing case.  For a nonincreasing sequence the same argument is read from right to left, with $Q_h=b^ha$ in place of $P_h=ab^h$; the counting formula is unchanged.  Thus write
+\[
+ g=h_1^{r_1}h_2^{r_2}\cdots h_t^{r_t},
+ \qquad h_1<h_2<\cdots<h_t.
+\]
+For a non-final block $h_j^{r_j}$, the following larger gap contains at least $h_j$ copies of $b$, so the word contains $P_{h_j}^{r_j+1}$.  Lemma~\ref{lem:periodic-block-count} and the inequalities
+\[
+ C(h)\ge h+1,
+ \qquad
+ B(h)=\left\lceil\frac{h+1}{2}\right\rceil
+\]
+give
+\begin{equation}\label{eq:monotone-nonfinal}
+ \mu(h_j,r_j+1)
+ \ge
+ \left\lceil\frac{r_j(h_j+1)}2\right\rceil,
+ \qquad j<t,
+\end{equation}
+where $\mu(h,L)$ denotes the number of mixed square words certified by that occurrence of $P_h^L$.
+
+For the final block $h_t^{r_t}$ we have an occurrence of $P_{h_t}^{r_t}$.  Adding the pure powers
+\[
+ b^2,b^4,\ldots,b^{2\lfloor h_t/2\rfloor}
+\]
+to the count from Lemma~\ref{lem:periodic-block-count} yields
+\begin{equation}\label{eq:monotone-final}
+ \mu(h_t,r_t)+\left\lfloor\frac{h_t}{2}\right\rfloor
+ \ge
+ \left\lfloor\frac{r_t(h_t+1)}2\right\rfloor-1.
+\end{equation}
+To verify this last estimate, write $r_t=2s$ or $2s+1$.  In the even case Lemma~\ref{lem:periodic-block-count} gives at least $(s-1)(h_t+1)+B(h_t)$ such words, and $B(h_t)+\lfloor h_t/2\rfloor\ge h_t$; in the odd case it gives at least $s(h_t+1)$ such words, while $\lfloor h_t/2\rfloor\ge\lfloor(h_t+1)/2\rfloor-1$.
+
+The square families belonging to different values $h_j$ are disjoint.  Every word counted for the block value $h_j$ contains at least two occurrences of $a$, and every gap between consecutive occurrences of $a$ inside that word has length $h_j$; hence $h_j$ is recoverable from the factor-word itself.  Put
+\[
+ N_j=r_j(h_j+1).
+\]
+Since $\sum_jN_j=m+S$, summing \eqref{eq:monotone-nonfinal} and \eqref{eq:monotone-final} gives
+\[
+ \thetaas(E(g))
+ \ge
+ \sum_{j<t}\left\lceil\frac{N_j}{2}\right\rceil
+ +\left\lfloor\frac{N_t}{2}\right\rfloor-1
+ \ge
+ \left\lfloor\frac{m+S}{2}\right\rfloor-1.
+\]
+Finally, put $N=m+S$.  Since $S\ge m\ge3$, we have $N\ge6$.  For $N\ge10$,
+\[
+ \left\lfloor\frac N2\right\rfloor-1
+ \ge \frac{N+4}{4}
+ \ge F(m)+F(S).
+\]
+For $6\le N\le9$, the possibilities with $S\ge m\ge3$ are
+\[
+ (m,S)=(3,3),(3,4),(3,5),(4,4),(3,6),(4,5),
+\]
+and direct substitution gives the same inequality.  This proves the final assertion.
+\end{proof}
+
+For $k=2$, let $D_2(E(g))$ denote the set of distinct Abelian-square factors containing exactly four occurrences of $a$.
+
+\begin{theorem}[Rank-two-free compensation]\label{thm:rank-two-free}
+Let $m\ge4$ and $g_1,\ldots,g_m\ge1$.  If
+\[
+ D_2(E(g))=\varnothing,
+\]
+then
+\[
+ \thetaas(E(g))\ge F(m)+F(S).
+\]
+In particular, the fixed-Parikh lower bound conjectured in \cite{FMMS2026} holds for every positive-gap word having no Abelian-square factor with four occurrences of $a$.
+\end{theorem}
+
+\begin{proof}
+The cases $m=4,5$ follow from Theorems~\ref{thm:x4-main} and~\ref{thm:x5-main}, so assume $m\ge6$.
+For $1\le i\le m-3$, put
+\[
+ \Delta_i=(g_i+g_{i+1})-(g_{i+2}+g_{i+3}).
+\]
+By Lemma~\ref{lem:positive-rank-window}, the $i$-th rank-two window contains an Abelian square if and only if
+\[
+ -(p_i+g_{i+3})\le\Delta_i\le2g_{i+1},
+ \qquad
+ p_i=\begin{cases}0,&i=1,\\ g_{i-1},&i>1.\end{cases}
+\]
+Hence every $\Delta_i$ lies in one of the two forbidden regions
+\[
+ \Delta_i>2g_{i+1}
+ \qquad\text{or}\qquad
+ \Delta_i<-(p_i+g_{i+3}).
+\]
+Two consecutive values cannot lie in opposite forbidden regions.  Indeed, the first alternative at $i$ gives
+\[
+ g_i>g_{i+1}+g_{i+2}+g_{i+3},
+\]
+whereas the second alternative at $i+1$ would give
+\[
+ g_i+g_{i+1}+g_{i+2}<g_{i+3},
+\]
+a contradiction.  The reverse transition is ruled out in the same way.  Thus all windows lie on the same forbidden side.
+
+Suppose first that
+\[
+ \Delta_i>2g_{i+1}
+\]
+for every $i$.  Then
+\begin{equation}\label{eq:rank2-desc}
+ g_i>g_{i+1}+g_{i+2}+g_{i+3}
+ \qquad(1\le i\le m-3).
+\end{equation}
+Consequently
+\[
+ g_1>g_2>\cdots>g_{m-2},
+\]
+and $g_1$ is the largest gap.  The pure powers of $b$ contribute $\lfloor g_1/2\rfloor$ distinct Abelian squares.  For each $2\le i\le m-2$, set the right boundary trim equal to zero in the rank-one window around $g_i$ and let the left trim $u$ vary over
+\[
+ 0\le u\le g_i,\qquad u\equiv g_i\pmod2.
+\]
+Since $g_{i-1}>g_i$, this gives $\lfloor g_i/2\rfloor+1$ distinct rank-one square words.  The families for different $i$ are disjoint because their internal gap lengths $g_i$ are distinct.  Therefore, with
+\[
+ A=\sum_{i=1}^{m-2}g_i,\qquad
+ T=g_{m-1}+g_m,\qquad S=A+T,
+\]
+we have
+\begin{equation}\label{eq:rank2-desc-count}
+ \thetaas(E(g))
+ \ge
+ \sum_{i=1}^{m-2}\left\lfloor\frac{g_i}{2}\right\rfloor+(m-3)
+ \ge \frac{A+m-4}{2}.
+\end{equation}
+From \eqref{eq:rank2-desc} at $i=m-3$ and positivity of the earlier gaps,
+\[
+ A\ge T+m-1.
+\]
+For $m\ge7$ this implies
+\[
+ \frac{A+m-4}{2}
+ \ge \frac{S+m+4}{4}
+ \ge F(S)+F(m).
+\]
+When $m=6$, \eqref{eq:rank2-desc} gives $A-T\ge14$, and \eqref{eq:rank2-desc-count} again yields the same conclusion.
+
+Now suppose that every window lies on the lower forbidden side.  Then, with $g_0=0$,
+\begin{equation}\label{eq:rank2-asc}
+ g_{i-1}+g_i+g_{i+1}<g_{i+2}
+ \qquad(1\le i\le m-3).
+\end{equation}
+Hence
+\[
+ g_2<g_3<\cdots<g_{m-1},
+ \qquad g_3>g_1.
+\]
+Put
+\[
+ H=g_{m-1},\qquad q=g_m,\qquad M=\max\{H,q\}.
+\]
+The pure powers contribute $\lfloor M/2\rfloor$ squares.  For each $2\le i\le m-2$, the next gap is larger than $g_i$, so setting the left trim to zero and varying the right trim through the admissible parity class gives $\lfloor g_i/2\rfloor+1$ distinct rank-one words.  Set
+\[
+ A=M+\sum_{i=2}^{m-2}g_i,
+ \qquad
+ U=g_1+\min\{H,q\},
+ \qquad
+ S=A+U.
+\]
+Then
+\[
+ \thetaas(E(g))\ge\frac{A+m-4}{2}.
+\]
+Moreover
+\[
+ A-U\ge\sum_{i=2}^{m-2}g_i-g_1\ge m-2,
+\]
+because $g_3\ge g_1+g_2+1$ and all remaining gaps are positive.  Thus for $m\ge7$,
+\[
+ \frac{A+m-4}{2}
+ \ge\frac{S+m+4}{4}
+ \ge F(S)+F(m).
+\]
+For $m=6$, the additional inequality $g_4>g_1+g_2+g_3$ gives $A-U\ge9$, which is again sufficient.  This completes the proof.
+\end{proof}
+
+\begin{remark}
+The theorem is an extreme instance of a possible rank-compensation principle: complete absence of rank-two squares forces the gap sequence to grow or decay superadditively, and this dispersion makes the pure and rank-one families alone large enough to meet the conjectured fixed-Parikh lower bound.  A quantitative version with $|D_2(E(g))|$ small rather than zero remains open.
+\end{remark}
+
+\section{Discussion}
+
+\subsection*{Computational verification}
+The proofs above are independent of computation.  As a reproducibility and error-detection check, the supplementary script \texttt{test\_verifier.py} independently verifies the main fixed-$x$ formulae and equality classifications on finite ranges, checks the auxiliary counting and rigidity lemmas, and compares the general rank-window statements with direct factor enumeration on small positive-gap instances.  A separate supplementary manifest records the precise ranges and the theorem-to-test correspondence.  No theorem in the paper relies on these finite computations as a substitute for proof.
+
+The structural difference between $x=4$ and $x=5$ is worth emphasising. For $x=4$, equality forces the minority letter to concentrate into a $1+3$ pattern. For $x=5$, a balanced long-wing configuration creates a genuinely new obstruction: Lemma~\ref{lem:balancing} forces a square containing four occurrences of $a$. Together with the wing-escape mechanism, this yields the run-rigidity theorem and reduces equality to the $2+3$ and single-run families.
+
+The next fixed case $x=6$ is not treated here.  The general results of Section~\ref{sec:general-run-length} instead identify two tractable regimes beyond the fixed-$x$ analysis.  Monotone gap structure creates many distinct higher-rank squares, whereas complete absence of rank-two squares forces superadditive gap growth and hence an abundance of pure and rank-one squares.  The unresolved regime lies between these extremes, where several ranks may coexist and distinct factor-words can collide across different windows.  A quantitative rank-compensation statement relating a small value of $|D_2|$ to low-rank surplus would be a natural next step.
+
+\subsection*{Run lengths and the additive-square problem}
+There is a further reason to formulate the general problem in terms of run lengths.  The additive-square problem asks whether one can avoid two consecutive blocks having the same length and the same sum; it appears in the work of Pirillo--Varricchio and Halbeisen--Hungerb\"uhler \cite{PirilloVarricchio1994,HalbeisenHungerbuhler2000} and remains open in its one-dimensional form; see also \cite{RaoRosenfeld2018}.  For a positive integer word $g=(g_1,\ldots,g_m)$, recall
+\[
+ E(g)=ab^{g_1}ab^{g_2}\cdots ab^{g_m}.
+\]
+If two consecutive blocks $U,V$ of $g$ have the same length and the same sum, then the run-aligned factor $E(U)E(V)$ is an Abelian square.  Thus additive squares in the gap word form a distinguished subclass of the binary Abelian squares counted here.  Cassaigne, Richomme, Saari, and Zamboni formulated a related infinite binary Abelian-square avoidance problem and proved its equivalence to the classical additive-square problem \cite{CassaigneRichommeSaariZamboni2011}.  Further variants and partial results are discussed, for example, in \cite{BrownJungicPoelstra2014,RaoRosenfeld2018,Vukusic2026}.
+
+The factors relevant to the present extremal problem are more flexible than run-aligned additive squares.  In the proof of Lemma~\ref{lem:positive-rank-window}, a rank-$k$ factor is allowed to trim its two outer gaps and to split the central gap.  In the notation of that proof, the equality of the two $b$-counts is
+\[
+ u+L+t=(c_i-t)+R+v.
+\]
+This is a boundary-relaxed additive equality: ordinary additive squares correspond to aligned special cases, whereas the converse need not hold.  The rank-window criterion packages all such boundary choices into a single interval condition.
+
+This distinction isolates a concrete obstacle to a general proof of the fixed-Parikh conjecture.  Classical additive-square theory is primarily concerned with existence or avoidance of equal-sum adjacent blocks; the present problem requires a quantitative lower bound for the number of \emph{distinct factor words} produced by all ranks and all boundary relaxations.  Theorem~\ref{thm:rank-two-free} establishes one extreme compensation phenomenon: if rank two is absent altogether, the gaps become sufficiently dispersed that lower-rank squares already meet the conjectured bound.  A quantitative version measuring how low-rank surplus compensates for a small but nonzero number of higher-rank squares remains open.
+
+\section*{Supplementary computational verification}
+The accompanying file \texttt{test\_verifier.py} is provided as supplementary material.  It is not used as a substitute for any proof in the paper; its purpose is to reproduce the finite audits described above and to provide independent error checks for the exact formulae and classifications.
+
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+During the preparation of this work, the authors used OpenAI ChatGPT for exploratory drafting, proof organisation, and computational organisation.  All mathematical statements, proofs, references, and verification scripts were subsequently reviewed and checked by the authors, who take full responsibility for the content of the manuscript.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

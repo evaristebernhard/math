@@ -1,0 +1,14 @@
+[04      1s] loaded reduced basis dim 581
+[04      2s] Babai done; Y-rows=187
+[04      5s] fpylll MPFR Babai: 1 point
+[04      5s] fpylll enumeration unavailable/failed (EnumerationError: dimension > 200; skip full Enumeration); using Babai+perturbations only
+[04      6s] bases: 2000
+[04     13s] heavy scoring: best h_H(base)=1.3069 / A_H=1.8232 = 71.7% (tilt pred 1.6689)
+[04     16s] AP sweep: best h_mid=1.3087 (mid mass=2.4383)
+[04     16s] finalists full-h top5: [1.309, 1.2995, 1.2959, 1.2925, 1.289]
+[04     18s] 
+[04     18s] === bt2015 SEARCH RESULT ===
+[04     18s] h = 1.309021  at |y| ~ 10^230.6
+[04     18s] h_H = 1.3069 / A_H = 1.8232 = 71.7%   harvest = +0.0021
+[04     18s] target 1.6383: not reached
+[04     18s] saved bt2015_results.json;  下一步:  python3 s05_certify.py bt2015

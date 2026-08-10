@@ -1,0 +1,315 @@
+{
+  "NU": 1900,
+  "baseline": {
+    "budget_tax_nats": 455.61850780680663,
+    "effective_budget_nats": 157.12359980818493,
+    "effective_budget_per_coordinate": 0.3415730430612716,
+    "raw_budget_nats": 612.7421076149916,
+    "source": "work/probes/qcal_seed20260726/qcal_results.json"
+  },
+  "calibration": {
+    "H_sha256": "96f5179eaa89e18758be4245eb71071d986e5b03eb619e8cce63899648b9f33f",
+    "NU": 1900,
+    "basis": "work/probes/hurst1900_warm_seed20260726/m460_n1900/base_basis.txt",
+    "basis_sha256": "7d8687907177730343e82704558cc8f9307b93a2a7aad827f215981460799b6f",
+    "bkz20": {
+      "audit": "work/probes/hurst1900_warm_seed20260726/m460_n1900/bkz20_attempt002.txt.audit.json",
+      "budget": {
+        "budget_tax_nats": 1045.2951685344126,
+        "effective_budget_nats": 260.5941196405242,
+        "effective_budget_per_coordinate": 0.5665089557402699,
+        "raw_budget_nats": 1305.8892881749368
+      },
+      "checkpoint": "work/probes/hurst1900_warm_seed20260726/m460_n1900/bkz20_attempt002.txt",
+      "checkpoint_sha256": "00c7341c40302f0937a8dadc5cdb6e6ee9883b4ff4e029f76a56e35a6a9b1f93",
+      "cy": "-1740356363795170746127353112778694140690513454189578139277329503555734271446612572708340122656602139143943962996944397323601276065409649026991896442655653160912061476797668258902815535907716659646240503092801142272301942916352408216933976741021387738620688185035404900167850618734622949878570922469139868206420665371554866291943740242451979799931378088447524623122877490722237867084470268489137279776979494973576024911664529559094719867987016890318134406522047656196604210958306442899238200267696152749830243316550168960923399792890589866899064605982704621329086545336",
+      "h_H": 1.4582371410132944,
+      "parity": "VERIFIED",
+      "rho": 8.705732819370319,
+      "runs": [
+        {
+          "accepted": false,
+          "backend": "dpe",
+          "command": [
+            "fplll",
+            "-a",
+            "bkz",
+            "-b",
+            "20",
+            "-f",
+            "dpe",
+            "-bkzmaxloops",
+            "1",
+            "-nolll"
+          ],
+          "output": null,
+          "output_valid": false,
+          "peak_rss_kib": 57876,
+          "retained_valid_failure": false,
+          "returncode": -6,
+          "seconds": 17.743943625999236,
+          "status": "infinite_loop_in_babai",
+          "stderr_tail": "terminate called after throwing an instance of 'std::runtime_error'\n  what():  infinite loop in babai\n"
+        },
+        {
+          "accepted": false,
+          "backend": "longdouble",
+          "command": [
+            "fplll",
+            "-a",
+            "bkz",
+            "-b",
+            "20",
+            "-f",
+            "longdouble",
+            "-bkzmaxloops",
+            "1",
+            "-nolll"
+          ],
+          "output": null,
+          "output_valid": false,
+          "peak_rss_kib": 59084,
+          "retained_valid_failure": false,
+          "returncode": -6,
+          "seconds": 30.97438850800063,
+          "status": "infinite_loop_in_babai",
+          "stderr_tail": "terminate called after throwing an instance of 'std::runtime_error'\n  what():  infinite loop in babai\n"
+        },
+        {
+          "accepted": true,
+          "backend": "mpfr",
+          "command": [
+            "fplll",
+            "-a",
+            "bkz",
+            "-b",
+            "20",
+            "-f",
+            "mpfr",
+            "-bkzmaxloops",
+            "1",
+            "-p",
+            "256",
+            "-nolll"
+          ],
+          "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/bkz20_attempt002.txt",
+          "output_valid": true,
+          "peak_rss_kib": 111964,
+          "retained_valid_failure": false,
+          "returncode": 8,
+          "seconds": 100.28866668199953,
+          "status": "completed_by_limit",
+          "stderr_tail": "Failure: loops limit exceeded in BKZ\n"
+        }
+      ],
+      "scorer_h_H_difference": "1.61399355662841613908494346599e-100"
+    },
+    "cleanup": {
+      "NU": 1900,
+      "campaign": "hurst1900_warm",
+      "cleanup_parent": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt002.txt",
+      "cleanup_parent_sha256": "c29aa5344aa980f2e836721c74211510e94caabd395aa9c2a2b6d44a28ad9a63",
+      "lift_manifest": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lift000.json",
+      "lift_manifest_sha256": "ad67d91ed19ccfeb4a89fdcb50cf723ddebc2fa424c2f184282567d2a24c3a61",
+      "mH": 460,
+      "peak_rss_kib": 188244,
+      "runs": [
+        {
+          "accepted": false,
+          "command": [
+            "fplll",
+            "-a",
+            "lll",
+            "-m",
+            "heuristic",
+            "-f",
+            "longdouble"
+          ],
+          "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt002.txt",
+          "output_valid": true,
+          "peak_rss_kib": 52972,
+          "retained_valid_failure": true,
+          "returncode": 3,
+          "seconds": 521.3224849159997,
+          "status": "infinite_loop_in_babai",
+          "stderr_tail": "Failure: infinite loop in babai\n"
+        },
+        {
+          "accepted": false,
+          "command": [
+            "fplll",
+            "-a",
+            "lll",
+            "-m",
+            "heuristic",
+            "-f",
+            "mpfr",
+            "-p",
+            "256"
+          ],
+          "output": null,
+          "output_valid": false,
+          "peak_rss_kib": 107660,
+          "retained_valid_failure": false,
+          "returncode": -15,
+          "seconds": 600.0698755740013,
+          "status": "timeout",
+          "stderr_tail": ""
+        },
+        {
+          "accepted": true,
+          "command": [
+            "fplll",
+            "-a",
+            "lll",
+            "-m",
+            "wrapper"
+          ],
+          "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt",
+          "output_valid": true,
+          "peak_rss_kib": 188244,
+          "retained_valid_failure": false,
+          "returncode": 0,
+          "seconds": 1107.5306392270013,
+          "status": "completed",
+          "stderr_tail": ""
+        }
+      ],
+      "schema": 1,
+      "total_seconds": 2228.9229997170023,
+      "warm_basis": "work/probes/hurst1900_warm_seed20260726/m460_n1900/warm_basis000.txt",
+      "warm_basis_sha256": "e4b2202afd26a5ab7716ef95f81b7d768c03611e19357e904b410fae917095b7",
+      "wrapper_checkpoint": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt",
+      "wrapper_checkpoint_sha256": "69f8c1572084f2726e3f3ff947a59b6daae5ec7211ea9045f3eca38e8eb6030b",
+      "wrapper_command": [
+        "fplll",
+        "-a",
+        "lll",
+        "-m",
+        "wrapper"
+      ],
+      "wrapper_completed": true
+    },
+    "cleanup_manifest": "work/probes/hurst1900_warm_seed20260726/m460_n1900/cleanup000.json",
+    "dimension": 461,
+    "directory": "work/probes/hurst1900_warm_seed20260726/m460_n1900",
+    "eta": 0.14927640584031898,
+    "lift": {
+      "determinant": "1",
+      "manifest": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lift000.json",
+      "parity": "VERIFIED",
+      "resumed": true,
+      "transform": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lift_transform000.txt",
+      "warm_basis": "work/probes/hurst1900_warm_seed20260726/m460_n1900/warm_basis000.txt",
+      "warm_basis_sha256": "e4b2202afd26a5ab7716ef95f81b7d768c03611e19357e904b410fae917095b7"
+    },
+    "lll": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt",
+    "lll_audit": {
+      "audit": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt.audit.json",
+      "budget": {
+        "budget_tax_nats": 1025.0900794465972,
+        "effective_budget_nats": 280.7992087283397,
+        "effective_budget_per_coordinate": 0.6104330624529124,
+        "raw_budget_nats": 1305.8892881749368
+      },
+      "checkpoint": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt",
+      "checkpoint_sha256": "69f8c1572084f2726e3f3ff947a59b6daae5ec7211ea9045f3eca38e8eb6030b",
+      "cy": "86993296329359498652304933361573425479232325045473295375510049740503549045992910896631453791677104664454285487444923455356424007170506539866650273280055907650727161762611686465774803694737791654655321182818225738270259688094200974395515970593474809047065700724219429671770198794919645051969627505330094859535397726590664341785852093741345965165485120952123348831767124294328326773074787061011438591885753316333322085585590070781989204885839546882306323649145403562446843894177972735740792817468593843264401162838208297978025513866117896581026401375756599250671148860",
+      "h_H": 1.4790917535279875,
+      "parity": "VERIFIED",
+      "rho": 8.372973915481452,
+      "scorer_h_H_difference": "3.68852332374144193766884164341e-100"
+    },
+    "lll_complexity_estimate": {
+      "bit_power_2_seconds": 660.7954368560653,
+      "bit_power_3_seconds": 1395.01258891836,
+      "bit_power_4_seconds": 2945.0265766054267,
+      "dimension": 461,
+      "measured_source_seconds": 148.2671201810008,
+      "model": "T ~= T0*(d/d0)^5*(target_NU/source_NU)^p",
+      "reference_dimension": 461,
+      "source_NU": 900,
+      "target_NU": 1900,
+      "warning": "complexity envelope only; backend precision, LLL swaps and conditioning determine the actual completion time"
+    },
+    "lll_sha256": "69f8c1572084f2726e3f3ff947a59b6daae5ec7211ea9045f3eca38e8eb6030b",
+    "mH": 460,
+    "meta": "work/probes/hurst1900_warm_seed20260726/m460_n1900/base_meta.json",
+    "meta_sha256": "81823e2c4a798fce755d04d886021c385462ec9489288bca4cecf384d004a18c",
+    "parity": "VERIFIED",
+    "raw_order": true,
+    "seed": 20260726
+  },
+  "calibration_m": 460,
+  "campaign": "hurst1900_warm",
+  "cold_baseline": {
+    "accepted": false,
+    "peak_rss_kib": 93964,
+    "seconds": 1245.1601826149997,
+    "source": "work/probes/hurst1900_seed20260726/m460_n1900/lll.txt.run.json",
+    "status": "truncated_or_invalid_matrix"
+  },
+  "cold_fallback": false,
+  "complexity_plan": {
+    "parent_dimension_fit": {
+      "coefficient_c": 0.009639518610284673,
+      "dimension_exponent_q": 1.567898230318205,
+      "model": "T=c*d^q (empirical, same NU/backend)",
+      "predicted_seconds": 344.07698941211976,
+      "samples": [
+        {
+          "dimension": 261,
+          "seconds": 60.40539120700123
+        },
+        {
+          "dimension": 361,
+          "seconds": 94.4963083640032
+        },
+        {
+          "dimension": 461,
+          "seconds": 148.2671201810008
+        }
+      ],
+      "target_dimension": 801
+    },
+    "target_bit_envelope": {
+      "bit_power_2_seconds": 1533.478928120682,
+      "bit_power_3_seconds": 3237.3444038103285,
+      "bit_power_4_seconds": 6834.393741377361,
+      "dimension": 801,
+      "measured_source_seconds": 344.07698941211976,
+      "model": "T ~= T0*(d/d0)^5*(target_NU/source_NU)^p",
+      "reference_dimension": 801,
+      "source_NU": 900,
+      "target_NU": 1900,
+      "warning": "complexity envelope only; backend precision, LLL swaps and conditioning determine the actual completion time"
+    }
+  },
+  "eta_gate": 0.9,
+  "main_m": 800,
+  "reserve_gib": 1.2,
+  "schema": 2,
+  "seed": 20260726,
+  "single_core": true,
+  "started_unix": 1785132629.5043037,
+  "status": "eta_gate_no_go",
+  "target": 1.826054,
+  "wall_hours": 3.0,
+  "wall_seconds": 2398.54337477684,
+  "warm_parent_NU": 900,
+  "warm_vs_cold": {
+    "cold_accepted": false,
+    "cold_incomplete_seconds": 1245.1601826149997,
+    "warm_cleanup_seconds": 2228.9229997170023
+  },
+  "zero_preflight": {
+    "complete": true,
+    "count": 20001,
+    "minimum_bits": 1993,
+    "minimum_index": 33,
+    "path": "work/zeros_arb.txt",
+    "required_bits": 1984,
+    "sha256": "e8fd33f14cb6c935955367639181e92ba956257044cd6a8c6586fae5c36aa62c",
+    "sufficient": true
+  }
+}

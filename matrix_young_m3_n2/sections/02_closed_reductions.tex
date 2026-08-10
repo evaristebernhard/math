@@ -1,0 +1,80 @@
+\section{Closed boundary cases and general reductions}
+
+\subsection{Commuting triples}
+\begin{proposition}[Commuting case \statusR]
+If $X,Y,Z$ commute, then \eqref{eq:MY} holds for both $j=1,2$.
+\end{proposition}
+\begin{proof}
+The three matrices are simultaneously diagonalizable.  On each common eigenline the desired estimate becomes the scalar weighted Young inequality
+\[
+x^\alpha y^\beta z^\gamma\le \alpha x+\beta y+\gamma z.
+\]
+Ordering the two resulting scalar coordinates gives the required eigenvalue inequalities.
+\end{proof}
+
+\subsection{One scalar factor}
+\begin{proposition}[Scalar-factor case \statusR]
+If one of $X,Y,Z$ is a scalar matrix, then \eqref{eq:MY} holds in every dimension.
+\end{proposition}
+\begin{proof}
+It suffices to take $Z=zI$.  Set
+\[
+\delta=\alpha+\beta,\qquad a=\frac{\alpha}{\delta},\qquad b=\frac{\beta}{\delta}.
+\]
+Then $a+b=1$ and
+\[
+X^\alpha Y^\beta=(X^\delta)^a(Y^\delta)^b.
+\]
+By Ando's two-factor Matrix Young inequality,
+\[
+s_j(X^\alpha Y^\beta)
+\le \lambda_j\bigl(aX^\delta+bY^\delta\bigr).
+\]
+Because $0<\delta<1$, operator concavity of $t\mapsto t^\delta$ gives
+\[
+aX^\delta+bY^\delta\preceq (aX+bY)^\delta.
+\]
+Functional calculus and the scalar weighted Young inequality imply
+\[
+z^\gamma(aX+bY)^\delta
+\preceq \delta(aX+bY)+\gamma zI
+=\alpha X+\beta Y+\gamma zI.
+\]
+Combining the inequalities proves the claim.
+\end{proof}
+
+\subsection{Adjacent identical factors}
+\begin{proposition}[Adjacent-equal case \statusR]
+If $X=Y$ or $Y=Z$, then \eqref{eq:MY} reduces to the two-factor Ando inequality.
+\end{proposition}
+\begin{proof}
+For example, if $X=Y$ then
+\[
+X^\alpha Y^\beta Z^\gamma=X^{\alpha+\beta}Z^\gamma,
+\]
+and $(\alpha+\beta)+\gamma=1$.
+\end{proof}
+
+\subsection{A determinant slack available in dimension two}
+For the remainder of the manuscript let $n=2$ and assume positive definiteness when inverses or logarithms are used; semidefinite cases can be obtained by regularization.
+
+Put
+\[
+P=X^\alpha Y^\beta Z^\gamma,
+\qquad
+S=\alpha X+\beta Y+\gamma Z.
+\]
+Define
+\[
+\rho=\sqrt{\det P},\qquad \Delta=\sqrt{\det S}.
+\]
+Since $\det^{1/2}$ is concave on $\mathbb H_+^2$,
+\[
+\Delta\ge \alpha\sqrt{\det X}+\beta\sqrt{\det Y}+\gamma\sqrt{\det Z}.
+\]
+Applying scalar weighted AM--GM to the three positive numbers $\sqrt{\det X}$, $\sqrt{\det Y}$ and $\sqrt{\det Z}$ yields
+\begin{equation}
+\boxed{\Delta\ge \rho.}
+\label{eq:det-slack}
+\end{equation}
+This nonnegative determinant slack is one of the principal special features of the $2\times2$ problem.

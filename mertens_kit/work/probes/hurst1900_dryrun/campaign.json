@@ -1,0 +1,22 @@
+{
+  "NU": 1900,
+  "calibration_m": 460,
+  "campaign": "hurst1900",
+  "eta_gate": 0.9,
+  "main_m": 800,
+  "schema": 1,
+  "seed": 20260726,
+  "started_unix": 1785125635.9514852,
+  "status": "dry_run",
+  "steps": [
+    "zero_preflight",
+    "m460_lll_bkz20_eta",
+    "eta_gate",
+    "m800_lll_bkz20",
+    "conditional_bkz40",
+    "pilot_or_full_search",
+    "arb_certificate"
+  ],
+  "target": 1.826054,
+  "wall_hours": 12
+}

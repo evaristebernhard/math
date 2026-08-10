@@ -1,0 +1,144 @@
+\section{The equal-weight slice $\alpha=\beta=\gamma=1/3$}
+
+The equal-weight problem is
+\begin{equation}
+ s_j(B_1^{1/3}B_2^{1/3}B_3^{1/3})
+ \le
+ \lambda_j\!\left(\frac{B_1+B_2+B_3}{3}\right),
+ \qquad j=1,2.
+ \label{eq:equal-weight}
+\end{equation}
+It is the most rigid nontrivial slice and should be closed before returning to arbitrary weights.
+
+\subsection{Largest singular value: reduction to arithmetic mean $I$}
+\begin{proposition}[Equal-weight $j=1$ normalization \statusR]
+Assume a $j=1$ counterexample occurs at an interior scale-stationary point.  After the normalization of Lemma~\ref{lem:stationary-scaling}, one may further reduce to
+\begin{equation}
+\boxed{B_1+B_2+B_3=3I.}
+\label{eq:sum3I}
+\end{equation}
+\end{proposition}
+\begin{proof}
+At a scale-stationary point, choose the top eigenvector of the arithmetic mean as $e_1$.  Then
+\[
+B_i=\begin{pmatrix}1&q_i\\ \overline q_i&b_i\end{pmatrix},
+\qquad
+\frac{B_1+B_2+B_3}{3}=\diag(1,s),
+\qquad s\le1.
+\]
+If $s<1$, define
+\[
+B_1'=B_1+3(1-s)E_{22}.
+\]
+Then $(B_1'+B_2+B_3)/3=I$ and $B_1'\succeq B_1$.  Since $t\mapsto t^{2/3}$ is operator monotone,
+\[
+B_1'^{\,2/3}\succeq B_1^{2/3}.
+\]
+For
+\[
+P=B_1^{1/3}B_2^{1/3}B_3^{1/3},
+\]
+we have
+\[
+P^*P=B_3^{1/3}B_2^{1/3}B_1^{2/3}B_2^{1/3}B_3^{1/3}.
+\]
+Replacing $B_1$ by $B_1'$ therefore cannot decrease $s_1(P)$.  Hence a normalized counterexample with $s<1$ produces one with arithmetic mean exactly $I$.
+\end{proof}
+
+Under \eqref{eq:sum3I}, write
+\[
+B_i=\begin{pmatrix}1&q_i\\ \overline q_i&|q_i|^2+r_i\end{pmatrix},
+\qquad r_i=\det B_i>0.
+\]
+The constraints become
+\begin{equation}
+q_1+q_2+q_3=0,
+\qquad
+|q_1|^2+|q_2|^2+|q_3|^2+r_1+r_2+r_3=3.
+\label{eq:equal-j1-constraints}
+\end{equation}
+Thus even before any real-symmetric reduction, the scale-normalized equal-weight $j=1$ problem is a finite scalar problem.
+
+\subsection{A candidate dimension-free strengthening}
+The following inequality emerged naturally during the project:
+\begin{problem}[Candidate three-factor norm inequality \statusW]
+For positive semidefinite matrices $A,B,C$, prove or disprove
+\begin{equation}
+\boxed{
+\|ABC\|\le \frac13\|A^3+B^3+C^3\|.
+}
+\label{eq:candidate-abc}
+\end{equation}
+\end{problem}
+If true, \eqref{eq:candidate-abc} would settle the equal-weight $j=1$ inequality in every dimension, not merely in dimension two.
+
+A valid Bhatia--Davis matrix AGM estimate gives
+\begin{equation}
+2\|ABC\|\le \|A^2B+BC^2\|.
+\label{eq:bd-bridge}
+\end{equation}
+The missing step is a sharp upper estimate connecting the right side of \eqref{eq:bd-bridge} to $A^3+B^3+C^3$.  Several attempted bridges were explored, but no completely audited proof of the constant $2/3$ has yet been retained.  Therefore \eqref{eq:candidate-abc} is deliberately \emph{not} promoted to theorem status in this manuscript.
+
+\subsection{Smallest singular value: a sharp trace-sign reduction}
+Now consider a scale-stationary candidate counterexample for $j=2$.  Normalize as in \eqref{eq:stationary-normal-form} so that
+\begin{equation}
+B_i=\begin{pmatrix}1&q_i\\ \overline q_i&|q_i|^2+r_i\end{pmatrix}>0,
+\qquad q_1+q_2+q_3=0,
+\label{eq:j2-normal}
+\end{equation}
+and
+\[
+\frac{B_1+B_2+B_3}{3}=\diag(1,s),\qquad s\ge1.
+\]
+Set
+\[
+P=B_1^{1/3}B_2^{1/3}B_3^{1/3},
+\qquad
+d=\det P=(r_1r_2r_3)^{1/3},
+\qquad
+\tau=\Tr(P^*P).
+\]
+
+\begin{proposition}[Safe determinant region \statusR]
+If $d\le1$, then $s_2(P)\le1$ automatically.
+\end{proposition}
+\begin{proof}
+Since $s_1(P)s_2(P)=d$ and $s_1(P)\ge s_2(P)$,
+\[
+s_2(P)\le \sqrt d\le1.
+\]
+\end{proof}
+
+Thus a normalized $j=2$ counterexample must satisfy $d>1$.  Moreover Minkowski's determinant inequality gives
+\[
+\sqrt{s}=\sqrt{\det\!\left(\frac{B_1+B_2+B_3}{3}\right)}
+\ge \frac{\sqrt{r_1}+\sqrt{r_2}+\sqrt{r_3}}{3}
+\ge (r_1r_2r_3)^{1/6}=\sqrt d,
+\]
+so
+\begin{equation}
+1<d\le s.
+\label{eq:d-region}
+\end{equation}
+
+\begin{proposition}[Trace-sign equivalence for the remaining $j=2$ region \statusR]
+In the region $d>1$, the desired inequality $s_2(P)\le1$ is equivalent to
+\begin{equation}
+\boxed{
+\tau\ge1+d^2.
+}
+\label{eq:J2}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Let the eigenvalues of $P^*P$ be $x=s_1(P)^2\ge y=s_2(P)^2$, so $xy=d^2>1$.  Hence $x>1$.  Now
+\[
+\det(I-P^*P)=(1-x)(1-y)=1-\tau+d^2.
+\]
+Because $1-x<0$, the condition $y\le1$ is equivalent to $\det(I-P^*P)\le0$, which is exactly \eqref{eq:J2}.
+\end{proof}
+
+Equation \eqref{eq:J2}, under \eqref{eq:j2-normal} and \eqref{eq:d-region}, is the principal rigorous bottleneck currently remaining in the equal-weight $j=2$ problem.
+
+\subsection{Numerical status}
+\statusN{} Extensive random and reduced-parameter searches performed during the project have not found a violation of either equal-weight inequality in dimension two.  The experiments also suggest that equality is concentrated on commuting or degenerate boundary configurations.  These observations are guidance only and are not used as proofs.

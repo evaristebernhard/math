@@ -1,0 +1,86 @@
+{
+  "NU": 1900,
+  "campaign": "hurst1900_warm",
+  "cleanup_parent": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt002.txt",
+  "cleanup_parent_sha256": "c29aa5344aa980f2e836721c74211510e94caabd395aa9c2a2b6d44a28ad9a63",
+  "lift_manifest": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lift000.json",
+  "lift_manifest_sha256": "ad67d91ed19ccfeb4a89fdcb50cf723ddebc2fa424c2f184282567d2a24c3a61",
+  "mH": 460,
+  "peak_rss_kib": 188244,
+  "runs": [
+    {
+      "accepted": false,
+      "command": [
+        "fplll",
+        "-a",
+        "lll",
+        "-m",
+        "heuristic",
+        "-f",
+        "longdouble"
+      ],
+      "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt002.txt",
+      "output_valid": true,
+      "peak_rss_kib": 52972,
+      "retained_valid_failure": true,
+      "returncode": 3,
+      "seconds": 521.3224849159997,
+      "status": "infinite_loop_in_babai",
+      "stderr_tail": "Failure: infinite loop in babai\n"
+    },
+    {
+      "accepted": false,
+      "command": [
+        "fplll",
+        "-a",
+        "lll",
+        "-m",
+        "heuristic",
+        "-f",
+        "mpfr",
+        "-p",
+        "256"
+      ],
+      "output": null,
+      "output_valid": false,
+      "peak_rss_kib": 107660,
+      "retained_valid_failure": false,
+      "returncode": -15,
+      "seconds": 600.0698755740013,
+      "status": "timeout",
+      "stderr_tail": ""
+    },
+    {
+      "accepted": true,
+      "command": [
+        "fplll",
+        "-a",
+        "lll",
+        "-m",
+        "wrapper"
+      ],
+      "output": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt",
+      "output_valid": true,
+      "peak_rss_kib": 188244,
+      "retained_valid_failure": false,
+      "returncode": 0,
+      "seconds": 1107.5306392270013,
+      "status": "completed",
+      "stderr_tail": ""
+    }
+  ],
+  "schema": 1,
+  "total_seconds": 2228.9229997170023,
+  "warm_basis": "work/probes/hurst1900_warm_seed20260726/m460_n1900/warm_basis000.txt",
+  "warm_basis_sha256": "e4b2202afd26a5ab7716ef95f81b7d768c03611e19357e904b410fae917095b7",
+  "wrapper_checkpoint": "work/probes/hurst1900_warm_seed20260726/m460_n1900/lll_attempt004.txt",
+  "wrapper_checkpoint_sha256": "69f8c1572084f2726e3f3ff947a59b6daae5ec7211ea9045f3eca38e8eb6030b",
+  "wrapper_command": [
+    "fplll",
+    "-a",
+    "lll",
+    "-m",
+    "wrapper"
+  ],
+  "wrapper_completed": true
+}

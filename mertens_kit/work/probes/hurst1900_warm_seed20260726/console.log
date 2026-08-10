@@ -1,0 +1,16 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/ubuntu/hurst/mertens_kit/s08_hurst1900_campaign.py", line 889, in <module>
+    main()
+  File "/home/ubuntu/hurst/mertens_kit/s08_hurst1900_campaign.py", line 701, in main
+    calibration = _warm_target(
+                  ^^^^^^^^^^^^^
+  File "/home/ubuntu/hurst/mertens_kit/s08_hurst1900_campaign.py", line 613, in _warm_target
+    lift = lift_instance(source, target, resume)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/hurst/mertens_kit/s08_hurst1900_campaign.py", line 231, in lift_instance
+    manifest = lift_structured_lattice.lift(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/hurst/mertens_kit/lift_structured_lattice.py", line 194, in lift
+    raise FileExistsError(f"refusing to overwrite lift artifact: {path}")
+FileExistsError: refusing to overwrite lift artifact: work/probes/hurst1900_warm_seed20260726/m460_n1900/lift_transform000.txt

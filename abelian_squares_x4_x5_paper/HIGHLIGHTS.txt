@@ -1,0 +1,4 @@
+• Exact minima are determined for binary words with four or five a's.
+• All minimisers in the two fixed-Parikh cases are classified.
+• Five-a minimisers have at most two runs of the letter a.
+• Two positive-gap regimes satisfy the conjectured fixed-Parikh lower bound.

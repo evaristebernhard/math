@@ -1,0 +1,13 @@
+[04      0s] loaded reduced basis dim 81
+[04      0s] Babai done; Y-rows=81
+[04      0s] fpylll enumeration unavailable/failed (ModuleNotFoundError: No module named 'fpylll'); using Babai+perturbations only
+[04      0s] bases: 2000
+[04      1s] heavy scoring: best h_H(base)=1.1169 / A_H=1.1198 = 99.7% (tilt pred 1.1187)
+[04      3s] AP sweep: best h_mid=1.1839 (mid mass=2.4383)
+[04      4s] finalists full-h top5: [np.float64(1.1837), np.float64(1.1814), np.float64(1.1799), np.float64(1.1792), np.float64(1.1789)]
+[04      6s] 
+[04      6s] === otr1985 SEARCH RESULT ===
+[04      6s] h = 1.183705  at |y| ~ 10^115.8
+[04      6s] h_H = 1.1071 / A_H = 1.1198 = 98.9%   harvest = +0.0766
+[04      6s] target 1.061545: *** SURPASSED ***
+[04      6s] saved otr1985_results.json;  下一步:  python3 s05_certify.py otr1985
