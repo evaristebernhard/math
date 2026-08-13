@@ -1,0 +1,1030 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize,noabbrev]{cleveref}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\RR}{\mathbb R}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Newt}{\operatorname{Newt}}
+\newcommand{\MV}{\operatorname{MV}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\re}{\operatorname{Re}}
+\newcommand{\dd}{\,\mathrm d}
+
+\title{Sparse Toric Flight Encoding for Constant-Slope Scalar Periodic Piecewise-Linear Equations, with an Explicit Three-Zone Limit-Cycle Bound}
+\author{Chaoyu Hu\thanks{Corresponding author. School of Automation, Hangzhou Dianzi University, Hangzhou, Zhejiang 310018, People's Republic of China. Email: \texttt{evaristebernhardwiener@gmail.com}.}
+\and
+Tianrun Yu\thanks{College of Control Science and Engineering, Zhejiang University, Hangzhou, Zhejiang, People's Republic of China. Email: \texttt{waldinglawtergk548@gmail.com}.}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop a sparse toric encoding for periodic piecewise-linear flights with constant slopes and finite Fourier forcing, and apply it to the symmetric three-zone saturation equation
+\[
+ x'=ax+(b-a)\operatorname{sat}(x)+\mu\sin t,
+ \qquad ab<0.
+\]
+For a nonzero constant slope, the endpoint matching relation becomes a Laurent polynomial after introducing phase characters \(q=e^{it}\) and the real exponential variable \(R=e^{a\tau}\); when the slope is zero, one retains the flight time \(T=\tau\) and obtains a polynomial--Laurent relation.  In the corresponding mixed logarithmic/ordinary coframe, tangential differentiation preserves the adopted Newton box supports.  More generally, the mixed volume of the resulting local flight boxes is governed by the matching partition function of the flight--phase incidence graph.  A simultaneous regular-level argument and a relative Khovanskii--Rolle reduction make this principle unconditional: for a prescribed cyclic \(k\)-flight itinerary with Fourier degree at most \(M\),
+\[
+ N_X(k,M)\le \Theta_k\,k!(4M)^k\mathsf L_{2k},
+\]
+where \(\Theta_k\) is an explicit Khovanskii--Rolle factor and \(\mathsf L_{2k}\) is the Lucas factor associated with the incidence cycle \(C_{2k}\).
+
+For the three-zone saturation problem, an auxiliary constant bias and the mean of a periodic solution define a global response curve.  Critical points satisfy an exact residence-time identity, which eliminates two of the four flight times on a genuine three-zone fibre.  The remaining matching equations become two Laurent equations on two separating exponential leaves.  Two Khovanskii--Rolle reductions and Bernstein--Kushnirenko--Khovanskii counting give
+\[
+ N_{\mathrm{reg},3z}^{+}\le8216.
+\]
+A two-sided level perturbation gives the same estimate for isolated degenerate fibres, while ordering, two-zone monotonicity, Rolle's theorem, and odd symmetry yield the unconditional global bound
+\[
+ \boxed{L^*\le16437}.
+\]
+The support propagation and mixed volumes are accompanied by a deterministic exact certificate.  Independently of this algebraic count, absence of a positive-mean genuine three-zone branch implies the structural bound \(L\le3\).
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords.} piecewise-linear differential equation; limit cycle; sparse toric encoding; Khovanskii--Rolle theorem; Newton polytope; mixed volume; interaction graph.
+
+\smallskip
+\noindent\textbf{2020 Mathematics Subject Classification.} 34C25, 34A34, 37C27.
+
+\section{Introduction}\label{sec:introduction}
+
+Periodic scalar equations with switching nonlinearities arise naturally as reductions of non-controllable piecewise-linear systems.  They belong to the broader class of piecewise-smooth dynamical systems, where grazing and other discontinuity-induced bifurcations are standard organizing mechanisms \cite{diBernardoBuddChampneysKowalczyk2008}.  Their solutions are continuous across switching levels, but the itinerary of a periodic orbit changes at grazing parameters, so a direct global zero count is difficult.  Basic regularity and continuation results for scalar piecewise periodic equations were developed by Bravo, Fern\'andez, and Tineo \cite{BravoFernandezTineo2007}.  The response-curve viewpoint is related both to first-order Ambrosetti--Prodi theory \cite{BravoFernandezTineo2002} and to the piecewise-linear reduction studied by Carmona, Freire, Ponce, and Torres \cite{CarmonaFreirePonceTorres2004}.
+
+We study
+\begin{equation}\label{eq:original}
+ x'=ax+(b-a)\operatorname{sat}(x)+\mu\sin t,
+ \qquad ab<0,
+\end{equation}
+where $\operatorname{sat}(x)=x$ for $|x|\le1$ and $\operatorname{sat}(x)=\operatorname{sgn}(x)$ for $|x|\ge1$.  The recent analysis of Bravo, Carmona, Fern\'andez, and Ojeda proves parameter-uniform finiteness, exhibits regimes with one, three, and five limit cycles, and motivates the conjecture that five is the sharp maximum \cite{BravoCarmonaFernandezOjeda2025}.  More generally, Bravo and Trinidad-Forte obtain Hilbert-type finiteness bounds for scalar piecewise-linear periodic equations with trigonometric coefficients by a Pfaffian crossing-time reduction \cite{BravoTrinidadForte2026}.  Our purpose is complementary in two directions: we prove a general sparse counting theorem for the constant-slope subclass, and we give a much sharper fully explicit bound for the symmetric three-zone saturation problem.  In the constant-slope subclass the crossing equations admit a toric Laurent lift, and simultaneous regular-level reduction preserves both Fourier sparsity and itinerary-graph sparsity through the BKK count.
+
+Nearby scalar results clarify the scope of the present problem.  A two-zone trigonometric family already admits a finite Hilbert number \cite{BravoFernandezOjeda2024}, while sign restrictions give a sharp two-cycle bound for a broader $|x|$-family \cite{GasullZhao2023}.  Nonisolated periodic families require separate center conditions; these were recently characterized for a class of piecewise-linear equations on the cylinder \cite{BravoTrinidadForte2026Centers}.  None of these results supplies the multi-zone, fixed-itinerary sparse count developed here, but they provide the relevant finiteness, multiplicity, and center benchmarks.
+
+The paper has two principal results.  The general one, proved in \cref{thm:rg-fixed-itinerary,cor:rg-global}, gives an unconditional fixed-itinerary and Hilbert-type bound for constant-slope periodic piecewise-linear equations with finite Fourier forcing; in particular, a prescribed cyclic $k$-flight itinerary has at most $\Theta_k k!(4M)^k\mathsf L_{2k}$ isolated crossing cycles.  The second result is the sharper model-specific application below.
+
+Let $L(a,b,\mu)$ be the number of isolated $2\pi$-periodic solutions of \eqref{eq:original}, and set
+\[
+ L^*=\sup_{ab<0,\,\mu>0}L(a,b,\mu).
+\]
+Then:
+
+\begin{theorem}\label{thm:main}
+For the symmetric three-zone saturation equation \eqref{eq:original},
+\[
+ \boxed{L^*\le16437}.
+\]
+If the positive-mean family contains no genuine three-zone branch, then \eqref{eq:original} has at most three isolated periodic solutions.
+\end{theorem}
+
+The conjectural sharp equality \(L^*=5\) remains open.  Reaching it requires a
+global real-oscillation theorem for the genuine three-zone response, rather
+than a further refinement of the mixed-volume count.
+
+After reversing $x$ if necessary, take $a<0<b$ and write
+\[
+ A=-a>0,\qquad B=b>0.
+\]
+Equation \eqref{eq:original} is then
+\begin{equation}\label{eq:unbiased}
+ u'+g(u)=\mu\sin t,
+ \qquad u(t+2\pi)=u(t),
+\end{equation}
+where $g$ is odd, continuous, and piecewise linear, with
+\begin{equation}\label{eq:slopes}
+ g'(u)=A\quad (|u|>1),
+ \qquad
+ g'(u)=-B\quad (|u|<1).
+\end{equation}
+Adjoining $\dot t=1$ identifies isolated periodic solutions with limit cycles of the suspended system on the cylinder.
+
+The proof uses the biased family
+\begin{equation}\label{eq:biased}
+ u'+g(u)=\mu\sin t+\lambda,
+ \qquad u(t+2\pi)=u(t).
+\end{equation}
+Its periodic solutions are parametrized by their mean
+\[
+ \xi=\frac1{2\pi}\int_0^{2\pi}u(t)\dd t,
+\]
+and $\lambda=\Lambda(\xi,\mu)$ is the resulting response curve.  The original problem is the slice $\Lambda=0$.  The estimate $8216$ proved below counts positive-mean genuine three-zone critical fibres of this auxiliary curve; it is not itself a limit-cycle bound.  The passage from critical fibres to the global number $16437$ is made in \cref{sec:global}.
+
+The main technical innovation is a Laurent rather than total-degree encoding.  The trigonometric flight variables are kept as $z=e^{ir}$ and $w=e^{is}$, while the real exponentials are $R=e^{Br}$ and $S=e^{As}$.  The two Pfaffian tangent operators are Euler operators and hence preserve monomial support.  An exact support calculation produces three BKK numbers
+\[
+ 6808,\qquad1568,\qquad1248,
+\]
+which enter the Khovanskii--Rolle estimate as $6808+(1568+1248)/2=8216$.  The calculation is reproducible from the files described in \cref{sec:certificate}.
+
+The same encoding has a general constant-slope form, developed in \cref{sec:general-toric}.  A finite Fourier flight has a four-extreme-point Newton description, logarithmic tangency preserves its character support, and the mixed volume of a collection of locally coupled flight boxes is exactly a weighted matching partition function of the flight--phase incidence graph.  For a cyclic $k$-flight itinerary the graph is $C_{2k}$.  Simultaneous Sard regularization of the matching level, followed by a relative Khovanskii--Rolle reduction on that regular algebraic level, yields the unconditional bound
+\[
+ N_X(k,M)\le\Theta_k\,k!(4M)^k\mathsf L_{2k},
+\]
+with an explicit factor \(\Theta_k=2^{k(k-1)/2+O(k)}\).  Thus, for fixed itinerary length, the general constant-slope count grows like \(C_kM^k\).  This theorem is independent of the residence-time reduction specific to the symmetric three-zone model.
+
+\section{The biased response curve}\label{sec:response}
+
+Piecewise derivatives below are taken away from crossing instants and extended across transversal crossings by continuity.  This is the standard regularity convention for scalar piecewise ODEs \cite{BravoFernandezTineo2007}.
+
+\subsection{Mean parametrization and symmetry}
+
+\begin{proposition}\label{prop:mean}
+For fixed $\mu>0$, the periodic solutions of \eqref{eq:biased} form a global one-parameter family $u(\,cdot\,;\xi,\mu)$ indexed by their mean.  The response $\Lambda(\xi,\mu)$ is continuous globally and real analytic on each transversal itinerary interval.  Moreover
+\begin{equation}\label{eq:positive-z}
+ z(t):=\partial_\xi u(t;\xi,\mu)>0
+\end{equation}
+and
+\begin{equation}\label{eq:symmetry}
+ u(t;-\xi,\mu)=-u(t+\pi;\xi,\mu),
+ \qquad
+ \Lambda(-\xi,\mu)=-\Lambda(\xi,\mu).
+\end{equation}
+For $\xi>0$ one also has
+\begin{equation}\label{eq:half-order}
+ u(t;\xi,\mu)+u(t+\pi;\xi,\mu)>0
+ \quad\text{for every }t.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Shooting from $t=0$ gives a continuous two-parameter surface of solutions indexed by the initial value and $\lambda$.  Linear growth $g(u)=Au+O(1)$ as $|u|\to\infty$ makes the periodicity equation proper.  On every fixed itinerary the implicit equations are analytic.
+
+It remains to show that projection of the periodic-solution surface to the mean has no fold.  A tangent pair $(y,\ell)$ satisfies
+\begin{equation}\label{eq:tangent-general}
+ y'+c(t)y=\ell,
+\end{equation}
+where $c(t)$ is the divided difference of $g$ and is piecewise equal to $A$ or $-B$.  If $\ell\ne0$, every zero of $y$ is crossed with the same orientation because $y'=\ell$ there.  A nonzero periodic function cannot have this property.  Thus $y$ has a fixed sign and nonzero mean.  If $\ell=0$, either $y=0$ or $y(t)=y(0)\exp(-\int_0^t c)$ has a fixed sign and again has nonzero mean.  Consequently no nonzero tangent has zero mean.  Proper continuation therefore makes the mean projection a global coordinate.  With the normalization $(2\pi)^{-1}\int z=1$, the same zero-crossing argument applied to \eqref{eq:tangent-general} gives \eqref{eq:positive-z}.
+
+Because $g$ is odd and $\sin(t+\pi)=-\sin t$, the transformation $(u,\lambda,\xi)\mapsto(-u(\cdot+\pi),-\lambda,-\xi)$ preserves \eqref{eq:biased}.  Uniqueness at fixed mean proves \eqref{eq:symmetry}.  Finally, $u(\cdot;\xi)>u(\cdot;-\xi)$ follows from \eqref{eq:positive-z}; substituting \eqref{eq:symmetry} gives \eqref{eq:half-order}.
+\end{proof}
+
+\subsection{Residence time and criticality}
+
+For a genuine three-zone orbit let
+\[
+ t_1<t_2<t_3<t_4<t_1+2\pi
+\]
+be its four crossings, ordered so that the intervals of lengths
+\begin{equation}\label{eq:durations}
+ r=t_2-t_1,\quad s=t_3-t_2,\quad
+ u=t_4-t_3,\quad v=t_1+2\pi-t_4
+\end{equation}
+are, respectively, a descending middle flight, a lower outer flight, an ascending middle flight, and an upper outer flight.  Thus the total middle-zone residence time is
+\[
+ T=r+u.
+\]
+Set
+\begin{equation}\label{eq:rho}
+ \rho=\frac{2\pi A}{A+B}.
+\end{equation}
+
+\begin{proposition}[Residence identity]\label{prop:residence}
+Let
+\[
+ J=\int_0^{2\pi}\frac{\dd t}{z(t)}>0.
+\]
+Then every transversal fibre satisfies
+\begin{equation}\label{eq:residence-identity}
+ \Lambda_\xi J=(A+B)(\rho-T).
+\end{equation}
+In particular,
+\begin{equation}\label{eq:critical-residence}
+ \Lambda_\xi=0\quad\Longleftrightarrow\quad T=\rho.
+\end{equation}
+On the critical set,
+\begin{equation}\label{eq:curvature}
+ \Lambda_{\xi\xi}=-\frac{(A+B)T_\xi}{J}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiating \eqref{eq:biased} with respect to $\xi$ gives
+\[
+ z'+g'(u)z=\Lambda_\xi.
+\]
+Division by $z>0$ and integration over a period yield
+\[
+ \Lambda_\xi J=\int_0^{2\pi}g'(u(t))\dd t
+ =A(2\pi-T)-BT=(A+B)(\rho-T),
+\]
+because the integral of $z'/z$ vanishes.  This proves \eqref{eq:residence-identity} and \eqref{eq:critical-residence}.  Differentiating \eqref{eq:residence-identity} and imposing $\Lambda_\xi=0$ gives \eqref{eq:curvature}.
+\end{proof}
+
+\begin{lemma}[Grazing extension of the residence identity]\label{lem:grazing-residence}
+For \(\mu>0\), \eqref{eq:residence-identity} extends to a grazing fibre, with
+\[
+ T=\operatorname{meas}\{t\in[0,2\pi):|u(t)|<1\}.
+\]
+In particular, if the central fibre is contained in \([-1,1]\), including the
+borderline case in which it grazes one or both switching lines, then
+\begin{equation}\label{eq:central-grazing-slope}
+ T(0)=2\pi,\qquad \Lambda_\xi(0,\mu)=-B.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The contact set \(\{t:|u(t)|=1\}\) has measure zero.  Indeed, if \(u=1\) or
+\(u=-1\) on a set of positive measure, then \(u'=0\) at almost every density
+point of that set, whereas the equation would require the nonconstant analytic
+function \(\mu\sin t+\lambda\) to equal the constant \(g(1)\) or \(g(-1)\) on
+a set of positive measure.
+
+The standard \(C^1\) grazing regularity for a continuous scalar piecewise ODE
+\cite[Theorem~A.1]{BravoFernandezTineo2007}, used in \cref{prop:mean}, implies
+that \(z=\partial_\xi u\) exists and satisfies the variational equation almost
+everywhere.  Since changing the value of
+\(g'(u)\) on the null contact set changes no integral, the proof of
+\eqref{eq:residence-identity} applies verbatim; equivalently, one may take
+transversal fibres converging to the grazing fibre and use dominated
+convergence.  On a central fibre contained in \([-1,1]\), one has
+\(g'(u)=-B\) almost everywhere and \(T=2\pi\).  The normalized periodic
+variational equation is then
+\[
+ z'-Bz=\Lambda_\xi,\qquad \frac1{2\pi}\int_0^{2\pi}z\,\dd t=1.
+\]
+Its periodic solution is constant, so \(z\equiv1\) and
+\(\Lambda_\xi=-B\), proving \eqref{eq:central-grazing-slope}.
+\end{proof}
+
+On a critical three-zone fibre, \eqref{eq:critical-residence} and the period constraint give
+\begin{equation}\label{eq:eliminate-u-v}
+ u=\rho-r,
+ \qquad
+ v=2\pi-\rho-s.
+\end{equation}
+Thus only $(r,s)$ remain independent.
+
+\begin{proposition}[Half-period nesting]\label{prop:nesting}
+Every positive-mean genuine three-zone critical fibre satisfies
+\begin{equation}\label{eq:nesting}
+ r+s<\pi,\qquad s+u<\pi,\qquad r,s,u,v>0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+At $t_2$ and $t_3$ the orbit lies on the lower switching line, $u=-1$.  By \eqref{eq:half-order}, the points at $t_2+\pi$ and $t_3+\pi$ lie strictly above $+1$, hence belong to the upper outer flight $(t_4,t_1+2\pi)$.  The two inclusions give
+\[
+ t_4<t_2+\pi,
+ \qquad
+ t_3+\pi<t_1+2\pi.
+\]
+Using \eqref{eq:durations}, these are $s+u<\pi$ and $r+s<\pi$.  Positivity of all four lengths is part of the genuine first-hit itinerary.
+\end{proof}
+
+\subsection{Amplitude transversality and fixed-slice regularity}
+
+Put $q=u'/z$.  At a critical fibre, direct differentiation gives
+\begin{equation}\label{eq:q-prime}
+ q'=\frac{\mu\cos t}{z}.
+\end{equation}
+At fixed mean set $w_\mu=\partial_\mu u$ and $h=w_\mu/z$.  Then
+\begin{equation}\label{eq:h-prime}
+ h'=\frac{\sin t-\sigma}{z},
+ \qquad
+ \sigma=\frac{\int_0^{2\pi}(\sin t)/z\dd t}{\int_0^{2\pi}1/z\dd t},
+ \qquad |\sigma|<1.
+\end{equation}
+
+\begin{proposition}[Amplitude transversality]\label{prop:amplitude}
+Every genuine transversal three-zone critical fibre satisfies
+\begin{equation}\label{eq:T-mu-sign}
+ T_\mu<0,
+ \qquad
+ \Lambda_{\xi\mu}=-\frac{(A+B)T_\mu}{J}>0.
+\end{equation}
+Consequently the critical locus is locally an analytic graph $\mu=\mu_s(\xi)$.
+\end{proposition}
+
+\begin{proof}
+For $\Gamma(t)=(q(t),h(t))$, equations \eqref{eq:q-prime}--\eqref{eq:h-prime} give
+\begin{equation}\label{eq:convexity-determinant}
+ \det(\Gamma',\Gamma'')
+ =\frac{\mu(1-\sigma\sin t)}{z^2}>0.
+\end{equation}
+Moreover
+\[
+ \int_0^{2\pi}z(t)\Gamma(t)\dd t
+ =\left(\int_0^{2\pi}u'(t)\dd t,
+ \int_0^{2\pi}w_\mu(t)\dd t\right)=(0,0).
+\]
+Thus $\Gamma$ is a strictly convex positively oriented closed curve containing the origin in its interior.  Its polar angle is strictly increasing, equivalently
+\begin{equation}\label{eq:h-over-q}
+ \left(\frac hq\right)'=
+ \frac{\det(\Gamma,\Gamma')}{q^2}>0
+\end{equation}
+between consecutive zeros of $q$.
+
+At a transversal crossing, implicit differentiation of $u(t_i)=\pm1$ gives $t_{i,\mu}=-h_i/q_i$.  With the crossing order in \eqref{eq:durations}, the cyclic inequalities furnished by \eqref{eq:h-over-q} imply
+\[
+ T_\mu=t_{2,\mu}-t_{1,\mu}+t_{4,\mu}-t_{3,\mu}
+ =\frac{h_1}{q_1}-\frac{h_2}{q_2}
+  +\frac{h_3}{q_3}-\frac{h_4}{q_4}<0.
+\]
+Differentiating \eqref{eq:residence-identity} with respect to $\mu$ on $T=\rho$ proves the second assertion in \eqref{eq:T-mu-sign}.  The implicit-function theorem applied to $T(\xi,\mu)-\rho=0$ proves the graph statement.
+\end{proof}
+
+\begin{corollary}[Fixed-slice regularity]\label{cor:fixed-slice}
+On a transversal itinerary interval the critical locus is a real-analytic curve.  At a fixed amplitude, every isolated critical fibre is an isolated finite-order zero of the one-variable analytic function $\mu_s(\xi)-\mu$; a simple zero is a regular intersection of the two-equation matching system.
+\end{corollary}
+
+\begin{proof}
+Analyticity follows from the constant-coefficient flight maps and transversal crossing equations.  The nonvanishing derivative $T_\mu$ in \cref{prop:amplitude} supplies an analytic graph.  Restricting this graph to a horizontal amplitude level gives the stated one-variable equation.  A simple zero is transverse to that level, which is precisely regularity after the two flight equations have been reduced to the compatibility and amplitude equations below.
+\end{proof}
+
+\subsection{The one-zone and two-zone branches}
+
+\begin{proposition}[Two-zone monotonicity]\label{prop:two-zone}
+On the positive right two-zone branch, the middle-zone residence time $T(\xi)$ is strictly decreasing.  Hence this branch contains at most one critical fibre.  If both adjacent one-zone endpoints occur, then $\Lambda_\xi<0$ at the middle one-zone endpoint and $\Lambda_\xi>0$ at the upper one-zone endpoint; the unique two-zone critical point, when present, is a minimum.
+\end{proposition}
+
+\begin{proof}
+On a right two-zone fibre one has $u>-1$, and the middle-zone set is $E_\xi=\{t:u(t;\xi)<1\}$.  If $\xi_2>\xi_1$, \eqref{eq:positive-z} gives $u(t;\xi_2)>u(t;\xi_1)$ for every $t$, hence $E_{\xi_2}\subset E_{\xi_1}$.  The inclusion is strict for transversal crossings, so $T=|E_\xi|$ decreases strictly.  Formula \eqref{eq:residence-identity} then shows that $\Lambda_\xi$ is strictly increasing in sign and can vanish at most once.
+
+On a one-zone branch $g'$ is constant.  The normalized variational solution is $z\equiv1$, so $\Lambda_\xi=-B$ in the middle zone and $\Lambda_\xi=A$ in the upper outer zone.  Continuity at a transversal-to-grazing limit gives the endpoint signs and the minimum assertion.  This recovers, in the present mean coordinate, the two-zone behavior underlying the scalar reduction in \cite{CarmonaFreirePonceTorres2004}.
+\end{proof}
+
+\section{Four-flight matching}\label{sec:matching}
+
+Let $W=\mu e^{it_1}$.  Solving the constant-coefficient equation on each flight expresses the four matching relations as
+\begin{equation}\label{eq:flight-match}
+ \lambda=\kappa_j-\im(WZ_j),
+ \qquad j=1,2,3,4.
+\end{equation}
+On the critical locus introduce
+\begin{equation}\label{eq:laurent-variables}
+ z=e^{ir},\qquad w=e^{is},\qquad
+ R=e^{Br},\qquad S=e^{As},
+\end{equation}
+and the constants
+\begin{equation}\label{eq:constants}
+ \alpha=e^{-B\rho},\quad L=2\pi-\rho,\quad
+ \beta=e^{AL},\quad p=e^{i\rho},\quad
+ c_- =\frac{-B}{-B+i},\quad c_+=\frac{A}{A+i}.
+\end{equation}
+The weighted arc centroids are
+\begin{align}
+ Z_1&=c_-\frac{z-R}{1-R},
+ &Z_2&=c_+z\frac{Sw-1}{S-1},\label{eq:centroids-12}\\
+ Z_3&=c_-w\frac{\alpha pR-z}{\alpha R-1},
+ &Z_4&=c_+\frac{\beta-pSw}{\beta-S}.\label{eq:centroids-34}
+\end{align}
+The corresponding constant terms give
+\begin{equation}\label{eq:d-values}
+ d_2=\frac{2BR}{1-R},\qquad
+ d_3=\frac{2BR(1-\alpha)}{(1-R)(1-\alpha R)},\qquad
+ d_4=\frac{2B}{1-R}.
+\end{equation}
+
+Set
+\begin{equation}\label{eq:AUV}
+ A_2=Z_1-Z_2,\qquad U=Z_1-Z_3,\qquad V=Z_1-Z_4
+\end{equation}
+and $[P,Q]=\im(P\overline Q)$.  Subtracting the first matching equation from the others gives
+\begin{equation}\label{eq:linear-W}
+ \im(WA_2)=d_2,\qquad \im(WU)=d_3,\qquad \im(WV)=d_4.
+\end{equation}
+
+\begin{lemma}[Global Cramer chart]\label{lem:cramer}
+On the positive genuine three-zone domain,
+\[
+ \Delta=[U,V]\ne0,
+\]
+and its sign is constant.
+\end{lemma}
+
+\begin{proof}
+Each $Z_j$ is a positive weighted average of $e^{it}$ over its flight arc.  By \cref{prop:nesting}, the arcs supporting $Z_1,Z_3,Z_4$ occur in strict cyclic order and do not interlace.  For points $\theta_j$ in those arcs, the oriented-area kernel
+\[
+ \im\!\left((e^{i\theta_1}-e^{i\theta_3})
+ \overline{(e^{i\theta_1}-e^{i\theta_4})}\right)
+\]
+has one strict sign.  The determinant $[U,V]$ is its triple integral against the positive flight weights.  It therefore has the same strict sign throughout the connected itinerary domain.
+\end{proof}
+
+The determinant identity for three planar vectors turns \eqref{eq:linear-W} into the compatibility equation
+\begin{equation}\label{eq:F-rational}
+ d_2[U,V]-d_3[A_2,V]+d_4[A_2,U]=0.
+\end{equation}
+Solving the last two equations in \eqref{eq:linear-W} and imposing $|W|=\mu$ gives
+\begin{equation}\label{eq:G-rational}
+ d_3^2|V|^2+d_4^2|U|^2
+ -2d_3d_4\re(U\overline V)-\mu^2[U,V]^2=0.
+\end{equation}
+Thus the critical-fibre count reduces to two scalar matching equations.
+
+\section{Laurent polynomialization and supports}\label{sec:laurent}
+
+Define the real denominators
+\begin{equation}\label{eq:denominators}
+ D_U=(1-R)(\alpha R-1),\quad
+ D_V=(1-R)(\beta-S),\quad
+ D_A=(1-R)(S-1)
+\end{equation}
+and the numerators
+\begin{align}
+ \widehat U&=c_-\bigl[(z-R)(\alpha R-1)
+ -w(\alpha pR-z)(1-R)\bigr],\label{eq:Uhat}\\
+ \widehat V&=c_-(z-R)(\beta-S)
+ -c_+(\beta-pSw)(1-R),\label{eq:Vhat}\\
+ \widehat A&=c_-(z-R)(S-1)
+ -c_+z(Sw-1)(1-R).\label{eq:Ahat}
+\end{align}
+Then $U=\widehat U/D_U$, $V=\widehat V/D_V$, and $A_2=\widehat A/D_A$.
+
+For a Laurent polynomial $P$, let
+\begin{equation}\label{eq:star}
+ P^\star(z,w,R,S)=\overline{P(z^{-1},w^{-1},R,S)},
+\end{equation}
+where the bar also conjugates $p,c_-,c_+$.  Put
+\begin{equation}\label{eq:IR}
+ \mathcal I(P,Q)=\frac{PQ^\star-P^\star Q}{2i},
+ \qquad
+ \mathcal R(P,Q)=PQ^\star+P^\star Q.
+\end{equation}
+These equal $\im(P\overline Q)$ and $2\re(P\overline Q)$ on the physical torus.
+
+Clearing the real denominators in \eqref{eq:F-rational} gives
+\begin{align}
+ F_0={}&R D_A\mathcal I(\widehat U,\widehat V)
+ +R(1-\alpha)(1-R)\mathcal I(\widehat A,\widehat V)\notag\\
+ &+D_V\mathcal I(\widehat A,\widehat U).\label{eq:F0}
+\end{align}
+
+\begin{lemma}[Primitive compatibility factor]\label{lem:F-factor}
+The Laurent polynomial $F_0$ is divisible by $(R-1)^3$.  The primitive compatibility representative is
+\begin{equation}\label{eq:FL}
+ F_L=\frac{F_0}{(R-1)^3}.
+\end{equation}
+Its formal support has $36$ exponent vectors and its Newton polytope has $16$ vertices.
+\end{lemma}
+
+\begin{proof}
+Regard $F_0$ as a polynomial in $R$ over the Laurent coefficient ring in $z,w,S$ and the parameter ring generated by $\alpha,\beta,p,c_\pm$ and their conjugates.  Substitution of \eqref{eq:Uhat}--\eqref{eq:Ahat} gives
+\[
+ F_0(1)=\partial_R F_0(1)=\partial_R^2F_0(1)=0.
+\]
+Exact sparse division therefore gives \eqref{eq:FL}; a fourth division has nonzero remainder.  Collecting the nonzero coefficients of the quotient gives $36$ exponent vectors.  Exact hull enumeration gives the $16$ vertices.  Both division and lists are regenerated by the certificate of \cref{sec:certificate}.
+\end{proof}
+
+For the amplitude equation define $\mathcal D(P,Q)=PQ^\star-P^\star Q$.  Clearing denominators in \eqref{eq:G-rational} gives
+\begin{align}
+ G_0={}&(1-\alpha)^2R^2\widehat V\widehat V^\star
+ +(\beta-S)^2\widehat U\widehat U^\star\notag\\
+ &+(1-\alpha)R(\beta-S)\mathcal R(\widehat U,\widehat V)
+ +\frac{\mu^2}{16B^2}\mathcal D(\widehat U,\widehat V)^2.\label{eq:G0}
+\end{align}
+Since $\mathcal D^2=-4\mathcal I^2$ on the physical torus, the last term has the sign required by \eqref{eq:G-rational}.  Exact division gives
+\begin{equation}\label{eq:GL}
+ G_L=\frac{G_0}{(R-1)^2}.
+\end{equation}
+
+\begin{proposition}[Basic supports]\label{prop:basic-supports}
+There are parameter-independent Newton polytopes $P_F,P_G$ such that
+\[
+ \Newt(F_L)\subseteq P_F,
+ \qquad
+ \Newt(G_L)\subseteq P_G.
+\]
+Their support and vertex counts are
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Polynomial & support size & Newton vertices\\
+\midrule
+$F_L$ & $36$ & $16$\\
+$G_L$ & $265$ & $24$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The coordinate ranges are
+\[
+ P_F:\ [-1,1]^2\times[0,2]^2,
+ \qquad
+ P_G:\ [-2,2]^2\times[0,4]\times[0,2].
+\]
+\end{proposition}
+
+\begin{proof}
+Expand \eqref{eq:F0} and \eqref{eq:G0} in the formal parameter ring before specialization, perform the exact divisions in $R$, and collect the exponent quadruples of $z^aw^bR^cS^d$.  This yields the stated counts and ranges.  Parameter specialization can delete a coefficient but cannot create an exponent outside these formal lists.  The full lists and their exact hull vertices occur in the JSON certificate.
+\end{proof}
+
+\section{Pfaffian reduction}\label{sec:pfaffian}
+
+On
+\[
+ M_+=(0,\pi)^2\times(0,\infty)^2
+\]
+with coordinates $(r,s,R,S)$, the exponential variables satisfy
+\begin{equation}\label{eq:forms}
+ \omega_R=\dd R-BR\dd r=0,
+ \qquad
+ \omega_S=\dd S-AS\dd s=0.
+\end{equation}
+Their tangent fields in Laurent coordinates are
+\begin{equation}\label{eq:euler-fields}
+ X_r=iz\partial_z+BR\partial_R,
+ \qquad
+ X_s=iw\partial_w+AS\partial_S.
+\end{equation}
+
+\begin{lemma}[Separating leaves]\label{lem:separating}
+The target leaves $R=e^{Br}$ and $S=e^{As}$ are separating solutions of \eqref{eq:forms} on $M_+$.
+\end{lemma}
+
+\begin{proof}
+Set $\phi_R=Re^{-Br}$ and $\phi_S=Se^{-As}$.  Then
+\[
+ \dd\phi_R=e^{-Br}\omega_R,
+ \qquad
+ \dd\phi_S=e^{-As}\omega_S.
+\]
+Each target leaf is the regular level $\phi_R=1$ or $\phi_S=1$ and is the cooriented boundary of a sublevel domain.  The integrating factors are positive, so the coorientation agrees with the Pfaffian form.  This is the separating-solution setting of Khovanskii's Rolle theory \cite{Khovanskii1980}\cite[Chapter~3]{Khovanskii1991}; for later quantitative formulations see \cite{GabrielovVorobjov2004}, and for the explicit covering reduction used here see \cite{Kaloshin2003}.
+\end{proof}
+
+The first contact function is
+\begin{equation}\label{eq:H2}
+ H_2=X_r(F_L)X_s(G_L)-X_s(F_L)X_r(G_L).
+\end{equation}
+For a monomial $m=z^aw^bR^cS^d$,
+\begin{equation}\label{eq:euler-monomial}
+ X_rm=(ia+Bc)m,
+ \qquad
+ X_sm=(ib+Ad)m,
+\end{equation}
+so these derivatives do not enlarge support.  The second contact determinant is
+\begin{equation}\label{eq:H1}
+ H_1=*(\dd F_L\wedge\dd G_L\wedge\dd H_2\wedge\omega_R),
+ \qquad \widetilde H_1=S^{-1}H_1.
+\end{equation}
+The factor $S^{-1}$ is positive on $M_+$ and only translates its Newton polytope.
+
+To control infinity, use
+\begin{equation}\label{eq:covering}
+ \varrho_+(r,s,R,S)=\sin r\sin s
+ \frac{R}{(1+R)^2}\frac{S}{(1+S)^2}.
+\end{equation}
+It is positive on $M_+$ and tends to zero along every escaping sequence.  Its only critical point is $(\pi/2,\pi/2,1,1)$, where its value is $1/16$; hence every $0<\varepsilon<1/16$ is a regular value and the level is compact.  Clearing a nonzero Laurent monomial from $\varrho_+=\varepsilon$ gives
+\begin{equation}\label{eq:P-epsilon}
+ P_\varepsilon=(z^2-1)(w^2-1)RS
+ +4\varepsilon zw(1+R)^2(1+S)^2.
+\end{equation}
+Finally set
+\begin{equation}\label{eq:Hc}
+ H_c=*(\dd F_L\wedge\dd G_L\wedge\dd P_\varepsilon\wedge\omega_R),
+ \qquad \widetilde H_c=S^{-1}H_c.
+\end{equation}
+
+\begin{proposition}[Contact supports]\label{prop:contact-supports}
+The direct support propagation from \eqref{eq:H2}, \eqref{eq:H1}, \eqref{eq:P-epsilon}, and \eqref{eq:Hc} gives
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Polynomial & supersupport size & Newton vertices\\
+\midrule
+$H_2$ & $1154$ & $52$\\
+$\widetilde H_1$ & $12360$ & $54$\\
+$P_\varepsilon$ & $13$ & $8$\\
+$\widetilde H_c$ & $2692$ & $74$\\
+\bottomrule
+\end{tabular}
+\end{center}
+All six Newton hulls used below contain the origin, so subtraction of a small regular value does not enlarge them.
+\end{proposition}
+
+\begin{proof}
+Products use Minkowski sums of exponent sets, sums use unions, and partial differentiation translates an exponent by a negative coordinate vector after deleting terms of degree zero in that coordinate.  Formula \eqref{eq:euler-monomial} deletes only monomials annihilated by the relevant Euler field.  Applying these rules to the displayed determinants gives the four lists and counts.  Translation by $-e_S$ gives the normalized contact supports.  Exact supporting-hyperplane tests give the vertex counts and verify origin membership.  The deterministic implementation emits every exponent and vertex.
+\end{proof}
+
+The two Khovanskii--Rolle steps now give
+\begin{align}
+ N_{\mathrm{reg},3z}^{+}
+ \le B_0+\frac12(B_1+B_2),\label{eq:KR-bound}
+\end{align}
+where the three algebraic torus systems have Newton four-tuples
+\begin{align}
+ \mathcal P_0&=(P_F,P_G,P_{H_2},P_{\widetilde H_1}),\label{eq:P0}\\
+ \mathcal P_1&=(P_F,P_G,P_{P_\varepsilon},P_{\widetilde H_c}),\label{eq:P1}\\
+ \mathcal P_2&=(P_F,P_G,P_{H_2},P_{P_\varepsilon}).\label{eq:P2}
+\end{align}
+Indeed, the first reduction replaces $\omega_S$ by $H_2$ and contributes half the intersections with a small covering level.  The remaining noncompact branch is reduced against $\omega_R$ and produces $\widetilde H_1$ plus a second half-covering term.  The branch already on $P_\varepsilon=0$ is compact, so its last reduction produces $\widetilde H_c$ without another infinity term.  This is the standard separating-solution Rolle argument of \cite[Chapter~3]{Khovanskii1991}.
+
+\section{Exact mixed volumes and the three-zone bound}\label{sec:mixed-volume}
+
+For a lattice polytope in $\RR^4$, write
+\[
+ \operatorname{Vol}_{\mathbb Z}=4!\operatorname{Vol}_{\mathrm{Eucl}}.
+\]
+With this normalization, polarization gives the BKK mixed volume as
+\begin{equation}\label{eq:polarization}
+ \MV(P_1,P_2,P_3,P_4)=\frac1{4!}
+ \sum_{\varnothing\ne I\subseteq\{1,2,3,4\}}
+ (-1)^{4-|I|}\operatorname{Vol}_{\mathbb Z}
+ \left(\sum_{i\in I}P_i\right).
+\end{equation}
+The factor $1/4!$ is essential when normalized lattice volumes, rather than Euclidean volumes, are inserted in the inclusion--exclusion sum; standard mixed-volume conventions and polarization are summarized in \cite[Chapter~5]{Schneider2014}.
+
+The exact certificate gives
+\begin{align}
+ \sum_I(-1)^{4-|I|}\operatorname{Vol}_{\mathbb Z}
+ \left(\sum_{i\in I}(\mathcal P_0)_i\right)&=163392,
+ &\MV(\mathcal P_0)&=\frac{163392}{24}=6808,\label{eq:MV0}\\
+ \sum_I(-1)^{4-|I|}\operatorname{Vol}_{\mathbb Z}
+ \left(\sum_{i\in I}(\mathcal P_1)_i\right)&=37632,
+ &\MV(\mathcal P_1)&=\frac{37632}{24}=1568,\label{eq:MV1}\\
+ \sum_I(-1)^{4-|I|}\operatorname{Vol}_{\mathbb Z}
+ \left(\sum_{i\in I}(\mathcal P_2)_i\right)&=29952,
+ &\MV(\mathcal P_2)&=\frac{29952}{24}=1248.\label{eq:MV2}
+\end{align}
+Bernstein's theorem bounds the isolated roots of each Laurent system in $(\CC^*)^4$ by these mixed volumes \cite{Bernstein1975}.  Kushnirenko's Newton-polytope form of B\'ezout theory \cite{Kushnirenko1976} and modern sparse-system treatments \cite{Sturmfels2002} provide the surrounding BKK framework; a toric refinement is given by Philippon and Sombra \cite{PhilipponSombra2008}.  Every physical root has $|z|=|w|=1$ and $R,S>0$, and hence lies in that algebraic torus.
+
+\begin{theorem}[Regular three-zone bound]\label{thm:8216}
+For fixed $A,B,\mu>0$, the number of regular positive-mean genuine three-zone interior critical fibres satisfies
+\[
+ \boxed{N_{\mathrm{reg},3z}^{+}\le8216}.
+\]
+\end{theorem}
+
+\begin{proof}
+Apply Bernstein's theorem to the three systems in \eqref{eq:KR-bound} and substitute \eqref{eq:MV0}--\eqref{eq:MV2}:
+\[
+ N_{\mathrm{reg},3z}^{+}
+ \le6808+\frac12(1568+1248)=8216.
+\]
+The formal supports are taken before parameter specialization, so the estimate is uniform in $A,B,\mu$.
+\end{proof}
+
+\section{A general sparse toric flight principle}\label{sec:general-toric}
+
+The preceding four-variable construction is a special case of a more general encoding for constant-slope piecewise-linear flights with finite Fourier forcing.  We record the part of this mechanism that is independent of the three-zone response reduction.
+
+\subsection{Constant-slope Fourier flights}
+
+Consider one flight on an interval $[t_j,t_{j+1}]$ governed by
+\begin{equation}\label{eq:general-flight}
+ x'=a_jx+b_j(t),\qquad
+ b_j(t)=\sum_{m=-M}^{M}\beta_{j,m}e^{imt},
+\end{equation}
+with constant $a_j\ne0$.  Let the endpoint values be $x(t_j)=c_j$ and $x(t_{j+1})=c_{j+1}$, and introduce
+\begin{equation}\label{eq:general-toric-vars}
+ q_j=e^{it_j},\qquad q_{j+1}=e^{it_{j+1}},\qquad
+ R_j=e^{a_j(t_{j+1}-t_j)}.
+\end{equation}
+
+\begin{proposition}[Laurent flight relation]\label{prop:laurent-flight}
+The endpoint matching condition for \eqref{eq:general-flight} is the Laurent equation
+\begin{equation}\label{eq:general-laurent-flight}
+ c_{j+1}-R_jc_j-
+ \sum_{m=-M}^{M}\frac{\beta_{j,m}}{im-a_j}
+ \bigl(q_{j+1}^{m}-R_jq_j^{m}\bigr)=0.
+\end{equation}
+In particular, if $P_j$ denotes its Newton polytope in the variables
+$(q_j,q_{j+1},R_j)$, then
+\begin{equation}\label{eq:single-flight-polytope}
+ P_j\subseteq
+ \operatorname{conv}\{\pm M e_{q_{j+1}},\ e_{R_j}\pm M e_{q_j}\}.
+\end{equation}
+Thus the extremal Newton data of one flight are bounded independently of the number $2M+1$ of Fourier modes.
+\end{proposition}
+
+\begin{proof}
+Variation of constants gives
+\[
+ c_{j+1}=R_jc_j+
+ \int_{t_j}^{t_{j+1}}e^{a_j(t_{j+1}-s)}b_j(s)\,\dd s.
+\]
+For the $m$th Fourier mode,
+\[
+ \int_{t_j}^{t_{j+1}}e^{a_j(t_{j+1}-s)}e^{ims}\,\dd s
+ =\frac{q_{j+1}^{m}-R_jq_j^m}{im-a_j},
+\]
+which proves \eqref{eq:general-laurent-flight}.  Every exponent occurring there lies on one of the two segments joining the four displayed extreme points, proving \eqref{eq:single-flight-polytope}.
+\end{proof}
+
+The toric variables are not independent: the physical locus satisfies
+\begin{equation}\label{eq:log-leaf-general}
+ \eta_j:=\dd\log R_j-
+ \frac{a_j}{i}\bigl(\dd\log q_{j+1}-\dd\log q_j\bigr)=0.
+\end{equation}
+The coefficients of $\eta_j$ in the logarithmic coframe are constant.
+
+\begin{lemma}[Support preservation by logarithmic tangency]\label{lem:log-support}
+Let
+\[
+ F(X)=\sum_{\alpha}c_\alpha X^\alpha
+\]
+be a Laurent polynomial on an algebraic torus.  For every logarithmic vector field
+\[
+ D=\sum_{\nu}d_\nu X_\nu\partial_{X_\nu}
+\]
+with constant coefficients $d_\nu$,
+\begin{equation}\label{eq:log-support-preservation}
+ \Newt(DF)\subseteq\Newt(F).
+\end{equation}
+More generally, if a contact determinant is formed from logarithmic differentials of Laurent polynomials $F_1,\ldots,F_r$ and constant-coefficient logarithmic $1$-forms, then its Newton polytope is contained in
+\begin{equation}\label{eq:contact-minkowski}
+ \Newt(F_1)+\cdots+\Newt(F_r).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For a character $X^\alpha$ one has
+\[
+ D(X^\alpha)=\langle d,\alpha\rangle X^\alpha,
+\]
+so logarithmic differentiation changes coefficients but creates no new exponent.  Expanding a contact determinant, each term is a product of one logarithmic derivative from each rigid Laurent equation; Newton polytopes of products add by Minkowski sum, giving \eqref{eq:contact-minkowski}.
+\end{proof}
+
+This lemma is the abstract version of \eqref{eq:euler-monomial}.  It explains why the Laurent encoding retains sparse Newton data through Khovanskii--Rolle contact operations instead of paying the degree growth caused by half-angle denominators.
+
+\begin{remark}[Zero slopes]\label{rem:zero-slope}
+If $a_j=0$, the nonzero Fourier modes are still Laurent, while the constant mode contributes $\beta_{j,0}(t_{j+1}-t_j)$.  Introduce the flight-time variable
+\[
+ T_j=t_{j+1}-t_j.
+\]
+Then the matching equation is
+\[
+ c_{j+1}-c_j-\beta_{j,0}T_j-
+ \sum_{m\ne0}\frac{\beta_{j,m}}{im}
+ (q_{j+1}^m-q_j^m)=0,
+\]
+and the leaf form is
+\[
+ \dd T_j-(\dd t_{j+1}-\dd t_j)=0.
+\]
+For a collection of flights we use the mixed coframe consisting of
+$\dd t_\ell$, $\dd\log R_j$ on the nonzero-slope flights, and $\dd T_j$ on the zero-slope flights.  All leaf forms have constant coefficients in this coframe.  Logarithmic differentiation in $q$ and $R$ preserves exponents, while ordinary differentiation in a $T_j$ only lowers its nonnegative exponent.  Consequently the box supersupports used below are preserved by tangential differentiation for arbitrary constant slopes, including zero.
+\end{remark}
+
+\subsection{Interaction graphs and mixed volume}
+
+The local nature of the flight equations yields a second sparsity which is independent of Fourier sparsity.  We formulate it for an arbitrary bipartite interaction graph.
+
+Let $\mathcal B=(E,V;\mathcal E)$ be bipartite with $|E|=|V|=k$.  Associate to each $e\in E$ a private coordinate $y_e$ and to each $v\in V$ a phase coordinate $q_v$.  For positive $\alpha,\beta,\gamma,\delta$, define the axis-parallel boxes
+\begin{align}
+ L_e&=\sum_{v\sim e}[0,\alpha e_{q_v}]+[0,\beta e_{y_e}],\label{eq:local-box}\\
+ S&=\sum_{v\in V}[0,\gamma e_{q_v}]
+   +\sum_{e\in E}[0,\delta e_{y_e}].\label{eq:global-box}
+\end{align}
+Write $\mathcal M(\mathcal B)$ for the set of all matchings of $\mathcal B$.
+
+\begin{theorem}[Interaction-graph mixed volume]\label{thm:graph-mixed-volume}
+With the BKK normalization in dimension $2k$,
+\begin{align}
+ &\MV\bigl((L_e)_{e\in E},\underbrace{S,\ldots,S}_{k\text{ times}}\bigr)\notag\\
+ &\qquad =k!\gamma^k\delta^k
+ \sum_{\mathfrak m\in\mathcal M(\mathcal B)}
+ \left(\frac{\alpha}{\gamma}\right)^{|\mathfrak m|}
+ \left(\frac{\beta}{\delta}\right)^{k-|\mathfrak m|}.
+ \label{eq:graph-MV}
+\end{align}
+Thus the mixed-volume contribution of the local equations is exactly a weighted monomer--dimer partition function of their interaction graph.
+\end{theorem}
+
+\begin{proof}
+For axis-parallel boxes, multilinearity of mixed volume gives the permanent of the matrix of side lengths (compare the general mixed-volume development in \cite[Chapter~5]{Schneider2014}).  Consider a permanent term and first inspect the $k$ rows corresponding to the local boxes $L_e$.  Row $e$ may choose either its private coordinate $y_e$, with weight $\beta$, or a neighboring phase coordinate $q_v$, with weight $\alpha$.  Distinctness of the selected columns says precisely that the chosen phase incidences form a matching $\mathfrak m$ of $\mathcal B$.  If $|\mathfrak m|=r$, the local rows contribute $\alpha^r\beta^{k-r}$.  The remaining $k$ identical rows $S$ must occupy the unused coordinates; there are $k!$ bijections, and their product of side lengths is $\gamma^{k-r}\delta^r$.  Summing over matchings gives
+\[
+ k!\sum_{\mathfrak m}
+ \alpha^{|\mathfrak m|}\beta^{k-|\mathfrak m|}
+ \gamma^{k-|\mathfrak m|}\delta^{|\mathfrak m|},
+\]
+which is \eqref{eq:graph-MV}.
+\end{proof}
+
+\begin{corollary}[Cyclic flight itineraries]\label{cor:cycle-MV}
+For a cyclic $k$-flight scalar itinerary, the $j$th matching equation depends only on $q_j,q_{j+1}$ and its private flight variable.  Hence the flight--phase incidence graph is $C_{2k}$.  Taking
+\[
+ \alpha=2M,\qquad \beta=1,\qquad
+ \gamma=4M,\qquad \delta=2,
+\]
+one obtains
+\begin{equation}\label{eq:cycle-MV}
+ \MV(L_1,\ldots,L_k,S^k)
+ =k!(4M)^k\mathsf L_{2k},
+\end{equation}
+where $\mathsf L_n$ is the Lucas sequence $\mathsf L_0=2$, $\mathsf L_1=1$, $\mathsf L_n=\mathsf L_{n-1}+\mathsf L_{n-2}$.  Equivalently,
+\begin{equation}\label{eq:lucas-closed}
+ \mathsf L_{2k}=
+ \left(\frac{3+\sqrt5}{2}\right)^k+
+ \left(\frac{3-\sqrt5}{2}\right)^k.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The bipartite graph has edges $Q_j\sim q_j$ and $Q_j\sim q_{j+1}$, hence is the even cycle $C_{2k}$.  In \eqref{eq:graph-MV} the two weight ratios are both $1/2$, so every matching contributes the same total factor and
+\[
+ \MV(L_1,\ldots,L_k,S^k)
+ =k!(4M)^k\#\mathcal M(C_{2k}).
+\]
+The number of all matchings of a cycle $C_n$ is $\mathsf L_n$, giving \eqref{eq:cycle-MV} and \eqref{eq:lucas-closed}.
+\end{proof}
+
+The general periodic piecewise-linear equations studied by Bravo and Trinidad-Forte \cite{BravoTrinidadForte2026} also reduce, for a fixed crossing itinerary, to matching equations coupling adjacent crossing times.  Their time-dependent slopes require a longer Pfaffian encoding.  The present constant-slope subclass is distinguished by \cref{prop:laurent-flight,lem:log-support}: finite Fourier forcing closes in a Laurent character algebra, while the crossing graph remains visible in the BKK count through \cref{thm:graph-mixed-volume}.
+
+
+\input{general_toric_unconditional_graph.tex}
+
+\section{Degenerate fibres and the global bound}\label{sec:global}
+
+\begin{lemma}[Two-sided perturbation]\label{lem:perturbation}
+At any fixed amplitude, the number of isolated positive-mean genuine three-zone interior critical fibres satisfies
+\begin{equation}\label{eq:isolated-bound}
+ N_{\mathrm{iso},3z}^{+}\le8216.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cref{cor:fixed-slice}, an isolated critical fibre is a finite-order zero of an analytic function $h(\eta)=M(\eta)-\mu^2$ on the local critical curve.  Choose finitely many such zeros and pairwise disjoint neighborhoods.  For a common sufficiently small regular $\delta>0$, an odd-order zero contributes at least one simple root to each of $h=\delta$ and $h=-\delta$, while an even-order zero contributes at least two simple roots to one of the two equations.  Thus $q$ chosen isolated roots produce at least $2q$ regular roots at the two amplitudes
+\[
+ \mu_+=\sqrt{\mu^2+\delta},
+ \qquad
+ \mu_-=\sqrt{\mu^2-\delta}.
+\]
+Theorem \ref{thm:8216} gives $2q\le2\cdot8216$.  Since the finite collection was arbitrary, \eqref{eq:isolated-bound} follows.  If critical points accumulate on an analytic itinerary interval, then $\Lambda_\xi$ vanishes identically there; the resulting zeros of $\Lambda$ either do not occur or belong to a continuum and hence do not represent isolated limit cycles.
+\end{proof}
+
+For fixed $\mu$, pointwise ordering implies that
+\[
+ m(\xi)=\min_t u(t;\xi),
+ \qquad
+ M(\xi)=\max_t u(t;\xi)
+\]
+are strictly increasing.  At $\xi=0$, symmetry gives $m(0)=-M(0)$.  Therefore the positive mean axis has only one of the two itinerary orders
+\begin{align*}
+ &\text{three-zone}\longrightarrow\text{right two-zone}
+   \longrightarrow\text{upper one-zone},\\
+ &\text{middle one-zone}\longrightarrow\text{right two-zone}
+   \longrightarrow\text{upper one-zone}.
+\end{align*}
+Each transition occurs at most once.
+
+\begin{proposition}[No-three-zone rigidity]\label{prop:no-three-zone}
+If the positive-mean family contains no genuine three-zone fibre, then
+\begin{equation}\label{eq:no-three-zone-bound}
+ \boxed{L(A,B,\mu)\le3}.
+\end{equation}
+This conclusion includes the borderline central grazing case \(M(0)=1\).
+\end{proposition}
+
+\begin{proof}
+The absence of a positive genuine three-zone fibre implies \(M(0)\le1\): if
+\(M(0)>1\), then \(m(0)=-M(0)<-1\), and continuity would preserve both strict
+crossings for all sufficiently small \(\xi>0\).  Hence
+\(m(0)=-M(0)\ge-1\).  Strict pointwise ordering now gives
+\[
+ m(\xi)>m(0)\ge-1\qquad(\xi>0),
+\]
+so no positive-mean fibre visits the lower outer zone.  Consequently its
+middle-zone residence time is exactly
+\begin{equation}\label{eq:right-residence-set}
+ T(\xi)=\operatorname{meas}E_\xi,\qquad
+ E_\xi=\{t:u(t;\xi,\mu)<1\}.
+\end{equation}
+For \(\xi_2>\xi_1>0\), \eqref{eq:positive-z} gives the set inclusion
+\[
+ E_{\xi_2}\subset E_{\xi_1},
+\]
+including at the grazing transition values.  Thus \(T(\xi)\) is nonincreasing
+on the whole positive axis.
+
+By \cref{prop:residence,lem:grazing-residence},
+\[
+ \operatorname{sgn}\Lambda_\xi(\xi,\mu)
+ =\operatorname{sgn}\bigl(\rho-T(\xi)\bigr).
+\]
+Because \(T\) is nonincreasing, this sign can change at most once, and only in
+the order \(-\) to \(+\), with a possible intervening interval on which it is
+zero.  At \(\xi=0\), either the central fibre is strictly middle one-zone or it
+is the grazing fibre \(M(0)=1\); in both cases
+\eqref{eq:central-grazing-slope} gives
+\(\Lambda(0,\mu)=0\) and \(\Lambda_\xi(0,\mu)=-B<0\).  Hence \(\Lambda\) first
+decreases from zero and can subsequently be only constant and then increasing.
+It has at most one isolated zero on \((0,\infty)\).  Odd symmetry supplies at
+most one negative partner, and the central zero contributes at most one
+isolated solution.  This proves \eqref{eq:no-three-zone-bound}.
+\end{proof}
+
+\begin{corollary}[Necessity of genuine three-zone dynamics]\label{cor:three-zone-necessary}
+If \eqref{eq:original} has at least five isolated periodic solutions, then its
+positive-mean family contains a genuine three-zone fibre.
+\end{corollary}
+
+\begin{proof}
+This is the contrapositive of \cref{prop:no-three-zone}.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:main}]
+If no positive genuine three-zone branch is present, the second assertion is
+exactly \cref{prop:no-three-zone}.
+
+Now suppose that the central fibre is genuinely three-zone.  Let $n_3$ be the number of positive isolated zeros of $\Lambda(\cdot,\mu)$ on the three-zone interval, assigning a possible endpoint zero to that interval.  Between the central zero and the first positive zero, and between each consecutive pair, Rolle's theorem gives a distinct isolated three-zone critical fibre.  By \cref{lem:perturbation}, $n_3\le8216$.
+
+To the right of the three-zone interval, the two-zone branch has at most one critical point and the upper one-zone branch has none.  Their union has at most two zeros: three zeros would force either two zeros on the strictly increasing one-zone branch or two distinct critical points on the two-zone-to-one-zone tail.  Thus the number $m$ of positive isolated zeros satisfies
+\[
+ m\le8216+2=8218.
+\]
+By \eqref{eq:symmetry}, nonzero zeros occur in opposite pairs, and the central zero contributes at most one isolated solution.  Consequently
+\[
+ L(A,B,\mu)\le2m+1\le2\cdot8218+1=16437.
+\]
+Taking the supremum proves the theorem.
+\end{proof}
+
+\section{Comparison with degree-based encodings}\label{sec:comparison}
+
+In half-angle variables $x=\tan(r/2)$ and $y=\tan(s/2)$, the two Pfaffian forms become
+\[
+ (1+x^2)\dd R-2BR\dd x,
+ \qquad
+ (1+y^2)\dd S-2AS\dd y.
+\]
+The matching equations have total degrees at most $8$ and $14$.  Propagating total degrees through the two contact steps and applying ordinary Bezout counting gives $126224$.  Keeping variablewise degrees improves this to the multihomogeneous checkpoint $12936$.
+
+The Laurent encoding removes both circle equations and turns the tangential derivatives into the support-preserving Euler operators \eqref{eq:euler-fields}.  Its exact BKK count is $8216$.  The improvement is therefore structural: it removes algebraic complexity introduced by half-angle denominators rather than changing the underlying dynamical reduction.
+
+\section{Discussion}\label{sec:discussion}
+
+The results above separate two contributions.  The response-curve and residence-time arguments are specific to the ordered scalar saturation family and drive the global passage from critical fibres to limit cycles.  In contrast, \cref{sec:general-toric} extracts the algebraic part into an unconditional constant-slope counting theorem: finite Fourier forcing becomes Laurent or polynomial--Laurent matching, simultaneous regularization permits a relative Khovanskii--Rolle reduction, and local itinerary coupling enters the BKK count through a matching partition function.  The three-zone estimate \(8216\) is therefore both a concrete sharper bound and a fully audited instance of this wider sparse toric mechanism.
+
+The conjectural sharp bound \(L^*=5\) remains open.  The difference between
+this value and the explicit bound obtained here is not merely a matter of
+refining the mixed-volume computation.  It requires a global real-oscillation
+theorem for the genuine three-zone critical graph
+\(\mu=\mu_s(\xi)\).  By \cref{prop:amplitude},
+\[
+ \mu_s'=-\frac{T_\xi}{T_\mu},
+\]
+and \(T_\mu<0\), so the singular locus is locally a graph and its turning
+points are exactly the zeros of \(T_\xi\).  This transversality gives no global
+control on the number or type of those zeros.  A sufficient mechanism would
+be a one-turning, or more specifically a no-valley, property for
+\(\mu_s\), together with its degenerate and grazing endpoint extensions.
+Such a property does not follow from the local convexity or
+Laurent--Pfaffian arguments developed here; local crossing-map identities
+likewise do not by themselves provide the required global control.
+
+In contrast, \cref{prop:no-three-zone} proves, independently of the algebraic
+count, that
+\[
+ \text{absence of a genuine three-zone branch}\Longrightarrow L\le3.
+\]
+It follows that every parameter regime with at least five isolated periodic
+solutions must involve genuine three-zone dynamics.  Thus the proved results
+are \(L^*\le16437\) and the preceding structural implication, whereas
+\(L^*=5\) remains the open sharp problem.  The missing ingredient is a global
+no-valley or one-turning theorem for the genuine three-zone critical graph,
+not an unresolved technical step in the mixed-volume estimate.
+
+\section{Reproducible certificate}\label{sec:certificate}
+
+The finite symbolic and polyhedral part of the proof is regenerated by
+\begin{verbatim}
+python3 verification/verify_certificate.py \
+  --check verification/mixed_volume_certificate.json
+\end{verbatim}
+The script expands the Laurent formulas in an exact formal coefficient ring, verifies the factor $(R-1)^3$ in $F_0$, constructs every contact supersupport by integer exponent arithmetic, and emits the complete support and vertex lists.  SciPy/Qhull proposes hull combinatorics only.  Every proposed facet is checked against an exact integer supporting hyperplane, and every simplex determinant is recomputed with integers or \texttt{Fraction}.  The certificate contains the fifteen normalized Minkowski-sum volumes for each of \eqref{eq:P0}--\eqref{eq:P2}; stable JSON serialization makes \texttt{--check} a byte-for-byte test.  A compact tabulation appears in the supplementary certificate.
+
+\appendix
+
+\section{Regular levels and real Laurent normalization}\label{app:normalization}
+
+The involution \eqref{eq:star} fixes $F_L$ and $G_L$ on the physical locus.  The tangent fields \eqref{eq:euler-fields} are real there, so the contact functions are real as well.  Multiplication by $S^{-1}>0$ preserves the coorientation of regular real levels while translating Newton polytopes.  This point matters because Khovanskii--Rolle reduction uses small real regular levels rather than only zero sets.
+
+For the same reason, adding a small constant to a contact equation requires the origin to lie in the adopted Newton hull.  The exact certificate verifies
+\[
+ 0\in P_F,P_G,P_{H_2},P_{P_\varepsilon},P_{\widetilde H_1},P_{\widetilde H_c}.
+\]
+Thus regular-level perturbation does not enlarge any mixed volume.
+
+\section{Why the BKK torus contains every physical root}\label{app:torus}
+
+Each algebraic system produced by the two Rolle reductions consists of four Laurent equations in $(z,w,R,S)$.  A physical solution satisfies
+\[
+ |z|=|w|=1,
+ \qquad R>0,
+ \qquad S>0,
+\]
+and therefore belongs to $(\CC^*)^4$.  Bernstein's theorem counts isolated complex torus roots with multiplicity and hence bounds the real physical roots.  Working on $M_+$ is essential: allowing $R=0$ or $S=0$ would introduce coordinate-stratum roots not counted by the torus form of the theorem.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

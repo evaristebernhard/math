@@ -1,0 +1,108 @@
+\begin{thebibliography}{10}
+
+\bibitem{Bernstein1975}
+David~N. Bernstein.
+\newblock The number of roots of a system of equations.
+\newblock {\em Functional Analysis and Its Applications}, 9(3):183--185, 1975.
+
+\bibitem{BravoTrinidadForte2026}
+J.~L. Bravo and R.~Trinidad-Forte.
+\newblock Finitude of limit cycles of linear piecewise {ODE}s in the cylinder.
+\newblock arXiv preprint arXiv:2605.05805, 2026.
+
+\bibitem{BravoCarmonaFernandezOjeda2025}
+Jos{\'e}~Luis Bravo, Victoriano Carmona, Manuel Fern{\'a}ndez, and Ignacio
+  Ojeda.
+\newblock Upper bound of the number of limit cycles for symmetric scalar
+  piecewise linear differential equations with three zones.
+\newblock arXiv preprint arXiv:2507.06705, 2025.
+
+\bibitem{BravoFernandezOjeda2024}
+Jos{\'e}~Luis Bravo, Manuel Fern{\'a}ndez, and Ignacio Ojeda.
+\newblock Hilbert number for a family of piecewise nonautonomous equations.
+\newblock {\em Qualitative Theory of Dynamical Systems}, 23:119, 2024.
+
+\bibitem{BravoFernandezTineo2002}
+Jos{\'e}~Luis Bravo, Manuel Fern{\'a}ndez, and Antonio Tineo.
+\newblock A result of {Ambrosetti--Prodi} type for first order {ODE}'s with
+  concave and coercive right member.
+\newblock {\em Nonlinear Studies}, 9(4):407--414, 2002.
+
+\bibitem{BravoFernandezTineo2007}
+Jos{\'e}~Luis Bravo, Manuel Fern{\'a}ndez, and Antonio Tineo.
+\newblock Periodic solutions of a periodic scalar piecewise {ODE}.
+\newblock {\em Communications on Pure and Applied Analysis}, 6(1):213--228,
+  2007.
+
+\bibitem{BravoTrinidadForte2026Centers}
+Jos{\'e}~Luis Bravo and Roberto Trinidad-Forte.
+\newblock Global centers in piecewise linear equations in the cylinder.
+\newblock {\em Qualitative Theory of Dynamical Systems}, 25:26, 2026.
+
+\bibitem{CarmonaFreirePonceTorres2004}
+Victoriano Carmona, Emilio Freire, Enrique Ponce, and Francisco Torres.
+\newblock Invariant manifolds of periodic orbits for piecewise linear
+  three-dimensional systems.
+\newblock {\em IMA Journal of Applied Mathematics}, 69(1):71--91, 2004.
+
+\bibitem{diBernardoBuddChampneysKowalczyk2008}
+Mario di~Bernardo, Christopher~J. Budd, Alan~R. Champneys, and Piotr Kowalczyk.
+\newblock {\em Piecewise-Smooth Dynamical Systems: Theory and Applications},
+  volume 163 of {\em Applied Mathematical Sciences}.
+\newblock Springer, London, 2008.
+
+\bibitem{GabrielovVorobjov2004}
+Andrei Gabrielov and Nicolai Vorobjov.
+\newblock Complexity of computations with {Pfaffian} and {Noetherian}
+  functions.
+\newblock In Yuri Ilyashenko and Christiane Rousseau, editors, {\em Normal
+  Forms, Bifurcations and Finiteness Problems in Differential Equations},
+  volume 137 of {\em NATO Science Series II: Mathematics, Physics and
+  Chemistry}, pages 211--250. Kluwer Academic Publishers, Dordrecht, 2004.
+
+\bibitem{GasullZhao2023}
+Armengol Gasull and Yulin Zhao.
+\newblock Existence of at most two limit cycles for some non-autonomous
+  differential equations.
+\newblock {\em Commun. Pure Appl. Anal.}, 22(3):970--982, 2023.
+
+\bibitem{Kaloshin2003}
+Vadim Kaloshin.
+\newblock The existential {Hilbert} 16-th problem and an estimate for cyclicity
+  of elementary polycycles.
+\newblock {\em Inventiones Mathematicae}, 151(3):451--512, 2003.
+
+\bibitem{Khovanskii1980}
+Askold~G. Khovanskii.
+\newblock On a class of systems of transcendental equations.
+\newblock {\em Soviet Mathematics Doklady}, 22(3):762--765, 1980.
+
+\bibitem{Khovanskii1991}
+Askold~G. Khovanskii.
+\newblock {\em Fewnomials}, volume~88 of {\em Translations of Mathematical
+  Monographs}.
+\newblock American Mathematical Society, Providence, RI, 1991.
+
+\bibitem{Kushnirenko1976}
+Anatolii~G. Kushnirenko.
+\newblock Newton polytopes and the {B\'ezout} theorem.
+\newblock {\em Functional Analysis and Its Applications}, 10(3):233--235, 1976.
+
+\bibitem{PhilipponSombra2008}
+Patrice Philippon and Mart{\'i}n Sombra.
+\newblock A refinement of the {Bernstein--Kushnirenko} estimate.
+\newblock {\em Advances in Mathematics}, 218(5):1370--1418, 2008.
+
+\bibitem{Schneider2014}
+Rolf Schneider.
+\newblock {\em Convex Bodies: The {Brunn--Minkowski} Theory}, volume 151 of
+  {\em Encyclopedia of Mathematics and Its Applications}.
+\newblock Cambridge University Press, Cambridge, 2 edition, 2014.
+
+\bibitem{Sturmfels2002}
+Bernd Sturmfels.
+\newblock {\em Solving Systems of Polynomial Equations}, volume~97 of {\em CBMS
+  Regional Conference Series in Mathematics}.
+\newblock American Mathematical Society, Providence, RI, 2002.
+
+\end{thebibliography}

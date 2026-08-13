@@ -1,0 +1,341 @@
+% Stronger unconditional version retaining the flight-graph mixed volume.
+% Intended to replace the all-loose bound after referee-style audit.
+
+\subsection{Relative regularization and an unconditional graph-structured bound}
+\label{subsec:relative-graph-bound}
+
+Fix a cyclic $k$-flight itinerary.  Write $q_j=e^{it_j}$ and let
+$\tau_j\in(0,2\pi)$ be the positively oriented gap from $q_j$ to $q_{j+1}$,
+with $q_{k+1}=q_1$ and $\sum_j\tau_j=2\pi$.  Introduce one positive private
+variable per flight,
+\[
+ y_j=\begin{cases}
+ R_j=e^{a_j\tau_j},&a_j\ne0,\\
+ T_j=\tau_j,&a_j=0.
+ \end{cases}
+\]
+Let $\mathcal C_k$ be the corresponding connected cyclic configuration chamber
+and set
+\[
+ \mathcal M_k=\mathcal C_k\times(0,\infty)^k.
+\]
+For the matching equations use the local boxes
+\begin{equation}\label{eq:rg-local-box}
+ L_j=[-M,M]_{q_j}+[-M,M]_{q_{j+1}}+[0,1]_{y_j}.
+\end{equation}
+These contain the Newton supports of the nonzero-slope Laurent flight relation
+and of the zero-slope polynomial--Laurent relation described above.
+
+Let $\phi_j=\log y_j-a_j\tau_j$ on a nonzero-slope flight and
+$\phi_j=y_j-\tau_j$ on a zero-slope flight, and define the partial physical
+leaves
+\begin{equation}\label{eq:rg-Gamma-r}
+ \Gamma_r=\{\phi_1=\cdots=\phi_r=0\}\subset\mathcal M_k,
+ \qquad r=0,\ldots,k,
+\end{equation}
+with $\Gamma_0=\mathcal M_k$.  Thus $\Gamma_k$ is the physical flight leaf.
+Let
+\[
+ Q=(Q_1,\ldots,Q_k):\mathcal M_k\longrightarrow\mathbb R^k
+\]
+be the Laurent matching map.
+
+\begin{lemma}[Separating flight chain and uniform covering]
+\label{lem:rg-covering}
+The partial leaves \(\Gamma_r\) form a separating chain on \(\mathcal M_k\).
+Moreover
+\begin{equation}\label{eq:rg-rho}
+ \rho_k(q,y)=\prod_{j=1}^k
+ \left(2-\frac{q_{j+1}}{q_j}-\frac{q_j}{q_{j+1}}\right)
+ \frac{y_j}{(1+y_j)^2}
+\end{equation}
+is a covering function.  For every sufficiently small regular
+\(\varepsilon>0\), the same real level is represented after clearing positive
+denominators by
+\begin{equation}\label{eq:rg-Peps}
+ P_\varepsilon=
+ \prod_{j=1}^k
+ \left(2-\frac{q_{j+1}}{q_j}-\frac{q_j}{q_{j+1}}\right)y_j
+ -\varepsilon\prod_{j=1}^k(1+y_j)^2=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Each \(d\phi_j\) has a nonzero component in the private \(y_j\)-direction,
+so \(\Gamma_r\) is a smooth cooriented hypersurface in \(\Gamma_{r-1}\) and
+is the boundary there of \(\{\phi_j<0\}\cap\Gamma_{r-1}\).
+The phase factor in \eqref{eq:rg-rho} equals
+\[
+ 4\sin^2(\tau_j/2)>0.
+\]
+The closure of the cyclic configuration chamber in \((S^1)^k\) is compact.
+Thus a sequence leaving every compact subset of \(\mathcal M_k\) either has
+some collision \(\tau_j\to0\), or some \(y_j\to0\) or \(y_j\to\infty\).
+In all cases \(\rho_k\to0\), which is exactly the covering property.  Sard's
+theorem supplies arbitrarily small regular values.  Multiplication by
+\(\prod_j(1+y_j)^2>0\) gives \eqref{eq:rg-Peps} without changing the real
+level or its coorientation.
+\end{proof}
+
+\begin{lemma}[Simultaneous rigid-level regularization]
+\label{lem:rg-regularization}
+Let $Z\subset\Gamma_k\cap Q^{-1}(0)$ be a finite collection of points at which
+$d(Q|_{\Gamma_k})$ has full rank $k$.  Then there are arbitrarily small
+$b\in\mathbb R^k$ such that:
+\begin{enumerate}
+\item $b$ is a regular value of $Q|_{\Gamma_r}$ for every $r=0,\ldots,k$;
+\item every point of $Z$ has a unique continuation to a point of
+$\Gamma_k\cap Q^{-1}(b)$ in a prescribed sufficiently small neighborhood;
+\item on the regular level $V_b=Q^{-1}(b)$ the chain
+\[
+ V_b\cap\Gamma_k\subset\cdots\subset V_b\cap\Gamma_1\subset V_b
+\]
+is a separating chain for the restricted forms $d\phi_1,\ldots,d\phi_k$.
+\end{enumerate}
+The shifts $Q_j\mapsto Q_j-b_j$ do not enlarge the local Newton boxes $L_j$.
+\end{lemma}
+
+\begin{proof}
+At every point of $Z$, the map $Q|_{\Gamma_k}$ is a local diffeomorphism.
+Choose pairwise disjoint neighborhoods of the points of $Z$ and a common ball
+$B_\delta(0)\subset\mathbb R^k$ such that every $b\in B_\delta(0)$ has one
+continued preimage in each neighborhood.
+
+For each $r=0,\ldots,k$, Sard's theorem implies that the critical values of
+$Q|_{\Gamma_r}$ have measure zero.  Because there are only finitely many
+$r$, choose $b\in B_\delta(0)$ outside the union of these critical-value sets.
+This proves the first two statements.
+
+It remains to verify the separating chain on $V_b$.  Regularity of
+$Q|_{\Gamma_{r-1}}$ makes $V_b\cap\Gamma_{r-1}$ smooth.  If
+$d\phi_r$ vanished on the tangent bundle of this level at a point of
+$V_b\cap\Gamma_r$, then $d\phi_r$ would lie in the span of the components of
+$dQ$ on $T\Gamma_{r-1}$.  Restricting $dQ$ to
+$T\Gamma_r=\ker(d\phi_r|_{T\Gamma_{r-1}})$ would then lower its rank below
+$k$, contradicting that $b$ is a regular value of $Q|_{\Gamma_r}$.  Hence
+$\phi_r=0$ is a regular hypersurface in $V_b\cap\Gamma_{r-1}$.  Since
+$V_b\cap\Gamma_r$ is the boundary there of
+$\{\phi_r<0\}\cap V_b\cap\Gamma_{r-1}$ with the coorientation induced by
+$d\phi_r$, it is separating.
+
+Finally, the origin belongs to every box $L_j$, so subtraction of the constant
+$b_j$ creates no exponent outside $L_j$.
+\end{proof}
+
+We next isolate the relative form of the Khovanskii--Rolle argument that is
+needed here.  It is the same one-dimensional Rolle step used in the standard
+proof of the Khovanskii reduction, but applied on the regular algebraic level
+$V_b$.
+
+\begin{proposition}[Relative Khovanskii--Rolle reduction]
+\label{prop:rg-relative-KR}
+Let $V$ be a smooth $k$-manifold carrying a separating chain
+\[
+ \Sigma_k\subset\Sigma_{k-1}\subset\cdots\subset\Sigma_0=V
+\]
+with $\Sigma_r=\Sigma_{r-1}\cap\{\psi_r=0\}$ and
+$d\psi_r\ne0$ on $\Sigma_r$.  Let $\rho$ be a covering function on an ambient
+manifold whose restriction to every $\Sigma_r$ is covering.  Assume all
+intersections have been perturbed to regular levels.  Successively replace the
+last remaining separating equation by either its contact equation or, once,
+a small covering level.  If $B_0$ denotes the final all-contact count and
+$B_j$ the final count when the covering level is first inserted at step $j$,
+then
+\begin{equation}\label{eq:rg-KR-inequality}
+ \#\Sigma_k\le B_0+\frac12\sum_{j=1}^kB_j.
+\end{equation}
+After a covering level has been inserted, all later reductions have no further
+covering term.
+\end{proposition}
+
+\begin{proof}
+This is the relative version of the one-step argument in Kaloshin's
+Khovanskii--Rolle reduction \cite[Theorems~16--18]{Kaloshin2003}.  We recall the point that matters here.  After all
+previous rigid/contact levels have been chosen regularly, restrict to a
+connected component $C$ of the one-dimensional manifold obtained by imposing
+all but the last separating equation.  On $C$ the last separator is a regular
+level of a smooth function $f$.  Choose a sufficiently small regular covering
+level $\rho=\varepsilon$.  The compact core
+$C_\varepsilon=\{\rho\ge\varepsilon\}\cap C$ is a finite union of circles and
+compact intervals.
+
+For the circle components, the ordinary Rolle lemma bounds the number of
+preimages of the separator level by the number of preimages of a sufficiently
+small regular level of the tangential derivative.  On an interval component the
+same bound has one additional endpoint term.  Summing over all interval
+components gives at most one endpoint contribution per interval, hence one half
+of the number of intersections with $\rho=\varepsilon$.  The tangential
+derivative vanishes precisely when the current differentials together with the
+last Pfaffian form become linearly dependent; relative to any nonvanishing
+volume form this is the contact determinant.  Choosing the contact levels
+successively from the sufficiently small regular values, exactly as in the
+proof of Kaloshin's one-step reduction theorem, therefore gives
+\[
+ N_{\rm current}\le
+ N_{\rm contact}+\frac12N_{\rm cover}.
+\]
+No nondegeneracy of the zero contact level is assumed.
+
+Iterate this regular-level inequality.  If the covering level is selected at
+some step, the new rigid level lies in the compact hypersurface
+$\{\rho=\varepsilon\}$, so every subsequent one-dimensional manifold is
+compact and the endpoint term disappears.  Thus the induction has one
+all-contact branch and exactly one branch for each possible first covering
+step, proving \eqref{eq:rg-KR-inequality}.
+\end{proof}
+
+For the flight problem take
+\begin{equation}\label{eq:rg-S}
+ S=[-2M,2M]^k_q\times[0,2]^k_y.
+\end{equation}
+As before,
+\begin{equation}\label{eq:rg-support-base}
+ \sum_{j=1}^k\Newt(Q_j)\subseteq S,
+ \qquad
+ \Newt(P_\varepsilon)\subseteq S.
+\end{equation}
+In the mixed coframe $d\arg q_j$, $d\log y_j$ on nonzero-slope flights and
+$dy_j$ on zero-slope flights, tangential differentiation does not enlarge the
+adopted box supersupports.
+
+For $N\ge1$ set
+\begin{align}
+ C_0(N)&=2^{N(N-1)/2},\label{eq:rg-C0}\\
+ C_j(N)&=
+ 2^{\frac{(j-1)(j-2)}2+\frac{(N-j)(N-j-1)}2}
+ (2^{j-1}+1)^{N-j},\qquad 1\le j\le N,\label{eq:rg-Cj}\\
+ \Theta_N&=C_0(N)+\frac12\sum_{j=1}^{N}C_j(N).
+ \label{eq:rg-Theta}
+\end{align}
+
+\begin{theorem}[Unconditional graph-structured fixed-itinerary bound]
+\label{thm:rg-fixed-itinerary}
+For a prescribed cyclic $k$-flight itinerary of a real scalar periodic
+piecewise-linear equation whose slope is constant on every visited region and
+whose real trigonometric forcing has Fourier degree at most $M\ge1$, the number of isolated
+crossing limit cycles realizing that itinerary satisfies
+\begin{equation}\label{eq:rg-final-bound}
+ \boxed{
+ N_X(k,M)\le
+ \Theta_k\,k!(4M)^k\mathsf L_{2k}.}
+\end{equation}
+Here $\mathsf L_n$ is the Lucas sequence.  The estimate is uniform in the
+switching levels and coefficients and includes zero slopes.
+\end{theorem}
+
+\begin{proof}
+First count nondegenerate transition solutions.  Choose an arbitrary finite
+collection $Z$.  By \cref{lem:rg-regularization}, shift the matching level to a
+common arbitrarily small regular value $b$ so that every point of $Z$ persists
+and the physical partial leaves restrict to a separating chain on
+$V_b=Q^{-1}(b)$.  The covering function of \cref{lem:rg-covering} restricts
+to a covering function on every member of this chain, because these level
+sets are closed in \(\mathcal M_k\).
+
+Apply \cref{prop:rg-relative-KR}.  Fix on $\mathcal M_k$ the nonvanishing
+volume form given by the mixed coframe used above.  At every regular rigid
+level choose the induced volume form compatibly, so that wedging it with the
+differentials of all current rigid equations gives the volume form from the
+preceding ambient level.  This is the standard compatible-volume normalization
+in the Khovanskii reduction.  With this choice the relative contact function is
+represented by the ambient determinant itself, rather than merely by that
+determinant times an uncontrolled positive function.  In particular, the first
+contact function is the coefficient, relative to the fixed mixed volume form,
+of
+\[
+ dQ_1\wedge\cdots\wedge dQ_k\wedge
+ d\phi_1\wedge\cdots\wedge d\phi_k.
+\]
+Hence it is polynomial--Laurent and its Newton polytope is contained in $S$.
+The same compatible normalization applies at every later contact step.  If
+$H_r$ is the contact function generated at the $r$th all-contact step, the
+support-preserving coframe therefore gives recursively
+\begin{equation}\label{eq:rg-contact-support}
+ \Newt(H_r)\subseteq2^{r-1}S,
+ \qquad r=1,\ldots,k.
+\end{equation}
+Indeed, the original rigid equations always contribute at most
+$\sum_j\Newt(Q_j)\subseteq S$, and the previously generated contact equations
+contribute their Minkowski sums.  Hence the all-contact dilation product is
+$C_0(k)$.
+
+If the covering equation is first inserted at step $j$, replace the smooth
+level $\rho=\varepsilon$ by its cleared Laurent equation
+$P_\varepsilon=0$.  The clearing factor is strictly positive on the real
+ambient manifold, so this is the same compact regular hypersurface and
+$dP_\varepsilon$ is a positive multiple of $d\rho$ along it.  We may therefore
+use $P_\varepsilon$ as the rigid defining equation in all subsequent contact
+steps.  Its polytope is in $S$, and the compatible-volume normalization then
+keeps every later contact polynomial--Laurent.  The later dilation factors obey
+the same recurrence $a_r=1+\sum_{\ell<r}a_\ell$ with the covering factor reset
+to $1$, giving the product $C_j(k)$ in \eqref{eq:rg-Cj}.  Small regular level
+perturbations do not enlarge the boxes because all adopted boxes contain the
+origin.
+
+Every final algebraic system contains the $k$ shifted flight equations together
+with $k$ contact/covering equations.  Bernstein's theorem and mixed-volume
+monotonicity therefore give, on the all-contact branch,
+\[
+ C_0(k)\operatorname{MV}(L_1,\ldots,L_k,S^k),
+\]
+and on the branch with first covering insertion at step $j$,
+\[
+ C_j(k)\operatorname{MV}(L_1,\ldots,L_k,S^k).
+\]
+The flight--phase incidence graph is the even cycle $C_{2k}$.  The
+interaction-graph mixed-volume theorem proved above yields
+\begin{equation}\label{eq:rg-cycle-MV}
+ \operatorname{MV}(L_1,\ldots,L_k,S^k)
+ =k!(4M)^k\mathsf L_{2k}.
+\end{equation}
+Combining \eqref{eq:rg-KR-inequality} with these BKK bounds gives
+\eqref{eq:rg-final-bound} for every finite collection $Z$, and therefore for
+all nondegenerate transition solutions.
+
+Finally, Bravo and Trinidad-Forte's additive-bias perturbation shows that an
+upper bound for simple crossing cycles bounds all isolated crossing cycles \cite[Proposition~17]{BravoTrinidadForte2026}.
+The perturbation changes only the zero Fourier coefficients, preserves
+constant slopes, and does not enlarge any Newton box.  Transversality preserves
+the prescribed itinerary.  This proves \eqref{eq:rg-final-bound} without a
+nondegeneracy assumption.
+\end{proof}
+
+\begin{corollary}[Graph-structured constant-slope Hilbert bound]
+\label{cor:rg-global}
+If $\mathcal H_{\rm cs}^{\times}(n,M)$ denotes the maximal number of crossing
+limit cycles in the constant-slope subclass with $n+1$ regions and Fourier
+degree at most $M\ge1$, then
+\begin{equation}\label{eq:rg-global}
+ \mathcal H_{\rm cs}^{\times}(n,M)
+ \le2Mn\max_{2\le k\le2Mn}
+ \left[\Theta_k k!(4M)^k\mathsf L_{2k}\right].
+\end{equation}
+Following the global bookkeeping in the proof of the general bound of Bravo and Trinidad-Forte, the corresponding total bound is the right-hand side plus $2$; for continuous piecewise vector fields the same bound also covers tangential cycles.
+\end{corollary}
+
+\begin{proof}
+Use the crossing bound $k\le2Mn$ and the bound of $2Mn$ crossing sequences of
+Bravo and Trinidad-Forte \cite[Propositions~12 and~15]{BravoTrinidadForte2026}, then apply \cref{thm:rg-fixed-itinerary} sequence by
+sequence.  Their global bookkeeping supplies the final $+2$ term, and their continuous-case perturbation \cite[Proposition~19]{BravoTrinidadForte2026} removes tangencies while preserving the constant-slope subclass.
+\end{proof}
+
+\begin{remark}[Comparison with the direct Pfaffian chain]
+For fixed $k$, \eqref{eq:rg-final-bound} has the form $C_kM^k$.  Since
+$\mathsf L_{2k}=((3+\sqrt5)/2)^k+((3-\sqrt5)/2)^k$ and
+$\Theta_k=2^{k(k-1)/2+O(k)}$, its logarithm has leading quadratic term
+$k^2/2$.  At the global crossing scale $k\le2Mn$, this becomes
+\[
+ \log_2 \mathcal H_{\rm cs}^{\times}(n,M)
+ \le 2M^2n^2+O\!\left(Mn\log(MnM)\right).
+\]
+By contrast, the direct encoding of time-dependent slopes by Bravo and
+Trinidad-Forte uses a Pfaffian chain of length $4k\le8Mn$, whose general
+Khovanskii factor $2^{r(r-1)/2}$ contributes
+\[
+ 32M^2n^2+O(Mn)
+\]
+to the quadratic exponent.  Thus, on the constant-slope subclass, the toric
+flight encoding reduces the leading quadratic coefficient in this part of the
+bound by a factor of $16$, in addition to changing the fixed-itinerary Fourier
+degree dependence from the general $M^{4k}$ scale to $M^k$.
+\end{remark}

@@ -1,0 +1,269 @@
+% Clean standalone section for later integration into main.tex.
+% This file deliberately uses the all-loose formulation of Kaloshin's mixed
+% system.  It avoids any extra transversality assumption on rigid levels.
+
+\subsection{An unconditional fixed-itinerary theorem}\label{subsec:unconditional-fixed-itinerary}
+
+We now close the Khovanskii--Rolle argument for an arbitrary cyclic crossing
+itinerary without imposing an auxiliary admissibility hypothesis.  Consider a
+fixed transversal itinerary with $k\ge2$ flights.  On its $j$th flight assume
+\begin{equation}\label{eq:uf-model}
+ x'=a_jx+b_j(t),\qquad
+ b_j(t)=\sum_{m=-M}^{M}\beta_{j,m}e^{imt},
+ \qquad a_j\in\mathbb R,\quad M\ge1.
+\end{equation}
+Let $c_j,c_{j+1}$ be the two switching values at the endpoints of the flight.
+Write $q_j=e^{it_j}$ and let $\tau_j\in(0,2\pi)$ be the positively oriented gap
+from $q_j$ to $q_{j+1}$, with $q_{k+1}=q_1$ and
+$\sum_j\tau_j=2\pi$.  Introduce one positive private variable per flight,
+\begin{equation}\label{eq:uf-private}
+ y_j=\begin{cases}
+ R_j=e^{a_j\tau_j},&a_j\ne0,\\
+ T_j=\tau_j,&a_j=0.
+ \end{cases}
+\end{equation}
+For $a_j\ne0$ the endpoint matching equation is
+\begin{equation}\label{eq:uf-Q-nonzero}
+ Q_j=c_{j+1}-R_jc_j-
+ \sum_{m=-M}^{M}\frac{\beta_{j,m}}{im-a_j}
+ \bigl(q_{j+1}^m-R_jq_j^m\bigr)=0,
+\end{equation}
+while for $a_j=0$ it is
+\begin{equation}\label{eq:uf-Q-zero}
+ Q_j=c_{j+1}-c_j-\beta_{j,0}T_j-
+ \sum_{m\ne0}\frac{\beta_{j,m}}{im}
+ \bigl(q_{j+1}^m-q_j^m\bigr)=0.
+\end{equation}
+Thus every $Q_j$ is polynomial--Laurent and
+\begin{equation}\label{eq:uf-local-support}
+ \Newt(Q_j)\subseteq
+ L_j:=[-M,M]_{q_j}+[-M,M]_{q_{j+1}}+[0,1]_{y_j}.
+\end{equation}
+
+Let $\mathcal C_k$ be one connected component of the configuration space of
+$k$ labelled cyclically ordered distinct points on $S^1$, and put
+\begin{equation}\label{eq:uf-M}
+ \mathcal M_k=\mathcal C_k\times(0,\infty)^k.
+\end{equation}
+The physical exponential/time relations are the integral manifold of the
+$k$ one-forms
+\begin{equation}\label{eq:uf-eta}
+ \eta_j=\begin{cases}
+ d\log y_j-a_j\,d\tau_j,&a_j\ne0,\\
+ dy_j-d\tau_j,&a_j=0.
+ \end{cases}
+\end{equation}
+
+\begin{lemma}[Global separating chain and covering]\label{lem:uf-covering}
+The physical flight locus is a separating solution of
+$\eta_1=\cdots=\eta_k=0$ on $\mathcal M_k$.  Moreover
+\begin{equation}\label{eq:uf-rho}
+ \rho_k(q,y)=\prod_{j=1}^k
+ \left(2-\frac{q_{j+1}}{q_j}-\frac{q_j}{q_{j+1}}\right)
+ \frac{y_j}{(1+y_j)^2}
+\end{equation}
+is a covering function in the sense of Khovanskii--Rolle theory.  For every
+regular $\varepsilon>0$, its level is represented, after clearing positive
+denominators, by the Laurent polynomial
+\begin{equation}\label{eq:uf-Peps}
+ P_\varepsilon=
+ \prod_{j=1}^k
+ \left(2-\frac{q_{j+1}}{q_j}-\frac{q_j}{q_{j+1}}\right)y_j
+ -\varepsilon\prod_{j=1}^k(1+y_j)^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $a_j\ne0$ set $\phi_j=\log y_j-a_j\tau_j$, and for $a_j=0$ set
+$\phi_j=y_j-\tau_j$.  Then $\eta_j=d\phi_j$, and $d\phi_j$ has a nonzero
+component in the private $y_j$ direction.  Consequently the chain
+\[
+ \Gamma_r=\{\phi_1=\cdots=\phi_r=0\},\qquad r=1,\ldots,k,
+\]
+is smooth, and $\Gamma_r$ is the cooriented boundary in $\Gamma_{r-1}$ of
+$\{\phi_r<0\}\cap\Gamma_{r-1}$.  This is a separating chain.
+
+The phase factor in \eqref{eq:uf-rho} is
+\[
+ 2-e^{i\tau_j}-e^{-i\tau_j}=4\sin^2(\tau_j/2)>0.
+\]
+The closure of $\mathcal C_k$ in $(S^1)^k$ is compact.  Hence a sequence in
+$\mathcal M_k$ with no accumulation point must either approach a collision
+$\tau_j\to0$ for some $j$, or satisfy $y_j\to0$ or $y_j\to\infty$ for some
+$j$.  In all cases \eqref{eq:uf-rho} tends to zero.  Therefore it is a covering
+function.  The polynomial \eqref{eq:uf-Peps} is obtained by multiplying the
+level equation by $\prod_j(1+y_j)^2$.
+\end{proof}
+
+For the support estimate define the common box
+\begin{equation}\label{eq:uf-S}
+ S=[-2M,2M]^k_q\times[0,2]^k_y\subset\mathbb R^{2k}.
+\end{equation}
+Then
+\begin{equation}\label{eq:uf-base-containment}
+ \sum_{j=1}^kL_j\subseteq S,
+ \qquad
+ \Newt(P_\varepsilon)\subseteq S.
+\end{equation}
+Indeed, each phase coordinate occurs in exactly two local flight boxes, while
+in \eqref{eq:uf-Peps} its exponent lies between $-2$ and $2$; the latter range
+is contained in $[-2M,2M]$ because $M\ge1$.  Each private exponent in the
+covering polynomial lies between $0$ and $2$.
+
+Use on $\mathcal M_k$ the mixed coframe consisting of $d\arg q_1,\ldots,
+d\arg q_k$, $d\log y_j$ on nonzero-slope flights, and $dy_j$ on zero-slope
+flights.  In this coframe the coefficients of every $\eta_j$ are constant.
+Logarithmic differentiation in $q$ and in nonzero-slope $y$ preserves Laurent
+exponents, while ordinary differentiation in a zero-slope $y_j=T_j$ only lowers
+its nonnegative exponent.  Therefore all differential coefficient supports
+remain inside the boxes in \eqref{eq:uf-base-containment}.
+
+For an integer $N\ge1$ define
+\begin{align}
+ A_0(N)&=2^{N(N-1)/2},\label{eq:uf-A0}\\
+ A_j(N)&=
+ 2^{\frac{(j-1)(j-2)}2+\frac{(N-j)(N-j-1)}2}
+ (2^{j-1}+1)^{N-j},\qquad 1\le j\le N,\label{eq:uf-Aj}\\
+ \Theta_N&=A_0(N)+\frac12\sum_{j=1}^{N}A_j(N).
+ \label{eq:uf-Theta}
+\end{align}
+
+\begin{theorem}[Unconditional sparse toric fixed-itinerary bound]
+\label{thm:uf-fixed-itinerary}
+For the constant-slope finite-Fourier equation \eqref{eq:uf-model}, the number
+$N_X(k,M)$ of isolated crossing limit cycles realizing a prescribed cyclic
+$k$-flight itinerary satisfies
+\begin{equation}\label{eq:uf-fixed-bound}
+ \boxed{
+ N_X(k,M)\le
+ \Theta_{2k}\,(2k)!\,(8M)^k.}
+\end{equation}
+The estimate is uniform in the switching levels and in all coefficients
+$a_j,\beta_{j,m}$, and includes zero slopes.
+\end{theorem}
+
+\begin{proof}
+We first count nondegenerate solutions of the transition equations.  Regard the
+$k$ matching equations
+\[
+ Q=(Q_1,\ldots,Q_k)=0
+\]
+as the loose equations in Kaloshin's mixed functional--Pfaffian system, with
+no rigid equations.  This is precisely the $s=0$ case in the definition of the
+Khovanskii number.  The separating solution is the physical flight locus from
+\cref{lem:uf-covering}.
+
+A nondegenerate transition solution is a regular point of the restriction of
+$Q$ to this separating leaf.  Given any finite collection of such solutions,
+the inverse function theorem gives pairwise disjoint neighborhoods in which all
+sufficiently small target values $b\in\mathbb R^k$ have one continued solution.
+By Sard's theorem choose such a $b$ to be a regular value of $Q$ on the
+separating leaf.  Hence the cardinality of the chosen finite collection is
+bounded by the Khovanskii number of the all-loose mixed system.  This
+regularization shifts the $Q_j$ by constants only; because the origin belongs
+to every $L_j$, no Newton box is enlarged.
+
+Kaloshin's reduction replaces the $k$ loose equations by the exact one-forms
+$dQ_1,\ldots,dQ_k$ and then eliminates the resulting $2k$ one-forms
+\[
+ \eta_1,\ldots,\eta_k,dQ_1,\ldots,dQ_k.
+\]
+The general Khovanskii--Rolle reduction gives one all-contact algebraic system
+and, for each of the $N=2k$ reduction steps, one system in which the covering
+function is inserted at that step, with coefficient $1/2$.
+
+Consider first the all-contact branch.  If $H_r$ is the new contact equation at
+step $r$, \eqref{eq:uf-base-containment} and the support-preserving mixed
+coframe give inductively
+\begin{equation}\label{eq:uf-contact-recursion}
+ \Newt(H_r)\subseteq2^{r-1}S,
+ \qquad r=1,\ldots,N.
+\end{equation}
+Indeed, the still uneliminated original $dQ_j$ together contribute at most
+$S$, while each previously created rigid contact equation contributes its own
+Newton box.  Thus the dilation factors obey
+$a_1=1$ and $a_r=1+\sum_{\ell<r}a_\ell=2^{r-1}$, whose product is $A_0(N)$.
+
+If the covering equation is inserted at step $j$, its Newton polytope is in
+$S$.  Before that step the factors are $1,2,\ldots,2^{j-2}$; at the covering
+step the factor is $1$; afterwards the same support recurrence gives
+\[
+ a_r=2^{r-j-1}(2^{j-1}+1),\qquad r>j.
+\]
+The product of all $N$ dilation factors is exactly $A_j(N)$ in
+\eqref{eq:uf-Aj}.
+
+Every final auxiliary system consists of $2k$ Laurent polynomials in
+$(q_1,\ldots,q_k,y_1,\ldots,y_k)\in(\mathbb C^*)^{2k}$.  The box $S$ contains
+the origin, so subtracting the small regular levels required during the
+Khovanskii--Rolle induction does not enlarge any adopted Newton box.  Likewise,
+clearing the positive denominators in the covering equation only multiplies its
+differential by a positive factor on the covering level and does not change the
+relevant real intersection set.  Bernstein's theorem, monotonicity and
+multilinearity of mixed volume give
+\[
+ \operatorname{MV}(a_1S,\ldots,a_NS)
+ =\left(\prod_{r=1}^Na_r\right)(2k)!\operatorname{Vol}_{\rm Eucl}(S).
+\]
+Since
+\[
+ \operatorname{Vol}_{\rm Eucl}(S)=(4M)^k2^k=(8M)^k,
+\]
+the all-contact system contributes at most
+$A_0(N)(2k)!(8M)^k$ and the $j$th covering system contributes at most
+$A_j(N)(2k)!(8M)^k$.  Applying the Khovanskii--Rolle coefficients proves
+\eqref{eq:uf-fixed-bound} for nondegenerate transition solutions.
+
+Finally, the scalar additive-bias perturbation used for crossing cycles by
+Bravo and Trinidad-Forte replaces $x'=S(t,x)$ by $x'=S(t,x)+\lambda$ and
+shows that, for an upper bound, isolated crossing cycles may be replaced by
+simple crossing cycles whose transition solutions are nondegenerate.  The
+perturbation changes only the zero Fourier coefficients and leaves all constant
+slopes and all Newton boxes above unchanged.  Transversality preserves the
+prescribed itinerary.  Therefore the same uniform estimate bounds all isolated
+crossing limit cycles with that itinerary.
+\end{proof}
+
+\begin{corollary}[Constant-slope Hilbert-type bound]
+\label{cor:uf-global}
+Let $\mathcal H_{\rm cs}^{\times}(n,M)$ be the supremum of the number of
+crossing limit cycles of scalar periodic piecewise-linear equations with $n+1$
+regions, constant slopes, and trigonometric forcing of degree at most $M\ge1$.
+Then
+\begin{equation}\label{eq:uf-global-crossing}
+ \mathcal H_{\rm cs}^{\times}(n,M)
+ \le 2Mn
+ \max_{2\le k\le2Mn}
+ \bigl[\Theta_{2k}(2k)!(8M)^k\bigr].
+\end{equation}
+Following the global bookkeeping of Bravo and Trinidad-Forte, the corresponding
+bound after including the at most two constant-sign outer cycles is the
+right-hand side of \eqref{eq:uf-global-crossing} plus $2$.  If the piecewise
+vector field is continuous, their tangency-removal argument shows that this
+latter bound applies to all isolated limit cycles, including tangential ones.
+\end{corollary}
+
+\begin{proof}
+Bravo and Trinidad-Forte prove that a crossing limit cycle has at most $2Mn$
+crossings and that there are at most $2Mn$ crossing sequences up to cyclic
+permutation.  Apply \cref{thm:uf-fixed-itinerary} to each sequence.  Their
+global proof adds at most two constant-sign cycles outside the extreme
+switching levels.  In the continuous case their additive-bias argument removes
+tangencies without increasing the number of regions or the Fourier degree and,
+in the present subclass, without changing the constant slopes.
+\end{proof}
+
+\begin{remark}[Asymptotic gain over the general Pfaffian encoding]
+For fixed $k$, the new bound grows as $C_kM^k$.  The dominant
+Khovanskii--Rolle dilation in \eqref{eq:uf-fixed-bound} is
+\[
+ A_0(2k)=2^{k(2k-1)},
+\]
+whereas the direct Pfaffian construction for time-dependent slopes uses a chain
+of length $4k$ and hence carries the general Khovanskii factor
+$2^{(4k)(4k-1)/2}=2^{2k(4k-1)}$.  Thus the constant-slope toric lift changes the
+Fourier-degree dependence from the general $M^{4k}$ scale to $M^k$ and reduces
+the leading quadratic exponent in $k$ from $8k^2$ to $2k^2$.  The sharper
+interaction-graph mixed-volume theorem remains useful for further reductions
+which retain some of the original flight equations as rigid equations.
+\end{remark}
