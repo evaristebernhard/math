@@ -1,0 +1,49 @@
+{
+  "model": "OpenAI (5.12) coherent stationary-phase F sampled on torus, F surrogate=p_d, STE endpoint projection",
+  "not_proved": "Does not satisfy F coefficient balancing or signed packing; no theorem guarantee",
+  "baseline": {
+    "grid_min": 0.25960138847129727,
+    "grid_max": 1.7435314057486608,
+    "circle_lower_conservative": 0.25427788615283853,
+    "circle_upper_conservative": 1.7488549080671196,
+    "epsilon_bound": 0.7488549080671196,
+    "endpoint_1": 12,
+    "endpoint_minus1": 12,
+    "grid": 131072
+  },
+  "runs": [
+    {
+      "trial": 0,
+      "blocks": 2,
+      "d": 20,
+      "best_during_training": 1.6899240100048702,
+      "initial_eps": 1.6652846774585366,
+      "polish_eps": 0.8492360316911598,
+      "grid_min": 0.15618484443183436,
+      "grid_max": 1.7754228704552988,
+      "raw_p_d_mean_sq": 0.9776178818034188
+    },
+    {
+      "trial": 1,
+      "blocks": 2,
+      "d": 20,
+      "best_during_training": 1.7148524411395507,
+      "initial_eps": 1.6899852479764257,
+      "polish_eps": 0.9245623716720929,
+      "grid_min": 0.08057261631399952,
+      "grid_max": 1.681789973275754,
+      "raw_p_d_mean_sq": 0.9728394271216056
+    }
+  ],
+  "best": {
+    "trial": 0,
+    "blocks": 2,
+    "d": 20,
+    "best_during_training": 1.6899240100048702,
+    "initial_eps": 1.6652846774585366,
+    "polish_eps": 0.8492360316911598,
+    "grid_min": 0.15618484443183436,
+    "grid_max": 1.7754228704552988,
+    "raw_p_d_mean_sq": 0.9776178818034188
+  }
+}
