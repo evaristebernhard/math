@@ -34,3 +34,10 @@ Additional frequency-geometry test (nonprimitive but pairwise nonparallel):
 ```bash
 python mixed_nonprimitive_scan.py --radius 4 --attempts 100 --output experiments/mixed_scan.json
 ```
+
+Resonance-directed support growth experiment:
+
+```bash
+python greedy_resonance.py --steps 7 --output experiments/greedy_resonance.json
+```
+This is a local greedy heuristic, not a proof of a good F.
