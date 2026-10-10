@@ -1,0 +1,17 @@
+{
+  "n": 128,
+  "points": 131074,
+  "M": 65536,
+  "epsilon": "76/100",
+  "verified_exactly": true,
+  "lower_checked": true,
+  "upper_checked": true,
+  "sample_min_approx": 0.2596021799085933,
+  "sample_max_approx": 1.7435316840559905,
+  "circle_lower_consequence": 0.24,
+  "circle_upper_consequence": 1.76,
+  "sample_lower_threshold": 0.25127485795454546,
+  "sample_upper_threshold": 1.7487251420454546,
+  "geometry": "two rational-slope coordinate grids; nearest angle <= 1/M; mirror uses real coefficients",
+  "derivative_lipschitz": 738.9090909090909
+}
