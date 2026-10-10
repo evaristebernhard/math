@@ -1,5 +1,7 @@
 # Seven periodic orbits from a grazing-induced fold
 
+**Sharp upper-bound research:** see [research/L7_UPPER_BOUND_PROGRAM.md](research/L7_UPPER_BOUND_PROGRAM.md) for the new (L^*\le7) conditional program, an exact three-cycle parameter theorem, and high-precision fold tests. This is not an established upper bound.
+
 This folder in `evaristebernhard/math` contains a research manuscript and executable certificate accompanying the revised draft
 
 **Seven Periodic Orbits from a Grazing-Induced Fold: A Computer-Assisted Counterexample in a Three-Zone Saturation Equation.**

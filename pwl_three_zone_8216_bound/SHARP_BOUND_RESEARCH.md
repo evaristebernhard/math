@@ -1,3 +1,5 @@
+> **SUPERSEDED BY THE SEVEN-CYCLE CONSTRUCTION (2026-10-10).** This historical ledger attempts to prove the now numerically contradicted (L^*\le5) conjecture. See [seven-cycle project](../pwl_three_zone_seven_cycles/) and its [new (L^*\le7) research program](../pwl_three_zone_seven_cycles/research/L7_UPPER_BOUND_PROGRAM.md). Do not use the no-valley target below as a valid global hypothesis.
+
 # \(L^*\le 5\) sharp-bound research ledger
 
 Status: **[GAP]**.  This file is deliberately separate from the proved
