@@ -1,0 +1,227 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=27mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\DeclareMathOperator{\sat}{sat}
+\DeclareMathOperator{\sgn}{sgn}
+\title{At Least Seven Limit Cycles in a Symmetric Three-Zone Scalar Piecewise-Linear Equation\\\large A Reproducible Computer-Assisted Counterexample to the Five-Cycle Conjecture}
+\author{Chaoyu Hu \and Tianrun Yu\\\small Author information to be confirmed before submission}
+\date{Draft of October 10, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+The family $x'=ax+(b-a)\sat(x)+\mu\sin t$, $ab<0$, has been conjectured to admit at most five isolated $2\pi$-periodic solutions. We exhibit the rational parameter triple
+$(a,b,\mu)=(-9,3/2,181363/100000)$ and give a reproducible, interval-based shooting certificate for at least seven distinct isolated periodic solutions. Six rational shooting endpoints are propagated using explicit piecewise exponential--trigonometric flows. Outward-rounded arithmetic and analytical Taylor remainder bounds certify three disjoint sign-changing intervals of the Poincar\'e displacement. A half-period reversal produces three additional solutions, together with the unique antisymmetric central solution. A first-crossing argument and the transversality of the prescribed switching events establish that the detected fixed points are isolated. Independent high-precision and adaptive ODE computations are provided only as cross-checks, not as substitutes for the interval certificate. The result is a lower bound, not a claim that seven is the sharp maximum.
+\end{abstract}
+\noindent\textbf{Keywords:} limit cycles; piecewise-linear differential equation; saturation; computer-assisted proof; interval arithmetic; Poincar\'e map.\\
+\textbf{MSC 2020:} 34C25, 34A34, 37C27.
+
+\section{Introduction}
+Consider the scalar $2\pi$-periodic equation
+\begin{equation}\label{eq:family}
+\dot x=ax+(b-a)\sat(x)+\mu\sin t,\qquad
+\sat(x)=\begin{cases}-1,&x<-1,\\x,&|x|\le 1,\\1,&x>1,\end{cases}
+\end{equation}
+where $ab<0$ and $\mu>0$. The solutions are interpreted as closed orbits in the cylinder $(t\bmod 2\pi,x)$. A limit cycle is an isolated closed orbit, counted once as a geometric image in the cylinder.
+Bravo, Carmona, Fern\'andez, and Ojeda \cite{Bravo2025} proved uniform finiteness and exhibited parameter regimes with five solutions, motivating a conjectural upper bound of five. The recent toric-flight analysis in the companion manuscript \cite{Companion} gave a considerably larger explicit global upper bound, but its final discussion left this small sharp bound open. An explicit example with more than five therefore has independent significance.
+
+Our aim is deliberately narrow: provide a concrete rational triple with seven isolated solutions and make every numerical inference replaceable by an auditable sign certificate. The argument is a shooting proof, not an application of the large fewnomial bounds in \cite{Companion}. The reader can verify the critical sign inclusions by running a self-contained Python script (standard library only). For added transparency, we specify the exact algebraic flow, event brackets, error bounds and the logic converting the signs into an isolated-cycle count.
+
+\section{The witness and the exact flight map}
+Fix throughout
+\begin{equation}\label{eq:parameters}
+(a,b,\mu)=\left(-9,\frac32,\frac{181363}{100000}\right).
+\end{equation}
+It is convenient to write
+\begin{equation}\label{eq:profile}
+\dot x+g(x)=\mu\sin t,\quad
+ g(x)=\begin{cases}
+9x+\frac{21}{2},&x<-1,\\
+-\frac32x,&|x|\le1,\\
+9x-\frac{21}{2},&x>1.
+\end{cases}
+\end{equation}
+At $x=\pm1$ these expressions agree, so the vector field is continuous and globally Lipschitz in $x$. The full-period Poincar\'e map
+\begin{equation}
+P(y)=x(2\pi;0,y),\qquad D(y)=P(y)-y
+\end{equation}
+is well-defined, continuous, and strictly increasing in $y$ before subtraction of $y$.
+
+For a segment where $g(x)=cx+d$ is fixed, the solution passing through $x(t_0)=y_0$ is exactly
+\begin{align}\label{eq:flow}
+\Phi_{c,d}(t;t_0,y_0)={}&e^{-c(t-t_0)}y_0-\frac dc\bigl(1-e^{-c(t-t_0)}\bigr)\\
+&+\frac\mu{1+c^2}\bigl[c\sin t-\cos t-e^{-c(t-t_0)}(c\sin t_0-\cos t_0)\bigr].\notag
+\end{align}
+Here $c\in\{-3/2,9\}$ is nonzero and $d\in\{0,\pm21/2\}$. Thus there are no numerical ODE integration errors in the primary calculation: only the evaluation of $\pi$, exponentials and trigonometric functions, and the enclosure of switching times, require certification.
+
+Let $\mathcal I_1=[-571/1000,-567/1000]$, $\mathcal I_2=[-55677/100000,-55675/100000]$ and $\mathcal I_3=[-55517/100000,-55514/100000]$. The first two shooting intervals have itinerary
+\begin{equation}\label{eq:four}
+\mathrm{middle}\to\mathrm{lower}\to\mathrm{middle}\to\mathrm{upper}\to\mathrm{middle},
+\end{equation}
+with four transverse crossings of the levels $(-1,-1,+1,+1)$. The last one has the two-crossing itinerary
+\begin{equation}\label{eq:two}
+\mathrm{middle}\to\mathrm{upper}\to\mathrm{middle}.
+\end{equation}
+We certify these itineraries, not merely solve their formal event equations.
+
+\section{Certified shooting inequalities}
+The following are coarse outward enlargements of the machine-produced intervals. Their deliberately few decimal digits make the strict signs easy to check independently.
+\begin{table}[ht]
+\centering
+\caption{Rational shooting endpoints and outward bounds for $D(y)$. The complete, sharper enclosures are printed by \texttt{proof/certify\_seven.py}.}\label{tab:signs}
+\begin{tabular}{@{}lll@{}}\toprule
+$y$ & enclosure for $D(y)$ & sign\\\midrule
+$-0.571$   & $[1.13334,\ 1.13357]\cdot10^{-5}$ & $+$\\
+$-0.567$   & $[-2.57304,\ -2.57281]\cdot10^{-5}$ & $-$\\
+$-0.55677$ & $[-4.97010,\ -4.96788]\cdot10^{-6}$ & $-$\\
+$-0.55675$ & $[5.38442,\ 5.38665]\cdot10^{-6}$ & $+$\\
+$-0.55517$ & $[9.31073,\ 9.31075]\cdot10^{-6}$ & $+$\\
+$-0.55514$ & $[-1.07074,\ -1.07072]\cdot10^{-5}$ & $-$\\\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{lemma}[Exact shape control for a constant-slope flight]\label{lem:shape}
+Along a flight governed by $\dot x+cx+d=\mu\sin t$, put
+$w(t)=e^{c(t-t_0)}\dot x(t)$. Then
+\begin{equation}\label{eq:shape}
+w'(t)=\mu e^{c(t-t_0)}\cos t.
+\end{equation}
+In particular, on each such flight, $w$ increases on $(0,\pi/2)$ and $(3\pi/2,2\pi)$ and decreases on $(\pi/2,3\pi/2)$; it has no other changes of monotonicity in one forcing period.
+\end{lemma}
+\begin{proof}
+Differentiating $\dot x+cx+d=\mu\sin t$ yields $\ddot x+c\dot x=\mu\cos t$. Multiplication by $e^{c(t-t_0)}$ gives \eqref{eq:shape}. The exponential is positive.
+\end{proof}
+
+\begin{lemma}[Verified switching sequences]\label{lem:events}
+At each of the six rational endpoints in Table~\ref{tab:signs}, the flow has the transverse, first-hit itinerary stated in \eqref{eq:four} or \eqref{eq:two}. These itineraries also hold throughout each corresponding closed shooting interval $\mathcal I_j$; all level crossings are transverse.
+\end{lemma}
+\begin{proof}
+The event enclosures are supplied with the certificate in \texttt{proof/certify\_seven.py}; for the four-crossing endpoints, the two lower crossings occur before $\pi/2$, the two upper crossings between $\pi$ and $3\pi/2$, and their level velocities have respective signs $-,+,+,-$. For the two-crossing endpoints, the two upper crossings occur between $\pi$ and $3\pi/2$, with velocities $+,-$. The script checks these facts by interval evaluation of \eqref{eq:flow} at both sides of each candidate event bracket. It additionally encloses the initial middle-flight minimum above $-1$ in the two-crossing cases and the final flight at $2\pi$ above $-1$. 
+
+For completeness, Lemma~\ref{lem:shape} rules out hidden earlier crossings: the initial middle flight decreases to at most one minimum, the lower flight decreases then increases, the next middle flight increases, the upper flight increases then decreases, and the final middle flight decreases to its terminal value. The sign of $w$ at the relevant events and endpoints, together with its single change of monotonicity at each $\cos t=0$, gives those shapes. For the two-crossing case, the certified single initial minimum is strictly above $-1$.
+
+For any two initial data $y_-<y_+$, uniqueness and the scalar comparison principle give $x(t;y_-)<x(t;y_+)$ at every fixed $t$. The minima and maxima are therefore strictly ordered in each $\mathcal I_j$. The endpoint shape bounds imply that every intermediate trajectory has the same strict visits to the prescribed zones. A change of first-hit topology would require a tangency to a switching level; the strict extreme-value inequalities and Lemma~\ref{lem:shape} rule this out. In particular, the crossing times vary analytically throughout the intervals by the implicit function theorem, and hence $D$ is real analytic there.
+\end{proof}
+
+\begin{lemma}[Displacement signs and center ordering]\label{lem:signs}
+At the six rational initial values in Table~\ref{tab:signs}, $D(y)$ has the indicated strict signs. Moreover,
+\begin{equation}\label{eq:centerineq}
+Q(-0.571):=x(\pi;0,-0.571)-0.571>0.01911577.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The finite algorithm in Appendix~\ref{app:certificate} evaluates \eqref{eq:flow} using outward-rounded decimal intervals, encloses each event by two rational decimal endpoints with opposite level-function signs, and propagates the resulting time interval to the next segment. The interval exponential, sine and cosine functions use Taylor polynomials with a rigorously bounded remainder (Lemma~\ref{lem:taylor}). These operations yield the intervals in Table~\ref{tab:signs} and the bound in \eqref{eq:centerineq}. The executable verifier stops with an error if any bracket, shape, or displacement-sign assertion fails.
+\end{proof}
+
+\section{Seven isolated cycles}
+\begin{lemma}[Unique antisymmetric periodic solution]\label{lem:center}
+There is a unique solution $x_c$ with $x_c(t+\pi)=-x_c(t)$; it is $2\pi$ periodic. Its initial value $y_c$ satisfies $y_c<-0.571$.
+\end{lemma}
+\begin{proof}
+Write $H(y)=x(\pi;0,y)+y$. Scalar order-preservation makes $H$ strictly increasing. The right-hand side is $-9x+O(1)$ uniformly in $t$ outside a compact interval; hence $x(\pi;0,y)=e^{-9\pi}y+O(1)$ as $y\to\pm\infty$, so $H$ changes sign once. Let $y_c$ be its unique zero. Oddness of $g$ and the identity $\sin(t+\pi)=-\sin t$ imply, by uniqueness, that $x(t+\pi;0,y_c)=-x(t;0,y_c)$ for all $t$. Hence $x_c$ is periodic. By \eqref{eq:centerineq} and monotonicity of $H$, $y_c<-0.571$.
+\end{proof}
+
+\begin{theorem}[Seven-cycle witness]\label{thm:seven}
+For the rational parameter triple \eqref{eq:parameters}, equation \eqref{eq:family} has at least seven geometrically distinct isolated $2\pi$-periodic solutions on the cylinder. In particular, a universal upper bound of five for this three-zone family is false.
+\end{theorem}
+\begin{proof}
+Since $D$ is continuous, Table~\ref{tab:signs} and the intermediate value theorem give a fixed point $y_j$ in each of the disjoint intervals $\mathcal I_j$, $j=1,2,3$. By Lemma~\ref{lem:events}, $D$ is real analytic on each interval and is not identically zero because its endpoint signs differ. Thus each interval contains at least one isolated fixed point.
+
+The strict ordering $y_j>y_c$ and the scalar comparison principle give $x_j(t)>x_c(t)$ for every $t$. Define the half-period involution
+\begin{equation}
+(\mathcal Sx)(t)=-x(t+\pi).
+\end{equation}
+Oddness of $g$ ensures that $\mathcal Sx_j$ is also a $2\pi$-periodic solution. Since $x_j(\pi)>x_c(\pi)=-y_c$, one has $(\mathcal Sx_j)(0)<y_c$. These three reflected solutions are distinct from each other, from $x_c$, and from the three original solutions, by strict order and injectivity of the flow. The map $\mathcal S$ is an involution preserving local isolation of solutions; hence all six noncentral solutions are isolated. The central solution is also isolated, by Lemma~\ref{lem:centermult} below. Therefore the total is at least $3+1+3=7$ distinct isolated periodic orbits.
+\end{proof}
+
+\begin{lemma}[Certified nonunit central multiplier]\label{lem:centermult}
+The unique antisymmetric solution of Lemma~\ref{lem:center} is hyperbolic; in fact $P'(y_c)>1$.
+\end{lemma}
+\begin{proof}
+The certificate brackets the unique central initial value by
+\[
+-0.579022471<y_c<-0.579022470
+\]
+using opposite strict signs of $Q(y)=x(\pi;0,y)+y$. Both endpoint trajectories have two transverse passages through $-1$ before $\pi$. Write $s=t_2-t_1$ for the time below $-1$ in the first half-period. By strict scalar order, the first (descending) intersection with $-1$ is delayed as the shooting initial value increases, while the second (ascending) intersection is advanced; hence $s$ strictly decreases with $y$ throughout this bracket. Interval propagation gives
+\[
+  s(y_c)\le s(-0.579022471) <0.448589954
+  <\frac{\pi}{7}.
+\]
+Antisymmetry makes the time above $1$ equal to $s$, so the two outer zones have total residence $2s$. The variational multiplier is therefore
+\[
+\log P'(y_c)=\frac32(2\pi-2s)-9(2s)
+=3\pi-21s>0.
+\]
+This strict nonunit bound, computed from the same exact flight interval routines, makes the central periodic orbit hyperbolic and hence isolated.
+\end{proof}
+
+\section{Numerical geometry of the witness (noncertifying)}
+Independent computations with a high-precision piecewise exact flow give the three roots listed in Table~\ref{tab:roots}. They are presented to explain the mechanism, not to prove their existence.
+\begin{table}[ht]
+\centering
+\caption{High-precision approximations. These are \emph{not} used in the sign certificate.}\label{tab:roots}
+\begin{tabular}{@{}lll@{}}\toprule
+$y=x(0)$ & $P'(y)$ & type\\\midrule
+$-0.569203954368034\ldots$ & $0.9914612791\ldots$ & attracting\\
+$-0.556760196081272\ldots$ & $1.5169801260\ldots$ & repelling\\
+$-0.555155990304937\ldots$ & $0.3330479441\ldots$ & attracting\\\bottomrule
+\end{tabular}
+\end{table}
+For a periodic orbit, let $T_m$ be its time spent in $|x|<1$. The scalar variational equation gives
+\begin{equation}\label{eq:mult}
+P'(y)=\exp\bigl(\tfrac32T_m-9(2\pi-T_m)\bigr)
+=\exp\bigl(\tfrac{21}{2}T_m-18\pi\bigr).
+\end{equation}
+Thus an outer region that is visited only briefly can change the stability substantially. The second root lies extremely near the lower switching line, and the third never enters the lower zone. The additional oscillation of the response curve near this grazing transition is consistent with the breakdown of a proposed global monotonicity route to the five-cycle conjecture.
+\begin{figure}[ht]
+\centering
+\IfFileExists{figures/response.png}{\includegraphics[width=.84\linewidth]{figures/response.png}}{\fbox{\parbox{.8\linewidth}{\centering Exploratory response figure generated by experiments/plot\_mechanism.py.}}}
+\caption{Exploratory response curve at the witness parameters. The rigorous result uses Table~\ref{tab:signs} rather than pixel-based root counting.}
+\end{figure}
+
+\section{Discussion and scope}
+The lower bound is obtained from elementary scalar order, antisymmetry, and an explicitly checkable finite list of sign computations. It is not a general upper bound. The earlier uniform finiteness results \cite{Bravo2025,BravoTrinidad2026,Companion} are compatible with the present example; only the conjectural value five is contradicted. The source of the additional fixed points appears to be a narrow configuration where the critical response graph bends back near a lower-zone grazing transition. A global upper bound, a full bifurcation analysis, and an explanation of how many such bends can occur remain open.
+
+\section*{Reproducibility and proof status}
+All scripts and figures are packaged with the source. Run \texttt{python3 proof/certify\_seven.py} with Python 3.10 or later; no third-party packages are needed for the sign certificate. Separate optional scripts use \texttt{scipy}, \texttt{numpy}, \texttt{matplotlib} or \texttt{mpmath}. The exact interval output, including event checks, must be saved and reviewed for the archival version. The arithmetic implementation assumes standard-conforming correctly directed Python \texttt{Decimal} operations; a second implementation with Arb/FLINT or exact rational interval arithmetic remains desirable as a fully independent audit. The central solution is included in the strict certificate through its half-period bracket and multiplier inequality.
+
+\appendix
+\section{Details of the interval checker}\label{app:certificate}
+\begin{lemma}[Elementary analytic enclosures]\label{lem:taylor}
+For $|z|\le10$, truncating the Maclaurin expansions of $e^z$, $\sin z$, and $\cos z$ after terms through order $160$ leaves errors bounded in absolute value by
+\begin{equation}
+\frac{3^{10}10^{161}}{161!}<10^{-95}\quad\text{for }e^z,
+\qquad\frac{10^{161}}{161!}<10^{-95}\quad\text{for }\sin z,\cos z.
+\end{equation}
+The value of $\pi$ can be enclosed by the alternating series of $16\arctan(1/5)-4\arctan(1/239)$, with the first omitted term as a rigorous remainder bound.
+\end{lemma}
+\begin{proof}
+For the trigonometric functions, every real derivative has magnitude at most one. Taylor's remainder theorem then bounds the remainder after order $160$. For the exponential, all derivatives on $[-10,10]$ have absolute value at most $e^{10}<3^{10}$. The displayed factorial inequality is exact. The arctangent series is alternating with decreasing term magnitudes for the two specified rational arguments.
+\end{proof}
+
+The verifier implements intervals as pairs of \texttt{Decimal} endpoints. Each elementary arithmetic operation is evaluated with \texttt{ROUND\_FLOOR} at the lower endpoint and \texttt{ROUND\_CEILING} at the upper endpoint. Interval products use all four combinations; reciprocals assert that the interval excludes zero. The Taylor remainder in Lemma~\ref{lem:taylor} is added as an interval $[-10^{-95},10^{-95}]$.
+
+Each stored switching-time decimal is only a \emph{center}; the algorithm forms a rational enclosure of specified radius and requires strict opposite signs of $\Phi_{c,d}(t;\cdot)-\ell$ at its two endpoints. It then replaces the exact event state by the switching level $\ell=\pm1$ and the unknown event time by the verified enclosure. The resulting dependency overestimates remain narrow enough to decide all six displacement signs. The script checks the derivative direction of every crossing; for the two-crossing trajectories it separately encloses the initial minimum above $-1$, and it checks the endpoint velocity in the final middle flight. Finally it calculates $Q(-0.571)$ using the half-period exact flow. An independent two-endpoint half-period bracket for $Q(y_c)=0$ verifies $-0.579022471<y_c<-0.579022470$ and $s(y_c)<\pi/7$, completing the nonunit central-multiplier argument.
+
+\begin{thebibliography}{9}
+\bibitem{Bravo2025}
+J.~L. Bravo, V.~Carmona, M.~Fern\'andez, and I.~Ojeda,
+\emph{Upper bound of the number of limit cycles for symmetric scalar piecewise linear differential equations with three zones}, arXiv:2507.06705 (2025).
+\bibitem{BravoTrinidad2026}
+J.~L. Bravo and R.~Trinidad-Forte,
+\emph{Finitude of limit cycles of linear piecewise ODEs in the cylinder}, arXiv:2605.05805 (2026).
+\bibitem{Companion}
+C.~Hu and T.~Yu,
+\emph{Sparse Toric Flight Encoding for Constant-Slope Scalar Periodic Piecewise-Linear Equations, with an Explicit Three-Zone Limit-Cycle Bound}, manuscript supplied by the authors (2026).
+\end{thebibliography}
+\end{document}

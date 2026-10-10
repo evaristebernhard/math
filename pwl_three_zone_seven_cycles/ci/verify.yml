@@ -1,0 +1,17 @@
+name: Reproduce seven-cycle certificate
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  certificate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check seven-cycle sign and center certificates
+        run: python3 pwl_three_zone_seven_cycles/proof/certify_seven.py
+      - name: Run regression test
+        run: cd pwl_three_zone_seven_cycles && python3 -m unittest discover -s tests -v
