@@ -1,0 +1,75 @@
+{
+  "architecture": "OpenAI-inspired C1 joined quadratic inverse-curvature wave packets",
+  "warning": "Not full Proposition 5.1: no F or lemma 5.2 packing",
+  "baseline": {
+    "grid_min": 0.25960138847129727,
+    "grid_max": 1.7435314057486608,
+    "circle_lower_conservative": 0.25427788615283853,
+    "circle_upper_conservative": 1.7488549080671196,
+    "epsilon_bound": 0.7488549080671196,
+    "endpoint_1": 12,
+    "endpoint_minus1": 12,
+    "grid": 131072
+  },
+  "trials": [
+    {
+      "trial": 0,
+      "K": 16,
+      "steps": 1800,
+      "wave_loss": 0.22312381501625533,
+      "spectral_tail_energy": 0.024331824286011036,
+      "min_abs_Y": 0.1492764705638272,
+      "max_abs_Y": 1.9568938072658242,
+      "wave_fourier_imag_max": 3.318179506738051e-17,
+      "endpoint_phase_error": 3.552713678800501e-15,
+      "projection_epsilon_bound": 1.054903944246521,
+      "refined_epsilon_bound": 0.9811727580288129,
+      "refined_min": 0.024169608846997252,
+      "refined_max": 1.7497098473516115,
+      "accepted_last": 2
+    },
+    {
+      "trial": 1,
+      "K": 16,
+      "steps": 1800,
+      "wave_loss": 0.28771082749722,
+      "spectral_tail_energy": 0.01205518864204643,
+      "min_abs_Y": 0.14450139016426145,
+      "max_abs_Y": 2.1928794782597913,
+      "wave_fourier_imag_max": 1.9873213400120945e-17,
+      "endpoint_phase_error": 0.0,
+      "projection_epsilon_bound": 1.0422464448664415,
+      "refined_epsilon_bound": 0.9602452993802253,
+      "refined_min": 0.045180384353894515,
+      "refined_max": 1.7769974393166734,
+      "accepted_last": 6
+    },
+    {
+      "trial": 2,
+      "K": 16,
+      "steps": 1800,
+      "wave_loss": 0.3127620975134672,
+      "spectral_tail_energy": 0.012489007126627732,
+      "min_abs_Y": 0.0674374118956694,
+      "max_abs_Y": 2.148372400410911,
+      "wave_fourier_imag_max": 2.3180030026201734e-17,
+      "endpoint_phase_error": 0.0,
+      "projection_epsilon_bound": 0.9941980464784719,
+      "refined_epsilon_bound": 0.9672762534508377,
+      "refined_min": 0.03787813301068764,
+      "refined_max": 1.6881432815149144,
+      "accepted_last": 13
+    }
+  ],
+  "best": {
+    "grid_min": 0.045180384353894515,
+    "grid_max": 1.7769974393166734,
+    "circle_lower_conservative": 0.03975470061977473,
+    "circle_upper_conservative": 1.7824231230507932,
+    "epsilon_bound": 0.9602452993802253,
+    "endpoint_1": 12,
+    "endpoint_minus1": 12,
+    "grid": 131072
+  },
+  "best_vs_prior": 0.21139039131310566
+}
