@@ -40,3 +40,19 @@ The STE seeds were **not** reliably better than random seeds; this is a negative
 ## What to optimize next
 
 The most fruitful upgrade is **train the phase/curvature parameters of B_N**, not just sign logits, then derive s via its real Fourier projection, and optimize the signed sequence in an inner loop. Require the phase derivative to stay in (0,1), force B(-t)=conj(B(t)), and optimize the spectral L_infinity objective. That is substantively closer to the wave framework of the original paper and supplies a more structured low-dimensional parameterization. It remains an experimental problem.
+
+## Explicit OpenAI-inspired phase-model baseline (negative result)
+
+`phase_model.py` trains a much smaller parameter family than 128 free signs:
+
+    phi_a(t) = t/2 + sum_{j=1}^J a_j sin(2 pi j t)/(2 pi j),
+    B_a(t) = exp(2 pi i N phi_a(t)),
+    sum |a_j| < 0.49.
+
+It ensures `0.01 < phi'_a(t) < 0.99`, `|B_a(t)|=1`, `B_a(-t)=conj(B_a(t))`, `B_a(t+1)=B_a(t)`, and (hence) Fourier coefficients of B are real. `a` is optimized by Torch automatic differentiation against the interior Fourier cube and exterior leakage. The resulting real Fourier coefficients are projected to signs, then parity-preserving swap-annealed.
+
+For `J=12`, `steps=1300`, `3 restarts`, `11000 swaps`, the best conservatively bounded full-circle epsilon among trials was **~0.807** (using a 16384-point FFT and Bernstein bound), worse than our unstructured best epsilon <=0.76. These numerical grid/Bernstein bounds are not an integer-arithmetic exact certificate; the exact certificate is ONLY for committed `best_signs_N128.csv`.
+
+This failed controlled experiment shows a single globally smooth chirp does not automatically replicate OpenAI's **coherent sum of many packed waves**. A better structured model should parameterize **piecewise curvature, interval centers and coherent Fourier phases** while respecting conjugation. No proof that this will improve practical performance.
+
+    python phase_model.py --harmonics 12 --steps 1300 --restarts 3 --swaps 11000
