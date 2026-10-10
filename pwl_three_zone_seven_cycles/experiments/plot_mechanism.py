@@ -1,36 +1,41 @@
-"""Reproducible explanatory plots; numerical, not interval certified."""
-import os,sys
-sys.path.insert(0,os.path.dirname(__file__))
-import numpy as np
+"""Replot the exploratory data shipped with the paper.
+
+The CSV is numerical continuation data, NOT an interval certificate.
+The rigorous proof uses proof/certify_seven.py.
+"""
+from pathlib import Path
+import csv
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from residence_experiment import central,shoot,residence
-A,B,mu,N=9.,1.5,1.81363,16384
-rho=2*np.pi*A/(A+B)
-yc=central(A,B,mu,N)
-xx=np.linspace(0,.08,161)
-Lam=[];Diff=[];mins=[]
-prev=yc;lam=0.
-for xi in xx:
-    prev,lam,u,ok=shoot(float(xi),prev,lam,A,B,mu,N)
-    if not ok: raise RuntimeError('failed shooting')
-    Lam.append(lam);Diff.append(residence(u)-rho);mins.append(float(u.min()))
-crit=[.0042753017,.0261500219,.0496475006]
-roots=[.007659607,.037207634,.065677289]
-fig,ax=plt.subplots(figsize=(9,4.1))
-ax.plot(xx,1e5*np.array(Lam),lw=1.7)
-ax.axhline(0,lw=.9,ls='--')
-for q in crit:ax.axvline(q,ls=':',lw=.8,alpha=.65)
-ax.scatter(roots,np.zeros(3),marker='x',s=65,zorder=5)
-ax.set(xlabel='Mean xi', ylabel='Response 1e5 * Lambda(xi)',title='Three positive zeros: A=9, B=1.5, mu=1.81363')
+
+ROOT = Path(__file__).resolve().parents[1]
+datafile = ROOT / "paper" / "figures" / "response_data.csv"
+rows = list(csv.DictReader(datafile.open(encoding="utf-8")))
+xi = [float(x["xi"]) for x in rows]
+lam = [float(x["scaled_lambda"]) for x in rows]
+res = [float(x["T_minus_rho"]) for x in rows]
+roots = [0.007659607, 0.037207634, 0.065677290]
+turns = [0.00427530, 0.02615002, 0.04964750]
+outdir = ROOT / "paper" / "figures"
+outdir.mkdir(parents=True, exist_ok=True)
+fig, ax = plt.subplots(figsize=(9,4.2))
+ax.plot(xi, lam, lw=1.7, label="numerical response")
+ax.axhline(0,ls="--",lw=.85)
+for q in turns: ax.axvline(q,ls=":",lw=.8,alpha=.6)
+ax.scatter(roots,[0]*3,marker="x",s=62,zorder=3)
 ax.grid(alpha=.25)
-fig.tight_layout();fig.savefig('/mnt/data/seven_response_mechanism.png',dpi=165);plt.close(fig)
-fig,ax=plt.subplots(figsize=(9,4.1))
-ax.plot(xx,Diff,lw=1.7)
-ax.axhline(0,lw=.9,ls='--')
-for q in crit:ax.axvline(q,ls=':',lw=.8,alpha=.65)
-ax.set(xlabel='Mean xi', ylabel='T(xi)-rho',title='Residence time changes sign three times')
+ax.set(xlabel="Mean xi",ylabel="1e5 Lambda(xi)",title="Seven-cycle witness: three positive response zeros")
+fig.tight_layout()
+fig.savefig(outdir/"response.png",dpi=180)
+plt.close(fig)
+fig, ax = plt.subplots(figsize=(9,4.2))
+ax.plot(xi,res,lw=1.7)
+ax.axhline(0,ls="--",lw=.85)
+for q in turns: ax.axvline(q,ls=":",lw=.8,alpha=.6)
 ax.grid(alpha=.25)
-fig.tight_layout();fig.savefig('/mnt/data/seven_residence_mechanism.png',dpi=165);plt.close(fig)
-print('saved plots',[(p,os.path.getsize(p)) for p in ['/mnt/data/seven_response_mechanism.png','/mnt/data/seven_residence_mechanism.png']])
+ax.set(xlabel="Mean xi",ylabel="T(xi) - rho",title="Residence-time mechanism")
+fig.tight_layout()
+fig.savefig(outdir/"residence.png",dpi=180)
+plt.close(fig)
+print("Saved exploratory plots to",outdir)
