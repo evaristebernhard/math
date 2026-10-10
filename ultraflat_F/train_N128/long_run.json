@@ -1,0 +1,131 @@
+{
+  "mode": "endpoint-constrained swap annealing with optional STE",
+  "n": 128,
+  "restarts": 16,
+  "train_mesh": 1024,
+  "best_train_grid_error": 0.7328655245686326,
+  "results": [
+    {
+      "seed": "optimized_wave_signs_N128.csv",
+      "loss": 0.6574255276729947,
+      "sample_error": 0.7328655245686326,
+      "sample_min": 0.26979132263294636,
+      "sample_max": 1.7328655245686326
+    },
+    {
+      "seed": "refined_signs_N128.csv",
+      "loss": 0.716089177761611,
+      "sample_error": 0.8025572342026515,
+      "sample_min": 0.19744276579734854,
+      "sample_max": 1.7484665994781874
+    },
+    {
+      "seed": "pd_tuned_N128_d30_signs.csv",
+      "loss": 0.6501829826621116,
+      "sample_error": 0.7379938611286374,
+      "sample_min": 0.26200613887136265,
+      "sample_max": 1.624324109067796
+    },
+    {
+      "seed": "pd_original_N128_d30_signs.csv",
+      "loss": 0.7551079596837657,
+      "sample_error": 0.8469647857754024,
+      "sample_min": 0.15303521422459765,
+      "sample_max": 1.7688141668160904
+    },
+    {
+      "seed": "random_0",
+      "loss": 0.7133165000465939,
+      "sample_error": 0.7948855822245761,
+      "sample_min": 0.2051144177754239,
+      "sample_max": 1.7790210544613596
+    },
+    {
+      "seed": "random_1",
+      "loss": 0.6564672238883557,
+      "sample_error": 0.7375699926771311,
+      "sample_min": 0.26243000732286886,
+      "sample_max": 1.673224131356242
+    },
+    {
+      "seed": "random_2",
+      "loss": 0.65348765438272,
+      "sample_error": 0.7393006246338474,
+      "sample_min": 0.26069937536615256,
+      "sample_max": 1.7196202527769187
+    },
+    {
+      "seed": "random_3",
+      "loss": 0.6944960330957677,
+      "sample_error": 0.7862435760913008,
+      "sample_min": 0.21375642390869923,
+      "sample_max": 1.674483623245551
+    },
+    {
+      "seed": "random_4",
+      "loss": 0.7190271134003903,
+      "sample_error": 0.8008510457146798,
+      "sample_min": 0.19914895428532023,
+      "sample_max": 1.7489749971545492
+    },
+    {
+      "seed": "random_5",
+      "loss": 0.6717581974923871,
+      "sample_error": 0.7573975943160891,
+      "sample_min": 0.2426024056839109,
+      "sample_max": 1.731487355397496
+    },
+    {
+      "seed": "random_6",
+      "loss": 0.7134604355095022,
+      "sample_error": 0.8030587027643108,
+      "sample_min": 0.22083269731619593,
+      "sample_max": 1.8030587027643108
+    },
+    {
+      "seed": "random_7",
+      "loss": 0.7254712469606365,
+      "sample_error": 0.8205280268705277,
+      "sample_min": 0.17947197312947227,
+      "sample_max": 1.690100689425768
+    },
+    {
+      "seed": "random_8",
+      "loss": 0.6855873264812575,
+      "sample_error": 0.7595192076703994,
+      "sample_min": 0.2451416087624813,
+      "sample_max": 1.7595192076703994
+    },
+    {
+      "seed": "random_9",
+      "loss": 0.6959095300388787,
+      "sample_error": 0.7796236750473122,
+      "sample_min": 0.22037632495268777,
+      "sample_max": 1.7276196264023571
+    },
+    {
+      "seed": "random_10",
+      "loss": 0.7139155935405912,
+      "sample_error": 0.7986705930215812,
+      "sample_min": 0.23275266506605904,
+      "sample_max": 1.7986705930215812
+    },
+    {
+      "seed": "random_11",
+      "loss": 0.7104340999691161,
+      "sample_error": 0.7934846389229566,
+      "sample_min": 0.20651536107704344,
+      "sample_max": 1.7811544230599474
+    }
+  ],
+  "certification": {
+    "grid_min": 0.25960138847129727,
+    "grid_max": 1.7435314057486608,
+    "circle_lower_conservative": 0.25427788615283853,
+    "circle_upper_conservative": 1.7488549080671196,
+    "epsilon_bound": 0.7488549080671196,
+    "endpoint_1": 12,
+    "endpoint_minus1": 12,
+    "grid": 131072
+  }
+}
