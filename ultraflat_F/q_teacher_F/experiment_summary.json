@@ -1,0 +1,37 @@
+{
+  "report_version": "2026-10-10",
+  "rigorous_obstruction": {
+    "L1": 2041028,
+    "L2": 1041558,
+    "minimal_relative_squared_balance_error": 0.9758803666185448,
+    "requires_original_three_frequency_modes": true
+  },
+  "q49_supervised": {
+    "Fourier_sign_pairs": 24,
+    "heldout_n": 12000,
+    "steps": 700,
+    "final_mse_p49": 0.2686714392598385,
+    "sampled_sup_lower": 2.0543139426830974,
+    "student_energy_estimate": 0.7053546126166976
+  },
+  "p2_exactly_balanced": {
+    "frequency_sign_pairs": 6,
+    "mass": 0.56854248046875,
+    "steps": 1200,
+    "final_mse_teacher": 0.6439842209374189,
+    "sampled_sup_lower": 1.5940742832733719
+  },
+  "factor_T63": {
+    "L": 63,
+    "steps": 650,
+    "sampled_max_error_before": 1,
+    "sampled_max_error_after": 0.5163731321122585
+  },
+  "factor_T127": {
+    "L": 127,
+    "steps": 500,
+    "sampled_max_error_before": 1,
+    "sampled_max_error_after": 0.49188784609307284
+  },
+  "caution": "Only obstruction theorem is rigorous. All sampling/training outcomes are exploratory; no compliant F, BN or PN constructed."
+}
