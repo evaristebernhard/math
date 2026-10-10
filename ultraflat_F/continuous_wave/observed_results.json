@@ -1,0 +1,32 @@
+{
+  "n": 200,
+  "status": "negative experimental baselines; independent FFT grid diagnostics only",
+  "models": [
+    {
+      "pairs": 24,
+      "unit_modulus_grid_max_error": 6.283862319378386e-14,
+      "scaled_b0": 0.9999999999999997,
+      "min_interior_magnitude": 0.00239477058636676,
+      "max_interior_magnitude": 2.007156808498444,
+      "exterior_L2_energy": 0.0014534414052570024,
+      "phase_speed_max_over_N": 0.8987648902332935,
+      "naive_rounded_sign_grid_error": 1.3028597033512295
+    },
+    {
+      "pairs": 48,
+      "unit_modulus_grid_max_error": 1.0103029524088925e-13,
+      "scaled_b0": 0.9999999999999992,
+      "min_interior_magnitude": 0.00520112280817104,
+      "max_interior_magnitude": 2.00270347713785,
+      "exterior_L2_energy": 0.06852565585007257,
+      "phase_speed_max_over_N": 2.354358516835641,
+      "naive_rounded_sign_grid_error": 0.9910053682962721
+    }
+  ],
+  "p49_proxy_independent_signs": {
+    "n": 200,
+    "normalized_autocorr_quartic": 1.0148,
+    "grid_min": 0.031215967452732828,
+    "grid_max": 2.633576508201373
+  }
+}
