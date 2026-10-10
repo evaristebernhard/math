@@ -16,148 +16,339 @@
 \newcommand{\sat}{\operatorname{sat}}
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\R}{\mathbb{R}}
-\title{Seven Periodic Orbits from a Grazing-Induced Fold\\[3pt]
-\large A Computer-Assisted Counterexample in a Three-Zone Saturation Equation}
+\title{Competing Residence Times and Seven Limit Cycles\\[3pt]\large in a Periodically Forced Three-Zone Equation}
 \author{Chaoyu Hu \and Tianrun Yu}
 \date{Research manuscript --- 10 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-How many isolated periodic responses can a scalar equation with only three affine regions and a single sinusoidal forcing possess? For the symmetric saturation family
-$\dot x=ax+(b-a)\sat(x)+\mu\sin t$, $ab<0$, five periodic solutions were known to occur, and five had been proposed as the universal maximum. We establish a lower bound of seven, using the explicit rational parameters
-$(a,b,\mu)=(-9,3/2,181363/100000)$.
-Beyond the witness, we explain the mechanism: increasing the mean of a periodic response shortens its lower exterior visit but lengthens its upper exterior visit. Their competing contributions to the total time spent in the expanding middle region can create an extra pair of folds in the mean-response curve, especially near grazing. A residence-time identity makes this competition precise and guided the discovery of the parameters. To separate the mechanism from its verification, we give both a numerical portrait of the folds and a computer-assisted proof using six rational shooting endpoints, exact affine flight maps, outward-rounded interval signs, and half-period symmetry. The central orbit is separately proved hyperbolic. The conclusion is \emph{at least} seven isolated periodic orbits, not a sharp global bound.
+A periodically forced three-zone scalar equation has explicit solutions on each
+linear region, yet the switching durations can generate a complicated return map.
+For the symmetric saturation equation
+$\dot x=ax+(b-a)\operatorname{sat}(x)+\mu\sin t$, $ab<0$,
+a universal maximum of five limit cycles had been conjectured. We construct
+at least seven isolated periodic solutions at the rational parameter triple
+$(a,b,\mu)=(-9,3/2,181363/100000)$. The construction is guided by a
+residence-time identity for the mean-parametrized biased response: its
+slope is determined by the time spent in the expanding middle zone.
+Raising the mean reduces the lower exterior visit but enlarges the upper
+one; these contributions compete, and the loss of a lower visit at a
+nondegenerate grazing obeys a square-root law. The resulting additional
+turning of the response curve explains how the candidate was found.
+The existence proof itself does not rely on the observed folds: exact
+piecewise flow formulas enclose three independent sign changes of the
+Poincar\'e displacement; scalar order and half-period symmetry then give
+seven isolated cycles. This disproves the proposed upper bound five but
+does not settle the sharp global upper bound.
 \end{abstract}
-\noindent\textbf{Keywords:} piecewise-linear dynamics; limit cycles; periodic forcing; grazing; response curve; interval arithmetic. \quad
+\noindent\textbf{Keywords:} piecewise-linear differential equations; limit cycles; residence time; grazing bifurcations; periodic solutions. \quad
 \textbf{MSC 2020:} 34C25, 34A34, 37C27.
 
-\section{The problem: why a three-zone equation is not necessarily simple}
-Consider
+\section{Introduction: a simple equation with an unexpected number of cycles}\label{sec:intro}
+Consider the periodic scalar equation
 \begin{equation}\label{eq:main}
-\dot x=ax+(b-a)\sat(x)+\mu\sin t,
-\qquad \sat(x)=\begin{cases}-1,&x<-1,\\ x,&|x|\le1,\\1,&x>1,\end{cases}
-\qquad ab<0,\ \mu>0.
+ \dot x=ax+(b-a)\sat(x)+\mu\sin t,\qquad ab<0,\quad\mu>0,
+ \qquad
+ \sat(x)=\begin{cases}-1,&x<-1,\\x,&|x|\le1,\\1,&x>1.\end{cases}
 \end{equation}
-A $2\pi$-periodic solution is a closed trajectory on the phase cylinder $(t\bmod 2\pi,x)$; it is a limit cycle when isolated among periodic trajectories on that cylinder. Different initial states at the same phase $t=0$ represent different orbits, even if their waveforms are similar.
+A periodic solution determines a closed curve on the cylinder
+$(t\bmod2\pi,x)$. We count \emph{isolated} $2\pi$-periodic curves, rather than
+zeros of a numerical discretization. Each of the three affine vector fields
+in \eqref{eq:main} can be integrated explicitly. Nevertheless, the times spent
+in the three zones are themselves unknown, and the combinatorics of switching
+changes when a trajectory touches $x=\pm1$ without crossing it.
 
-The family is deceptively elementary. Each flight inside a fixed zone is explicitly solvable, but its \emph{duration} is determined by the unknown times at which the solution reaches $x=\pm1$. The number and ordering of these events can change at a grazing orbit, where a turning point lies exactly on a switching level. It is this moving switching geometry, rather than complexity of individual flights, that makes global cycle counting difficult.
+Bravo, Carmona, Fern\'andez and Ojeda \cite{Bravo2025} established a
+parameter-independent finite upper bound and constructed parameter regimes
+with five cycles. They also highlighted the conjecture that five is the largest
+possible number. In contrast, the general sparse-flight estimate of
+\cite{HuYuBound} gives an explicit, but much larger, upper bound. Neither
+result settles the small sharp count.
 
-Bravo, Carmona, Fern\'andez and Ojeda \cite{Bravo2025} showed uniform finiteness, constructed five-solution regimes, and posed five as a conjectural sharp upper bound. A separate sparse toric approach \cite{HuYuBound} bounds the full family by $16437$, leaving the exact maximum open. Here we disprove the proposed value five by a single, fully specified, reproducible example.
+Our result changes its known lower bound. For the \emph{rational} parameters
+\begin{equation}\label{eq:witness-intro}
+  (a,b,\mu)=\left(-9,\frac32,\frac{181363}{100000}\right),
+\end{equation}
+there are at least seven distinct isolated periodic responses. In particular,
+five is not a universal upper bound for \eqref{eq:main}. We do not claim seven
+is the global maximum.
 
-\medskip
-\noindent\textbf{What the reader should take from this paper.}
-There are two logically distinct contributions. First, the \emph{geometric explanation} in Sections~\ref{sec:response}--\ref{sec:discovery} identifies the mechanism and explains how we located the example; several quantities in those sections are deliberately labeled numerical observations. Second, the \emph{existence theorem} in Sections~\ref{sec:witness}--\ref{sec:proof} is based only on strict inequalities for the original equation. Understanding the response-curve plot is not a premise of the proof.
+The interesting point is \emph{why} seven can occur. The middle zone expands
+perturbations, while both exterior zones contract them. Raising the mean of a
+periodic response suppresses a visit to the lower exterior zone but prolongs
+a visit to the upper exterior zone. These changes have opposite effects on the
+residence time in the expanding middle zone. Close to a grazing transition,
+the shorter exterior visit collapses at square-root order, giving this
+competition a singular sensitivity. The resulting response curve can bend
+back an additional time. That geometric observation led us to
+\eqref{eq:witness-intro}; the proof of seven cycles then uses exact flights
+and strict signs of a one-dimensional return map.
 
-\section{The response curve turns cycle counting into a problem about residence time}\label{sec:response}
-Write $A=-a>0$ and $B=b>0$ and set
-\begin{equation}\label{eq:g}
-g(x)=Ax-(A+B)\sat(x).
-\end{equation}
-We introduce an auxiliary constant bias $\lambda$ and study
-\begin{equation}\label{eq:bias}
-\dot x+g(x)=\mu\sin t+\lambda,\qquad x(t+2\pi)=x(t).
-\end{equation}
-The periodic responses of \eqref{eq:bias} can be parametrized globally by their mean
-$\xi=(2\pi)^{-1}\int_0^{2\pi}x(t)\,dt$; write $\lambda=\Lambda(\xi,\mu)$ and $x=x(t;\xi,\mu)$. Strict scalar order implies
-\begin{equation}\label{eq:z}
-z(t):=\partial_\xi x(t;\xi,\mu)>0,
-\end{equation}
-as shown in \cite[Section~2]{HuYuBound}. The original, unbiased equation corresponds exactly to the zeros of $\Lambda(\cdot,\mu)$. Since $g$ is odd and $\sin(t+\pi)=-\sin t$,
-\begin{equation}\label{eq:odd}
-\Lambda(-\xi,\mu)=-\Lambda(\xi,\mu),\qquad \Lambda(0,\mu)=0.
-\end{equation}
-Thus the zero at the origin gives the central antisymmetric orbit, and every positive noncentral zero has a distinct negative partner.
-
-\subsection{An exact derivative identity}
-The decisive observable is the residence time
-\begin{equation}\label{eq:T}
-T(\xi,\mu)=\operatorname{meas}\{t\in[0,2\pi): |x(t;\xi,\mu)|<1\}.
-\end{equation}
-Away from the finitely many switching instants, differentiate \eqref{eq:bias} with respect to $\xi$. Since $z>0$,
+The distinction matters: the response-curve picture explains the
+\emph{discovery}, whereas the fixed-point inequalities below prove the
+\emph{existence}. Our logical path is
 \[
-\dot z+g'(x)z=\Lambda_\xi,
-\qquad \frac{d}{dt}\log z+g'(x)=\frac{\Lambda_\xi}{z}.
+ \underbrace{\text{residence times}}_{\text{geometry}}
+ \ \longrightarrow\
+ \underbrace{\text{extra response turning}}_{\text{parameter choice}}
+ \ \longrightarrow\
+ \underbrace{\text{three ordered fixed points}}_{\text{rigorous construction}}
+ \ \longrightarrow\
+ \underbrace{\text{seven cycles}}_{\text{half-period symmetry}}.
 \]
-Integration over one period cancels the logarithmic boundary term. Writing $J=\int_0^{2\pi}z^{-1}(t)\,dt>0$, we obtain
+A second implementation of the interval arithmetic would be valuable before
+journal submission; we explicitly distinguish this software-audit task from
+the analytic deductions.
+
+\section{The geometry behind the extra periodic responses}\label{sec:response}
+We work in the orientation $a=-A<0<b=B$, where $A,B>0$, and write
+\begin{equation}\label{eq:g}
+  \dot x+g(x)=\mu\sin t,\qquad
+  g(x)=Ax-(A+B)\sat(x).
+\end{equation}
+The outer regions have $g'=A>0$, hence perturbations decay at rate $A$;
+the middle region has $g'=-B<0$, hence they grow at rate $B$.
+A single flight therefore tells us nothing decisive about the full-period
+response: its total amplification depends on how long it spends in each zone.
+
+\subsection{A response curve whose slope is a time balance}
+To vary periodic solutions continuously without restricting ourselves to
+actual zeros of the original equation, introduce an auxiliary bias:
+\begin{equation}\label{eq:bias}
+ \dot x+g(x)=\mu\sin t+\lambda,
+ \qquad x(t+2\pi)=x(t).
+\end{equation}
+The periodic solutions of this auxiliary family admit a global mean
+parametrization, as established in \cite[Section~2]{HuYuBound}:
+\[
+ \xi=\frac1{2\pi}\int_0^{2\pi}x(t)\,dt,
+ \qquad \lambda=\Lambda(\xi,\mu),
+ \qquad z(t)=\partial_\xi x(t;\xi,\mu)>0.
+\]
+In this parametrization the original equation is simply the horizontal
+section $\Lambda=0$. The half-period odd symmetry implies
+\begin{equation}\label{eq:odd}
+ \Lambda(-\xi,\mu)=-\Lambda(\xi,\mu),\qquad\Lambda(0,\mu)=0.
+\end{equation}
+The central orbit is always present; other zeros, if any, occur in
+opposite-mean pairs.
+
+Define the middle-zone residence time
+\begin{equation}\label{eq:T}
+ T(\xi,\mu)=\operatorname{meas}\{t\in[0,2\pi):|x(t;\xi,\mu)|<1\}
+\end{equation}
+and the critical duration $\rho=2\pi A/(A+B)$.
+Differentiating \eqref{eq:bias} with respect to $\xi$ at transverse
+crossings gives $\dot z+g'(x)z=\Lambda_\xi$. Because $z>0$, division by $z$
+and integration around the periodic orbit yield
 \begin{equation}\label{eq:key}
-\boxed{\ \Lambda_\xi(\xi,\mu)\,J(\xi,\mu)=(A+B)(\rho-T(\xi,\mu)),\qquad
-\rho=\frac{2\pi A}{A+B}.\ }
+\boxed{\quad
+ \Lambda_\xi J=(A+B)(\rho-T),\qquad
+ J=\int_0^{2\pi}\frac{dt}{z(t)}>0.
+\quad}
 \end{equation}
-Indeed $g'=-B$ in the middle and $g'=A$ in the two exterior zones. The identity also extends to the grazing boundary by continuity as detailed in \cite{HuYuBound}.
+Indeed, the integral of $\dot z/z$ vanishes, while
+$\int g'(x)\,dt=A(2\pi-T)-BT$. The identity extends across isolated
+grazing contacts by continuity \cite{HuYuBound}.
 
-Equation \eqref{eq:key} is the essential reduction: the response curve slopes down when $T>\rho$ and up when $T<\rho$. It explains why an upper bound of five looked plausible. If the negative-slope portion on $\xi>0$ had a sufficiently simple connected shape, $\Lambda$ could cross zero at most twice after the central crossing. The example below shows that this shape property fails.
+This identity is the basic reason to study durations rather than explicitly
+solve every periodic boundary-value problem: the sign of
+$\Lambda_\xi$ depends \emph{only} on whether the residence time is above or
+below $\rho$. At $T>\rho$ the response curve descends; at $T<\rho$
+it ascends. A five-cycle upper bound would follow from a sufficiently simple
+shape of these sign regions. Our example violates that shape.
 
-The same residence time determines the Floquet multiplier of an \emph{unbiased} periodic solution. If $P(y)$ denotes the full-period return map at phase zero, its derivative at a periodic point is
+There is an independent dynamical interpretation. At a genuine periodic
+solution of the original equation, the Floquet multiplier of the return map
+$P(y)=x(2\pi;0,y)$ is
 \begin{equation}\label{eq:multiplier}
-P'(y)=\exp\left(-\int_0^{2\pi}g'(x(t))\,dt\right)
-=\exp\bigl((A+B)(T-\rho)\bigr).
+\boxed{\quad P'(y)
+ =\exp\!\left(-\int_0^{2\pi}g'(x(t))\,dt\right)
+ =\exp\bigl((A+B)(T-\rho)\bigr).\quad}
 \end{equation}
-Thus the threshold $T=\rho$ simultaneously marks a response fold and the change from $P'<1$ to $P'>1$. One need not solve a separate variational equation to determine a multiplier after the time spent in each zone is known.
+The same critical duration $T=\rho$ therefore separates contraction from
+expansion of the full-period map. It is not necessary to numerically solve a
+separate variational equation after the switching durations have been found.
 
-\subsection{Why the two exterior zones compete}
-On a four-crossing orbit, let $s$ be the time in the lower exterior zone $x<-1$, and let $v$ be the time in the upper exterior zone $x>1$. Then
+\subsection{The lower and upper visits push in opposite directions}
+Suppose a positive-mean trajectory visits both exterior regions. Denote by
+$s$ its total time below $-1$ and by $v$ its total time above $1$.
+Then identically
 \begin{equation}\label{eq:compete}
-T=2\pi-s-v,\qquad T_\xi=-s_\xi-v_\xi.
+ T=2\pi-s-v,\qquad T_\xi=-s_\xi-v_\xi.
 \end{equation}
-Increasing the mean raises the trajectory pointwise. Consequently the lower visit shrinks ($s$ decreases) and the upper visit expands ($v$ increases). The two terms in \eqref{eq:compete} have \emph{opposite effects} on $T$. There is no reason for their balance to have a universal sign.
+Strict order $z>0$ means that raising $\xi$ lifts the entire graph of the
+orbit. Thus the time below $-1$ decreases while the time above $1$
+increases:
+\begin{equation}\label{eq:opposed}
+ s_\xi<0,\qquad v_\xi>0
+\end{equation}
+on a transverse four-crossing itinerary. Consequently $-s_\xi>0$ and
+$-v_\xi<0$ compete. No sign follows for their sum. This is the precise
+obstruction to a global monotonicity argument for the residence time.
 
-Near a nondegenerate grazing of the lower level $x=-1$, the lower residence time generically vanishes like a square root of the distance to the grazing parameter, so its derivative can become large. The precise coefficient is not needed here. This points to a narrow regime where the extra turn in $T$ can occur: the lower-zone visit is almost disappearing, while strong exterior damping continues to affect the return map. This is our explanation of the mechanism, not a global grazing theorem.
+The contribution from the lower exterior visit becomes particularly sharp
+as that visit disappears. This can be quantified without a complete
+classification of periodic solutions.
 
-\section{How the witness was found}\label{sec:discovery}
-We did not begin by solving for seven periodic orbits. The search started from an unsuccessful attempt to establish the simple residence-time shape that would imply the five-cycle conjecture. Let four successive crossing times on a genuine three-zone flight be $t_1<t_2<t_3<t_4$, with regions middle, lower, middle, upper. Put
+\begin{proposition}[Square-root loss of the lower exterior visit]\label{prop:grazing}
+Fix $A,B,\mu>0$. Suppose the mean-parametrized periodic family
+\eqref{eq:bias} has a nondegenerate lower grazing at $(t_g,\xi_g)$:
+\[
+ x(t_g;\xi_g,\mu)=-1,\qquad
+ x_t(t_g;\xi_g,\mu)=0,\qquad
+ \gamma:=x_{tt}(t_g;\xi_g,\mu)=\mu\cos t_g>0.
+\]
+Assume the upper exterior visit is present with transverse crossings and
+this is the only lower grazing in a neighborhood. With
+$z_g=\partial_\xi x(t_g;\xi_g,\mu)>0$, the duration of the disappearing
+lower visit satisfies
+\begin{equation}\label{eq:sqrt}
+ \boxed{\quad
+ s(\xi)=2\sqrt{\frac{2z_g}{\gamma}}\,
+          \sqrt{\xi_g-\xi}+o\bigl(\sqrt{\xi_g-\xi}\bigr)
+ \quad}\qquad(\xi\uparrow\xi_g).
+\end{equation}
+In particular, the middle residence time has a strict local maximum at
+the grazing fibre.
+\end{proposition}
+\begin{proof}
+Since the vector field is continuous across $x=-1$, and the velocity
+vanishes at the contact, both one-sided second derivatives agree and equal
+$\mu\cos t_g=\gamma$. The family is differentiable in its mean at the
+contact. For $\delta=\xi_g-\xi\downarrow0$ and
+$\tau=t-t_g$, the local expansion is
+\[
+ x(t_g+\tau;\xi_g-\delta,\mu)+1
+   =-z_g\delta+\frac\gamma2\tau^2
+     +o(\delta+\tau^2).
+\]
+The two neighboring intersections with $-1$ therefore occur at
+$\tau_\pm=\pm\sqrt{2z_g\delta/\gamma}+o(\sqrt\delta)$, and their
+time separation is \eqref{eq:sqrt}.
+The upper-zone duration $v(\xi)$ is differentiable near the contact,
+with $v_\xi>0$ by strict pointwise order and transverse crossings.
+For $\xi<\xi_g$ close to the contact, 
+$T(\xi)=2\pi-v(\xi)-s(\xi)$ lies below
+$T(\xi_g)=2\pi-v(\xi_g)$ because the square-root loss dominates the
+$O(\delta)$ upper-duration change. For $\xi>\xi_g$ the lower visit is absent,
+so $T(\xi)=2\pi-v(\xi)<T(\xi_g)$. Hence the grazing fibre is a
+strict local maximum of the residence time.
+\end{proof}
+
+\begin{remark}
+The proposition establishes a \emph{local cusp in $T$ at a generic grazing},
+not an automatic additional periodic orbit. Zeros of the original equation
+still require $\Lambda=0$, and response extrema require $T=\rho$.
+What the cusp supplies is a geometric way for $T$ to turn sharply, and
+therefore a reason that multiple crossings of the critical level $\rho$
+can occur when the exterior damping is sufficiently asymmetric.
+\end{remark}
+
+\section{From an unsuccessful monotonicity proof to the witness}\label{sec:discovery}
+Our search began with the question whether the three-zone residence time
+could obey a sign constraint strong enough to force only two noncentral
+response zeros. The square-root mechanism suggests why such a constraint is
+fragile. We made the obstruction computable through the switching geometry.
+
+\subsection{A four-crossing sign formula}
+Take successive switching times $t_1<t_2<t_3<t_4$, in the order
+$+1,-1,-1,+1$, and let
 \begin{equation}\label{eq:durations}
-r=t_2-t_1,\quad s=t_3-t_2,\quad u=t_4-t_3,\quad v=t_1+2\pi-t_4.
+ r=t_2-t_1,\quad s=t_3-t_2,\quad
+ u=t_4-t_3,\quad v=t_1+2\pi-t_4.
 \end{equation}
-Here $T=r+u$. At a critical point of the response curve, \eqref{eq:key} gives $r+u=\rho$, removing one independent flight duration.
+The intervals alternate between middle, lower, middle, and upper zones.
+Here $T=r+u$ and $s+v=2\pi-T$. On a response critical orbit
+$T=\rho$, so $u=\rho-r$ and $v=2\pi-\rho-s$: the four durations reduce to
+two free variables.
 
-There is a direct way to test the sign of $T_\xi$. At a transverse crossing $x(t_i;\xi)=\pm1$, differentiate to obtain
+Implicit differentiation of each transverse crossing equation gives
 \begin{equation}\label{eq:crossdiff}
-\frac{dt_i}{d\xi}=-\frac{z(t_i)}{\dot x(t_i)}.
+ t_{i,\xi}=-\frac{z(t_i)}{x_t(t_i)}.
 \end{equation}
-Along a middle flight $z$ grows by $e^{B\ell}$ over duration $\ell$; along an exterior flight it decays by $e^{-A\ell}$. Denoting $w_i=\dot x(t_i)\ne0$ and $z_1=z(t_1)>0$, substituting into $T=t_2-t_1+t_4-t_3$ yields
+Along middle flights $z$ is multiplied by $e^{B\ell}$, whereas along
+exterior flights it is multiplied by $e^{-A\ell}$, at each critical fibre
+where $\Lambda_\xi=0$. Set $w_i=x_t(t_i)\ne0$, $z_1=z(t_1)>0$.
+The identity $T=t_2-t_1+t_4-t_3$ then gives the explicit four-speed test
 \begin{equation}\label{eq:H}
-\boxed{\ T_\xi=z_1\,\mathcal H,\quad
-\mathcal H=\frac1{w_1}-\frac{e^{Br}}{w_2}
-+\frac{e^{Br-As}}{w_3}-\frac{e^{B(r+u)-As}}{w_4}.\ }
+\boxed{\quad
+ T_\xi=z_1\mathcal H,\qquad
+ \mathcal H=\frac1{w_1}-\frac{e^{Br}}{w_2}
+ +\frac{e^{Br-As}}{w_3}-\frac{e^{B(r+u)-As}}{w_4}.
+ \quad}
 \end{equation}
-On a critical orbit set $u=\rho-r$. Formula \eqref{eq:H} reduces an apparently global monotonicity claim to the sign of an explicit combination of four switching velocities. The matching equations of \cite[Section~3]{HuYuBound} reduce the admissible critical flights to a two-dimensional compatibility condition, so this sign can be investigated without shooting over every initial value.
+The sign of the residence derivative has now become the sign of a finite
+expression in the four crossing velocities. Using the flight matching
+relations of \cite[Section~3]{HuYuBound}, admissible critical trajectories
+can be parametrized by a compatibility curve in $(r,s)$. The search is thus
+for a change of sign on a physically admissible curve, not a blind search
+for zeros of the full-period map.
 
-\paragraph{From an attempted bound to a candidate counterexample.}
-In numerical scans with relatively mild exterior damping, admissible critical flights tended to have $\mathcal H>0$. This encouraged the (incorrect) conjecture that $T_\xi$ had a universal sign there. Extending the scan to stronger exterior contraction revealed actual critical three-zone flights with $\mathcal H<0$. We then chose simple slopes $A=9$ and $B=3/2$. Tracking the numerically computed critical amplitude produced a shallow minimum near $\mu\simeq1.813584$, just below the symmetric threshold $\mu_c\simeq1.81363456$. We picked the rational value
+\subsection{Why $A=9$, $B=3/2$ and $\mu=1.81363$?}
+Initial numerical tests with weak exterior damping suggested a simple sign
+for $\mathcal H$, but that sign failed for stronger damping. A physical
+negative value arose with the convenient rational slopes
+\[
+ A=9,\qquad B=\frac32.
+\]
+Following the associated response-critical curve numerically then revealed
+a shallow \emph{valley} in the required forcing amplitude. Its minimum was
+near $\mu_{\min}\simeq1.813584$, while the symmetric critical fibre
+occurred at $\mu_c\simeq1.81363456$. The narrow strip
+$\mu_{\min}<\mu<\mu_c$ is precisely where a fixed-amplitude level can
+intersect the three-zone critical curve twice. We selected the simple
+rational value
 \begin{equation}\label{eq:mu}
-\mu=\frac{181363}{100000}=1.81363
+ \mu=\frac{181363}{100000}=1.81363
 \end{equation}
-between those two levels. These steps explain the discovery of the rational witness. The approximate critical values are exploratory outputs, not part of the theorem's hypotheses or proof.
+in that strip. The two threshold values are exploratory numerical
+approximations, not rigorously enclosed bifurcation parameters.
 
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=.90\linewidth,height=6.25cm,grid=major,grid style={gray!17},
- xlabel={Mean $\xi$},ylabel={$10^5\Lambda(\xi,\mu)$},xmin=0,xmax=.08,
- scaled x ticks=false,xtick={0,.02,.04,.06,.08},
- tick label style={font=\small},label style={font=\small}]
-\addplot[thick,blue!70!black,mark=none] table[x=xi,y=scaled_lambda,col sep=comma]{figures/response_data.csv};
-\addplot[dashed,black!60] coordinates {(0,0) (.08,0)};
-\addplot[only marks,mark=x,mark size=3pt,very thick,red!80!black] coordinates {(.007659607,0) (.037207634,0) (.065677290,0)};
-\end{axis}
-\end{tikzpicture}
-\caption{Numerical portrait of the biased response at $A=9$, $B=3/2$, $\mu=1.81363$. The three marked positive zeros are later proved to exist by a completely separate displacement-sign argument. Data use a discretized shooting solver and \emph{are not} interval-certified.}
-\label{fig:response}
-\end{figure}
-
-For this value of $\mu$, numerical continuation gives the three response turning points in Table~\ref{tab:turns}. The first two are on genuine four-crossing flights, while the third occurs after the lower exterior visit has disappeared. Figure~\ref{fig:response} shows their effect: beginning from $\Lambda(0)=0$, the graph first goes negative, then positive, then negative, then positive again. That is the geometry of \emph{three} positive zeros rather than two.
+At this amplitude, the numerical response has the following three turning
+points on the positive-mean half-line:
 \begin{table}[ht]
 \centering
-\caption{Exploratory (noncertified) response turning points for the witness parameters. Their location is useful for intuition but not required for Theorem~\ref{thm:seven}.}\label{tab:turns}
+\caption{Numerical response extrema; these values motivated the witness but are not proof inputs.}\label{tab:turns}
 \begin{tabular}{@{}r r l l@{}}\toprule
-Mean $\xi$ & $\Lambda(\xi)$ & Type & Flight itinerary \\\midrule
-$0.00427530$ & $-5.83\cdot10^{-7}$ & local minimum & four crossings \\
-$0.02615002$ & $+1.20\cdot10^{-5}$ & local maximum & four crossings \\
-$0.04964750$ & $-2.30\cdot10^{-5}$ & local minimum & two crossings \\\bottomrule
+Mean $\xi$ & $\Lambda(\xi)$ & Type & Itinerary\\\midrule
+$0.00427530$ & $-5.83\cdot10^{-7}$ & local minimum & four crossings\\
+$0.02615002$ & $+1.20\cdot10^{-5}$ & local maximum & four crossings\\
+$0.04964750$ & $-2.30\cdot10^{-5}$ & local minimum & two crossings\\\bottomrule
 \end{tabular}
 \end{table}
+Beginning from $\Lambda(0)=0$, the graph descends, rises, descends,
+and rises again. This is exactly the pattern needed for \emph{three positive
+response zeros}, rather than the two allowed by the old five-cycle guess.
+The first two extrema belong to the genuine three-zone regime; the third
+is the ordinary two-zone minimum after the lower exterior visit vanishes.
 
-The parametric window is exceptionally narrow; one extremum is only of order $10^{-7}$. This is why a coarse time grid or a routine root solver is not convincing evidence on its own. We therefore turn to a proof for the original, unbiased equation using exact affine flows and interval signs.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.94\linewidth,height=6.4cm,grid=major,
+ grid style={gray!18},xmin=0,xmax=.08,
+ xlabel={Mean $\xi$},ylabel={$10^5\Lambda(\xi,\mu)$},
+ scaled x ticks=false,xtick={0,.02,.04,.06,.08},
+ label style={font=\small},tick label style={font=\small}]
+\addplot[very thick,blue!65!black,mark=none]
+ table[x=xi,y=scaled_lambda,col sep=comma]{figures/response_data.csv};
+\addplot[dashed,black!70] coordinates {(0,0)(.08,0)};
+\addplot[only marks,mark=x,mark size=3pt,very thick,red!75!black]
+ coordinates {(.007659607,0) (.037207634,0) (.065677290,0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Exploratory response curve at the rational witness parameters.
+Its three positive zeros are verified \emph{independently} by the strict
+return-map signs in Table~\ref{tab:signs}. The plotted data are not used
+as a mathematical certificate.}\label{fig:response}
+\end{figure}
+
+The geometry serves a different purpose from the proof. It tells us
+\emph{where} to look and what crossing structure to expect. Near grazing,
+however, the first response extremum is tiny, and ordinary time stepping
+can give false fixed points. To prove the claim we abandon the plotted
+response values and return to the original unbiased equation.
 
 \section{A concrete, rational seven-cycle witness}\label{sec:witness}
 Our witness is
@@ -305,7 +496,7 @@ Half-period antisymmetry makes its total exterior residence $2s$. The exact mult
 Thus $P'(y_c)>1$; the central fixed point is hyperbolic and isolated. The symmetry map preserves isolation of each noncentral fixed point, completing the proof of Theorem~\ref{thm:seven}. \qed
 
 \section{What has and has not been established}
-The proof does not require numerically counting the turning points in Figure~\ref{fig:response}; those estimates were only a guide for locating the parameters. The reason seven orbits appear is the additional reversal in the response curve near lower-level grazing. The reason we can \emph{prove} their existence is independent and simpler: three verified Poincar\'e sign changes and the half-period reflection symmetry.
+The proof does not require numerically counting the turning points in Figure~\ref{fig:response}; those estimates were only a guide for locating the parameters. The numerical response curve exhibits an additional reversal near lower-level grazing. Proposition~\ref{prop:grazing} proves the local residence-time singularity that makes this geometry possible, but it does not prove the number of global response extrema. The reason we can \emph{prove} their existence is independent and simpler: three verified Poincar\'e sign changes and the half-period reflection symmetry.
 
 There is an important limitation. The theorem proves $L(-9,3/2,1.81363)\ge7$ and disproves a universal upper bound of five. It does \emph{not} prove that seven is the maximum, nor does it give a classification of all three-zone response curves. The existing explicit global upper bound \cite{HuYuBound} is unaffected. It remains to determine how many such extra folds can occur as $A$, $B$, and $\mu$ vary, and whether seven can be attained on an explicitly bounded open set of parameters. Strict endpoint signs in fact persist under sufficiently small perturbations, but determining a useful rigorous parameter box is future work.
 
