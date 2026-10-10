@@ -29,3 +29,8 @@ The two recorded scans in `experiments/` are from fixed seeds and the indicated 
 * The source seed for `low_rank_fit.py` is a modified experiment with `p_1=cos(2π y_1)` (not the paper's `p_0=0, p_1=½ cos`). Numerical fits refer to that particular variant, not the original first step.
 
 See `F_ANALYSIS.md` for proofs, numerical results, limitations, and next steps.
+Additional frequency-geometry test (nonprimitive but pairwise nonparallel):
+
+```bash
+python mixed_nonprimitive_scan.py --radius 4 --attempts 100 --output experiments/mixed_scan.json
+```
