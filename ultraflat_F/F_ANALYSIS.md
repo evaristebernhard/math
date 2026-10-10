@@ -77,3 +77,12 @@ With fixed gamma and r spreading vectors W_j∈R^d, the target ratio values lie 
 Investigate additive-resonant supports with controlled convolution multiplicities. A good candidate must simultaneously have exact/near balance, total weight near 1, tiny convolution away from zero, and a certified uniform supremum. Replace random support growth with adding frequencies whose sum-pairs create cancellation at already large autocorrelation indices, then use a **max-norm** refinement in addition to quartic minimization. For reduced spreading, study the special algebraic structure of p_d's coefficients rather than treating log magnitudes as generic numbers.
 
 This directory has no claimed high-quality F and no claimed ultraflat ±1 sequence.
+## 8. An obstruction specific to the primitive 2D search space
+
+The direct-balance scan deliberately uses primitive integer frequencies in two dimensions, but this is an extra restriction, NOT part of Proposition 4.1. From the third-grid averaging argument in the earlier primitive-frequency study, any real trigonometric polynomial supported entirely on primitive nonzero frequencies in dimension two satisfies
+
+`||F||_2² / ||F||_∞² <= 80/81`.
+
+Therefore if the weights are normalized to energy 1, its global supremum must be at least `sqrt(81/80) ~= 1.00623059`, irrespective of D or phase optimization. The present scan is valuable for debugging a direct-balance optimizer, but this restricted family cannot solve the auxiliary problem for arbitrarily small δ. A serious next search must allow nonprimitive vectors while keeping *distinct sign-pairs nonparallel* (remove at least one representative of any parallel pair).
+
+The current larger numerical gaps (sample sup about 1.8–2.0) are far worse than this primitive-only floor, so removing primitivity alone is not guaranteed to fix them.
