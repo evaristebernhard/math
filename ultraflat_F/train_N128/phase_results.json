@@ -1,0 +1,39 @@
+{
+  "method": "periodic real-coefficient chirp with bounded derivative; differentiable phase regression",
+  "trials": [
+    {
+      "trial": 0,
+      "phase_loss": 4.038626612075649,
+      "before_epsilon_bound": 1.6927439289757111,
+      "after_epsilon_bound": 0.8836401542594307,
+      "after_grid_min": 0.161984053267083,
+      "after_grid_max": 1.8279102272841912
+    },
+    {
+      "trial": 1,
+      "phase_loss": 4.141593453953871,
+      "before_epsilon_bound": 2.1363349765557422,
+      "after_epsilon_bound": 0.80721453278298,
+      "after_grid_min": 0.23588000505059828,
+      "after_grid_max": 1.7265603221777792
+    },
+    {
+      "trial": 2,
+      "phase_loss": 4.1784436731982195,
+      "before_epsilon_bound": 2.082621173241604,
+      "after_epsilon_bound": 0.8968688923708175,
+      "after_grid_min": 0.14862006803467187,
+      "after_grid_max": 1.8224916214796416
+    }
+  ],
+  "best": {
+    "grid_min": 0.23588000505059828,
+    "grid_max": 1.7265603221777792,
+    "circle_lower_conservative": 0.19278546721702,
+    "circle_upper_conservative": 1.7696548600113575,
+    "epsilon_bound": 0.80721453278298,
+    "endpoint_1": 12,
+    "endpoint_minus1": 12,
+    "grid": 16384
+  }
+}
