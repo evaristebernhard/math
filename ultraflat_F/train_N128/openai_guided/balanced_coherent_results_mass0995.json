@@ -1,0 +1,54 @@
+{
+  "model": "F exact coefficient balance + coherent stationary phase Fourier coefficients",
+  "limitation": "2D primitive modes, no uniform sup norm bound, no proven B_N",
+  "baseline": {
+    "grid_min": 0.25960138847129727,
+    "grid_max": 1.7435314057486608,
+    "circle_lower_conservative": 0.25427788615283853,
+    "circle_upper_conservative": 1.7488549080671196,
+    "epsilon_bound": 0.7488549080671196,
+    "endpoint_1": 12,
+    "endpoint_minus1": 12,
+    "grid": 131072
+  },
+  "f_weight": 2.5,
+  "mass": 0.995,
+  "runs": [
+    {
+      "trial": 0,
+      "D": 16,
+      "H": 4,
+      "fourth_moment_defect": 0.8133908614023533,
+      "sup_sample_lower_bound": 2.025212452697021,
+      "max_weight_mismatch": 1.3877787807814457e-17,
+      "initial_epsilon": 1.0408489092326567,
+      "refined_epsilon": 0.9901183120262175,
+      "grid_min": 0.015476791228291214,
+      "grid_max": 1.8324850181462353
+    },
+    {
+      "trial": 1,
+      "D": 16,
+      "H": 4,
+      "fourth_moment_defect": 0.8025526529787969,
+      "sup_sample_lower_bound": 2.0035398368030117,
+      "max_weight_mismatch": 6.938893903907228e-18,
+      "initial_epsilon": 1.1338107861288282,
+      "refined_epsilon": 0.9618542738621647,
+      "grid_min": 0.04362332831765475,
+      "grid_max": 1.7940015533754103
+    }
+  ],
+  "best": {
+    "trial": 1,
+    "D": 16,
+    "H": 4,
+    "fourth_moment_defect": 0.8025526529787969,
+    "sup_sample_lower_bound": 2.0035398368030117,
+    "max_weight_mismatch": 6.938893903907228e-18,
+    "initial_epsilon": 1.1338107861288282,
+    "refined_epsilon": 0.9618542738621647,
+    "grid_min": 0.04362332831765475,
+    "grid_max": 1.7940015533754103
+  }
+}
