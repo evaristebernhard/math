@@ -86,3 +86,9 @@ The direct-balance scan deliberately uses primitive integer frequencies in two d
 Therefore if the weights are normalized to energy 1, its global supremum must be at least `sqrt(81/80) ~= 1.00623059`, irrespective of D or phase optimization. The present scan is valuable for debugging a direct-balance optimizer, but this restricted family cannot solve the auxiliary problem for arbitrarily small δ. A serious next search must allow nonprimitive vectors while keeping *distinct sign-pairs nonparallel* (remove at least one representative of any parallel pair).
 
 The current larger numerical gaps (sample sup about 1.8–2.0) are far worse than this primitive-only floor, so removing primitivity alone is not guaranteed to fix them.
+
+## 9. Breaking primitivity with direction-dependent multipliers
+
+For each radius-4 primitive direction a_j, allow h_j in {1,2,3} and replace a_j by h_j a_j, preserving distinct nonparallel sign-pairs while breaking the primitive-only ceiling. With 100 random multiplier assignments plus all-one and all-two controls (seed 143), the smallest observed quartic objective was J≈0.75077 for **all frequencies doubled**. This is only F(2x), so does not improve intrinsic flatness. In the comparable primitive radius-4 runs, the observed J was ≈0.75486 for the same direction (or ≈0.74509 with another direction). None is good.
+
+To understand this failure, count repeated unordered two-sum representations h=a+b, h≠0. The primitive 24-pair support has 908 repetitions beyond the first representation; 50 random multiplier assignments averaged approximately 616. Such collisions enable cancellations among coefficients of F². Fewer collisions are not an impossibility theorem, but random frequency inflation plainly does not optimize the required additive structure. The next test should insert frequencies specifically to cancel the largest nonzero autocorrelations.
