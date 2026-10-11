@@ -85,3 +85,40 @@ A better q-guided F learner must **learn a one-to-many spreading operator** inst
 Train W_j and equal-modulus Fourier-phase factors f, while retaining an analytic reference `q(y + Φ(z))` and explicitly controlling the telescoped uniform deviation from that reference. Parameter loss must include (i) the maximum coefficient weight error, (ii) the *uniform* sup error, (iii) the additive-collision defect, and (iv) the cost `D, min w, H, N`. The previous low-rank log-factorization experiments had large residuals, so **r<<D is a conjectural optimization target, not achieved**.
 
 For q49 the support cannot be enumerated. A practical next step is to develop tensor-circuit **frequency sampling** and a certified covering bound on the *unseen* modes, or a new analytic family whose coefficient-width product is known structurally. Until then, sampling q49 function values alone is not enough to certify F. Finite N=200 has no guaranteed viability from the asymptotic theorem.
+
+## 7. A constructive *sufficient* stability bound for trainable spreading
+
+Suppose we choose for each original Fourier mode s and j=1,...,r a spreading factor `f_(s,j)(z_j)` and a *coherent ideal factor*
+
+`h_(s,j)(z_j)=g_j(z_j) exp(2πi (s·W_j) ψ_j(z_j))`, with `0≤g_j≤1`.
+
+Assume the true factor is a finite trigonometric polynomial with exact equal-modulus Fourier coefficients, while `||f_(s,j)-h_(s,j)||∞≤eps_(s,j)`.
+
+Define the constructed output and ideal bounded surrogate
+
+`F(y,z)=Σ_s b_s exp(2πi s·y) ∏_j f_(s,j)(z_j)`;
+
+`G(y,z)=(∏_j g_j(z_j)) q(y+Σ_j W_j ψ_j(z_j))`.
+
+Because `||q||∞≤1`, `||G||∞≤1`. Telescoping the products gives the explicit **nonuniform** supremum certificate
+
+`||F||∞ ≤ 1 + Σ_s |b_s| Σ_{j=1}^r eps_(s,j) ∏_{i<j}(1+eps_(s,i))`.
+
+This can be much sharper than selecting one worst-case factor error for all frequencies (although the sum remains astronomically large for a fully expanded q49). It identifies where a model must spend approximation accuracy and supplies a **hard gate** instead of adding an arbitrary sampled-sup penalty.
+
+If each finite factor has exactly `L_(s,j)` Fourier modes of magnitude `1/sqrt(L_(s,j))`, and frequency blocks are uniquely encoded by retaining original s, then every output coefficient from a seed s has squared modulus
+
+`|b_s|²/∏_j L_(s,j)`.
+
+Choose the final linear direction v with nonzero components only along old y, i.e. `(gamma,0,...,0)`; every output frequency associated with s has weight `|s·gamma|`. The coefficient-balance error is therefore controlled *mode by mode* by
+
+`| log(|b_s|² / (|s·gamma| ∏_j L_(s,j))) |`.
+
+These yield TWO independent trainable constraints: the integer product/weight-fitting loss, and the uniform *shared-shear* approximation. A low-rank r is not proven feasible. Strictly obtaining weight mass just below 1 and nonparallel signed output modes are further required gates, not conclusions of these formulae.
+
+### Proposed implementation order
+
+1. On p2 and p3, enumerate exact Fourier coefficients; fit the integer widths L and shared W; prove or refute feasibility at r=1,2,3 before training phases.
+2. For feasible widths, train finite factor phases with exact equal-magnitude coefficients, against their **shared** ideal chirps; compute mode-dependent eps_(s,j) and the telescoping sup certificate.
+3. Only if the resulting finite F has all Proposition 4.1 conditions and N*w_min/H² is numerically sensible, optimize the continuous packed-wave B_N and finally round to Littlewood signs.
+4. On q49, do not claim computational support without an actual sparse Fourier representation or certified tensor-factor integration technique.
