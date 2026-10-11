@@ -1,0 +1,132 @@
+{
+  "p3": {
+    "D": 27,
+    "M": 0.5886917114257812,
+    "l1_full": 2.265625
+  },
+  "group": {
+    "d": 3,
+    "D": 27,
+    "groups": 15,
+    "paired_groups": 12,
+    "admissible_edges": 88,
+    "explanation": "Generic one-factor-per-support-sign-pair construction reduces to one factor per matched hyperplane group, preserving first-order product fitting; magnitude-control factor lemma still needed."
+  },
+  "tau_001": {
+    "tau": "1/100",
+    "D": 27,
+    "r": 15,
+    "log10_uniform_T_product": 368.74351096195477,
+    "log10_anisotropic_T_product": 293.22708928343707,
+    "log10_max_individual_box_size_anisotropic": 290.625029292109,
+    "log10_min_individual_box_size_anisotropic": 282.9076815303999,
+    "factorwise_min_beta": [
+      4.2539734365164254e-20,
+      2.612758499480543e-23,
+      2.0345304169790119e-19,
+      3.735669535231454e-18,
+      3.205529762338025e-23,
+      7.555998583410187e-18,
+      3.701647137862956e-19,
+      1.5487709803564528e-16,
+      6.922560881198255e-20,
+      3.9679581770536734e-23,
+      2.787347772885832e-20,
+      1.1195191883542346e-22,
+      3.8144606874211286e-13,
+      1.978474200696423e-12,
+      7.8125e-05
+    ],
+    "max_relative_product_error": 0.00031249999982925996,
+    "smallest_projection_beta": 2.612758499480543e-23,
+    "T_for_min_spreading_width_100": 3.8273724884975616e+24,
+    "max_w0_coordinate": 6
+  },
+  "tau_0001": {
+    "tau": "1/10000",
+    "D": 27,
+    "r": 15,
+    "log10_uniform_T_product": 398.74351096195477,
+    "log10_anisotropic_T_product": 323.22708928343707,
+    "log10_max_individual_box_size_anisotropic": 318.6250292921091,
+    "log10_min_individual_box_size_anisotropic": 310.9076367461376,
+    "factorwise_min_beta": [
+      4.253973436516426e-22,
+      2.6127584994805426e-25,
+      2.0345304169790118e-21,
+      3.735669535231454e-20,
+      3.2055297623380247e-25,
+      7.555998583410186e-20,
+      3.701647137862956e-21,
+      1.5487709803564526e-18,
+      6.922560881198255e-22,
+      3.9679581770536735e-25,
+      2.787347772885832e-22,
+      1.1195191883542348e-24,
+      3.8144606874211284e-15,
+      1.9784742006964228e-14,
+      7.8125e-07
+    ],
+    "max_relative_product_error": 3.1249999982931275e-06,
+    "smallest_projection_beta": 2.6127584994805426e-25,
+    "T_for_min_spreading_width_100": 3.8273724884975616e+26,
+    "max_w0_coordinate": 6
+  },
+  "fixed_taper_factor_gates": [
+    {
+      "T": 63,
+      "L": 63,
+      "mesh": 131072,
+      "edge": 0.025,
+      "energy_h": 0.9702852626386675,
+      "best_possible_L2_error": 0.2078045997821116,
+      "min_L2_error_inside": 0.15084549623326188,
+      "tail_L2": 0.1429279117483515,
+      "phase_projection_sup_grid": 0.7769215324756453,
+      "phase_projection_maxmod_grid": 1.3407473132028163
+    },
+    {
+      "T": 127,
+      "L": 127,
+      "mesh": 131072,
+      "edge": 0.025,
+      "energy_h": 0.9702852626386675,
+      "best_possible_L2_error": 0.1767954177310929,
+      "min_L2_error_inside": 0.13676455762246503,
+      "tail_L2": 0.11203604557928257,
+      "phase_projection_sup_grid": 0.783017837831147,
+      "phase_projection_maxmod_grid": 1.3522109672896858
+    },
+    {
+      "T": 255,
+      "L": 255,
+      "mesh": 131072,
+      "edge": 0.025,
+      "energy_h": 0.9702852626386675,
+      "best_possible_L2_error": 0.15102901660010715,
+      "min_L2_error_inside": 0.12509373359187567,
+      "tail_L2": 0.0846245925912809,
+      "phase_projection_sup_grid": 0.7529202540202858,
+      "phase_projection_maxmod_grid": 1.3765965138216019
+    },
+    {
+      "T": 1023,
+      "L": 1023,
+      "mesh": 131072,
+      "edge": 0.025,
+      "energy_h": 0.9702852626386675,
+      "best_possible_L2_error": 0.121507962609671,
+      "min_L2_error_inside": 0.11539299647316964,
+      "tail_L2": 0.038061021301277045,
+      "phase_projection_sup_grid": 0.6503961540614301,
+      "phase_projection_maxmod_grid": 1.4620511626336656
+    }
+  ],
+  "prune_4_smallest": {
+    "removed_pairs": 4,
+    "l1_sup_error": 0.0078125,
+    "l2_energy_loss": 7.62939453125e-06,
+    "D_after": 23,
+    "r_after": 12
+  }
+}
