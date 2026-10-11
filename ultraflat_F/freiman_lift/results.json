@@ -1,0 +1,22 @@
+{
+  "seed": "tuned quartic p2 (six sign-pairs)",
+  "coefficients": "exact rational",
+  "M_exact": "9315/16384",
+  "fourth_original_exact": "485641833/1073741824",
+  "fourth_linear_lift_exact": "485641833/1073741824",
+  "fourth_balanced_one_coord_exact": "634969809/1073741824",
+  "M": 0.56854248046875,
+  "fourth_original": 0.45228920225054026,
+  "fourth_balanced_one_coord": 0.5913617173209786,
+  "J_original": 0.31520424131304026,
+  "J_balanced": 0.45427675638347864,
+  "normalized_sup_lower_original": 1.1828922595437157,
+  "normalized_sup_lower_balanced": 1.3525822481451013,
+  "nu": "1/10000000",
+  "max_relative_balance_error": 0.0027007999999999477,
+  "weight_mass": 0.5685426,
+  "relation_rank": 4,
+  "relation_kernel_dim": 2,
+  "three_mode_weight_error_lower": "2023/2073",
+  "disclaimer": "p2 is not high energy. The lift does not preserve the pointwise bound; these are sup lower bounds from exact moments, not sampled maxima."
+}
