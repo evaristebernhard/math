@@ -85,6 +85,33 @@ Cover `[0,Lambda] x U_PV` by finitely many validated cells, using interval/half-
 
 **Remaining obligations for IEEE 33:** verified open-loop AC/DistFlow branch across the q domain; outward-rounded interval bounds on the symmetric Jacobian, operator norm, projected residual and safety quantities; the full correlated half-disc P/Q set (rectangular supersets are sound but may be loose); physical line-specific current limits; rigorous unsafe witness solve. None is currently completed in this PR.
 
+## 3a. Explicit IEEE-33 nonlinear DistFlow sensitivity needed for mu
+
+The general theorem becomes computational rather than abstract by using the **open-loop** DistFlow Jacobian, i.e., hold the physical PV reactive injection q fixed while differentiating the power flow. With the notation of notes/06, let `B_Q` select the m PV buses, `E_Q=B_Q^T`, `z=(nu,ell)`, and let
+```math
+J_{open}= F_z |_{q\ independent\ of\ nu}
+= [[I, -M],
+   [diag((a^2+b^2)/nu^2), I+2diag(a/nu)H_r+2diag(b/nu)H_x]],
+```
+```math
+F_{q,open} = [-2X B_Q; -2 diag(b/nu) D B_Q].
+```
+The matrix `M` here is the DistFlow loss matrix of notes/06, not the VI monotonicity constant `mu`. Implicit differentiation gives
+```math
+D_q z = -J_{open}^{-1}F_{q,open},
+D_q V_{PV}
+ = -diag(1/(2sqrt(nu_{PV}))) E_Q [I\ 0] J_{open}^{-1} F_{q,open}.
+```
+These formulas are valid only over a validated regular **open-loop** branch; unlike the closed-loop Hessian in notes/06 they contain no derivative of the clipped control.
+
+For the **common scalar gain** `G=gI` used by the existing case33bw numerical table,
+```math
+sym(D_q A) = I + g sym(D_q V_{PV}).
+```
+Hence a verified uniform spectral lower bound `lambda_min(sym(D_q V_PV)) >= beta` gives `mu >= 1+g beta`. If `beta>=0`, the monotonicity test continues to hold for arbitrarily large positive g on that same validated branch; a gain increase alone is not a uniqueness obstruction. This **does not** imply the open-loop branch remains regular for all g or that hosting capacity rises with g, nor does it apply unmodified to heterogeneous gains. A direct interval lower eigenvalue bound (e.g., symmetric part plus Gershgorin after suitable scaling) is still required for IEEE 33.
+
+A cheaper *local normal-branch* variant may be used when existence of `V(u,q)` over the **entire** inverter capability box is too strong: choose a verified closed convex local reactive domain `D_local`, show `T_u(D_local) subset D_local` for all inputs in the cell and certify the same strong-monotonicity/Lipschitz inequalities there. Then Banach gives a unique solution **inside that local box**, and all preceding safety bounds hold for it. This does **not** exclude other equilibria outside the local box, and must be labeled a normal-branch certificate rather than a global equilibrium uniqueness theorem.
+
 ## 4. Exact-rational switching toy that defeats the naive Picard test
 
 Consider a deliberately simple affine voltage feeder, not full nonlinear DistFlow:
