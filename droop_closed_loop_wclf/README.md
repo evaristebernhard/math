@@ -72,3 +72,8 @@ Run: `python3 code/blockwise_capacity_demo.py`.
 - code/dynamic_ramp_demo.py: exact scalar first-order tracking model, checks derived ramp bound.
 
 Run: `python3 code/dynamic_ramp_demo.py`. Assumes absolutely continuous renewable/load inputs with bounded change rates; not valid for jumps without additional analysis.
+
+## IEEE 33-bus test (2026-10-13)
+
+- notes/12_ieee33_capacity_benchmark.md: first actual 33-bus capacity-continuity study comparing isotropic vs block-Hessian envelopes, binding voltage/Q/current constraints, and a first-order inverter dynamic ramp stress test.
+- **Caution:** benchmark values remain float checks. A package of the complete session numerical scripts was generated separately; the PR does not yet contain that imported dependency tree or CI verification.
