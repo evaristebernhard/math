@@ -94,26 +94,16 @@ a \emph{lower} bound for an explicit parameter region:
 it does not assert that seven is the maximum, either at
 these parameters or globally.
 
-The proof and the search leading to the parameters have
-different roles. To locate a candidate, we consider the
-mean-parametrized periodic response of a biased equation.
-Its derivative is controlled by the time spent in the
-expanding middle zone. As the mean changes, the lower
-and upper exterior residence times vary in opposite
-directions; near grazing one of them vanishes at
-square-root order. This produces the additional bending
-of the response curve discussed in Sections~\ref{sec:response}
-and~\ref{sec:discovery}. The existence proof instead uses
-strict Poincar\'e displacement signs, the ordered scalar
-flow, and half-period symmetry (Sections~\ref{sec:witness}
-and~\ref{sec:proof}). Quantitative control of both grazing
-barriers and the central multiplier makes the whole cube
-in~\eqref{eq:param-cube} valid.
-
-The supporting computation uses directed decimal interval
-arithmetic rather than a formally verified proof assistant.
-An independent Arb/FLINT replication would be a valuable
-additional check before submission.
+The parameter choice is explained by the geometry of the biased
+periodic response. Its slope depends on the time spent in the
+expanding middle zone, while the two exterior residence times
+respond in competing ways to a change in the mean.
+Near a nondegenerate grazing, one exterior residence vanishes
+at square-root order. This mechanism guides the construction
+in Sections~\ref{sec:response}--\ref{sec:discovery}.
+The proof in Sections~\ref{sec:witness}--\ref{sec:proof}
+uses strict return-map signs, half-period symmetry,
+and quantitative grazing and Floquet bounds.
  
 \section{Residence times and the periodic response}\label{sec:response}
 For equation~\eqref{eq:main}, write
@@ -301,24 +291,23 @@ for a change of sign on a physically admissible curve, not a blind search
 for zeros of the full-period map.
 
 \subsection{Selection of the rational parameters}
-Initial numerical tests with weak exterior damping suggested a simple sign
-for $\mathcal H$, but that sign failed for stronger damping. A physical
-negative value arose with the convenient rational slopes
+The four-speed criterion~\eqref{eq:H} was evaluated along the
+admissible critical-response curve. A change in sign occurred
+for the rational slopes
 \[
  A=9,\qquad B=\frac32.
 \]
-Following the associated response-critical curve numerically then revealed
-a shallow \emph{valley} in the required forcing amplitude. Its minimum was
+Numerical continuation of the response-critical curve showed
+a shallow local minimum in the forcing amplitude, at
 near $\mu_{\min}\simeq1.813584$, while the symmetric critical fibre
-occurred at $\mu_c\simeq1.81363456$. The narrow strip
-$\mu_{\min}<\mu<\mu_c$ is precisely where a fixed-amplitude level can
-intersect the three-zone critical curve twice. We selected the simple
-rational value
+occurred at $\mu_c\simeq1.81363456$. The numerically observed interval
+$\mu_{\min}<\mu<\mu_c$ admits multiple intersections with the
+response-critical curve. A rational value inside it is
 \begin{equation}\label{eq:mu}
  \mu=\frac{181363}{100000}=1.81363
 \end{equation}
-in that strip. The two threshold values are exploratory numerical
-approximations, not rigorously enclosed bifurcation parameters.
+The two threshold values serve only to motivate the parameter
+choice; they are not rigorous bifurcation bounds.
 
 At this amplitude, the numerical response has the following three turning
 points on the positive-mean half-line:
@@ -359,18 +348,18 @@ return-map signs in Table~\ref{tab:signs}. The plotted data are not used
 as a mathematical certificate.}\label{fig:response}
 \end{figure}
 
-The geometry serves a different purpose from the proof. It tells us
-\emph{where} to look and what crossing structure to expect. Near grazing,
-however, the first response extremum is tiny, and ordinary time stepping
-can give false fixed points. To prove the claim we abandon the plotted
-response values and return to the original unbiased equation.
+The plotted extrema locate the candidate; they are not used as
+existence tests. Because the first extremum is extremely shallow,
+the proof instead evaluates exact affine flows with certified
+switching events and strict return-map signs.
 
 \section{The rational witness and its Poincar\'e map}\label{sec:witness}
-Our witness is
+At the center of the parameter cube~\eqref{eq:param-cube},
+the equation is
 \begin{equation}\label{eq:witness}
 \boxed{\ \dot x=-9x+\frac{21}{2}\sat(x)+\frac{181363}{100000}\sin t.\ }
 \end{equation}
-Equivalently, $\dot x+g(x)=\mu\sin t$ with
+Its restoring function is
 \begin{equation}\label{eq:gparts}
 g(x)=\begin{cases}9x+21/2,&x<-1,\\-3x/2,&|x|\le1,\\9x-21/2,&x>1.\end{cases}
 \end{equation}
@@ -386,7 +375,9 @@ has at least seven distinct isolated $2\pi$-periodic
 trajectories.
 \end{proposition}
 
-For orientation only, an independent high-precision computation gives three initial values above the antisymmetric center and their characteristic multipliers:
+High-precision numerical approximations for the three noncentral
+orbits above the antisymmetric center are listed below.
+The estimates help describe the dynamics but do not enter the proof.
 \begin{table}[ht]
 \centering
 \caption{Numerical approximations (not used in the proof).}\label{tab:roots}
@@ -397,7 +388,10 @@ $-0.556760196081272$ & $1.5169801260$ & repelling \\
 $-0.555155990304937$ & $0.3330479441$ & attracting \\\bottomrule
 \end{tabular}
 \end{table}
-The second solution approaches $-1$ very closely at its minimum, while the third stays above it and has only two threshold crossings. The mathematical problem is to prove that these are \emph{three genuine and distinct} zeros, not numerical artifacts caused by near-grazing.
+The second orbit nearly grazes $x=-1$, whereas the third remains
+above that threshold and has only two switching crossings.
+The strict displacement and event bounds below distinguish
+these genuine fixed points from numerical near-grazing artifacts.
 
 \section{Proof of the main theorem}\label{sec:proof}
 \subsection{Exact affine flows and switching events}
@@ -515,7 +509,12 @@ Thus $P'(y_c)>1$; the central fixed point is hyperbolic and isolated. The symmet
 \input{robustness.tex}
 
 \section{Discussion and open questions}
-The proof does not require numerically counting the turning points in Figure~\ref{fig:response}; those estimates were only a guide for locating the parameters. The numerical response curve exhibits an additional reversal near lower-level grazing. Proposition~\ref{prop:grazing} proves the local residence-time singularity that makes this geometry possible, but it does not prove the number of global response extrema. The reason we can \emph{prove} their existence is independent and simpler: three verified Poincar\'e sign changes and the half-period reflection symmetry.
+The response curve in Figure~\ref{fig:response} illustrates how
+the competing residence times generate additional turning.
+Proposition~\ref{prop:grazing} identifies the local singular
+behavior at grazing, but does not classify all response folds.
+The rigorous existence count comes from the certified return-map
+signs and half-period symmetry, independently of the plotted extrema.
 
 Theorem~\ref{thm:main} disproves the conjectured five-cycle
 bound on an explicitly defined open parameter cube.
@@ -528,7 +527,11 @@ does not determine the sharp global upper bound, nor
 the exact number of folds of the periodic response.
 The general upper bound from~\cite{HuYuBound} remains unchanged.
 
-The computations deserve independent scrutiny before journal submission. The current sign certificate relies on a standard-conforming Python \texttt{Decimal} implementation with correctly directed rounding; it is not a formally verified proof kernel. A second implementation based on Arb/FLINT or exact rational intervals would be a valuable independent audit. We separate this software-level qualification from the mathematical implication of the displayed strict bounds.
+The strict numerical inequalities were checked using directed
+\texttt{Decimal} interval arithmetic and exact affine flow formulas.
+The implementation is reproducible, but not formally verified.
+Independent replication using Arb/FLINT or exact rational interval
+arithmetic remains desirable.
 
 \section*{Code and data availability}
 The public source repository contains this manuscript, the exact-flow interval checker, the exploratory response data, and independent high-precision and ODE checks. From the project directory run
