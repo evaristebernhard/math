@@ -1,45 +1,34 @@
-\section{安全容量准入与增益设计算法}\label{sec:algorithm}
-算法的核心是完整单元判定器 $\mathsf{CellSafe}(\bm g,I)$：输入固定增益 $\bm g$ 和负荷区间 $I=[a,b]$，只有验证整个 $I\times\U$ 上全部电压、电流及光伏功率约束后才返回 \textsf{PASS}；如果状态盒验证失败、导数上界过松、可能触及限幅或达到细分预算，统一返回 \textsf{UNKNOWN}。这种失败不能当作物理越限证据。
+\section{最大安全接入容量计算与逆变器协调算法}\label{sec:algorithm}
+
+本文的设计变量包括新增负荷容量 $L$ 和光伏逆变器的下垂增益向量 $\bm g=(g_1,\ldots,g_m)$。针对一组给定增益，算法首先计算馈线在当前负荷水平下的非线性 DistFlow；再利用分块 Hessian、半圆支撑函数及复功率几何界检查安全约束，并沿新增负荷方向搜索最大可接受容量。完成容量评估后，根据最紧约束所在节点及其灵敏度更新逆变器增益，重新运行安全容量计算。上述两个步骤交替执行，直到容量改善趋于平稳或达到计算预算。
 
 \input{figures/flow}
 
-\subsection{算法一：连续安全容量的自适应区间检查}
-\begin{enumerate}[leftmargin=8mm,itemsep=3pt]
-\item \textbf{输入：}网络、半圆扰动集、逆变器增益 $\bm g$、目标容量 $L$、初始步长 $\Delta$、最小单元宽度 $\delta$ 和角度网格数 $N_\theta$。
-\item 将 $[0,L]$ 分为相邻完整单元，放入队列；初始化已通过集合 $\mathcal A=\varnothing$。
-\item 取出单元 $I=[a,b]$，对所有 $(\lambda,w)\in I\times\U$ 验证正常、未限幅的非线性 DistFlow 解分支、正电压状态盒及导数上界。若无法验证，则本单元暂记 \textsf{UNKNOWN}。
-\item 通过式~\eqref{eq:zt}--\eqref{eq:blocks} 计算分块 Hessian；用式~\eqref{eq:voltage_accept} 检查全部节点电压，用式~\eqref{eq:phasor_bound} 检查全部线路电流，用式~\eqref{eq:PVpass} 检查每台逆变器的总视在功率。只有全部\emph{完整单元上界}满足要求才记 \textsf{PASS}。
-\item 通过的单元加入 $\mathcal A$。其余单元若宽度大于 $\delta$ 且预算允许，则二等分后继续检查；否则记录无法认证的区间并返回 \textsf{UNKNOWN}。
-\item 对 $\mathcal A$ 按端点排序，只有通过单元无间隙、无遗漏地覆盖整个 $[0,L]$ 时，才接受容量 $L$ 并输出各单元的裕度与认证记录。
-\end{enumerate}
-工程数值实现采用非线性潮流求解器与双精度灵敏度计算，并同时报告约束裕度和求解残差。连续区间检查可减小负荷网格漏检风险；严格区间算术可作为进一步提高数值可信度的扩展，不是本文仿真实验的前置条件。
-
-\subsection{算法二：增益协调设计（可选）}
+\subsection{完整负荷区间安全检查}
+对于当前增益 $\bm g$，给定候选容量 $L$，把 $[0,L]$ 分成宽度不超过 $\Delta$ 的连续单元 $I_k=[a_k,b_k]$。每个单元完成以下三类计算：
 \begin{enumerate}[leftmargin=8mm,itemsep=2pt]
-\item 从统一增益及已有可行异构增益出发，在 $\mathcal G=[0,4]^m$ 内构造有限候选集。
-\item 对每个候选增益调用算法一检查若干目标容量，只保留整个负荷前缀均通过的设计；\textsf{UNKNOWN} 不能作为单调二分搜索的物理不可行证明。
-\item 结合活跃约束的裕度，以坐标搜索或局部优化生成新增益；每个候选仍需重复完整前缀验证。
-\item 输出有限测试中取得最大\emph{可认证容量}的增益配置与逐单元记录，不宣称全局最优。
+\item 在代表运行点求解非线性 DistFlow，利用式~\eqref{eq:zt}--\eqref{eq:blocks} 计算电压对负荷与光伏扰动的 Jacobian 和分块 Hessian。
+\item 利用式~\eqref{eq:voltage_accept} 计算节点电压裕度，利用式~\eqref{eq:phasor_bound} 计算线路电流裕度，并通过式~\eqref{eq:PVpass} 检查逆变器总视在功率是否落在运行范围内。
+\item 当某个单元的安全上界不能满足要求时，先缩小单元宽度并重新计算。只有所有单元的全部约束均通过后，才接受候选容量 $L$。
 \end{enumerate}
-算法一可独立用于固定控制增益的负荷准入；算法二不改变底层安全判据，也不要求引入新的动态控制律。
+完整负荷区间检查比仅在若干独立容量点求解潮流更稳定：即使两个相邻采样点满足电压约束，中间区间仍可能出现更紧的约束或更大的非线性误差。
 
-\begin{theorem}[连续安全容量的条件保证]\label{thm:sound}
-固定 $\bm g$、$L$ 与不确定集 $\U$。设算法一完成一个无间隙有限覆盖 $[0,L]=\bigcup_{k=1}^{K}I_k$，并且对每个单元 $I_k$：
-\begin{enumerate}[label=(\roman*),leftmargin=9mm,itemsep=1pt]
-\item 指定正常、未限幅 DistFlow 解分支存在于整个 $I_k\times\U$，其正电压状态包含于经过验证的状态盒；
-\item 式~\eqref{eq:zt}--\eqref{eq:phasor_bound} 所用的隐函数导数、分块 Hessian、复功率余项、角度网格修正与电压下界均在整个单元有效；
-\item 电压判据~\eqref{eq:voltage_accept}、线路电流界~\eqref{eq:phasor_bound} 及全部逆变器容量测试~\eqref{eq:PVpass} 均通过。
+\subsection{协调增益与容量交替更新}
+在本文算例中，以统一增益作为初始解，并允许四台逆变器在 $0\le g_j\le4$ 的研究范围内分别调整。采用坐标更新结合局部约束优化，每次提出一个新的增益组合后，都重新计算完整负荷前缀的安全容量。只保留容量改善且安全约束检查通过的方案；当各增益坐标的试探均不能继续提高目标值时，输出当前最佳设计。
+
+\paragraph{算法 1：结构化安全容量与协调增益联合计算}
+\begin{enumerate}[leftmargin=8mm,itemsep=2pt]
+\item \textbf{输入：}网络参数、光伏不确定范围、设备约束、初始增益 $\bm g^{(0)}$、负荷划分宽度 $\Delta$ 和角度数 $N_\theta$。
+\item \textbf{潮流及灵敏度：}对当前增益求解 DistFlow，并计算电压与线路复功率的线性响应和分块 Hessian 余项。
+\item \textbf{容量搜索：}沿负荷方向逐步增大 $L$；对 $[0,L]$ 执行完整单元检查，针对临界单元自适应细分，记录首个难以通过的约束及当前可接受容量。
+\item \textbf{协调更新：}识别活跃的电压、线路电流和逆变器视在功率约束；通过局部增益搜索形成新的 $\bm g$。
+\item \textbf{重新评估：}将更新后的 $\bm g$ 代回步骤 2--3。若对应容量提高，则更新当前设计；否则调整搜索方向或步长。
+\item \textbf{输出：}逆变器增益配置、接入容量、最紧约束、潮流求解记录以及完整负荷分段结果。
 \end{enumerate}
-则指定的实际带限幅稳态控制模型，对全部 $(\lambda,w)\in[0,L]\times\U$ 均满足电压、电流与逆变器功率约束，因而 $\Lambda_{\rm conn}(\bm g)\ge L$。
-\end{theorem}
-\begin{proof}
-任取区间中的负荷与扰动，必属于一个已通过的 $I_k\times\U$。由条件 (i) 得到对应的正常稳态分支。Taylor 定理、条件 (ii) 和半圆精确支撑函数给出式~\eqref{eq:Vbound}，条件 (iii) 因而使各电压违反量非正。复功率角度支持式~\eqref{eq:angular}、漏采修正~\eqref{eq:gridsafe} 及余项上界给出线路电流界~\eqref{eq:phasor_bound}，故热约束满足。由~\eqref{eq:PVpass}，原始有功无功总输出始终处于逆变器功率圆内，限幅算子不改变该光滑稳态解，容量限制同样成立。有限单元无间隙覆盖全部负荷区间，故结论对任意中间负荷和任意允许扰动成立。
-\end{proof}
 
-\begin{remark}[数值判定的含义]
-未通过近似上界检查不一定意味着潮流越限；此时可减小负荷单元宽度、收紧 Hessian 或复功率包络，并直接检查候选最坏光伏扰动。算法报告的是所采用模型和求解设置下的安全容量估计；应结合独立潮流算例验证其裕度。
-\end{remark}
+本算法的容量内层和增益外层使用\emph{同一物理网络及同一安全约束}；增益不会根据某个孤立光伏场景的电压表现直接选定，而是由容量计算结果驱动。对于同样的增益设置，更紧的电流上界能够减少保守拒绝，进而增加可接受容量。
 
-\begin{remark}[精度--代价权衡]
-细化负荷宽度通常可降低局部 Taylor 余项；提高角度网格分辨率可减小式~\eqref{eq:gridsafe} 的 $\pi K_l/N_\theta$ 修正，但都会增加计算量。对于确实跨越限幅切换的区域，单靠提高精度不能代替分模式物理验证。
-\end{remark}
+\subsection{算法结果判定及计算量}
+对任意已经接受的负荷单元，若使用的状态包络和二阶余项确实包含该单元所有规定扰动，则电压、电流和逆变器功率圆上界满足条件，即说明该单元在所采用的稳态模型内满足运行要求；由于单元连续覆盖 $[0,L]$，全部新增负荷水平得到同样的检查。这一结论由泰勒展开、半圆支撑函数~\eqref{eq:support} 和复功率角度公式~\eqref{eq:angular} 直接得到。
+
+运行时间主要由非线性潮流及其导数计算、角度搜索和临界区间细分共同决定。增大 $N_\theta$ 可降低角度离散修正 $\pi K_l/N_\theta$，但增加每个单元的计算时间。第~\ref{sec:experiments} 节用相同算例对这部分精度与成本进行实测比较。
