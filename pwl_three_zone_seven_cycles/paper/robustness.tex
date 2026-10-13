@@ -1,31 +1,20 @@
 % Quantitative consequences of the strict seven-cycle interval certificate.
-\section{An explicit open cube of seven isolated cycles}\label{sec:consequences}
+\subsection{Parameter-uniform isolation and stability}\label{sec:consequences}
 Write $\theta=(A,B,\mu)$ and
 $\theta_0=(9,3/2,181363/100000)$.
 Let $x_\theta(t;y)$ solve the initial-value problem with
 $x_\theta(0;y)=y$, and put
 $D_\theta(y)=x_\theta(2\pi;y)-y$.
 
-\begin{theorem}[A quantitative robust seven-cycle family]
-\label{thm:quantitative}
-For every parameter triple satisfying
-\begin{equation}\label{eq:param-cube}
-  |A-9|<10^{-12},\qquad |B-3/2|<10^{-12},\qquad
-  |\mu-181363/100000|<10^{-12},
-\end{equation}
-the equation
-\[
-  \dot x=-Ax+(A+B)\sat(x)+\mu\sin t
-\]
-has at least seven \emph{isolated} $2\pi$-periodic orbits.
-Among these one can choose at least four locally attracting and
-at least three locally repelling orbits. The central orbit is
-hyperbolic repelling, but hyperbolicity of the selected noncentral
-orbits is not asserted.
-\end{theorem}
-\begin{proof}
-We separate the displacement signs, the absence of grazing on
-the three shooting intervals, and central hyperbolicity.
+Theorem~\ref{thm:main} already states the uniform result.
+Its proof reduces to three checks: preservation of the
+six Poincar\'e displacement signs, absence of grazing on
+the three shooting intervals, and the hyperbolicity of
+the central antisymmetric orbit.
+
+\begin{proof}[Completion of the proof of Theorem~\ref{thm:main}]
+We use the three ingredients described above, with all
+inequalities uniform over the cube~\eqref{eq:param-cube}.
 
 \emph{1. Uniform displacement control.}
 The reference vector field points strictly inward on the
@@ -54,8 +43,11 @@ $e^{4\pi}<e^{13}<(11/4)^{13}<600000$.
 The smallest absolute certified displacement endpoint
 margin in Table~\ref{tab:signs} exceeds
 $4.96788\cdot10^{-6}$, so all six signs persist.
-The intermediate value theorem therefore gives one
-periodic solution in each of $I_1,I_2,I_3$.
+The intermediate value theorem therefore gives at least
+one periodic solution in each of $I_1,I_2,I_3$.
+At the central parameter triple, their existence and
+the strict switching pattern are established by
+Proposition~\ref{prop:witness}.
 
 \emph{2. Explicit grazing barriers and isolation.}
 At a tangency to $\ell\in\{-1,1\}$ the phase
@@ -204,7 +196,7 @@ orbit. This gives at least four attracting
 and three repelling periodic orbits.
 \end{proof}
 
-\begin{corollary}[Three critical residence-time profiles]
+\begin{corollary}[Critical residence-time profiles forced by the cycles]
 \label{cor:critical}
 For every parameter triple in \eqref{eq:param-cube},
 the mean-parametrized biased response has at least
@@ -216,7 +208,7 @@ satisfying
 \]
 \end{corollary}
 \begin{proof}
-Theorem~\ref{thm:quantitative} gives three ordered
+Theorem~\ref{thm:main} gives three ordered
 periodic orbits above the antisymmetric central
 solution, with means $0<\xi_1<\xi_2<\xi_3$.
 The central mean is zero and the biased
@@ -231,11 +223,10 @@ Neither nondegeneracy of these points nor
 an exact global count of folds is asserted.
 \end{proof}
 
-The extra certificate
+The supplemental script
 \texttt{proof/certify\_parameter\_persistence.py}
-validates \eqref{eq:grazingmargin}, the reference
-center event boxes, and the elementary numerical
-inequalities in the theorem. It relies on the
-original directed-\texttt{Decimal} interval
-backend and is \emph{not} an independent
-implementation in Arb/FLINT.
+verifies the directed interval margins in
+\eqref{eq:grazingmargin}, the central event brackets,
+and the rational inequalities used here. It reuses
+the original directed-\texttt{Decimal} arithmetic;
+it is not an independent Arb/FLINT implementation.
