@@ -41,3 +41,11 @@ Run from this directory: python3 code/test_math.py and python3 code/cubic_demo.p
 - Earlier interval/Krawczyk power-flow literature already provides nonlinear enclosure machinery. The general notions of interval certification, support functions, and contraction are not claimed to be original here.
 
 Next mathematical task: derive and **independently check** an implementable Hessian norm bound M using an explicit, interval-verified inverse-Jacobian bound, then determine in what network regimes the cubic certificate actually beats published worst-case power-flow enclosures.
+
+## Capacity-first extension (2026-10-13)
+
+- notes/06_explicit_hessian_and_capacity.md: closed-loop Jacobian and all mixed second derivatives; computable uniform Hessian bound.
+- notes/07_hosting_capacity_control.md: physical vs certified hosting capacity, safe ramping, derivative sign tests, and certified 1-D global search.
+- code/one_line_capacity_hessian.py: dependency-free numerical derivative regression on nonlinear two-node DistFlow with incremental load capacity.
+
+Run: `python3 code/one_line_capacity_hessian.py`.
