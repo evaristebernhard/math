@@ -11,8 +11,10 @@
 6. As an optional design layer, search gain vectors and retain the one with the largest passing connected capacity.
 
 ## Contents
-- `paper/main.tex`: English manuscript with problem formulation, two core algorithms, conditional theorem/proof, numerical comparison and limitations.
+- `paper/main.tex` and `paper/sections/`: English manuscript with problem formulation, two algorithms, conditional theorem/proof, numerical comparison and limitations.
 - `results/ieee33_design_trials.csv`: reported experimental design candidates (FLOAT, not outward-rounded safety proofs).
+- `algorithm/connected_prefix.py`: dependency-free reusable whole-cell coverage and finite-design-search driver; inject a physical branch/Hessian/phasor/PV oracle to apply it to a feeder.
+- `algorithm/tests/test_connected_prefix.py`: gap/UNKNOWN/endpoints regression tests. This tests *bookkeeping*, NOT the missing IEEE33 validated numerical oracle.
 - `paper/REPRODUCIBILITY.md`: exact distinction between mathematical theorem, exploratory IEEE33 inner candidates and interval-certified fixed-disturbance *unsafe* witnesses.
 
 ## Study benchmark
@@ -34,3 +36,12 @@ cd distribution_capacity_algorithm/paper
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
+
+Run the independent algorithm driver tests:
+```bash
+cd distribution_capacity_algorithm
+python3 -m unittest discover -s algorithm/tests -v
+python3 algorithm/connected_prefix.py
+```
+
+**Current status:** manuscript TeX committed; LaTeX compilation has not yet been confirmed in GitHub CI. The optional PDF is built locally with `make -C paper paper`. Do not claim that a source file alone constitutes a machine-verified IEEE33 result.
