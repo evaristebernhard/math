@@ -89,3 +89,9 @@ Run: `python3 code/capacity_gap_toy.py`. IEEE-33-bus capacity gap remains *unver
 
 - notes/14_two_sided_capacity_bracket_ieee33.md: complements the certified inner capacity with a physically feasible PV disturbance witness and a componentwise interval-Jacobian sign test of squared-voltage derivative to exclude larger loads on a specified unsaturated branch.
 - On fixed g=1.85 in the tested 0–1.25 MW domain, the float-based exploratory bracket is about 1.032555–1.065 MW. Not directed-rounded or verified for saturated control.
+
+## 2026-10-13 corrected PV capability/gain capacity evaluation
+
+- notes/15_coupled_pv_gain_capacity.md: corrects the full PV P²+Q² inverter limit (PV uncertainty plus Q/V feedback), proves the correlated one-angle support and nonlinear residual allowance, provides connected-capacity witness lemma and gain-dependent numerical inner/witness results.
+- code/affine_apparent_power.py: dependency-free generic half-disc apparent-power upper and numerical self-check.
+- Full IEEE 33 dependency scripts for the new experiment remain in the session research bundle and still require import/CI verification before the GitHub PR can be called independently reproducible.
