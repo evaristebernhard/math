@@ -1,0 +1,6 @@
+angular_grid,load_target_mw,passed,elapsed_seconds,cell_evaluations,first_rejected_cell_mw,reason
+256,1.15,0,1.4253,73,1.137969-1.138125,current
+512,1.15,1,1.3114,66,,
+1024,1.15,1,1.3755,62,,
+2048,1.15,1,1.6185,62,,
+4096,1.15,1,2.1617,62,,
