@@ -95,3 +95,11 @@ Run: `python3 code/capacity_gap_toy.py`. IEEE-33-bus capacity gap remains *unver
 - notes/15_coupled_pv_gain_capacity.md: corrects the full PV P²+Q² inverter limit (PV uncertainty plus Q/V feedback), proves the correlated one-angle support and nonlinear residual allowance, provides connected-capacity witness lemma and gain-dependent numerical inner/witness results.
 - code/affine_apparent_power.py: dependency-free generic half-disc apparent-power upper and numerical self-check.
 - Full IEEE 33 dependency scripts for the new experiment remain in the session research bundle and still require import/CI verification before the GitHub PR can be called independently reproducible.
+
+## Saturation-aware connected-capacity theorem (2026-10-13)
+
+- notes/16_saturation_aware_capacity_vi.md: replace nonsmooth clip differentiation by the projected-variational-inequality equilibrium; prove a conditional strong-monotonicity/residual bound that remains valid across Q-limit switching, and turn it into a steady connected-load capacity criterion.
+- code/saturation_vi_toy.py: dependency-free exact-rational demonstration including a high-gain case `g * dV/dq = 2.7 > 1` where raw fixed-point contraction fails but projected-gradient contraction succeeds. Exhaustively **encloses continuous parameter cells**, not just sampled points. Toy bracket: `0.50 <= Lambda_conn < 0.52` (toy units, not MW for IEEE 33).
+- Run `python3 code/saturation_vi_toy.py` or `python3 code/test_math.py` from this directory.
+
+**Status:** actual nonlinear IEEE-33 saturated-mode capacity remains UNVERIFIED. Need verified open-loop branch, interval Jacobian strong-monotonicity constants, projected residual enclosures, and physical current limits before claiming an IEEE-33 improvement. This method does not prove inverter transient stability.
