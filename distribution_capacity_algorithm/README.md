@@ -1,47 +1,40 @@
-# Structure-aware robust hosting-capacity algorithm — manuscript
+# 配电网鲁棒安全接入容量算法
 
-**Purpose:** an algorithm paper, not a global optimality paper. The main contribution is a complete-load-interval feasibility oracle combining nonlinear DistFlow implicit derivatives, separated Hessian blocks for voltage, half-disc support functions, complex-power phasor geometry for thermal constraints, and joint PV apparent-power capability. Heterogeneous inverter gains are a light outer design variable.
+本目录为**中文算法论文**，研究问题是：在光伏注入不确定、逆变器视在功率受限的情况下，给出配电网能够连续、安全接入的新增负荷容量。
 
-## Research logic
-1. For a candidate gain vector and load cell, enclose the nonlinear normal branch and compute its first/second derivatives.
-2. Use blockwise Hessian bounds and exact right-half-disc supports to bound each signed voltage violation over the *entire* cell.
-3. Use affine complex-power angular supports (plus grid and nonlinear-remainder allowances) to bound each line current.
-4. Require the full correlated PV $(P,Q)$ circle test throughout the cell. If raw Q clips, return UNKNOWN rather than reusing unsaturated derivatives.
-5. Recursively subdivide failed cells. Accept capacity L **only if every cell of [0,L] passes**.
-6. As an optional design layer, search gain vectors and retain the one with the largest passing connected capacity.
+**不要求证明增益全局最优。** 论文的主体是安全容量判定算法：非线性 DistFlow、隐函数 Jacobian、负荷与光伏扰动分块 Hessian、半圆支撑函数、复功率几何电流界、光伏有功--无功联合容量约束、自适应区间覆盖。外层增益协调仅作为提高算法输出容量的应用。
 
-## Contents
-- `paper/main.tex` and `paper/sections/`: English manuscript with problem formulation, two algorithms, conditional theorem/proof, numerical comparison and limitations.
-- `results/ieee33_design_trials.csv`: reported experimental design candidates (FLOAT, not outward-rounded safety proofs).
-- `algorithm/connected_prefix.py`: dependency-free reusable whole-cell coverage and finite-design-search driver; inject a physical branch/Hessian/phasor/PV oracle to apply it to a feeder.
-- `algorithm/tests/test_connected_prefix.py`: gap/UNKNOWN/endpoints regression tests. This tests *bookkeeping*, NOT the missing IEEE33 validated numerical oracle.
-- `paper/REPRODUCIBILITY.md`: exact distinction between mathematical theorem, exploratory IEEE33 inner candidates and interval-certified fixed-disturbance *unsafe* witnesses.
+## 目录
 
-## Study benchmark
-case33bw active 32 lines; base loads ×0.65; PVs at buses 9,18,24,33, 0.25 MW nominal each; each has a 0.125 MVA right-half-disc uncertainty and 1 MVA rating; additional unity-PF load at bus18; V limits [0.95,1.05] pu; **common 0.31 pu line current is a research-assumed limit**, not official branch ratings.
+- `paper/main.tex`：中文论文主文件；正文分为 `paper/sections/01_problem.tex` 至 `04_experiments.tex`。
+- `paper/REPRODUCIBILITY.md`：数值结果的证据等级、尚缺实验与验证任务。
+- `results/ieee33_design_trials.csv`：IEEE 33 节点三组增益及其双精度候选容量。
+- `algorithm/connected_prefix.py`：独立可运行的完整负荷区间覆盖算法驱动器。它需要外部接入实际的 DistFlow/Hessian/复功率/PV 安全判定器，不等于 IEEE 33 潮流求解器。
+- `algorithm/tests/test_connected_prefix.py`：测试完整覆盖、未知区间和有限候选增益选择。
 
-| Gains (buses 9/18/24/33) | FLOAT passed complete-prefix target |
+## IEEE 33 节点实验参数
+
+基于 MATPOWER case33bw 的 32 条有效径向支路，原始负荷缩放 0.65。9、18、24、33 号节点分别设置 0.25 MW 标称光伏、0.125 MVA 右半圆扰动与 1 MVA 逆变器。18 号节点新增单位功率因数负荷。电压限值 0.95--1.05 pu，线路电流统一限值 0.31 pu **仅为研究设定，不是真实线路额定值**。
+
+| 增益（9、18、24、33） | 全负荷区间双精度候选容量 |
 |---|---:|
 | (1.92,1.92,1.92,1.92) | 1.0586 MW |
 | (3.70,1.92,2.12,2.52) | 1.1363 MW |
-| (3.80105,1.89598,2.39520,4.00) | 1.1500 MW |
+| (3.80105,1.89598,2.39520,4.0) | 1.1500 MW |
 
-The 8.63% improvement is in a *conservative computed inner capacity*, not a rigorously proved physical improvement or a global optimum.
+以上是**普通浮点计算得到的安全内界候选**，不能称为已经严格证明的全扰动安全容量。增益协调带来的 8.63% 提升也是计算目标的改善，尚非可证明的物理容量提升。
 
-**Source status:** Full IEEE33 runnable numerical dependency set still resides in the previous experiment ZIP, not in this GitHub branch. Existing math proofs and standalone exact outer-bound code are in sibling `droop_closed_loop_wclf/` on this same PR branch. Do not claim standalone IEEE33 code reproducibility from the paper folder yet.
+## 编译与检查
 
-Build manuscript when pdflatex is installed:
+安装 XeLaTeX、中文宏包及 Noto CJK 字体后：
+
 ```bash
-cd distribution_capacity_algorithm/paper
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
-```
-
-Run the independent algorithm driver tests:
-```bash
+make -C distribution_capacity_algorithm/paper paper
 cd distribution_capacity_algorithm
-python3 -m unittest discover -s algorithm/tests -v
 python3 algorithm/connected_prefix.py
+python3 -m unittest discover -s algorithm/tests -v
 ```
 
-**Current status:** manuscript TeX committed; LaTeX compilation has not yet been confirmed in GitHub CI. The optional PDF is built locally with `make -C paper paper`. Do not claim that a source file alone constitutes a machine-verified IEEE33 result.
+GitHub Actions 会构建中文 PDF 并上传为工作流产物。上一个研究目录 `droop_closed_loop_wclf/` 保留了原始数学分析与部分代码；没有丢弃 Hessian 工作。
+
+**待完成的核心内容：** 将 IEEE 33 完整实验依赖合入仓库；以严格向外包络重新验证整个安全负荷前缀；进行完整的同模型消融、运行时间和其他馈线实验。
