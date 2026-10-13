@@ -62,5 +62,16 @@ class SaturationCapacityTests(unittest.TestCase):
         saturation_capacity_test()
 
 
+class GlobalCapacityUpperTests(unittest.TestCase):
+    def test_all_gain_rational_capacity_upper(self):
+        from fractions import Fraction as F
+        from exact_design_upper import (
+            upper_at_six_decimals, necessary_voltage_upper, necessary_source_lower
+        )
+        self.assertEqual(upper_at_six_decimals(), F('1.452831'))
+        self.assertLess(necessary_voltage_upper(F('1.452831')), F('.95')**2)
+        self.assertGreater(necessary_source_lower(F('1.506628')), F('.31'))
+
+
 if __name__ == "__main__":
     unittest.main()
