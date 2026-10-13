@@ -6,15 +6,16 @@ Let $x_\theta(t;y)$ solve the initial-value problem with
 $x_\theta(0;y)=y$, and put
 $D_\theta(y)=x_\theta(2\pi;y)-y$.
 
-Theorem~\ref{thm:main} already states the uniform result.
-Its proof reduces to three checks: preservation of the
-six Poincar\'e displacement signs, absence of grazing on
-the three shooting intervals, and the hyperbolicity of
-the central antisymmetric orbit.
+The fixed-point brackets constructed above give the seven
+orbits at the rational parameter triple. To establish
+Theorem~\ref{thm:main} on the entire parameter cube,
+we control the displacement signs, switching itineraries,
+and the multiplier of the central antisymmetric orbit
+uniformly in the parameters.
 
-\begin{proof}[Completion of the proof of Theorem~\ref{thm:main}]
-We use the three ingredients described above, with all
-inequalities uniform over the cube~\eqref{eq:param-cube}.
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+All estimates below hold uniformly for parameters
+satisfying~\eqref{eq:param-cube}.
 
 \emph{1. Uniform displacement control.}
 The reference vector field points strictly inward on the
@@ -65,7 +66,7 @@ The original exact-flow directed-interval calculation
 for the four phases and the \emph{six} rational shooting
 endpoints, as now checked by
 \texttt{proof/certify\_parameter\_persistence.py},
-establishes the stronger quantitative bound
+gives the required uniform bound
 \begin{equation}\label{eq:grazingmargin}
  \bigl|x_{\theta_0}(t_*^{\,0};y)-\ell\bigr|
  >3\cdot10^{-4}
@@ -101,7 +102,7 @@ Opposite endpoint signs prevent the analytic
 function from being identically zero.
 Its zeros on $I_j$ are finite and isolated.
 
-The three endpoint sign patterns are
+The three certified endpoint sign patterns are
 $(+,-),(-,+),(+,-)$, respectively.
 A positive-to-negative zero of a scalar
 return displacement is locally attracting,
