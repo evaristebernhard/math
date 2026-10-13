@@ -61,9 +61,9 @@ def certify():
     # In the whole cube, |x_theta(t;y)-x_0(t;y)|<1.5e-6 for
     # a fixed initial y, and |dx_theta/dt|<40 for |x|<=2.000002.
     # Therefore the change of each grazing-phase gap is bounded by
-    # 1.5e-6 + 40e-10 < 1.501e-6, far below 0.0003.
-    assert D("1.501e-6") < MIN_BARRIER
-    assert MAX_DIFFERENCE + 40*PHASE_SHIFT < D("1.501e-6")
+    # 1.5e-6 + 40e-10 < 1.505e-6, far below 0.0003.
+    assert D("1.505e-6") < MIN_BARRIER
+    assert MAX_DIFFERENCE + 40*PHASE_SHIFT < D("1.505e-6")
     assert MU > B
     for center, level, _ in GRAZE_PHASES:
         tg = I(D(center)-D("1e-25"), D(center)+D("1e-25"))
@@ -140,7 +140,7 @@ def certify():
     assert floquet_lower > D("0.0043"), floquet_lower
 
     print("Grazing-phase min directed sign margin:", minimum_gap)
-    print("Parameter-shifted grazing barrier error <", D("1.501e-6"))
+    print("Parameter-shifted grazing barrier error <", D("1.505e-6"))
     print("Central half-period residence <", s_upper)
     print("Central Floquet log lower bound >", floquet_lower)
     print("CERTIFIED: >=7 ISOLATED periodic cycles (>=4 attracting, >=3 repelling)")
