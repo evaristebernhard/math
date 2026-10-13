@@ -77,3 +77,10 @@ Run: `python3 code/dynamic_ramp_demo.py`. Assumes absolutely continuous renewabl
 
 - notes/12_ieee33_capacity_benchmark.md: first actual 33-bus capacity-continuity study comparing isotropic vs block-Hessian envelopes, binding voltage/Q/current constraints, and a first-order inverter dynamic ramp stress test.
 - **Caution:** benchmark values remain float checks. A package of the complete session numerical scripts was generated separately; the PR does not yet contain that imported dependency tree or CI verification.
+
+## Capacity as the principal object (2026-10-13)
+
+- notes/13_capacity_gap_theorem.md: defines physical vs certified load-hosting upper boundaries; proves a conditional bound on **lost capacity**, `Lambda_true - Lambda_cert <= delta/m`, where delta is worst-case safety-envelope overestimation and m is a verified boundary slope. Includes the gain-uniform corollary and a reverse-flow toy.
+- code/capacity_gap_toy.py: self-contained analytic reverse-PV current toy checking the capacity-gap inequality.
+
+Run: `python3 code/capacity_gap_toy.py`. IEEE-33-bus capacity gap remains *unverified*.
