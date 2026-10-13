@@ -1,6 +1,6 @@
 # Competing Residence Times and Seven Limit Cycles
 
-The manuscript **Competing Residence Times and Seven Limit Cycles in a Periodically Forced Three-Zone Equation** presents a geometrically motivated seven-cycle counterexample.
+The manuscript **Competing Residence Times and Seven Limit Cycles in a Periodically Forced Three-Zone Equation** proves a parameter-uniform seven-cycle counterexample, with the principal theorem stated in the introduction and proved through the rational witness, exact crossing certificates and uniform continuation.
 
 The equation is
 
@@ -10,7 +10,7 @@ The equation is
 
 At \((A,B,\mu)=(9,3/2,181363/100000)\), we certify **at least seven distinct isolated periodic orbits**. This contradicts the conjectural maximum five discussed by Bravo, Carmona, Fernández and Ojeda, [arXiv:2507.06705](https://arxiv.org/abs/2507.06705). It does **not** establish an upper bound of seven.
 
-**New rigorous consequences:** for **every** `|A-9|, |B-1.5|, |mu-1.81363| < 1e-12` there are at least seven **isolated** periodic cycles, including **four locally attracting and three locally repelling** cycles. Directed-interval grazing barriers are `>3e-4`, while their perturbation is `<1.505e-6`. The central Floquet logarithm stays `>0.0043`. The ordered response zeros force three distinct critical residence-time profiles. Noncentral hyperbolicity and a global seven-cycle upper bound are not claimed.
+**Main theorem:** for **every** `|A-9|, |B-1.5|, |mu-1.81363| < 1e-12` there are at least seven **isolated** periodic cycles, including **four locally attracting and three locally repelling** cycles. Directed-interval grazing barriers are `>3e-4`, while their perturbation is `<1.505e-6`. The central Floquet logarithm stays `>0.0043`. The ordered response zeros force three distinct critical residence-time profiles. Noncentral hyperbolicity and a global seven-cycle upper bound are not claimed.
 
 ## Mathematical idea
 
@@ -33,8 +33,8 @@ The paper derives this local law and explains why it makes an extra response ben
 
 ## Project map
 
-- [Revised mathematical paper](paper/main.tex) — idea, response identity, local grazing law, parameter discovery and rigorous construction.
-- [Rigorous persistence and stability section](paper/robustness.tex) — explicit cube of isolated cycles, verified grazing barriers, central multiplier bound, and three critical residence profiles.
+- [Research manuscript](paper/main.tex) — a single main theorem stated in the introduction, the residence-time mechanism, parameter selection and its exact return-map certificate.
+- [Continuation of the principal proof](paper/robustness.tex) — quantitative grazing and central multiplier bounds; this is a proof subsection, **not a second main theorem**.
 - [Analytic persistence certificate](proof/certify_parameter_persistence.py) — checks six signs, four grazing barriers at each shooting endpoint, and central orbit stability; **not** an independent interval-arithmetic backend.
 - [Discovery record](notes_discovery.md) — how the seven-cycle example was found.
 - [Interval certificate](proof/certify_seven.py) — six Poincaré displacement sign checks, first-hit and grazing barriers, central hyperbolicity.
