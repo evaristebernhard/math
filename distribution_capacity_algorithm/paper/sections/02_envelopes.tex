@@ -9,7 +9,7 @@ z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
 \end{align}
 式~\eqref{eq:ztt} 的二阶项是包含状态与参数的\emph{总二阶导数}，其中具有 $F_{zz},F_{zt},F_{tt}$ 等混合项；不能只对标称线性潮流求二阶导数。
 
-对电压下限、上限或电流约束对应的任意标量违反函数 $\phi(\lambda,w)$，假设在整个 $\mathcal C$ 上成立
+对节点电压上下限对应的任意标量违反函数 $\phi(\lambda,w)$，假设在整个 $\mathcal C$ 上成立
 \begin{equation}
 |\phi_{\lambda\lambda}|\le B_{\lambda\lambda},\qquad
 \norm{\nabla_w\phi_\lambda}_2\le B_{\lambda w},\qquad
@@ -89,7 +89,7 @@ U_l^{\rm phasor}:=
 {\underline\nu_l}.
 \label{eq:phasor_bound}
 \end{equation}
-这给出整个单元上的线路电流平方安全上界。**本文线路电流约束只采用式~\eqref{eq:phasor_bound} 的复功率几何上界**，不再对线路电流构造标量 Hessian 上界，也不再计算两种电流上界的最小值。分块 Hessian 继续用于节点电压和逆变器容量的非线性余项，两者计算对象明确分离。
+这给出整个单元上的线路电流平方安全上界。\textbf{本文线路电流约束只采用式~\eqref{eq:phasor_bound} 的复功率几何上界}，不再对线路电流构造标量 Hessian 上界，也不再计算两种电流上界的最小值。分块 Hessian 继续用于节点电压和逆变器容量的非线性余项，两者计算对象明确分离。
 
 \subsection{光伏有功--无功耦合容量检查}
 逆变器 $j$ 在未限幅公式下的\emph{原始总输出}写为
