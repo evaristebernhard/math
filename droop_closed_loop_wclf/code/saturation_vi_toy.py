@@ -46,7 +46,7 @@ def solve_scalar(lam, wp, wq):
     """Rigorous interval enclosure for the exact clipped Q equilibrium."""
     assert 0 <= wp <= C and abs(wq) <= C
     cap_lo, cap_hi = sqrt_enclosure(S*S - (P0 + wp)**2)
-    v_open = V0 - A*lam - A_PV*wp
+    v_open = V0 - A*lam + A_PV*wp
     stationary_raw = (wq - G*(v_open-1))/(1+G*B)
     return clip_image(stationary_raw, stationary_raw, cap_lo, cap_hi)
 
@@ -54,8 +54,8 @@ def solve_scalar(lam, wp, wq):
 def cell_voltage_enclosure(l0, l1, p0, p1, w0, w1):
     """All points in one closed lambda/wp/wq rectangle; no sampling."""
     assert 0 <= l0 <= l1 and 0 <= p0 <= p1 <= C and -C <= w0 <= w1 <= C
-    v_open_lo = V0 - A*l1 - A_PV*p1
-    v_open_hi = V0 - A*l0 - A_PV*p0
+    v_open_lo = V0 - A*l1 + A_PV*p0
+    v_open_hi = V0 - A*l0 + A_PV*p1
     u_lo = (w0 - G*(v_open_hi-1))/(1+G*B)
     u_hi = (w1 - G*(v_open_lo-1))/(1+G*B)
     cap_lo = sqrt_enclosure(S*S - (P0+p1)**2)[0]
@@ -89,7 +89,7 @@ def test():
     ]:
         qlo, qhi = solve_scalar(lam,wp,wq)
         assert qlo <= qhi
-        base = V0-A*lam-A_PV*wp
+        base = V0-A*lam+A_PV*wp
         cap_lo, cap_hi = sqrt_enclosure(S*S-(P0+wp)**2)
         # With tau = 1/(1+G*B), the projected map is independent of q.
         for q in [F(-1,5), F(0), F(1,5)]:
@@ -100,19 +100,19 @@ def test():
     low, high = certify_capacity_prefix(F(1,2), segments=4)
     assert low >= V_MIN and high <= V_MAX, (float(low),float(high))
 
-    # Feasible half-disc witness: wp=C, wq=0, lambda=0.51.
-    witness_lam = F(51,100)
+    # Feasible half-disc witness: wp=C, wq=0, lambda=0.52.
+    witness_lam = F(52,100)
     qlo, qhi = solve_scalar(witness_lam,C,F(0))
-    witness_v_upper = V0-A*witness_lam-A_PV*C+B*qhi
+    witness_v_upper = V0-A*witness_lam+A_PV*C+B*qhi
     assert witness_v_upper < V_MIN
     cap_hi = sqrt_enclosure(S*S-(P0+C)**2)[1]
-    unbounded_q = G*(1-(V0-A*witness_lam-A_PV*C))/(1+G*B)
+    unbounded_q = G*(1-(V0-A*witness_lam+A_PV*C))/(1+G*B)
     assert unbounded_q > cap_hi  # actually Q-saturated
 
     print("GAIN",G,"G*B",G*B,"(ordinary Picard contraction fails)")
     print("Entire rational-certified prefix [0,0.50] V bounds:",float(low),float(high))
-    print("Feasible unsafe witness at 0.51 has upper V:",float(witness_v_upper))
-    print("Proved toy bracket: 0.50 <= connected capacity < 0.51")
+    print("Feasible unsafe witness at 0.52 has upper V:",float(witness_v_upper))
+    print("Proved toy bracket: 0.50 <= connected capacity < 0.52")
     print("This is NOT an IEEE-33 nonlinear DistFlow certificate.")
 
 
