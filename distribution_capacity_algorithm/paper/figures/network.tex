@@ -1,0 +1,53 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=.46cm,y=.86cm,
+ bus/.style={circle,draw=black!65,fill=white,inner sep=0pt,minimum size=3.6pt},
+ pv/.style={circle,draw=teal!85!black,fill=teal!25,inner sep=0pt,minimum size=5.5pt},
+ load/.style={circle,draw=orange!85!black,fill=orange!25,inner sep=0pt,minimum size=6pt},
+ line/.style={draw=black!65,line width=.52pt}]
+% Backbone
+\draw[line] (0,0)--(17,0);
+\foreach \i in {1,...,18}{
+  \pgfmathsetmacro{\x}{\i-1}
+  \ifnum\i=9
+    \node[pv] at (\x,0) {};
+  \else\ifnum\i=18
+    \node[load] at (\x,0) {};
+  \else \node[bus] at (\x,0) {};\fi\fi
+}
+\foreach \i in {1,2,3,6,9,12,15,18}{
+  \pgfmathsetmacro{\x}{\i-1}
+  \node[font=\scriptsize,above=2pt] at (\x,0) {\i};
+}
+% Branch from bus 2 to buses 19--22
+\draw[line] (1,0)--(1,-1.05)--(4,-1.05);
+\foreach \i in {19,...,22}{
+ \pgfmathsetmacro{\x}{\i-18}
+ \node[bus] at (\x,-1.05) {};
+ \node[font=\scriptsize,below=3pt] at (\x,-1.05) {\i};
+}
+% Branch from bus 3 to buses 23--25
+\draw[line] (2,0)--(2,-2.15)--(4,-2.15);
+\foreach \i in {23,...,25}{
+ \pgfmathsetmacro{\x}{\i-21}
+ \ifnum\i=24 \node[pv] at (\x,-2.15) {}; \else\node[bus] at (\x,-2.15) {};\fi
+ \node[font=\scriptsize,below=3pt] at (\x,-2.15) {\i};
+}
+% Branch from bus 6 to buses 26--33
+\draw[line] (5,0)--(5,-3.15)--(12,-3.15);
+\foreach \i in {26,...,33}{
+ \pgfmathsetmacro{\x}{\i-21}
+ \ifnum\i=33 \node[pv] at (\x,-3.15) {}; \else\node[bus] at (\x,-3.15) {};\fi
+}
+\node[font=\scriptsize,below=3pt] at (5,-3.15) {26};
+\node[font=\scriptsize,below=3pt] at (8,-3.15) {29};
+\node[font=\scriptsize,below=3pt] at (12,-3.15) {33};
+\node[font=\scriptsize,above=6pt,teal!70!black] at (8,0) {PV};
+\node[font=\scriptsize,above=6pt,teal!70!black] at (3,-2.15) {PV};
+\node[font=\scriptsize,above=6pt,teal!70!black] at (12,-3.15) {PV};
+\node[font=\scriptsize,above=6pt] at (17,0) {PV+新增负荷};
+\node[font=\scriptsize,align=center,anchor=west] at (14,-2.25) {颜色标识：\\[-1mm] \textcolor{teal!70!black}{光伏逆变器}\\[-1mm] \textcolor{orange!80!black}{18 号节点新增负荷}};
+\end{tikzpicture}
+\caption{IEEE 33 节点径向馈线与本文实验中的四台光伏逆变器、新增负荷位置。所有支路拓扑来自 case33bw 的 32 条在运线路。}
+\label{fig:topology}
+\end{figure}
