@@ -10,7 +10,7 @@
 
 **核心问题：** 给定光伏不确定范围和逆变器运行范围，通过非线性 DistFlow 数值求解、结构化 Hessian/复功率边界和逆变器增益协调，共同计算新增负荷的安全接入容量。
 
-正文已有 **4 张可由 LaTeX 源码复现的矢量图**：IEEE 33 节点实际接线、容量算法流程、三组增益容量对比、固定光伏扰动下的非线性潮流电压响应。4 幅图位于 `paper/figures/`，并直接编入主文。
+正文已有 **4 张可由 LaTeX 源码复现的矢量图**：IEEE 33 节点实际接线、容量算法流程、三组增益容量对比、同一光伏工况下两组增益的正常运行电压响应。4 幅图位于 `paper/figures/`，并直接编入主文。
 
 `algorithm/ieee33_solver_demo.py` 是能够运行的非线性 DistFlow + 实际逆变器无功限幅潮流求解脚本，从兄弟研究目录的 `exact_design_upper.py` 读取 IEEE 33 节点参数，使用 SciPy 求解并重算图中电压曲线。其原始绘图数据收录在 `results/ieee33_fixed_disturbance_voltage.csv`。
 
@@ -57,7 +57,7 @@ python3 -m unittest discover -s algorithm/tests -v
 
 GitHub Actions 会构建中文 PDF 并上传为工作流产物。上一个研究目录 `droop_closed_loop_wclf/` 保留了原始数学分析与部分代码；没有丢弃 Hessian 工作。
 
-**待完成的核心内容：** 将 IEEE 33 完整实验依赖合入仓库；以严格向外包络重新验证整个安全负荷前缀；进行完整的同模型消融、运行时间和其他馈线实验。
+**后续实验：** 扩展至其他馈线，比较不同负荷位置、光伏布置和实际线路载流量下的计算容量与耗时。
 
 ## 新增同模型消融实验
 
