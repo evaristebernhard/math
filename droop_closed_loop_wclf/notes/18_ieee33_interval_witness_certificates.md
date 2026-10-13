@@ -64,10 +64,10 @@ Displayed decimals are rounded *for reporting only*; code comparisons use exact 
 
 Therefore, for **connected steady hosting capacity from zero** in the designated physical clipped-control normal branch, each fixed load is an upper obstruction:
 \[
-\Lambda_{\mathrm{conn}}(1.92) < 1.09322\ \mathrm{MW},\qquad
-\Lambda_{\mathrm{conn}}(2.6) < 1.22273\ \mathrm{MW},
+\Lambda_{\mathrm{conn}}(1.92) \le 1.09322\ \mathrm{MW},\qquad
+\Lambda_{\mathrm{conn}}(2.6) \le 1.22273\ \mathrm{MW},
 \]
-assuming the normal branch is the intended operating equilibrium. The strict inequality here reflects a witnessed failure *at* the load. The bounds do **not** establish that every disconnected higher load is unsafe.
+assuming the normal branch is the intended operating equilibrium. The non-strict upper inequality is essential: a connected safe prefix may approach the unsafe witness load from below, so its supremum can equal that load even when the point itself is unsafe. The bounds do **not** establish that every disconnected higher load is unsafe.
 
 ## 4. Reproduction and outstanding work
 
