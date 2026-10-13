@@ -10,6 +10,8 @@ The equation is
 
 At \((A,B,\mu)=(9,3/2,181363/100000)\), we certify **at least seven distinct isolated periodic orbits**. This contradicts the conjectural maximum five discussed by Bravo, Carmona, Fernández and Ojeda, [arXiv:2507.06705](https://arxiv.org/abs/2507.06705). It does **not** establish an upper bound of seven.
 
+**New rigorous consequences:** for **every** `|A-9|, |B-1.5|, |mu-1.81363| < 1e-12` there are at least seven **isolated** periodic cycles, including **four locally attracting and three locally repelling** cycles. Directed-interval grazing barriers are `>3e-4`, while their perturbation is `<1.505e-6`. The central Floquet logarithm stays `>0.0043`. The ordered response zeros force three distinct critical residence-time profiles. Noncentral hyperbolicity and a global seven-cycle upper bound are not claimed.
+
 ## Mathematical idea
 
 A three-zone affine ODE has explicit flights but unknown switching times. The mean-parametrized biased periodic response satisfies
@@ -32,6 +34,8 @@ The paper derives this local law and explains why it makes an extra response ben
 ## Project map
 
 - [Revised mathematical paper](paper/main.tex) — idea, response identity, local grazing law, parameter discovery and rigorous construction.
+- [Rigorous persistence and stability section](paper/robustness.tex) — explicit cube of isolated cycles, verified grazing barriers, central multiplier bound, and three critical residence profiles.
+- [Analytic persistence certificate](proof/certify_parameter_persistence.py) — checks six signs, four grazing barriers at each shooting endpoint, and central orbit stability; **not** an independent interval-arithmetic backend.
 - [Discovery record](notes_discovery.md) — how the seven-cycle example was found.
 - [Interval certificate](proof/certify_seven.py) — six Poincaré displacement sign checks, first-hit and grazing barriers, central hyperbolicity.
 - [Exploratory response data](paper/figures/response_data.csv) — illustration, not proof data.
@@ -43,6 +47,7 @@ The paper derives this local law and explains why it makes an extra response ben
 From this folder:
 
     python3 proof/certify_seven.py
+    python3 proof/certify_parameter_persistence.py
     python3 -m unittest discover -s tests -v
 
 Optional experiments:
@@ -62,7 +67,7 @@ The public repository contains editable LaTeX and plot data. The PDF can be obta
 
 ## Proof status
 
-The certificate uses exact affine flights and directed Decimal interval arithmetic, including rational Taylor remainders and first-hit checks. A second independently implemented interval backend (for example Arb/FLINT) would be desirable before formal publication. Numerical response extrema are exploratory only. No global bound of seven has been proved.
+The certificate uses exact affine flights and directed Decimal interval arithmetic, including rational Taylor remainders and first-hit checks. A second independently implemented interval backend (for example Arb/FLINT) would be desirable before formal publication. Numerical response extrema are exploratory only. The explicit `1e-12` cube now controls all grazing barriers and the central multiplier, yielding a **numerically specified cube of isolated cycles**. No global bound of seven has been proved.
 
 ## Literature
 

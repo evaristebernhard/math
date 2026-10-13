@@ -1,0 +1,38 @@
+name: Seven-cycle manuscript and proofs
+on:
+  pull_request:
+    paths:
+      - 'pwl_three_zone_seven_cycles/**'
+      - '.github/workflows/seven_cycle.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Strict base witness signs and central orbit
+        run: python3 pwl_three_zone_seven_cycles/proof/certify_seven.py
+      - name: Analytic parameter cube certificate
+        run: python3 pwl_three_zone_seven_cycles/proof/certify_parameter_persistence.py
+      - name: Regression tests
+        run: cd pwl_three_zone_seven_cycles && python3 -m unittest discover -s tests -v
+      - name: Install LaTeX dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-pictures lmodern
+      - name: Build manuscript twice and fail on missing references
+        run: |
+          cd pwl_three_zone_seven_cycles/paper
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          if grep -Eq 'Reference .* undefined|Citation .* undefined|There were undefined references' main.log; then
+            echo 'Unresolved LaTeX references/citations'
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: seven-cycle-revised-paper
+          path: pwl_three_zone_seven_cycles/paper/main.pdf

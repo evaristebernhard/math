@@ -1,6 +1,7 @@
 .PHONY: verify test experiments paper
 verify:
 	python3 proof/certify_seven.py
+	python3 proof/certify_parameter_persistence.py
 	python3 -m unittest discover -s tests -v
 test: verify
 experiments:
