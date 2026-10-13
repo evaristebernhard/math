@@ -51,3 +51,10 @@ Next mathematical task: derive and **independently check** an implementable Hess
 Run: `python3 code/one_line_capacity_hessian.py`.
 
 - notes/08_gain_to_capacity_sensitivity.md: use implicit gain sensitivity and active robust constraints to identify which inverter gain locally releases hosting capacity.
+
+## Capacity-first certified quadratic design (2026-10-13)
+
+- notes/09_quadratic_safe_capacity.md: theorem turning validated joint Hessian bounds and half-disc supports into a convex conservative (lambda,g) capacity optimization; explicit fixed-g safe interval and physical toy comparison.
+- code/certified_capacity_interval.py: standard-library calculator for the fixed-g certified inner interval, with an exactly solvable line-current toy.
+
+Run: `python3 code/certified_capacity_interval.py`.
