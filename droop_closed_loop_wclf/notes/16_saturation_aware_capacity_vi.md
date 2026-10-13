@@ -89,7 +89,7 @@ Cover `[0,Lambda] x U_PV` by finitely many validated cells, using interval/half-
 
 Consider a deliberately simple affine voltage feeder, not full nonlinear DistFlow:
 ```math
-V(lambda,w_p,q) = 0.995 -0.11 lambda -0.02 w_p +0.06 q,
+V(lambda,w_p,q) = 0.995 -0.11 lambda +0.02 w_p +0.06 q,
 g=45,  P_PV=0.15+w_p, S=0.25,
 0<=w_p<=0.02, |w_q|<=0.02.
 ```
@@ -97,13 +97,13 @@ The actual PV set is the right half-disc `w_p^2+w_q^2<=0.02^2, w_p>=0`. We certi
 
 Here `g*dV/dq=2.7>1`, so the usual `g L_q<1` contraction test for the raw physical response fails. Yet
 ```math
-A(q)=(1+2.7)q+45(0.995-0.11lambda-0.02w_p-1)-w_q,
+A(q)=(1+2.7)q+45(0.995-0.11lambda+0.02w_p-1)-w_q,
 mu=L=3.7.
 ```
 For `tau=1/3.7`, the projected-gradient map is constant in q (contraction factor zero), and the exact equilibrium is
 ```math
 q*(lambda,w_p,w_q)
- = clip((w_q-45(0.995-0.11lambda-0.02w_p-1))/3.7,
+ = clip((w_q-45(0.995-0.11lambda+0.02w_p-1))/3.7,
         -sqrt(0.25^2-(0.15+w_p)^2),
         +sqrt(0.25^2-(0.15+w_p)^2)).
 ```
@@ -111,11 +111,11 @@ This equilibrium crosses into PV Q saturation as load rises.
 
 The accompanying `code/saturation_vi_toy.py` checks every one of 4^3 **closed rational parameter cells** partitioning `lambda in [0,0.50], w_p in [0,0.02], w_q in [-0.02,0.02]`. It uses Fraction arithmetic and integer square-root upper/lower rational enclosures; it does not use floating point for pass/fail. Interval monotonicity of `clip` and the exact scalar closed form give, over the entire union,
 ```math
-0.95059818166788... <= V <= 1.007,
+0.95129818166788... <= V <= 1.0071,
 ```
-which validates a safe connected voltage capacity of at least `0.50` in the toy's load units (and respects PV apparent-power capability). At the feasible right-half-disc witness `lambda=0.51,w_p=0.02,w_q=0`, the rational upper voltage enclosure is `V<0.94949818166795<0.95`. Thus
+which validates a safe connected voltage capacity of at least `0.50` in the toy's load units (and respects PV apparent-power capability). At the feasible right-half-disc witness `lambda=0.52,w_p=0.02,w_q=0`, the rational upper voltage enclosure is `V<0.94919818166795<0.95`. Thus
 ```math
-0.50 <= Lambda_conn < 0.51
+0.50 <= Lambda_conn < 0.52
 ```
 for the scalar toy under voltage and inverter capability constraints. The upper-obstruction witness suffices for **connected** capacity, without excluding disconnected safe load levels.
 
