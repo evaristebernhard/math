@@ -1,0 +1,45 @@
+\section{Capacity admission and gain-design algorithms}\label{sec:algorithm}
+The centerpiece is a \emph{cell-wide robust feasibility oracle}
+$\mathsf{CellSafe}(\bm g,I)$. Given gains $\bm g$ and a nonempty load cell $I$, it either returns PASS, meaning that the mathematical upper enclosures are valid over the \emph{entire} $I\times\U$ and all security tests pass, or returns UNKNOWN. In particular, nonconvergence of a nonlinear interval enclosure, crossing a PV Q-clip surface, or exceeding the chosen subdivision budget is never misreported as an actual physical violation.
+
+\paragraph{Algorithm 1: adaptive connected robust capacity acceptance.}
+\begin{enumerate}[leftmargin=8mm,itemsep=3pt]
+\item \textbf{Input:} feeder and inverter data, half-disc radii $(C_j)$, gain vector $\bm g$, candidate admission $L$, initial load width $\Delta$, smallest allowed width $\delta$, and angular resolution $N_\theta$.
+\item Partition $[0,L]$ into a finite queue of \emph{contiguous} cells, each no wider than $\Delta$. Initialize accepted-cell set $\mathcal A=\varnothing$.
+\item Pop cell $I=[a,b]$; locate and \emph{enclose} its designated normal unsaturated nonlinear DistFlow branch for every $(\lambda,w)\in I\times\U$. If the branch cannot be validated, mark the cell UNKNOWN.
+\item Where branch validation succeeds, compute the nominal first derivatives and validated load/disturbance Hessian blocks \eqref{eq:zt}--\eqref{eq:blocks}. Test all bus voltage constraints by \eqref{eq:voltage_accept}; all line-current limits by \eqref{eq:phasor_bound}; and all PV apparent-power conditions by \eqref{eq:PVpass}. Return PASS \emph{only if every bound holds on all inputs in the cell}.
+\item If PASS, insert $I$ into $\mathcal A$. Otherwise, when $b-a>\delta$ and refinement budget remains, subdivide $I$ into $[a,(a+b)/2]$ and $[(a+b)/2,b]$ and continue. If refinement is exhausted, terminate with UNKNOWN and report the location of the unresolved gap.
+\item Sort $\mathcal A$ and verify \emph{exact contiguous coverage} of $[0,L]$ with no unresolved cell. Return PASS and the accepted interval collection if and only if the whole prefix is covered; otherwise return UNKNOWN. Save per-cell margins and the numerical precision used.
+\end{enumerate}
+
+In floating-point prototypes, step 3 is an \emph{approximate enclosure check} and an Algorithm 1 PASS should be labeled a \emph{numerical candidate}. A rigorous PASS requires outward-rounded interval validation of step 3, derivatives, remainders and inequality comparisons in steps 4--6.
+
+\paragraph{Algorithm 2: capacity-oriented gain selection (optional outer loop).}
+\begin{enumerate}[leftmargin=8mm,itemsep=2pt]
+\item Initialize a finite design pool with uniform gains and any previously passing heterogeneous gains from $\mathcal G=[0,4]^m$.
+\item For each design, apply Algorithm 1 to progressively larger capacity targets. Preserve the largest \emph{fully covered PASS target}; an UNKNOWN target is not a physical infeasibility witness and cannot justify a globally monotone capacity bisection.
+\item Propose further gain vectors with coordinate changes or a local constrained optimizer using the binding envelope margins as guidance. Repeat full-prefix tests; retain the best confirmed PASS target and its gain vector.
+\item Return the best tested gain vector, accepted load prefix and all cell certificates. Do not label it the global physical optimum unless a separate design-wide upper-bound proof is available.
+\end{enumerate}
+This deliberately separates \emph{feasibility assurance} from \emph{design search}. Algorithm 1 is useful with fixed gains even without Algorithm 2; nothing in its guarantee depends on the outer optimizer reaching a global solution.
+
+\begin{theorem}[Conditional safety of a connected capacity prefix]\label{thm:sound}
+Fix a gain vector $\bm g$, a proposed target $L$ and the uncertainty product \eqref{eq:U}. Suppose Algorithm 1 admits a gap-free finite partition $[0,L]=\bigcup_{k=1}^{K}I_k$ and, for every cell $I_k$:
+\begin{enumerate}[label=(\roman*),leftmargin=9mm,itemsep=1pt]
+\item the intended normal unsaturated nonlinear DistFlow solution exists on $I_k\times\U$, has strictly positive squared voltages, and is contained in a verified state enclosure;
+\item all implicit derivative, block-Hessian, phasor-remainder, angular grid and lower-voltage bounds used in Section~\ref{sec:method} hold uniformly on $I_k\times\U$;
+\item the upper constraints \eqref{eq:voltage_accept}, \eqref{eq:phasor_bound} and the correlated inverter capability conditions \eqref{eq:PVpass} pass for the \emph{complete} cell.
+\end{enumerate}
+Then on the designated steady-state branch, the \emph{physical} clipped-control model \eqref{eq:physical} satisfies every voltage, thermal and inverter rating limit for all $(\lambda,w)\in[0,L]\times\U$. Thus $\Lambda_{\rm conn}(\bm g)\ge L$.
+\end{theorem}
+\begin{proof}
+Take any $(\lambda,w)$ in the proposed prefix, and choose a cell $I_k$ that contains $\lambda$. By (i) its nonlinear solution exists on the intended smooth branch. Taylor's theorem and (ii) imply the load/disturbance block-Hessian upper bound \eqref{eq:Vbound}, and (iii) makes both signed voltage violations nonpositive. The exact half-disc support reformulation \eqref{eq:angular}, its corrected angular discretization \eqref{eq:gridsafe}, and the validated complex-power remainder prove \eqref{eq:phasor_bound}; thus all line-current limits hold. Finally, \eqref{eq:PVpass} places the \emph{total} PV output of the unsaturated solution within the physical apparent-power disk, so the physical clipping operator leaves every reactive command unchanged and all inverter ratings hold. This argument holds for every cell. Gap-free coverage proves the result for every intermediate load and uncertainty point.
+\end{proof}
+
+\begin{remark}[Certificate and physical security are different statements]
+A failed test in Algorithm 1 may mean a loose bound, a numerical failure or a Q-limit switch; it does \emph{not} establish that the physical feeder is unsafe. The theorem is sufficient, not necessary, and it does not establish uniqueness of AC power-flow solutions outside the verified branch. Its conclusion concerns steady-state security, not dynamic tracking of a rapidly changing load.
+\end{remark}
+
+\begin{remark}[Practical accuracy knobs]
+The initial load step $\Delta$, minimum cell width $\delta$ and angular resolution $N_\theta$ trade runtime for enclosure sharpness. The margin $\pi K_l/N_\theta$ must decrease with angular refinement, while load partitioning generally reduces local Taylor remainder size. Neither refinement guarantees success where the full PV capability constraint actually switches modes.
+\end{remark}
