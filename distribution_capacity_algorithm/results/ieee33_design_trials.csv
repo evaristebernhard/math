@@ -1,0 +1,4 @@
+design,g9,g18,g24,g33,float_accepted_prefix_mw,accepted_cells,evidence
+uniform,1.92,1.92,1.92,1.92,1.0586,58,float_whole_cell
+prior_coord,3.70,1.92,2.12,2.52,1.1363,62,float_whole_cell
+candidate_coord,3.80105,1.89598,2.39520,4.00000,1.1500,60,float_whole_cell

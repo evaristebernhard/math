@@ -1,0 +1,113 @@
+\section{结构化非线性安全上界}\label{sec:method}
+
+\subsection{隐函数灵敏度与分块 Hessian}\label{sec:hess}
+固定逆变器增益 $\bm g$，取负荷区间 $I=[\lambda_0-h,\lambda_0+h]$ 和完整参数单元 $\mathcal C=I\times\U$。假设其上存在正电压的正常、未限幅 DistFlow 解分支 $z(t)$，且可以验证雅可比矩阵 $J=F_z$ 在整个单元内非奇异。令 $t=(\lambda,w)$，则隐函数求导得到
+\begin{align}
+z_t&=-J^{-1}F_t,\label{eq:zt}\\
+z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
+\label{eq:ztt}
+\end{align}
+式~\eqref{eq:ztt} 的二阶项是包含状态与参数的\emph{总二阶导数}，其中具有 $F_{zz},F_{zt},F_{tt}$ 等混合项；不能只对标称线性潮流求二阶导数。
+
+对电压下限、上限或电流约束对应的任意标量违反函数 $\phi(\lambda,w)$，假设在整个 $\mathcal C$ 上成立
+\begin{equation}
+|\phi_{\lambda\lambda}|\le B_{\lambda\lambda},\qquad
+\norm{\nabla_w\phi_\lambda}_2\le B_{\lambda w},\qquad
+\norm{\nabla_w^2\phi}_2\le B_{ww}.
+\label{eq:blocks}
+\end{equation}
+与使用单一整体 Hessian 范数不同，这里分别保留负荷--负荷、负荷--光伏和光伏--光伏三组曲率。各节点和各约束可以采用不同的上界常数。
+
+\subsection{半圆支撑函数与电压安全判据}
+右半圆集合~\eqref{eq:U} 对线性函数 $au+bv$ 的精确支撑函数是
+\begin{equation}
+\supp_{\U_j}(a,b)=C_j
+\begin{cases}
+\sqrt{a^2+b^2},&a\ge0,\\
+|b|,&a<0.
+\end{cases}
+\label{eq:support}
+\end{equation}
+当 $a\ge0$ 时圆周上的最大方向可行；当 $a<0$ 时最优点在直径 $u=0$ 上。因此不必用完整圆盘或矩形替代真实不确定集，也不必对扰动进行大量枚举采样。
+
+记 $R_w=(\sum_jC_j^2)^{1/2}$、$s=\lambda-\lambda_0$。将完整参数单元上的 Taylor 余项以式~\eqref{eq:blocks} 控制，再分别最大化一阶扰动项，得到
+\begin{align}
+\phi(\lambda_0+s,w)\le\Phi_\phi(s):={}&
+\phi_0+\phi_\lambda s+
+\sum_{j=1}^{m}\supp_{\U_j}(\phi_{w_{p,j}},\phi_{w_{q,j}})
+\nonumber\\
+&+\tfrac12B_{\lambda\lambda}s^2
++B_{\lambda w}R_w|s|
++\tfrac12B_{ww}R_w^2.
+\label{eq:Vbound}
+\end{align}
+这里 $\phi_0$ 与一阶导数取自 $(\lambda_0,0)$，三个 $B$ 必须是整个单元上的有效上界。$\Phi_\phi(s)$ 是凸函数，因此其在区间 $[-h,h]$ 上的最大值取于端点。每个节点的充分电压安全判据为
+\begin{equation}
+\max\{\Phi_{\phi_i^-}(-h),\Phi_{\phi_i^-}(h),
+\Phi_{\phi_i^+}(-h),\Phi_{\phi_i^+}(h)\}\le0.
+\label{eq:voltage_accept}
+\end{equation}
+若单元不是以 $\lambda_0$ 对称，使用实际两个端点偏移量即可。
+
+\subsection{复功率几何电流上界}
+直接对标量 $\ell_l$ 使用整体二阶余项可能过于保守，因为线路电流平方具有复功率模长形式 $\ell_l=(a_l^2+b_l^2)/\nu_l$。令 $y_l=(a_l,b_l)$，在整个单元上构造仿射展开
+\begin{equation}
+y_l(s,w)=y_l^0+t_ls+\sum_jT_{lj}w_j+r_l(s,w),
+\qquad \norm{r_l(s,w)}_2\le\eta_l .
+\label{eq:affine}
+\end{equation}
+记 $e_\theta=(\cos\theta,\sin\theta)$。根据 $\norm{y}_2=\max_{\theta}e_\theta^\top y$，可将仿射部分对所有负荷和光伏扰动的最大模长\emph{精确}化为一维角度优化：
+\begin{equation}
+A_l=\max_{\theta\in[0,2\pi]}
+\left[
+e_\theta^\top y_l^0+
+h|e_\theta^\top t_l|+
+\sum_j\supp_{\U_j}(T_{lj}^\top e_\theta)
+\right].
+\label{eq:angular}
+\end{equation}
+将括号内记为 $f_l(\theta)$，其全局 Lipschitz 常数可取
+\begin{equation}
+K_l=\norm{y_l^0}_2+h\norm{t_l}_2+
+\sum_jC_j\norm{T_{lj}}_{\mathrm F}.
+\label{eq:lip}
+\end{equation}
+用 $N_\theta$ 个等距角度采样时，必须加入漏采校正：
+\begin{equation}
+A_l\le\max_{0\le k<N_\theta}
+f_l(2\pi k/N_\theta)+\pi K_l/N_\theta.
+\label{eq:gridsafe}
+\end{equation}
+只取角度采样最大值是对真实最大值的\emph{下界}，不能单独作为安全证明。若已经验证该线路接收端电压平方满足 $\nu_l\ge\underline\nu_l>0$，则
+\begin{equation}
+\ell_l\le
+U_l^{\rm phasor}:=
+\frac{\left[\max\{0,\max_k f_l(2\pi k/N_\theta)
++\pi K_l/N_\theta+\eta_l\}\right]^2}
+{\underline\nu_l}.
+\label{eq:phasor_bound}
+\end{equation}
+这给出整个单元上的电流平方安全上界。若另有同一单元上有效的 Hessian 电流上界 $U_l^H$，可以取 $\min\{U_l^H,U_l^{\rm phasor}\}$，仍为上界。本文采用分块 Hessian 重点处理电压、复功率几何重点处理电流，两种工具互补而不互相替代。
+
+\subsection{光伏有功--无功耦合容量检查}
+逆变器 $j$ 在未限幅公式下的\emph{原始总输出}写为
+\begin{equation}
+y_j^{PV}(s,w)=
+\begin{pmatrix}
+P_j^0+w_{p,j}\\
+w_{q,j}-g_j(V_j(s,w)-V_j^{\rm ref})
+\end{pmatrix}.
+\end{equation}
+对该二维向量同样使用式~\eqref{eq:angular} 的半圆几何支撑函数，并加入非线性余项 $\eta_j^{PV}$。余项可以从平方电压 Hessian 得到，因为
+\begin{equation}
+\nabla^2 V_j=
+\frac{\nabla^2\nu_j}{2\sqrt{\nu_j}}
+-\frac{\nabla\nu_j\nabla\nu_j^\top}{4\nu_j^{3/2}}.
+\end{equation}
+记仿射部分的可验证模长上界为 $\overline A_j^{PV}$，整个单元的逆变器一致性条件为
+\begin{equation}
+\overline A_j^{PV}+\eta_j^{PV}\le S_j,\qquad
+j=1,\ldots,m .
+\label{eq:PVpass}
+\end{equation}
+该判据直接保留 $P_j$ 与 $Q_j$ 的相关性，避免分别取极大值后过度保守。只要全部逆变器通过，光滑方程的输出始终落在功率圆内，因而与实际带限幅控制方程一致。未通过只表示当前光滑证书无法接受这个单元，不等同于真实电网越限。
