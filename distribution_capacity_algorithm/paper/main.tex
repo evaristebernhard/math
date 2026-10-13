@@ -1,25 +1,29 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[UTF8,11pt,a4paper,fontset=none]{ctexart}
 \usepackage[margin=24mm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
 \usepackage{booktabs,array,enumitem,microtype}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
-\newtheorem{remark}{Remark}
+\setCJKmainfont{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\setmainfont{TeX Gyre Termes}
+\newtheorem{theorem}{定理}
+\newtheorem{proposition}{命题}
+\newtheorem{remark}{注}
 \newcommand{\R}{\mathbb R}
 \newcommand{\U}{\mathcal U}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\supp}{\operatorname{supp}}
 \newcommand{\clip}{\operatorname{clip}}
-\title{\bfseries A Structure-Aware Algorithm for Robust Safe Load Hosting in Distribution Networks with Inverter Volt/VAR Control}
-\author{Research manuscript --- authors to be added}
-\date{October 2026\\[2pt]\small Working draft; IEEE 33-bus safe-inner figures are not yet formally interval-certified}
+\title{\bfseries 基于结构化 Hessian 与复功率几何界的\\配电网鲁棒安全接入容量算法}
+\author{研究论文初稿（作者信息待补）}
+\date{2026 年 10 月\\[2pt]\small 研究版本：IEEE 33 节点的安全容量内界尚未完成严格区间认证}
 \begin{document}
 \maketitle
 \begin{abstract}
-This paper studies the safe admission of additional flexible demand in radial distribution networks with uncertain photovoltaic injections and power-limited inverter Volt/VAR response. Rather than estimating extreme operating points separately, we construct a connected robust safe loading interval. Our algorithm combines implicit nonlinear DistFlow sensitivities, structured load--uncertainty block-Hessian voltage bounds, a support-function reduction of complex-power thermal envelopes, and a correlated active/reactive inverter capability check. Adaptive subdivision ensures that an accepted capacity covers every intermediate load, not merely passing sample points. An optional outer search tunes heterogeneous inverter gains but requires no claim of global optimality. We prove a conditional soundness theorem: validated state and derivative enclosures on every admitted cell imply steady-state security for all prescribed disturbances and load levels in the accepted prefix. In a double-precision IEEE 33-bus study, the computed conservative admission level increases from 1.0586 MW with uniform gains to 1.1500 MW with coordinated gains, an 8.63\% improvement in the numerical certificate objective. These safe-side IEEE 33-bus values are not yet outward-rounded proofs; dynamic safety and global optimal gain design are outside the claims of this manuscript.
+针对含光伏不确定性与功率受限逆变器 Volt/VAR 调节的径向配电网，研究新增柔性负荷的鲁棒安全接入容量计算问题。不同于只计算某个负荷水平下的最坏电压或电流，本文将输出定义为从当前负荷水平出发、所有中间水平均满足安全约束的\textbf{连续接入容量区间}。为此，提出一种结构化容量认证算法：利用非线性 DistFlow 隐函数导数建立电压对负荷与光伏扰动的分块 Hessian 上界，使用半圆不确定集的解析支撑函数处理一阶最坏扰动，利用复功率模长的角度参数化收紧线路电流上界，并通过光伏有功--无功耦合视在功率约束保证采用的光滑下垂方程与物理限幅控制一致。算法采用自适应区间细分，只在整个负荷区间完成覆盖和全部约束检查时接受容量。进一步使用简单的外层增益搜索改善所得安全容量，无需证明全局最优。本文给出算法在已验证状态及导数区间下的条件安全性定理。在 IEEE 33 节点研究算例中，普通双精度计算得到的保守容量候选由统一增益下的 1.0586 MW 提高至协调增益下的 1.1500 MW，计算目标提高约 8.63\%。上述安全内界尚不是向外舍入的严格数值证明；本文不主张动态稳定性保证或物理容量全局最优性。
 \end{abstract}
-\noindent\textbf{Index terms:} robust hosting capacity, distribution system, nonlinear DistFlow, block Hessian, inverter control, uncertainty support function.
+\noindent\textbf{关键词：}配电网；安全接入容量；非线性 DistFlow；分块 Hessian；光伏不确定性；Volt/VAR 控制；鲁棒计算
 \input{sections/01_problem}
 \input{sections/02_envelopes}
 \input{sections/03_algorithm}
@@ -27,14 +31,14 @@ This paper studies the safe admission of additional flexible demand in radial di
 \begin{thebibliography}{9}
 \bibitem{sou2026}
 K.~C. Sou, S.~Z. Khong, and H. Sandberg,
-\emph{Real-time worst-case load flow for distribution systems with power injection uncertainties},
-IEEE Trans. Power Systems, vol.~41, no.~1, pp.~124--141, 2026.
-\href{https://doi.org/10.1109/TPWRS.2025.3597048}{doi:10.1109/TPWRS.2025.3597048}.
+\emph{Real-Time Worst-Case Load Flow for Distribution Systems With Power Injection Uncertainties},
+IEEE Transactions on Power Systems, vol.~41, no.~1, 2026.
 \bibitem{pantazis2026}
 G. Pantazis and M. Chong,
-\emph{Certificate-based synthesis of coordinated droop control for heterogeneous radial distribution networks},
+\emph{Certificate-based Synthesis of Coordinated Droop Control for Heterogeneous Radial Distribution Networks},
 arXiv:2608.11141, 2026. \url{https://arxiv.org/abs/2608.11141}.
 \bibitem{matpower33}
-MATPOWER, \emph{case33bw benchmark data}, \url{https://github.com/MATPOWER/matpower/blob/master/data/case33bw.m}.
+MATPOWER, \emph{case33bw benchmark data},
+\url{https://github.com/MATPOWER/matpower/blob/master/data/case33bw.m}.
 \end{thebibliography}
 \end{document}
