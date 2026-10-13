@@ -9,9 +9,10 @@
 \node[process,below=of b] (c) {半圆支撑函数计算电压边界；复功率角度法计算电流边界；检查完整 $P$--$Q$ 功率圆};
 \node[decision,below=of c] (d) {当前完整负荷单元是否满足全部安全判据？};
 \node[process,below=of d] (e) {满足：接受单元；未满足：细分并复算（达到预算则记为未知）};
-\node[process,below=of e] (f) {只有全部单元无间隙覆盖 $[0,L]$ 才输出可接入容量；外层可尝试新下垂增益};
+\node[process,below=of e] (f) {记录可接入容量与活跃约束，更新逆变器增益后重新计算};
 \foreach \s/\t in {a/b,b/c,c/d,d/e,e/f}{\draw[->,thick,blue!70!black] (\s.south)--(\t.north);}
+\draw[->,thick,dashed,teal!70!black] (f.east) -- ++(.55,0) |- (b.east);
 \end{tikzpicture}
-\caption{结构化安全容量计算流程。核心是对完整负荷单元而非离散负荷采样点进行检查。}
+\caption{最大安全接入容量与协调增益联合设计流程。每次增益更新后均重新完成负荷区间检查。}
 \label{fig:flow}
 \end{figure}
