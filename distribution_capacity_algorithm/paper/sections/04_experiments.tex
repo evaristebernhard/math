@@ -1,51 +1,49 @@
-\section{IEEE 33-bus numerical study}\label{sec:experiments}
-\subsection{Benchmark and evidence level}
-The numerical study uses the 32 active branches of MATPOWER case33bw~\cite{matpower33}, with 12.66 kV and 10 MVA bases. The nominal active/reactive loads are multiplied by 0.65. Four PV inverters are placed at buses 9, 18, 24 and 33, each with 0.25 MW nominal active injection, a right-half-disc uncertainty radius of 0.125 MVA in the active/reactive plane and a 1 MVA nameplate. Extra unity-power-factor demand enters at bus 18. Voltage limits are 0.95--1.05 pu. We use a \emph{research-assumed} identical branch-current limit of 0.31 pu, which is \emph{not} a physical line-by-line ampacity dataset supplied by MATPOWER. Four gains are varied within an illustrative $[0,4]^4$ design box. These numerical assumptions must accompany every comparison.
+\section{IEEE 33 节点数值实验}\label{sec:experiments}
+\subsection{算例与证据等级}
+实验使用 MATPOWER 的 case33bw~\cite{matpower33}，保留 32 条有效径向支路，基准电压 12.66 kV、基准容量 10 MVA，原始有功、无功负荷同时乘以 0.65。光伏逆变器设置于 9、18、24、33 号节点，每台标称有功注入为 0.25 MW、右半圆有功--无功扰动半径为 0.125 MVA、视在功率额定值为 1 MVA。额外新增的单位功率因数负荷全部接入 18 号节点。电压限制为 $0.95\le V_i\le1.05$ pu，线路电流统一采用 $I_l^{\max}=0.31$ pu。应特别强调：这个统一电流限值是\emph{研究假设}，并非实际线路逐条额定载流量。外层设计将四个增益约束在 $[0,4]^4$ 内，这也不意味着已经完成动态稳定增益区间的判定。
 
-The archival implementation computes the existing nonlinear implicit sensitivity and block-Hessian envelopes, the geometric current upper bound with an angular-grid allowance, and the correlated raw-PV capability bound on load cells. It adaptively refines every load cell from zero to each tested candidate. The IEEE 33-bus \emph{inner} numbers in Table~\ref{tab:results} use \emph{ordinary double precision}. They therefore demonstrate numerical behavior of conservative formulas but are \emph{not a formal outward-rounded all-uncertainty safety proof}.
+已有 Python 原型对每一负荷单元分别计算非线性状态包络、分块 Hessian 电压界、复功率几何电流界和有功--无功耦合功率圆上界，并自适应细分到从零到目标容量的全部区间均通过测试。表~\ref{tab:results} 的安全侧数字均来自\emph{普通双精度计算}，仍属于保守判据的数值候选，\textbf{不是已经完成向外舍入的全扰动安全认证}。
 
 \begin{table}[ht]
 \centering
-\caption{Entire-prefix passing \emph{floating-point candidates}; this is not a comparison of certified physical optimums. All other network and uncertainty settings are held fixed.}
+\caption{同一 IEEE 33 节点算例下的连续容量浮点候选。各方案仅改变四台逆变器增益，其余模型与约束相同。}
 \label{tab:results}
-\begin{tabular}{@{}p{33mm}p{72mm}rr@{}}
+\begin{tabular}{@{}p{32mm}p{72mm}rr@{}}
 \toprule
-Design & Gains at buses (9, 18, 24, 33) & Prefix (MW) & Cells\\
+设计方案 & 增益（节点 9、18、24、33） & 容量/MW & 单元数\\
 \midrule
-Uniform & $(1.92,1.92,1.92,1.92)$ & 1.0586 & 58\\
-Coordinated (earlier) & $(3.70,1.92,2.12,2.52)$ & 1.1363 & 62\\
-Coordinated (revised) & $(3.80105,1.89598,2.39520,4.00000)$ & 1.1500 & 60\\
+统一增益 & $(1.92,1.92,1.92,1.92)$ & 1.0586 & 58\\
+协调增益（前期） & $(3.70,1.92,2.12,2.52)$ & 1.1363 & 62\\
+协调增益（改进） & $(3.80105,1.89598,2.39520,4.00000)$ & 1.1500 & 60\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-On the same reported conservative algorithmic objective, the revised heterogeneous setting increases the accepted target by
+相对于统一增益的浮点候选容量，改进方案在相同保守计算目标下增加
 \[
-1.1500-1.0586=0.0914\ \mathrm{MW}=91.4\ \mathrm{kW},
-\qquad 0.0914/1.0586\approx8.63\%.
+1.1500-1.0586=0.0914\ {\rm MW}=91.4\ {\rm kW},
+\qquad \frac{0.0914}{1.0586}\approx8.63\%.
 \]
-This is \emph{not} evidence of an 8.63\% improvement in the rigorously proved \emph{true physical} maximum, because the new inner-side IEEE 33-bus calculations have not yet been validated with directed intervals. The last bus-33 gain touches the arbitrarily chosen design-box limit of 4; it cannot be advertised as a globally optimal hardware controller.
+这只能解释为\emph{现有算法返回的候选安全容量增加}，尚不能直接声称真实物理最大容量提高了 $8.63\%$。改进方案中 33 号增益达到人为上限 $4$，更不能据此声称全局最优或物理控制器参数最优。
 
-\subsection{Why structured current and voltage envelopes both matter}
-The scalar second-derivative current estimate can be unnecessarily loose even when it is mathematically valid. In an earlier gain-$2.6$ cell near $1.00$--$1.02$ MW, the first-line scalar Hessian current estimate was roughly $0.334$ pu, exceeding the illustrative $0.31$ pu limit, whereas the affine phasor geometry with its nonlinear remainder yielded about $0.286$ pu for the same cell. The line-specific phasor enclosure thus removed a false rejection from the scalar bound. This comparison is \emph{for bounding methods}, not a claim that the actual physical current equals $0.286$ pu or that all other security conditions pass at that load.
+\subsection{分块 Hessian 与复功率界的互补作用}
+将线路电流平方当作普通标量，对其直接使用宽松的整体 Hessian 余项会造成额外保守性。在以前增益约为 $2.6$、新增负荷约为 $1.00$--$1.02$ MW 的单元上，首条线路的标量 Hessian 电流上界约为 $0.334$ pu，超过所假设的 $0.31$ pu 限值；而同一单元的复功率几何计算上界约为 $0.286$ pu，可以通过线路电流测试。因此复功率结构可以消除部分由普通标量上界造成的误拒绝。
 
-At the same time the block Hessian is not discarded: it controls nonlinear bus voltage and the voltage-dependent inverter apparent-power envelope; a fully scalar phasor treatment cannot replace those derivative checks. The gain search is therefore \emph{capacity design using a structured oracle}, not merely tuning gains according to one sampled worst voltage.
+但这不表示 Hessian 应被放弃。节点电压、非线性电压相关的逆变器输出及混合参数余项仍由分块 Hessian 控制。电流通过仅表示\emph{该项约束}的保守界改善，其他电压及逆变器额定容量可能继续限制整体安全接入容量。
 
-\subsection{Separate physical unsafe-witness validation}
-For the revised coordinated gains, consider the \emph{single feasible} disturbance $w_{p,j}=0$, $w_{q,j}=-0.0125$ pu for each PV and added load $1.1870$ MW. A separate interval fixed-point calculation on the intended physical normal branch encloses an equilibrium with all PV modes strictly unsaturated and
+\subsection{独立的物理越限工况}
+对于表~\ref{tab:results} 的改进协调增益，取四台逆变器上的同一可行扰动 $w_{p,j}=0$、$w_{q,j}=-0.0125$ pu，再取新增负荷为 $1.1870$ MW。已有单独的区间不动点验证记录在选定正常物理稳态分支上给出
 \[
-0.94993228<V_{18}<0.94993334<0.95\ \mathrm{pu}.
+0.94993228<V_{18}<0.94993334<0.95\ {\rm pu},
 \]
-Thus for \emph{this fixed gain vector} there is a genuine violating witness at that load. It can obstruct a connected safe prefix beyond $1.1870$ MW; it does not prove that all disturbances below that load are safe, that other gains cannot perform better, or that all AC solutions are globally unique. The interval witness verifier remains in the accompanying numerical experiment archive; it has not yet been committed as a dependency-closed IEEE 33-bus solver to this paper folder.
+且对应状态盒内四台逆变器均严格未限幅。该结果意味着这组\emph{固定增益}存在一个真实欠压见证，因此其连续安全容量不能延伸到这一负荷水平。
 
-A further gain-independent necessary outer bound $L^\star\le1.452831$ MW for the exact-decimal study feeder is recorded with a standalone exact-rational script in the existing research project. It is supplementary context, not an algorithmic optimality claim or evidence that our capacity-search procedure nearly attains the physical limit.
+必须区分两个证据方向：一个可行扰动的严格越限证据只提供\emph{固定设计的容量上界障碍}；它本身不能证明较低负荷对\emph{全部}扰动安全。此前研究得到的与增益无关的解析必要容量上界约为 $1.452831$ MW，对当前算法论文仅作为附加参考，并不证明当前搜索接近全局最优。
 
-\subsection{Needed submission-stage ablation studies}
-The most informative comparisons for an \emph{algorithm} paper will hold every physical assumption fixed and ablate only the envelope mechanism: (i) isotropic whole-Hessian voltage/current bounds; (ii) load/uncertainty block Hessians with scalar thermal estimates; (iii) block Hessians plus phasor current geometry; and (iv) the full algorithm with the joint PV disk test. Recording per-constraint limiting margins, computation time, load-cell subdivisions, angular resolution and conservative capacity should identify the actual contribution of each ingredient. A second feeder and realistic line-specific current limits are needed to make the engineering generality credible. We have not filled in absent running times, fabricated matched literature benchmark results or relabeled Monte Carlo stress tests as robust certificates.
+\subsection{算法论文还需要哪些对照实验}
+为了明确各环节究竟贡献多少容量提升，后续应在\emph{完全相同的物理模型与约束}下进行消融：整体 Hessian 法、保留三个分块但使用标量线路电流上界的方法、分块 Hessian 加复功率几何界的方法，以及进一步加入耦合光伏功率圆测试的完整方法。每组实验需要同时记录容量、活跃约束裕度、运行时间、单元细分数量以及角度分辨率敏感性。进一步引入第二个馈线和真实线路逐条载流量，才能判断工程推广能力。当前没有完成的计时或文献同模型对照，不能用推测数字补齐；Monte Carlo 抽样也不能替代全扰动安全证明。
 
-\section{Discussion and conclusion}
-The proposed method returns a concrete admission decision: a gain vector (which may be fixed), a load prefix, and full-cell feasibility records. This is a useful algorithmic output even without proving that it maximizes the true physical load-hosting capacity. Its theoretical contribution is the sound \emph{composition} of exact half-disc support, nonlinear implicit block-Hessian bounds, geometric line-current envelopes and a joint inverter capability consistency test. Its operational distinction is accepting the \emph{entire} loading trajectory in parameter space, not a finite grid of unrelated passing points.
+\section{讨论与结论}
+本文将配电网新增负荷接入转化为\emph{连续负荷区间安全判定问题}，提出一种由非线性隐函数灵敏度、分块 Hessian 电压包络、半圆支撑函数、复功率角度电流界及逆变器有功--无功耦合约束构成的容量计算算法。算法先保证每个负荷单元在全部允许扰动下通过充分安全判据，再检查从零到目标容量的无间隙覆盖；外层可调整逆变器增益提高算法返回的安全容量，而不依赖全局最优证明。
 
-Three gaps delimit the present claim. First, the IEEE 33-bus positive-capacity records are only floating-point candidates; rigorous outward-rounded state, Jacobian, Hessian, phasor and PV-envelope evaluation remains to be implemented. Second, when Q-clipping occurs within a cell, the present smooth oracle returns UNKNOWN rather than proving a valid piecewise mode; saturation-aware coverage is a logical extension, not a finished algorithmic result on this feeder. Third, a steady secure solution says nothing by itself about inverter transients, ramp limits, or dynamic stability.
-
-The natural next paper milestone is therefore \emph{a reproducible validated IEEE 33-bus safe-inner run plus matched algorithmic ablations}, not a theorem about global gain optimality. The present manuscript supplies the full algorithmic question, mathematical construction, proof obligations and transparent numerical starting point.
+目前理论层面已经有完整的\emph{条件安全性定理}，IEEE 33 节点双精度实验也展示了异构增益方案在保守计算目标上的容量提升。但最终可用于严格安全声明的数值实现仍需完成向外舍入的状态、Jacobian、Hessian、复功率和功率圆验证；限幅切换区域仍需经验证的分模式计算。同时，稳态安全不自动代表动态控制稳定性。作为算法论文，最优先的后续工作是补齐可复现的严格安全侧数值程序、同模型消融实验、计算时间及独立算例，而不是继续追求无法验证的全局最优数字。
