@@ -19,92 +19,94 @@
 \newcommand{\R}{\mathbb{R}}
 \title{Competing Residence Times and Seven Limit Cycles\\[3pt]\large in a Periodically Forced Three-Zone Equation}
 \author{Chaoyu Hu \and Tianrun Yu}
-\date{Research manuscript --- 10 October 2026}
+\date{13 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-A periodically forced three-zone scalar equation has explicit solutions on each
-linear region, yet the switching durations can generate a complicated return map.
-For the symmetric saturation equation
-$\dot x=ax+(b-a)\operatorname{sat}(x)+\mu\sin t$, $ab<0$,
-a universal maximum of five limit cycles had been conjectured. We construct
-at least seven isolated periodic solutions at the rational parameter triple
-$(a,b,\mu)=(-9,3/2,181363/100000)$. The construction is guided by a
-residence-time identity for the mean-parametrized biased response: its
-slope is determined by the time spent in the expanding middle zone.
-Raising the mean reduces the lower exterior visit but enlarges the upper
-one; these contributions compete, and the loss of a lower visit at a
-nondegenerate grazing obeys a square-root law. The resulting additional
-turning of the response curve explains how the candidate was found.
-The existence proof itself does not rely on the observed folds: exact
-piecewise flow formulas enclose three independent sign changes of the
-Poincar\'e displacement; scalar order and half-period symmetry then give
-seven isolated cycles. A quantitative perturbation argument and
-strict grazing barriers prove that at least seven \emph{isolated}
-cycles persist throughout an explicit $10^{-12}$ parameter cube.
-At least four are attracting and three repelling; moreover, three
-distinct stationary residence-time profiles follow from the ordered
-response zeros. Thus five is not a universal upper bound,
-but the sharp global upper bound remains unknown.
+We consider a periodically forced, symmetric, three-zone scalar
+piecewise-linear equation with contracting outer zones and an expanding
+middle zone. An earlier conjecture proposed that this family admits at most
+five limit cycles. We give a rational counterexample and prove a stronger
+parameter-uniform statement: every system in an explicitly specified open
+cube about $(A,B,\mu)=(9,3/2,181363/100000)$ possesses at least seven
+isolated $2\pi$-periodic orbits, including at least four locally attracting
+and three locally repelling ones. A residence-time identity and a
+square-root law at grazing explain the geometry that led to the example.
+The proof uses exact affine flows, strict interval bounds for Poincar\'e
+displacements and switching events, scalar order, and half-period
+symmetry. We also obtain three distinct critical residence-time profiles.
+No sharp global upper bound is claimed.
 \end{abstract}
 \noindent\textbf{Keywords:} piecewise-linear differential equations; limit cycles; residence time; grazing bifurcations; periodic solutions. \quad
 \textbf{MSC 2020:} 34C25, 34A34, 37C27.
 
-\section{Introduction: a simple equation with an unexpected number of cycles}\label{sec:intro}
-Consider the periodic scalar equation
+\section{Introduction}\label{sec:intro}
+We study the periodically forced scalar equation
 \begin{equation}\label{eq:main}
- \dot x=ax+(b-a)\sat(x)+\mu\sin t,\qquad ab<0,\quad\mu>0,
+ \dot x=-Ax+(A+B)\sat(x)+\mu\sin t,
+ \qquad A,B,\mu>0,
  \qquad
- \sat(x)=\begin{cases}-1,&x<-1,\\x,&|x|\le1,\\1,&x>1.\end{cases}
+ \sat(x)=
+ \begin{cases}
+   -1,&x<-1,\\
+   x,&|x|\le1,\\
+   1,&x>1.
+ \end{cases}
 \end{equation}
-A periodic solution determines a closed curve on the cylinder
-$(t\bmod2\pi,x)$. We count \emph{isolated} $2\pi$-periodic curves, rather than
-zeros of a numerical discretization. Each of the three affine vector fields
-in \eqref{eq:main} can be integrated explicitly. Nevertheless, the times spent
-in the three zones are themselves unknown, and the combinatorics of switching
-changes when a trajectory touches $x=\pm1$ without crossing it.
+Its solutions define trajectories on the cylinder
+$(t\bmod 2\pi,x)$. A limit cycle means an isolated periodic
+trajectory on this cylinder. Despite the explicit affine flow
+in each zone, the number of periodic solutions depends on the
+switching times between zones.
 
-Bravo, Carmona, Fern\'andez and Ojeda \cite{Bravo2025} established a
-parameter-independent finite upper bound and constructed parameter regimes
-with five cycles. They also highlighted the conjecture that five is the largest
-possible number. In contrast, the general sparse-flight estimate of
-\cite{HuYuBound} gives an explicit, but much larger, upper bound. Neither
-result settles the small sharp count.
+Bravo, Carmona, Fern\'andez and Ojeda~\cite{Bravo2025}
+proved a parameter-independent finite upper bound and exhibited
+parameters with five limit cycles. They proposed five as the
+largest possible number. A more general, substantially larger
+bound appears in~\cite{HuYuBound}. We give a counterexample
+to the proposed bound and prove that the phenomenon persists
+on an explicit parameter set.
 
-Our result changes its known lower bound. For the \emph{rational} parameters
-\begin{equation}\label{eq:witness-intro}
-  (a,b,\mu)=\left(-9,\frac32,\frac{181363}{100000}\right),
-\end{equation}
-there are at least seven distinct isolated periodic responses. In particular,
-five is not a universal upper bound for \eqref{eq:main}. We do not claim seven
-is the global maximum.
-
-The interesting point is \emph{why} seven can occur. The middle zone expands
-perturbations, while both exterior zones contract them. Raising the mean of a
-periodic response suppresses a visit to the lower exterior zone but prolongs
-a visit to the upper exterior zone. These changes have opposite effects on the
-residence time in the expanding middle zone. Close to a grazing transition,
-the shorter exterior visit collapses at square-root order, giving this
-competition a singular sensitivity. The resulting response curve can bend
-back an additional time. That geometric observation led us to
-\eqref{eq:witness-intro}; the proof of seven cycles then uses exact flights
-and strict signs of a one-dimensional return map.
-
-The distinction matters: the response-curve picture explains the
-\emph{discovery}, whereas the fixed-point inequalities below prove the
-\emph{existence}. Our logical path is
+\begin{theorem}[Seven isolated cycles on an explicit parameter cube]
+\label{thm:main}
+Let
 \[
-\begin{gathered}
- \text{residence-time balance}\ \longrightarrow\ \text{response turning},\\
- \text{three ordered return-map zeros}\ \longrightarrow\ \text{seven cycles by symmetry}.
-\end{gathered}
+  (A_0,B_0,\mu_0)
+  =\left(9,\frac32,\frac{181363}{100000}\right).
 \]
-A second implementation of the interval arithmetic would be valuable before
-journal submission; we explicitly distinguish this software-audit task from
-the analytic deductions.
+For every $(A,B,\mu)$ satisfying
+\begin{equation}\label{eq:param-cube}
+  |A-A_0|<10^{-12},\qquad
+  |B-B_0|<10^{-12},\qquad
+  |\mu-\mu_0|<10^{-12},
+\end{equation}
+equation~\eqref{eq:main} has at least seven isolated
+$2\pi$-periodic trajectories. Among them one can choose at
+least four locally attracting and three locally repelling
+trajectories. The antisymmetric central trajectory is
+hyperbolic repelling; no hyperbolicity is asserted for the
+selected noncentral trajectories.
+\end{theorem}
 
-\section{The geometry behind the extra periodic responses}\label{sec:response}
-We work in the orientation $a=-A<0<b=B$, where $A,B>0$, and write
+In particular, $(A,B,\mu)=(A_0,B_0,\mu_0)$ disproves the
+conjectured universal upper bound of five. The theorem is
+a \emph{lower} bound for an explicit parameter region:
+it does not assert that seven is the maximum, either at
+these parameters or globally.
+
+The parameter choice is explained by the geometry of the biased
+periodic response. Its slope depends on the time spent in the
+expanding middle zone, while the two exterior residence times
+respond in competing ways to a change in the mean.
+Near a nondegenerate grazing, one exterior residence vanishes
+at square-root order. This mechanism guides the construction
+in Sections~\ref{sec:response}--\ref{sec:discovery}.
+The proof in Sections~\ref{sec:witness}--\ref{sec:proof}
+uses strict return-map signs, half-period symmetry,
+and quantitative grazing and Floquet bounds.
+ 
+\section{Residence times and the periodic response}\label{sec:response}
+For equation~\eqref{eq:main}, write
 \begin{equation}\label{eq:g}
   \dot x+g(x)=\mu\sin t,\qquad
   g(x)=Ax-(A+B)\sat(x).
@@ -114,7 +116,7 @@ the middle region has $g'=-B<0$, hence they grow at rate $B$.
 A single flight therefore tells us nothing decisive about the full-period
 response: its total amplification depends on how long it spends in each zone.
 
-\subsection{A response curve whose slope is a time balance}
+\subsection{The residence-time identity}
 To vary periodic solutions continuously without restricting ourselves to
 actual zeros of the original equation, introduce an auxiliary bias:
 \begin{equation}\label{eq:bias}
@@ -248,13 +250,13 @@ therefore a reason that multiple crossings of the critical level $\rho$
 can occur when the exterior damping is sufficiently asymmetric.
 \end{remark}
 
-\section{From an unsuccessful monotonicity proof to the witness}\label{sec:discovery}
-Our search began with the question whether the three-zone residence time
-could obey a sign constraint strong enough to force only two noncentral
-response zeros. The square-root mechanism suggests why such a constraint is
-fragile. We made the obstruction computable through the switching geometry.
+\section{Locating the seven-cycle parameters}\label{sec:discovery}
+The residence-time identity suggests a practical way of locating additional
+response folds. The square-root grazing mechanism rules out a simple global
+monotonicity argument, and the switching geometry reduces the search to
+a finite expression in crossing times and velocities.
 
-\subsection{A four-crossing sign formula}
+\subsection{A four-crossing derivative formula}
 Take successive switching times $t_1<t_2<t_3<t_4$, in the order
 $+1,-1,-1,+1$, and let
 \begin{equation}\label{eq:durations}
@@ -288,25 +290,24 @@ can be parametrized by a compatibility curve in $(r,s)$. The search is thus
 for a change of sign on a physically admissible curve, not a blind search
 for zeros of the full-period map.
 
-\subsection{Why $A=9$, $B=3/2$ and $\mu=1.81363$?}
-Initial numerical tests with weak exterior damping suggested a simple sign
-for $\mathcal H$, but that sign failed for stronger damping. A physical
-negative value arose with the convenient rational slopes
+\subsection{Selection of the rational parameters}
+The four-speed criterion~\eqref{eq:H} was evaluated along the
+admissible critical-response curve. A change in sign occurred
+for the rational slopes
 \[
  A=9,\qquad B=\frac32.
 \]
-Following the associated response-critical curve numerically then revealed
-a shallow \emph{valley} in the required forcing amplitude. Its minimum was
+Numerical continuation of the response-critical curve showed
+a shallow local minimum in the forcing amplitude, at
 near $\mu_{\min}\simeq1.813584$, while the symmetric critical fibre
-occurred at $\mu_c\simeq1.81363456$. The narrow strip
-$\mu_{\min}<\mu<\mu_c$ is precisely where a fixed-amplitude level can
-intersect the three-zone critical curve twice. We selected the simple
-rational value
+occurred at $\mu_c\simeq1.81363456$. The numerically observed interval
+$\mu_{\min}<\mu<\mu_c$ admits multiple intersections with the
+response-critical curve. A rational value inside it is
 \begin{equation}\label{eq:mu}
  \mu=\frac{181363}{100000}=1.81363
 \end{equation}
-in that strip. The two threshold values are exploratory numerical
-approximations, not rigorously enclosed bifurcation parameters.
+The two threshold values serve only to motivate the parameter
+choice; they are not rigorous bifurcation bounds.
 
 At this amplitude, the numerical response has the following three turning
 points on the positive-mean half-line:
@@ -347,18 +348,18 @@ return-map signs in Table~\ref{tab:signs}. The plotted data are not used
 as a mathematical certificate.}\label{fig:response}
 \end{figure}
 
-The geometry serves a different purpose from the proof. It tells us
-\emph{where} to look and what crossing structure to expect. Near grazing,
-however, the first response extremum is tiny, and ordinary time stepping
-can give false fixed points. To prove the claim we abandon the plotted
-response values and return to the original unbiased equation.
+The plotted extrema locate the candidate; they are not used as
+existence tests. Because the first extremum is extremely shallow,
+the proof instead evaluates exact affine flows with certified
+switching events and strict return-map signs.
 
-\section{A concrete, rational seven-cycle witness}\label{sec:witness}
-Our witness is
+\section{The rational witness and its Poincar\'e map}\label{sec:witness}
+At the center of the parameter cube~\eqref{eq:param-cube},
+the equation is
 \begin{equation}\label{eq:witness}
 \boxed{\ \dot x=-9x+\frac{21}{2}\sat(x)+\frac{181363}{100000}\sin t.\ }
 \end{equation}
-Equivalently, $\dot x+g(x)=\mu\sin t$ with
+Its restoring function is
 \begin{equation}\label{eq:gparts}
 g(x)=\begin{cases}9x+21/2,&x<-1,\\-3x/2,&|x|\le1,\\9x-21/2,&x>1.\end{cases}
 \end{equation}
@@ -368,11 +369,15 @@ P(y)=x(2\pi;0,y),\qquad D(y)=P(y)-y.
 \end{equation}
 Fixed points of $P$ are precisely the required periodic solutions.
 
-\begin{theorem}[At least seven isolated periodic solutions]\label{thm:seven}
-Equation \eqref{eq:witness} admits at least seven distinct isolated $2\pi$-periodic solutions on the phase cylinder. Consequently five is not a universal upper bound for the family \eqref{eq:main}.
-\end{theorem}
+\begin{proposition}[Certified rational witness]\label{prop:witness}
+At $(A,B,\mu)=(A_0,B_0,\mu_0)$, equation~\eqref{eq:main}
+has at least seven distinct isolated $2\pi$-periodic
+trajectories.
+\end{proposition}
 
-For orientation only, an independent high-precision computation gives three initial values above the antisymmetric center and their characteristic multipliers:
+High-precision numerical approximations for the three noncentral
+orbits above the antisymmetric center are listed below.
+The estimates help describe the dynamics but do not enter the proof.
 \begin{table}[ht]
 \centering
 \caption{Numerical approximations (not used in the proof).}\label{tab:roots}
@@ -383,10 +388,13 @@ $-0.556760196081272$ & $1.5169801260$ & repelling \\
 $-0.555155990304937$ & $0.3330479441$ & attracting \\\bottomrule
 \end{tabular}
 \end{table}
-The second solution approaches $-1$ very closely at its minimum, while the third stays above it and has only two threshold crossings. The mathematical problem is to prove that these are \emph{three genuine and distinct} zeros, not numerical artifacts caused by near-grazing.
+The second orbit nearly grazes $x=-1$, whereas the third remains
+above that threshold and has only two switching crossings.
+The strict displacement and event bounds below distinguish
+these genuine fixed points from numerical near-grazing artifacts.
 
-\section{Proof: six sign tests, first-hit control, and symmetry}\label{sec:proof}
-\subsection{Exact flights, not a numerical time-step approximation}
+\section{Proof of the main theorem}\label{sec:proof}
+\subsection{Exact affine flows and switching events}
 In a region where $g(x)=cx+d$, the flow from $x(t_0)=y_0$ is
 \begin{align}\label{eq:flight}
 \Phi_{c,d}(t;t_0,y_0)={}&e^{-c(t-t_0)}y_0-\frac dc\bigl(1-e^{-c(t-t_0)}\bigr)\\
@@ -413,7 +421,7 @@ A second useful shape identity holds within each affine zone. If $\dot x+cx+d=\m
 \end{equation}
 Thus the velocity cannot develop a hidden oscillation inside a flight: it has a known monotonicity pattern on the arcs determined by $\pi/2$ and $3\pi/2$. The two identities also make it possible to check the absence of tangencies across an entire interval of initial values, rather than merely accepting the crossings returned by a numerical event detector.
 
-\subsection{Three disjoint intervals on the Poincar\'e section}
+\subsection{Three disjoint fixed-point brackets}
 The six initial values are rational decimal numbers. Table~\ref{tab:signs} gives deliberately widened enclosures for their full-period displacements. The enclosures contain the raw intervals produced by the script \texttt{proof/certify\_seven.py}; no numerical root estimates are used.
 \begin{table}[ht]
 \centering
@@ -467,7 +475,7 @@ Here each entry holds at both endpoints, not just at one sampled orbit. Since $x
 
 It follows that the zero set of $D$ within each $I_j$ is discrete: an analytic function with two nonzero endpoint values cannot vanish identically. We therefore obtain \emph{three distinct isolated fixed points}, not just three zeros belonging to a possible continuum of fixed points.
 
-\subsection{Why they give seven rather than only three}
+\subsection{Symmetry and isolation at the rational witness}
 The forcing possesses the half-period reversal symmetry
 \begin{equation}\label{eq:sym}
 \mathcal Sx(t)=-x(t+\pi).
@@ -496,24 +504,34 @@ Half-period antisymmetry makes its total exterior residence $2s$. The exact mult
 \begin{equation}\label{eq:centerhyper}
 \log P'(y_c)=\frac32(2\pi-2s)-9(2s)=3\pi-21s>0.
 \end{equation}
-Thus $P'(y_c)>1$; the central fixed point is hyperbolic and isolated. The symmetry map preserves isolation of each noncentral fixed point, completing the proof of Theorem~\ref{thm:seven}. \qed
+Thus $P'(y_c)>1$; the central fixed point is hyperbolic and isolated. The symmetry map preserves isolation of each noncentral fixed point, completing the proof of Proposition~\ref{prop:witness}.
 
 \input{robustness.tex}
 
-\section{What has and has not been established}
-The proof does not require numerically counting the turning points in Figure~\ref{fig:response}; those estimates were only a guide for locating the parameters. The numerical response curve exhibits an additional reversal near lower-level grazing. Proposition~\ref{prop:grazing} proves the local residence-time singularity that makes this geometry possible, but it does not prove the number of global response extrema. The reason we can \emph{prove} their existence is independent and simpler: three verified Poincar\'e sign changes and the half-period reflection symmetry.
+\section{Discussion and open questions}
+The response curve in Figure~\ref{fig:response} illustrates how
+the competing residence times generate additional turning.
+Proposition~\ref{prop:grazing} identifies the local singular
+behavior at grazing, but does not classify all response folds.
+The rigorous existence count comes from the certified return-map
+signs and half-period symmetry, independently of the plotted extrema.
 
-There is an important limitation. The theorem proves
-$L(-9,3/2,1.81363)\ge7$ but does \emph{not} prove that seven is the
-global maximum. Theorem~\ref{thm:quantitative} now gives a quantitative
-parameter cube with seven \emph{isolated} cycles and a rigorous
-stability classification. The proof uses explicit grazing barriers
-and a lower bound on the central Floquet exponent; it does not
-establish that seven is the sharp global maximum.
-Determining the sharp bound remains open. The previously established general upper bound
-\cite{HuYuBound} is unchanged.
+Theorem~\ref{thm:main} disproves the conjectured five-cycle
+bound on an explicitly defined open parameter cube.
+The persistence proof certifies the switching structure
+and the central multiplier uniformly over the cube; the
+stability classification of noncentral cycles relies on
+Poincar\'e displacement signs and order, and does not
+establish their hyperbolicity. In particular the theorem
+does not determine the sharp global upper bound, nor
+the exact number of folds of the periodic response.
+The general upper bound from~\cite{HuYuBound} remains unchanged.
 
-The computations deserve independent scrutiny before journal submission. The current sign certificate relies on a standard-conforming Python \texttt{Decimal} implementation with correctly directed rounding; it is not a formally verified proof kernel. A second implementation based on Arb/FLINT or exact rational intervals would be a valuable independent audit. We separate this software-level qualification from the mathematical implication of the displayed strict bounds.
+The strict numerical inequalities were checked using directed
+\texttt{Decimal} interval arithmetic and exact affine flow formulas.
+The implementation is reproducible, but not formally verified.
+Independent replication using Arb/FLINT or exact rational interval
+arithmetic remains desirable.
 
 \section*{Code and data availability}
 The public source repository contains this manuscript, the exact-flow interval checker, the exploratory response data, and independent high-precision and ODE checks. From the project directory run
@@ -546,11 +564,15 @@ The exploratory solver supplies decimal \emph{centers} for event times, not trus
 The same half-period algorithm evaluates $Q(y)=x(\pi;0,y)+y$ at the rational endpoints of \eqref{eq:centerbracket}, with opposite certified signs. After checking the two transverse lower crossings, it encloses their time separation at the lower endpoint of the center bracket. Monotonic order of the first descending and second ascending crossing times shows that this is an upper bound for the central lower-zone residence $s$. The strict rational comparison $s<\pi/7$ gives \eqref{eq:centerhyper}.
 
 \paragraph{Logical dependencies.}
-There are only three points at which the executable output is used in the mathematical proof: (i) the strict six endpoint signs, (ii) the strict crossing/minimum inequalities ensuring the three analytic itinerary intervals, and (iii) the center bracket and $s<\pi/7$. The robustness results use
-the six same sign margins together with an analytic parameter
-perturbation inequality and the order structure of the return map,
-not the rounded multipliers in Table~\ref{tab:roots}.
-Every other mathematical step---intermediate value, strict scalar order, symmetry, analyticity across transverse events, and Floquet's formula---is analytic and independent of the numerical method.
+The executable interval certificates are used for four groups of
+strict inequalities: (i) the six displacement signs,
+(ii) the crossing and grazing barriers on the three shooting
+intervals, (iii) the central shooting and residence-time
+bounds, and (iv) the margins in the quantitative parameter
+continuation. The sign-change, order, symmetry, analyticity,
+Gronwall, and Floquet arguments are mathematical deductions
+from those inequalities. The rounded numerical multipliers
+in Table~\ref{tab:roots} are not proof inputs.
 
 \begin{thebibliography}{9}
 \bibitem{Bravo2025}
