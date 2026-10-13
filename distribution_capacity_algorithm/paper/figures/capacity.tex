@@ -1,0 +1,25 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+width=.88\linewidth,height=6.15cm,
+ybar,bar width=19pt,ymin=0.95,ymax=1.18,
+symbolic x coords={统一增益,前期协调,改进协调},
+xtick=data,
+ylabel={候选安全接入容量（MW）},
+ymajorgrids=true,grid style={gray!20},
+nodes near coords={\pgfmathprintnumber[fixed,precision=4]{\pgfplotspointmeta}},
+nodes near coords align={vertical},
+every node near coord/.append style={font=\small},
+enlarge x limits=.20,
+axis line style={gray!70},
+tick label style={font=\small},
+ylabel style={font=\small},
+]
+\addplot[draw=teal!70!black,fill=teal!32] coordinates {
+(统一增益,1.0586) (前期协调,1.1363) (改进协调,1.1500)};
+\end{axis}
+\end{tikzpicture}
+\caption{原 Hessian--复功率算法输出的三组 IEEE 33 节点双精度容量候选。三组仅改变逆变器增益，系统配置和安全约束相同；此图不是全局最优性比较。}
+\label{fig:capacity}
+\end{figure}

@@ -26,6 +26,10 @@ jobs:
           cd distribution_capacity_algorithm
           python3 algorithm/connected_prefix.py
           python3 -m unittest discover -s algorithm/tests -v
+      - name: Install numerical solver dependencies
+        run: python3 -m pip install --quiet numpy scipy
+      - name: Run IEEE33 nonlinear physical solver
+        run: python3 distribution_capacity_algorithm/algorithm/ieee33_solver_demo.py
       - name: Install Chinese XeLaTeX
         run: |
           sudo apt-get update -qq
