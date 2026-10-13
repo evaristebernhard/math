@@ -113,3 +113,10 @@ Run: `python3 code/capacity_gap_toy.py`. IEEE-33-bus capacity gap remains *unver
 
 - `notes/18_ieee33_interval_witness_certificates.md`: verified 64-state interval Banach inclusions for two **fixed feasible PV disturbances** in the real clipped-control model: g=1.92 at 1.09322 MW (all PV unsaturated), g=2.6 at 1.22273 MW (PV18 positive-Q clipped). Verified voltage boxes lie strictly below 0.95 pu. These establish physical **upper obstructions** (conditional on designated normal branch), not the all-uncertainty safe **lower** bound, dynamic safety, or global root uniqueness.
 - The standalone verifier is inside the recovered working-session zip but has not yet been imported to the repository: Github CI reproduction remains pending.
+
+## Four-inverter capacity-oriented gain selection — 2026-10-13
+
+- `notes/19_coordinated_gain_hosting_optimization.md`: **B builds on A** using the original block-Hessian voltage and phasor current inner envelopes. Select individual gains (bus 9/18/24/33) instead of forcing a common gain.
+- IEEE33 FLOAT connected-inner candidates: uniform g=(1.92,1.92,1.92,1.92) gives 1.0586MW; tested coordinated g=(3.70,1.92,2.12,2.52) gives 1.1363MW (+77.7kW, ~7.34%). Neither is outward-rounded full-uncertainty certification or global optimality.
+- New feasible unsafe witness at 1.1795MW for the coordinated controller was checked with **mpmath.iv interval Banach inclusion**, strictly unsaturated in the local root box, proving bus18 V<0.95pu. The previously strict uniform-g unsafe witness is 1.09322MW. A directed-interval all-disturbance safe *inner prefix through 1.10MW* for coordinated gains would prove physically improved hosting capacity. **That lower side is still open.**
+- Executable joint-gain source and logs are in the separately downloadable complete experiment bundle; not imported to this repository branch yet. Dynamic inverter stability not evaluated.
