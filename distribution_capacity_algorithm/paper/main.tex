@@ -2,6 +2,9 @@
 \usepackage[margin=24mm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
 \usepackage{booktabs,array,enumitem,microtype}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\pgfplotsset{compat=1.18}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \setCJKmainfont{Noto Serif CJK SC}
 \setCJKsansfont{Noto Sans CJK SC}
@@ -15,13 +18,13 @@
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\supp}{\operatorname{supp}}
 \newcommand{\clip}{\operatorname{clip}}
-\title{\bfseries 基于结构化 Hessian 与复功率几何界的\\配电网鲁棒安全接入容量算法}
-\author{研究论文初稿（作者信息待补）}
-\date{2026 年 10 月\\[2pt]\small 研究版本：IEEE 33 节点的安全容量内界尚未完成严格区间认证}
+\title{\bfseries 考虑光伏不确定性与逆变器协调调节的\\配电网安全接入容量计算算法}
+\author{研究论文}
+\date{}
 \begin{document}
 \maketitle
 \begin{abstract}
-针对含光伏不确定性与功率受限逆变器 Volt/VAR 调节的径向配电网，研究新增柔性负荷的鲁棒安全接入容量计算问题。不同于只计算某个负荷水平下的最坏电压或电流，本文将输出定义为从当前负荷水平出发、所有中间水平均满足安全约束的\textbf{连续接入容量区间}。为此，提出一种结构化容量认证算法：利用非线性 DistFlow 隐函数导数建立电压对负荷与光伏扰动的分块 Hessian 上界，使用半圆不确定集的解析支撑函数处理一阶最坏扰动，利用复功率模长的角度参数化收紧线路电流上界，并通过光伏有功--无功耦合视在功率约束保证采用的光滑下垂方程与物理限幅控制一致。算法采用自适应区间细分，只在整个负荷区间完成覆盖和全部约束检查时接受容量。进一步使用简单的外层增益搜索改善所得安全容量，无需证明全局最优。本文给出算法在已验证状态及导数区间下的条件安全性定理。在 IEEE 33 节点研究算例中，普通双精度计算得到的保守容量候选由统一增益下的 1.0586 MW 提高至协调增益下的 1.1500 MW，计算目标提高约 8.63\%。上述安全内界尚不是向外舍入的严格数值证明；本文不主张动态稳定性保证或物理容量全局最优性。
+针对高比例光伏接入下新增负荷容量难以准确评估的问题，提出一种面向径向配电网的结构化安全接入容量计算算法。该方法在非线性 DistFlow 模型下，以新增负荷容量为直接输出，结合逆变器 Volt/VAR 下垂调节及视在功率约束，综合考虑节点电压、线路电流与光伏功率波动。算法首先利用数值潮流求解器和隐函数灵敏度获得运行点的一阶与二阶信息，进一步通过负荷--扰动分块 Hessian 近似建立电压安全包络；针对线路电流，提出基于复功率几何的角度搜索上界，避免统一 Hessian 范数造成的明显保守性；最后在连续负荷区间上执行自适应检查，并以外层协调增益搜索提高可接入容量。IEEE 33 节点算例中，统一逆变器增益得到的计算容量为 1.0586 MW，协调增益方案为 1.1500 MW，提高约 8.63\%。非线性潮流求解还展示了在相同光伏扰动下，协调增益能够延缓 18 号节点电压越限。结果表明，利用结构化灵敏度和电流几何模型能够形成兼顾容量计算与逆变器参数设计的工程算法。本文结果基于数值潮流和所实现的保守上界算法，不以全局最优性或形式化区间证明为前提。
 \end{abstract}
 \noindent\textbf{关键词：}配电网；安全接入容量；非线性 DistFlow；分块 Hessian；光伏不确定性；Volt/VAR 控制；鲁棒计算
 \input{sections/01_problem}
