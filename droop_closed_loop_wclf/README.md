@@ -65,3 +65,10 @@ Run: `python3 code/certified_capacity_interval.py`.
 - code/blockwise_capacity_demo.py: dependency-free proof-formula regression; compare isotropic Hessian, block-Hessian and exact robust toy capacity.
 
 Run: `python3 code/blockwise_capacity_demo.py`.
+
+## Load-ramp dynamics (2026-10-13)
+
+- notes/11_dynamic_ramp_certificate.md: conditional uniform contraction theorem for first-order inverter lag, safe transient tube, and load slew-rate limit tied to certified steady hosting margins.
+- code/dynamic_ramp_demo.py: exact scalar first-order tracking model, checks derived ramp bound.
+
+Run: `python3 code/dynamic_ramp_demo.py`. Assumes absolutely continuous renewable/load inputs with bounded change rates; not valid for jumps without additional analysis.
