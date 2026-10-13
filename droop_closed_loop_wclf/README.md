@@ -49,3 +49,5 @@ Next mathematical task: derive and **independently check** an implementable Hess
 - code/one_line_capacity_hessian.py: dependency-free numerical derivative regression on nonlinear two-node DistFlow with incremental load capacity.
 
 Run: `python3 code/one_line_capacity_hessian.py`.
+
+- notes/08_gain_to_capacity_sensitivity.md: use implicit gain sensitivity and active robust constraints to identify which inverter gain locally releases hosting capacity.
