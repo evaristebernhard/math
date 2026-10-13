@@ -1,0 +1,40 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs,array,enumitem,microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\U}{\mathcal U}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\clip}{\operatorname{clip}}
+\title{\bfseries A Structure-Aware Algorithm for Robust Safe Load Hosting in Distribution Networks with Inverter Volt/VAR Control}
+\author{Research manuscript --- authors to be added}
+\date{October 2026\\[2pt]\small Working draft; IEEE 33-bus safe-inner figures are not yet formally interval-certified}
+\begin{document}
+\maketitle
+\begin{abstract}
+This paper studies the safe admission of additional flexible demand in radial distribution networks with uncertain photovoltaic injections and power-limited inverter Volt/VAR response. Rather than estimating extreme operating points separately, we construct a connected robust safe loading interval. Our algorithm combines implicit nonlinear DistFlow sensitivities, structured load--uncertainty block-Hessian voltage bounds, a support-function reduction of complex-power thermal envelopes, and a correlated active/reactive inverter capability check. Adaptive subdivision ensures that an accepted capacity covers every intermediate load, not merely passing sample points. An optional outer search tunes heterogeneous inverter gains but requires no claim of global optimality. We prove a conditional soundness theorem: validated state and derivative enclosures on every admitted cell imply steady-state security for all prescribed disturbances and load levels in the accepted prefix. In a double-precision IEEE 33-bus study, the computed conservative admission level increases from 1.0586 MW with uniform gains to 1.1500 MW with coordinated gains, an 8.63\% improvement in the numerical certificate objective. These safe-side IEEE 33-bus values are not yet outward-rounded proofs; dynamic safety and global optimal gain design are outside the claims of this manuscript.
+\end{abstract}
+\noindent\textbf{Index terms:} robust hosting capacity, distribution system, nonlinear DistFlow, block Hessian, inverter control, uncertainty support function.
+\input{sections/01_problem}
+\input{sections/02_envelopes}
+\input{sections/03_algorithm}
+\input{sections/04_experiments}
+\begin{thebibliography}{9}
+\bibitem{sou2026}
+K.~C. Sou, S.~Z. Khong, and H. Sandberg,
+\emph{Real-time worst-case load flow for distribution systems with power injection uncertainties},
+IEEE Trans. Power Systems, vol.~41, no.~1, pp.~124--141, 2026.
+\href{https://doi.org/10.1109/TPWRS.2025.3597048}{doi:10.1109/TPWRS.2025.3597048}.
+\bibitem{pantazis2026}
+G. Pantazis and M. Chong,
+\emph{Certificate-based synthesis of coordinated droop control for heterogeneous radial distribution networks},
+arXiv:2608.11141, 2026. \url{https://arxiv.org/abs/2608.11141}.
+\bibitem{matpower33}
+MATPOWER, \emph{case33bw benchmark data}, \url{https://github.com/MATPOWER/matpower/blob/master/data/case33bw.m}.
+\end{thebibliography}
+\end{document}
