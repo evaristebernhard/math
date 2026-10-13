@@ -1,0 +1,17 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=3.8mm,>=Latex,
+ every node/.style={font=\small},
+ process/.style={draw=blue!65!black,rounded corners=2pt,fill=blue!5,align=center,minimum height=9mm,text width=11cm,inner sep=3pt},
+ decision/.style={draw=orange!80!black,rounded corners=2pt,fill=orange!7,align=center,minimum height=8mm,text width=11cm,inner sep=3pt}]
+\node[process] (a) {输入馈线参数、光伏不确定集、逆变器增益和待接入容量 $L$};
+\node[process,below=of a] (b) {按新增负荷划分单元 $I$；求解非线性 DistFlow，计算 Jacobian 与分块 Hessian};
+\node[process,below=of b] (c) {半圆支撑函数计算电压边界；复功率角度法计算电流边界；检查完整 $P$--$Q$ 功率圆};
+\node[decision,below=of c] (d) {当前完整负荷单元是否满足全部安全判据？};
+\node[process,below=of d] (e) {满足：接受单元；未满足：细分并复算（达到预算则记为未知）};
+\node[process,below=of e] (f) {只有全部单元无间隙覆盖 $[0,L]$ 才输出可接入容量；外层可尝试新下垂增益};
+\foreach \s/\t in {a/b,b/c,c/d,d/e,e/f}{\draw[->,thick,blue!70!black] (\s.south)--(\t.north);}
+\end{tikzpicture}
+\caption{结构化安全容量计算流程。核心是对完整负荷单元而非离散负荷采样点进行检查。}
+\label{fig:flow}
+\end{figure}
