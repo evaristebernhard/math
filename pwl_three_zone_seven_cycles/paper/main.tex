@@ -13,6 +13,7 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
 \newtheorem{remark}{Remark}
+\newtheorem{corollary}{Corollary}
 \newcommand{\sat}{\operatorname{sat}}
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\R}{\mathbb{R}}
@@ -38,8 +39,12 @@ turning of the response curve explains how the candidate was found.
 The existence proof itself does not rely on the observed folds: exact
 piecewise flow formulas enclose three independent sign changes of the
 Poincar\'e displacement; scalar order and half-period symmetry then give
-seven isolated cycles. This disproves the proposed upper bound five but
-does not settle the sharp global upper bound.
+seven isolated cycles. Strict endpoint signs further persist in an
+explicit parameter cube; on a possibly smaller open neighborhood we prove
+at least four attracting and three repelling isolated orbits.
+Three distinct stationary residence-time profiles are forced by
+the ordered response zeros. Thus five is not a universal upper bound,
+but the sharp global upper bound remains unknown.
 \end{abstract}
 \noindent\textbf{Keywords:} piecewise-linear differential equations; limit cycles; residence time; grazing bifurcations; periodic solutions. \quad
 \textbf{MSC 2020:} 34C25, 34A34, 37C27.
@@ -492,10 +497,21 @@ Half-period antisymmetry makes its total exterior residence $2s$. The exact mult
 \end{equation}
 Thus $P'(y_c)>1$; the central fixed point is hyperbolic and isolated. The symmetry map preserves isolation of each noncentral fixed point, completing the proof of Theorem~\ref{thm:seven}. \qed
 
+\input{robustness.tex}
+
 \section{What has and has not been established}
 The proof does not require numerically counting the turning points in Figure~\ref{fig:response}; those estimates were only a guide for locating the parameters. The numerical response curve exhibits an additional reversal near lower-level grazing. Proposition~\ref{prop:grazing} proves the local residence-time singularity that makes this geometry possible, but it does not prove the number of global response extrema. The reason we can \emph{prove} their existence is independent and simpler: three verified Poincar\'e sign changes and the half-period reflection symmetry.
 
-There is an important limitation. The theorem proves $L(-9,3/2,1.81363)\ge7$ and disproves a universal upper bound of five. It does \emph{not} prove that seven is the maximum, nor does it give a classification of all three-zone response curves. The existing explicit global upper bound \cite{HuYuBound} is unaffected. It remains to determine how many such extra folds can occur as $A$, $B$, and $\mu$ vary, and whether seven can be attained on an explicitly bounded open set of parameters. Strict endpoint signs in fact persist under sufficiently small perturbations, but determining a useful rigorous parameter box is future work.
+There is an important limitation. The theorem proves
+$L(-9,3/2,1.81363)\ge7$ but does \emph{not} prove that seven is the
+global maximum. Proposition~\ref{prop:quantitative} gives a quantitative
+parameter cube with seven distinct periodic trajectories;
+Theorem~\ref{thm:robust} provides a possibly smaller open neighborhood
+of seven isolated cycles with rigorously classified stability types.
+An explicit uniform parameter box for every transverse itinerary
+and the central multiplier, and the sharp global upper bound,
+remain open. The previously established general upper bound
+\cite{HuYuBound} is unchanged.
 
 The computations deserve independent scrutiny before journal submission. The current sign certificate relies on a standard-conforming Python \texttt{Decimal} implementation with correctly directed rounding; it is not a formally verified proof kernel. A second implementation based on Arb/FLINT or exact rational intervals would be a valuable independent audit. We separate this software-level qualification from the mathematical implication of the displayed strict bounds.
 
@@ -503,6 +519,7 @@ The computations deserve independent scrutiny before journal submission. The cur
 The public source repository contains this manuscript, the exact-flow interval checker, the exploratory response data, and independent high-precision and ODE checks. From the project directory run
 \begin{verbatim}
 python3 proof/certify_seven.py
+python3 proof/certify_parameter_persistence.py
 python3 -m unittest discover -s tests -v
 \end{verbatim}
 The certificate requires only the Python standard library. The file \texttt{response\_data.csv}, stored in \texttt{paper/figures/}, is a numerical plot sample, not a proof input. Neither the plot nor rounded roots are used for the existence theorem.
@@ -529,7 +546,11 @@ The exploratory solver supplies decimal \emph{centers} for event times, not trus
 The same half-period algorithm evaluates $Q(y)=x(\pi;0,y)+y$ at the rational endpoints of \eqref{eq:centerbracket}, with opposite certified signs. After checking the two transverse lower crossings, it encloses their time separation at the lower endpoint of the center bracket. Monotonic order of the first descending and second ascending crossing times shows that this is an upper bound for the central lower-zone residence $s$. The strict rational comparison $s<\pi/7$ gives \eqref{eq:centerhyper}.
 
 \paragraph{Logical dependencies.}
-There are only three points at which the executable output is used in the mathematical proof: (i) the strict six endpoint signs, (ii) the strict crossing/minimum inequalities ensuring the three analytic itinerary intervals, and (iii) the center bracket and $s<\pi/7$. Every other mathematical step---intermediate value, strict scalar order, symmetry, analyticity across transverse events, and Floquet's formula---is analytic and independent of the numerical method.
+There are only three points at which the executable output is used in the mathematical proof: (i) the strict six endpoint signs, (ii) the strict crossing/minimum inequalities ensuring the three analytic itinerary intervals, and (iii) the center bracket and $s<\pi/7$. The robustness results use
+the six same sign margins together with an analytic parameter
+perturbation inequality and the order structure of the return map,
+not the rounded multipliers in Table~\ref{tab:roots}.
+Every other mathematical step---intermediate value, strict scalar order, symmetry, analyticity across transverse events, and Floquet's formula---is analytic and independent of the numerical method.
 
 \begin{thebibliography}{9}
 \bibitem{Bravo2025}
