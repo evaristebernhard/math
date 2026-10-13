@@ -1,0 +1,116 @@
+\section{Structure-aware nonlinear safety envelopes}\label{sec:method}
+
+\subsection{Implicit derivatives and a separated Hessian}\label{sec:hess}
+Fix an inverter-gain vector $\bm g$ and a load interval
+$I=[\lambda_0-h,\lambda_0+h]$. On the parameter cell
+$\mathcal C=I\times\U$, suppose a designated \emph{unsaturated} nonlinear DistFlow branch $z(t)$ exists with positive squared voltages, $t=(\lambda,w)$, and admits verified first and second derivatives. With $J=F_z$ nonsingular on the cell, implicit differentiation gives
+\begin{align}
+z_t&=-J^{-1}F_t,\label{eq:zt}\\
+z_{t_at_b}&=-J^{-1}D^2F[
+(z_{t_a},e_a),(z_{t_b},e_b)] .
+\label{eq:ztt}
+\end{align}
+The second expression is the \emph{total} second directional derivative of the residual $F$ in state and parameter coordinates. It includes the mixed terms $F_{zt}$ and $F_{tt}$, as well as $F_{zz}$. Dropping these terms invalidates the certificate. In an interval implementation the inverse-Jacobian majorants and all derivative constants must hold uniformly on $\mathcal C$.
+
+For any scalar signed safety violation $\phi(\lambda,w)$ from \eqref{eq:violations}, suppose
+\begin{equation}
+|\phi_{\lambda\lambda}|\le B_{\lambda\lambda},\quad
+\norm{\nabla_w\phi_\lambda}_2\le B_{\lambda w},\quad
+\norm{\nabla_w^2\phi}_2\le B_{ww}
+\quad\text{throughout }\mathcal C.
+\label{eq:blocks}
+\end{equation}
+These three \emph{separate} nonnegative constants distinguish load curvature, load--disturbance coupling and pure disturbance curvature. A single joint Hessian norm discards this structure and can be substantially more conservative.
+
+\subsection{Half-disc support and voltage-cell test}
+For any pair $(a,b)$, the exact support of the right half-disc \eqref{eq:U} is
+\begin{equation}
+\supp_{\U_j}(a,b)=C_j
+\begin{cases}
+\sqrt{a^2+b^2},&a\ge0,\\
+|b|,&a<0.
+\end{cases}
+\label{eq:support}
+\end{equation}
+For $a\ge0$, the unconstrained circular maximizer has a nonnegative first coordinate. For $a<0$, the optimum lies on the boundary diameter $u=0$ and chooses the sign of $v$. This eliminates the need to enumerate disturbance samples.
+
+Set $R_w=(\sum_jC_j^2)^{1/2}$ and $s=\lambda-\lambda_0$. Taylor's theorem on the \emph{complete} cell, together with \eqref{eq:blocks} and the independent supports, gives
+\begin{align}
+\phi(\lambda_0+s,w)\le\Phi_\phi(s)
+:={}&\phi_0+\phi_\lambda s
++\sum_{j=1}^m
+\supp_{\U_j}(\phi_{w_{p,j}},\phi_{w_{q,j}})
+\nonumber\\
+&+\tfrac12 B_{\lambda\lambda}s^2
++B_{\lambda w}R_w|s|
++\tfrac12 B_{ww}R_w^2.
+\label{eq:Vbound}
+\end{align}
+All $\phi_0$ and derivative coefficients are evaluated at $(\lambda_0,0)$, whereas $B$ coefficients are uniform over $\mathcal C$. The right-hand side is convex in $s$. Therefore the sufficient cell-wide voltage acceptance condition is simply
+\begin{equation}
+\boxed{\max\{\Phi_{\phi_i^-}(-h),\Phi_{\phi_i^-}(h),
+\Phi_{\phi_i^+}(-h),\Phi_{\phi_i^+}(h)\}\le0}
+\label{eq:voltage_accept}
+\end{equation}
+for every bus $i$. When the target interval begins or ends asymmetrically around the expansion center, replace $\pm h$ by the actual two offsets.
+
+\subsection{Complex-power angular current envelope}
+A scalar Hessian on $\ell_l$ can be needlessly conservative because the current square is the magnitude of a two-dimensional complex-power numerator divided by squared voltage. For branch $l$ let $y_l=(a_l,b_l)$ from \eqref{eq:ell}. On a whole load cell construct
+\begin{equation}
+y_l(s,w)=y_l^0+t_ls+\sum_jT_{lj}w_j+r_l(s,w),
+\qquad\norm{r_l(s,w)}_2\le\eta_l.
+\label{eq:affine}
+\end{equation}
+The affine norm is maximized exactly by one angular variable. With $e_\theta=(\cos\theta,\sin\theta)$,
+\begin{equation}
+A_l=\max_{\theta\in[0,2\pi]}
+\left[e_\theta^\top y_l^0+h|e_\theta^\top t_l|
++\sum_j\supp_{\U_j}(T_{lj}^\top e_\theta)\right].
+\label{eq:angular}
+\end{equation}
+Indeed $\norm{x}_2=\max_\theta e_\theta^\top x$ and maxima over the compact angular, load and uncertainty sets may be interchanged. Denote the bracketed function by $f_l(\theta)$ and let $N_\theta$ be the number of equispaced angular directions. The constant
+\begin{equation}
+K_l=\norm{y_l^0}_2+h\norm{t_l}_2+
+\sum_j C_j\norm{T_{lj}}_{\mathrm F}
+\label{eq:lip}
+\end{equation}
+bounds $|f_l'(\theta)|$ wherever the derivative exists and is a global Lipschitz constant across nondifferentiable support directions. Consequently,
+\begin{equation}
+A_l\le \max_{0\le k<N_\theta}
+f_l(2\pi k/N_\theta)+\pi K_l/N_\theta.
+\label{eq:gridsafe}
+\end{equation}
+The $\pi K_l/N_\theta$ allowance is indispensable: sampling angles without it provides a \emph{lower} estimate of the maximum.
+
+If a validated lower squared-voltage bound $\underline\nu_l>0$ is available on the cell, then
+\begin{equation}
+\boxed{\ell_l\le U_l^{\rm phasor}:=
+\frac{\left[\max\{0,\max_kf_l(2\pi k/N_\theta)
++\pi K_l/N_\theta+\eta_l\}\right]^2}
+{\underline\nu_l}}
+\label{eq:phasor_bound}
+\end{equation}
+is sufficient to check $\ell_l\le(I_l^{\max})^2$. The outer $\max\{0,\cdot\}$ is harmless because the true norm cannot be negative. If an independently validated scalar current Hessian bound $U_l^H$ is also available on the same whole cell, $\min\{U_l^{\rm phasor},U_l^H\}$ remains an upper bound. The proposed implementation uses the geometric current envelope and the block Hessian chiefly for voltage.
+
+\subsection{Full inverter capability consistency}
+For each PV inverter let
+\begin{equation}
+y_j^{PV}(s,w)=
+\begin{pmatrix}
+P_j^0+w_{p,j}\\
+w_{q,j}-g_j(V_j(s,w)-V_j^{\rm ref})
+\end{pmatrix}.
+\end{equation}
+Taylor expansion and the same angular support construction produce an affine norm majorant $\overline A_j^{PV}$, with a validated remainder $\eta_j^{PV}$. The voltage Hessian necessary for the remainder follows from
+\begin{equation}
+\nabla^2V_j=
+\frac{\nabla^2\nu_j}{2\sqrt{\nu_j}}-
+\frac{\nabla\nu_j\nabla\nu_j^\top}{4\nu_j^{3/2}}.
+\end{equation}
+The entire-cell check is
+\begin{equation}
+\boxed{\overline A_j^{PV}+\eta_j^{PV}\le S_j
+\qquad(j=1,\ldots,m).}
+\label{eq:PVpass}
+\end{equation}
+This maintains the \emph{correlation} between active and reactive PV output rather than adding independent worst-case scalar magnitudes. Once \eqref{eq:PVpass} holds for every PV, the unsaturated model \eqref{eq:droop} agrees with the physical clipped control law \eqref{eq:physical} for the complete cell. A failed check is UNKNOWN, not proof of unsafe physical operation. The algorithm does not differentiate through a clipping kink.
