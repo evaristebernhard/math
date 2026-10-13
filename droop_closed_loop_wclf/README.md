@@ -108,3 +108,8 @@ Run: `python3 code/capacity_gap_toy.py`. IEEE-33-bus capacity gap remains *unver
 
 - `notes/17_hessian_phasor_ieee33_capacity_recheck.md`: retain original block-Hessian voltage and PV capability bounds; use prior phasor geometric current upper on the whole load cell, then adaptively refine the connected inner capacity. Observed FLOAT candidates include g=1.85 inner 1.033948 MW, g=1.90 inner 1.053233 MW, and g=1.92 inner 1.058600 MW. Physical clipped-Q witness barriers computed separately. **These numbers are not outward-rounded or full IEEE-33 saturated-mode certificates.**
 - Prior experimental numerical source files were recovered and rerun in the current working session and packaged as a standalone 18-file Python source/results artifact; they are **not yet imported in this GitHub branch**. Do not claim complete CI reproducibility from this README.
+
+## Interval-certified physical unsafe witnesses — 2026-10-13
+
+- `notes/18_ieee33_interval_witness_certificates.md`: verified 64-state interval Banach inclusions for two **fixed feasible PV disturbances** in the real clipped-control model: g=1.92 at 1.09322 MW (all PV unsaturated), g=2.6 at 1.22273 MW (PV18 positive-Q clipped). Verified voltage boxes lie strictly below 0.95 pu. These establish physical **upper obstructions** (conditional on designated normal branch), not the all-uncertainty safe **lower** bound, dynamic safety, or global root uniqueness.
+- The standalone verifier is inside the recovered working-session zip but has not yet been imported to the repository: Github CI reproduction remains pending.
