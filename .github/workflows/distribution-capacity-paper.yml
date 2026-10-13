@@ -1,4 +1,4 @@
-name: Distribution capacity algorithm paper
+name: 配电网安全容量算法论文
 on:
   push:
     paths:
@@ -21,20 +21,20 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Check exact cell-cover logic
+      - name: Test exact interval coverage
         run: |
           cd distribution_capacity_algorithm
           python3 algorithm/connected_prefix.py
           python3 -m unittest discover -s algorithm/tests -v
-      - name: Install LaTeX
+      - name: Install Chinese XeLaTeX
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra
-      - name: Compile manuscript
+          sudo apt-get install -y --no-install-recommends texlive-xetex texlive-lang-chinese texlive-latex-extra fonts-noto-cjk fonts-texgyre
+      - name: Build Chinese manuscript
         run: make -C distribution_capacity_algorithm/paper paper
-      - name: Attach PDF
+      - name: Upload Chinese PDF
         uses: actions/upload-artifact@v4
         with:
-          name: distribution-capacity-algorithm-paper
+          name: distribution-capacity-paper-zh
           path: distribution_capacity_algorithm/paper/main.pdf
           if-no-files-found: error
