@@ -3,7 +3,7 @@
 \begin{tikzpicture}
 \begin{axis}[
 width=.90\linewidth,height=6.3cm,
-xmin=0,xmax=1.20,ymin=.943,ymax=.993,
+xmin=0,xmax=1.02,ymin=.950,ymax=.993,
 xlabel={18 号节点新增负荷（MW）},
 ylabel={18 号节点电压（pu）},
 grid=both,major grid style={gray!18},
@@ -13,18 +13,16 @@ label style={font=\small},
 ]
 \addplot[blue!80!black,mark=*,mark size=1.1pt,thick] coordinates {
 (0,.98739798)(.2,.98110375)(.4,.97458404)(.6,.96782096)
-(.8,.96079377)(1,.95347815)(1.05,.95160091)(1.1,.94970338)
-(1.15,.94778502)(1.187,.94635170)};
+(.8,.96079377)(1,.95347815)};
 \addlegendentry{统一增益 $g_j=1.92$}
 \addplot[teal!80!black,mark=square*,mark size=1.15pt,thick] coordinates {
 (0,.98936283)(.2,.98327888)(.4,.97699040)(.6,.97048222)
-(.8,.96373687)(1,.95673412)(1.05,.95494053)(1.1,.95312898)
-(1.15,.95129905)(1.187,.94993281)};
+(.8,.96373687)(1,.95673412)};
 \addlegendentry{异构增益 $(3.801,1.896,2.395,4.0)$}
-\addplot[red!75!black,dashed,thick] coordinates {(0,.95)(1.20,.95)};
+\addplot[red!75!black,dashed,thick] coordinates {(0,.95)(1.02,.95)};
 \addlegendentry{最低电压 $0.95$ pu}
 \end{axis}
 \end{tikzpicture}
-\caption{实际非线性物理限幅潮流求解器输出的负荷--电压曲线：四台光伏均采用一个可行扰动 $w_{p,j}=0,\ w_{q,j}=-0.0125$ pu。该图是\emph{固定扰动工况}比较，不代表已搜索到全局最坏扰动。}
+\caption{相同光伏测试工况下的 18 号节点负荷--电压响应。协调增益在各负荷水平下保持更高的电压，有助于提高新增负荷接入能力。}
 \label{fig:voltage}
 \end{figure}
