@@ -113,10 +113,10 @@ This per-gain bound must NOT be substituted for the 1.452831 MW all-gain outer b
 ## 5. Reproduction
 
 In a fresh clone of this PR **without any missing numeric bundle dependencies**:
-\`\`\`sh
+```sh
 cd droop_closed_loop_wclf
 python3 code/exact_design_upper.py
-\`\`\`
+```
 It requires only Python's standard library and prints the exact gain-independent upper bound.
 
-The **full inner numerical optimization** dependencies are still in the session's accompanying code ZIP, not yet committed into this PR. Their entrypoints are \`design_max_safe_capacity.py\`, \`test_design_capacity.py\`, and \`verify_optimized_witness_interval.py\`. They depend on the original \`case33_data.py\`, \`block_hessian_33.py\`, \`hessian_phasor_capacity.py\`, \`physical_q_angular.py\` and related scripts. Import the whole closure as one audited change, rather than committing broken single-script imports.
+The **full inner numerical optimization** dependencies are still in the session's accompanying code ZIP, not yet committed into this PR. Their entrypoints are `design_max_safe_capacity.py`, `test_design_capacity.py`, and `verify_optimized_witness_interval.py`. They depend on the original `case33_data.py`, `block_hessian_33.py`, `hessian_phasor_capacity.py`, `physical_q_angular.py` and related scripts. Import the whole closure as one audited change, rather than committing broken single-script imports.
