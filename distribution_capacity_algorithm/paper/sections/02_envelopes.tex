@@ -1,98 +1,116 @@
-\section{结构化非线性安全上界}\label{sec:method}
+\section{电压与线路电流的安全裕度计算}\label{sec:method}
 
-\subsection{隐函数灵敏度与分块 Hessian}\label{sec:hess}
-固定逆变器增益 $\bm g$，取负荷区间 $I=[\lambda_0-h,\lambda_0+h]$ 和完整参数单元 $\mathcal C=I\times\U$。假设其上存在正电压的正常、未限幅 DistFlow 解分支 $z(t)$，且可以验证雅可比矩阵 $J=F_z$ 在整个单元内非奇异。令 $t=(\lambda,w)$，则隐函数求导得到
+本节给出安全接入容量算法的实际计算过程。对每一组逆变器下垂增益，首先在选定负荷水平下求解非线性 DistFlow，得到各节点电压、线路有功及无功潮流。然后考虑新增负荷和光伏功率在指定范围内的变化，计算电压和电流可能达到的边界值，最后与设备运行限值比较。对于整个负荷区间均满足约束的配置，算法继续增加接入容量。
+
+\subsection{节点电压响应与分块 Hessian}\label{sec:hess}
+
+取新增负荷区间 $I=[\lambda_0-h,\lambda_0+h]$，以 $\lambda_0$ 为参考负荷，$s=\lambda-\lambda_0$ 为负荷变化量，$w$ 为光伏有功和无功扰动。对节点 $i$，平方电压随负荷和光伏变化的局部表达式为
+\begin{equation}
+\nu_i(\lambda_0+s,w)
+=\nu_i^0+\frac{\partial\nu_i}{\partial\lambda}s+
+(\nabla_w\nu_i)^\top w+\varepsilon_i(s,w),
+\label{eq:voltage_local}
+\end{equation}
+其中 $\nu_i^0$ 是参考工况的潮流结果，两个一阶导数分别描述\emph{增加负荷}和\emph{光伏出力变化}对节点电压的影响，$\varepsilon_i$ 表示非线性余项。
+
+计算上述系数时，将非线性潮流方程写为 $F(z,\lambda,\bm g,w)=0$，$z=(\nu,\ell)$。数值潮流求解器首先获得参考状态及雅可比矩阵 $J=F_z$；由同一雅可比矩阵求解线性方程组得到一阶灵敏度，再求二阶灵敏度：
 \begin{align}
 z_t&=-J^{-1}F_t,\label{eq:zt}\\
 z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
 \label{eq:ztt}
 \end{align}
-式~\eqref{eq:ztt} 的\emph{总二阶导数}同时包含 $F_{zz},F_{zt},F_{tt}$ 等项，用于描述负荷与光伏扰动之间的非线性耦合。
+其中 $t=(\lambda,w)$。实际实现采用线性方程组求解，不需要显式计算 $J^{-1}$。一阶灵敏度用于预测电压变化趋势，二阶灵敏度用于估计负荷区间和光伏扰动内的预测误差。
 
-对节点电压上下限对应的任意标量违反函数 $\phi(\lambda,w)$，假设在整个 $\mathcal C$ 上成立
+为直接判断电压是否满足 $V_{\min}\le V_i\le V_{\max}$，分别计算下限和上限对应的裕度违反量
+$\phi_i^-=V_{\min}^2-\nu_i$ 和 $\phi_i^+=\nu_i-V_{\max}^2$。
+对任一 $\phi$，将二阶误差分为三项，其区间最大值分别记为
 \begin{equation}
 |\phi_{\lambda\lambda}|\le B_{\lambda\lambda},\qquad
 \norm{\nabla_w\phi_\lambda}_2\le B_{\lambda w},\qquad
 \norm{\nabla_w^2\phi}_2\le B_{ww}.
 \label{eq:blocks}
 \end{equation}
-与将所有二阶曲率合并为一个统一范数不同，这里分别保留负荷--负荷、负荷--光伏和光伏--光伏三组曲率。各节点和各约束可以采用不同的上界常数。
+这三个系数对应三个直接的工程影响：$B_{\lambda\lambda}$ 描述新增负荷引起的电压响应非线性，$B_{\lambda w}$ 描述负荷与光伏同时变化的耦合，$B_{ww}$ 描述光伏扰动自身引起的非线性。各系数从相应节点的二阶灵敏度中提取，用于计算当前负荷单元的电压变化范围。
 
-\subsection{半圆支撑函数与电压安全判据}
+\subsection{光伏扰动下的节点电压范围}
 
-光伏扰动采用二维半圆几何模型。由解析支撑函数计算一阶最坏扰动贡献，再通过 Hessian 控制非线性余项。
-右半圆集合~\eqref{eq:U} 对线性函数 $au+bv$ 的精确支撑函数是
+本算例中，第 $j$ 台光伏的扰动满足式~\eqref{eq:U} 的半圆约束。对于电压一阶变化中的系数对 $(a,b)$，对应半圆扰动能够产生的最大贡献可直接计算为
 \begin{equation}
-\supp_{\U_j}(a,b)=C_j
-\begin{cases}
+\supp_{\U_j}(a,b)=
+C_j\begin{cases}
 \sqrt{a^2+b^2},&a\ge0,\\
 |b|,&a<0.
 \end{cases}
 \label{eq:support}
 \end{equation}
-当 $a\ge0$ 时圆周上的最大方向可行；当 $a<0$ 时最优点在直径 $u=0$ 上。由此可直接求出模型中各光伏半圆集合的线性支撑值。
+因此，在计算每个节点的最不利电压时，可以直接使用其有功和无功灵敏度，而无需逐个枚举光伏注入组合。
 
-记 $R_w=(\sum_jC_j^2)^{1/2}$、$s=\lambda-\lambda_0$。将完整参数单元上的 Taylor 余项以式~\eqref{eq:blocks} 控制，再分别最大化一阶扰动项，得到
+设 $R_w=(\sum_jC_j^2)^{1/2}$。对节点电压违反量 $\phi$，根据一阶灵敏度和上一小节的三个二阶系数，计算整个光伏扰动集合上的上界
 \begin{align}
-\phi(\lambda_0+s,w)\le\Phi_\phi(s):={}&
+\Phi_\phi(s)={}&
 \phi_0+\phi_\lambda s+
-\sum_{j=1}^{m}\supp_{\U_j}(\phi_{w_{p,j}},\phi_{w_{q,j}})
+\sum_{j=1}^{m}
+\supp_{\U_j}(\phi_{w_{p,j}},\phi_{w_{q,j}})
 \nonumber\\
-&+\tfrac12B_{\lambda\lambda}s^2
-+B_{\lambda w}R_w|s|
-+\tfrac12B_{ww}R_w^2.
+&+\tfrac12B_{\lambda\lambda}s^2+
+B_{\lambda w}R_w|s|+
+\tfrac12B_{ww}R_w^2.
 \label{eq:Vbound}
 \end{align}
-这里 $\phi_0$ 与一阶导数取自 $(\lambda_0,0)$，三个 $B$ 必须是整个单元上的有效上界。$\Phi_\phi(s)$ 是凸函数，因此其在区间 $[-h,h]$ 上的最大值取于端点。每个节点的充分电压安全判据为
+式中前两项由参考潮流和负荷灵敏度计算，第三项为光伏扰动的最大一阶影响，最后三项是非线性修正。将负荷单元的两个端点 $s=\pm h$ 分别代入上式，即可得到电压约束的单元检查量：
 \begin{equation}
 \max\{\Phi_{\phi_i^-}(-h),\Phi_{\phi_i^-}(h),
 \Phi_{\phi_i^+}(-h),\Phi_{\phi_i^+}(h)\}\le0.
 \label{eq:voltage_accept}
 \end{equation}
-若单元不是以 $\lambda_0$ 对称，使用实际两个端点偏移量即可。
+对每个节点重复这一步，便得到该负荷单元的电压安全判定。
 
-\subsection{复功率几何电流上界}
-直接对标量 $\ell_l$ 使用整体二阶余项可能过于保守，因为线路电流平方具有复功率模长形式 $\ell_l=(a_l^2+b_l^2)/\nu_l$。令 $y_l=(a_l,b_l)$，在整个单元上构造仿射展开
+\subsection{线路有功、无功潮流与电流计算}
+
+线路是否过载取决于线路电流。在非线性 DistFlow 中，支路 $l$ 的接收端有功和无功潮流分别记为 $P_l=a_l$、$Q_l=b_l$，接收端电压幅值为 $V_l=\sqrt{\nu_l}$，于是
+\begin{equation}
+I_l=\frac{\sqrt{P_l^2+Q_l^2}}{V_l}.
+\label{eq:current_physical}
+\end{equation}
+工程计算中，我们先利用潮流求解器得到参考工况的 $P_l,Q_l,V_l$，再用灵敏度计算新增负荷和光伏扰动对 $P_l,Q_l$ 的影响，最终计算线路可能达到的最大电流。
+
+具体地，将某条线路的有功、无功潮流组合成向量 $y_l=(P_l,Q_l)^\top$，其在当前负荷单元内的计算表达式为
 \begin{equation}
 y_l(s,w)=y_l^0+t_ls+\sum_jT_{lj}w_j+r_l(s,w),
 \qquad \norm{r_l(s,w)}_2\le\eta_l .
 \label{eq:affine}
 \end{equation}
-记 $e_\theta=(\cos\theta,\sin\theta)$。根据 $\norm{y}_2=\max_{\theta}e_\theta^\top y$，可将仿射部分对所有负荷和光伏扰动的最大模长\emph{精确}化为一维角度优化：
+其中 $y_l^0$ 是参考潮流，$t_l$ 是新增负荷灵敏度，$T_{lj}$ 是光伏有功和无功灵敏度，$\eta_l$ 是二阶修正量。这样就可以同时处理有功和无功变化对线路电流的影响。
+
+为计算最不利的复功率幅值，程序在 $0$ 至 $2\pi$ 范围内搜索角度 $\theta$。令 $e_\theta=(\cos\theta,\sin\theta)$，则仿射潮流的最大幅值可表示为
 \begin{equation}
 A_l=\max_{\theta\in[0,2\pi]}
-\left[
-e_\theta^\top y_l^0+
+\left[e_\theta^\top y_l^0+
 h|e_\theta^\top t_l|+
-\sum_j\supp_{\U_j}(T_{lj}^\top e_\theta)
-\right].
+\sum_j\supp_{\U_j}(T_{lj}^\top e_\theta)\right].
 \label{eq:angular}
 \end{equation}
-将括号内记为 $f_l(\theta)$，其全局 Lipschitz 常数可取
-\begin{equation}
-K_l=\norm{y_l^0}_2+h\norm{t_l}_2+
-\sum_jC_j\norm{T_{lj}}_{\mathrm F}.
-\label{eq:lip}
-\end{equation}
-用 $N_\theta$ 个等距角度采样时，必须加入漏采校正：
-\begin{equation}
-A_l\le\max_{0\le k<N_\theta}
-f_l(2\pi k/N_\theta)+\pi K_l/N_\theta.
+该式只需要在一个角度变量上搜索；每个角度对应的光伏最不利影响由前述半圆支撑函数直接计算。设括号内的角度函数为 $f_l(\theta)$。实现中采用 $N_\theta$ 个等距角度，并按照
+\begin{align}
+K_l&=\norm{y_l^0}_2+h\norm{t_l}_2+
+\sum_jC_j\norm{T_{lj}}_{\mathrm F},\label{eq:lip}\\
+A_l&\le\max_{0\le k<N_\theta}
+f_l(2\pi k/N_\theta)+\frac{\pi K_l}{N_\theta}
 \label{eq:gridsafe}
-\end{equation}
-加入式~\eqref{eq:gridsafe} 的角度漏采修正，并设线路接收端电压平方满足 $\nu_l\ge\underline\nu_l>0$，可得到
+\end{align}
+补偿角度网格间的可能变化。结合线路接收端平方电压下界 $\underline\nu_l$ 和潮流二阶修正 $\eta_l$，得到该负荷单元内的电流平方计算界
 \begin{equation}
-\ell_l\le
-U_l^{\rm phasor}:=
-\frac{\left[\max\{0,\max_k f_l(2\pi k/N_\theta)
-+\pi K_l/N_\theta+\eta_l\}\right]^2}
+\ell_l\le U_l^{\rm phasor}:=
+\frac{\left[\max\left\{0,\max_k f_l(2\pi k/N_\theta)
++\frac{\pi K_l}{N_\theta}+\eta_l\right\}\right]^2}
 {\underline\nu_l}.
 \label{eq:phasor_bound}
 \end{equation}
-式~\eqref{eq:phasor_bound} 即本文采用的线路电流平方上界。至此，分块 Hessian 用于电压及逆变器容量余项，复功率几何法用于线路电流，形成分工明确的安全裕度计算方法。
+对每条线路比较 $U_l^{\rm phasor}$ 与 $(I_l^{\max})^2$，即可完成线路过载检查。正式容量算法只使用这一种线路电流计算界；分块 Hessian 主要用于节点电压和逆变器相关的非线性修正。
 
-\subsection{光伏有功--无功耦合容量检查}
-逆变器 $j$ 在未限幅公式下的\emph{原始总输出}写为
+\subsection{逆变器视在功率检查}
+
+光伏逆变器还需要满足自身的额定容量。对于第 $j$ 台逆变器，按实际有功出力与原始下垂无功命令形成
 \begin{equation}
 y_j^{PV}(s,w)=
 \begin{pmatrix}
@@ -100,16 +118,15 @@ P_j^0+w_{p,j}\\
 w_{q,j}-g_j(V_j(s,w)-V_j^{\rm ref})
 \end{pmatrix}.
 \end{equation}
-对该二维向量同样使用式~\eqref{eq:angular} 的半圆几何支撑函数，并加入非线性余项 $\eta_j^{PV}$。余项可以从平方电压 Hessian 得到，因为
+与线路潮流类似，程序用一阶灵敏度计算其有功--无功向量的变化范围，再计入电压的二阶修正。对于电压幅值的修正，可由平方电压导数计算
 \begin{equation}
 \nabla^2 V_j=
 \frac{\nabla^2\nu_j}{2\sqrt{\nu_j}}
 -\frac{\nabla\nu_j\nabla\nu_j^\top}{4\nu_j^{3/2}}.
 \end{equation}
-记仿射部分的可验证模长上界为 $\overline A_j^{PV}$，整个单元的逆变器一致性条件为
+记计算得到的仿射功率幅值上界为 $\overline A_j^{PV}$，非线性修正为 $\eta_j^{PV}$，对应的逆变器容量条件是
 \begin{equation}
-\overline A_j^{PV}+\eta_j^{PV}\le S_j,\qquad
-j=1,\ldots,m .
+\overline A_j^{PV}+\eta_j^{PV}\le S_j,\qquad j=1,\ldots,m.
 \label{eq:PVpass}
 \end{equation}
-该判据保留 $P_j$ 与 $Q_j$ 的相关性，按照完整视在功率圆检查逆变器容量。通过测试的运行单元满足实际逆变器控制约束，并参与下一步安全容量搜索。
+完成节点电压、线路电流和逆变器视在功率三类检查后，当前负荷单元的安全结果传入下一节的容量搜索与协调增益更新。
