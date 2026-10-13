@@ -1,0 +1,115 @@
+{
+  "experiment": "IEEE 33 节点同模型安全容量算法消融",
+  "date": "2026-10-13",
+  "settings": {
+    "case": "case33bw",
+    "base_load_scale": 0.65,
+    "pv_buses": [
+      9,
+      18,
+      24,
+      33
+    ],
+    "pv_p_mw": 0.25,
+    "pv_halfdisc_radius_mva": 0.125,
+    "pv_s_mva": 1,
+    "load_bus": 18,
+    "current_limit_pu": 0.31,
+    "voltage_limits_pu": [
+      0.95,
+      1.05
+    ],
+    "gains": [
+      3.80105,
+      1.89598,
+      2.3952,
+      4
+    ],
+    "angles": 2048,
+    "coarse_step_mw": 0.02,
+    "min_width_mw": 0.00025
+  },
+  "experiments": [
+    {
+      "method": "isotropic",
+      "target_08": "pass",
+      "target_10": "no",
+      "target_115": "no",
+      "first_nonpassing_cell": [
+        0.831875,
+        0.832031
+      ],
+      "limiting": "current"
+    },
+    {
+      "method": "block_scalar",
+      "target_08": "pass",
+      "target_10": "no",
+      "target_115": "no",
+      "first_nonpassing_cell": [
+        0.832813,
+        0.832969
+      ],
+      "limiting": "current"
+    },
+    {
+      "method": "block_phasor",
+      "target_08": "pass",
+      "target_10": "pass",
+      "target_115": "pass",
+      "evaluations_at_115": 62,
+      "wall_time_at_115_s": 1.7808
+    },
+    {
+      "method": "block_min",
+      "target_08": "pass",
+      "target_10": "pass",
+      "target_115": "pass",
+      "evaluations_at_115": 62,
+      "wall_time_at_115_s": 2.1072
+    }
+  ],
+  "runtime_08_mw_three_repeats": [
+    {
+      "method": "isotropic",
+      "seconds": [
+        0.5943,
+        0.6065,
+        0.6037
+      ],
+      "median": 0.6037,
+      "evaluations": 46
+    },
+    {
+      "method": "block_scalar",
+      "seconds": [
+        0.6021,
+        0.7068,
+        0.6993
+      ],
+      "median": 0.6993,
+      "evaluations": 40
+    },
+    {
+      "method": "block_phasor",
+      "seconds": [
+        1.1694,
+        1.1389,
+        1.1622
+      ],
+      "median": 1.1622,
+      "evaluations": 40
+    },
+    {
+      "method": "block_min",
+      "seconds": [
+        1.2548,
+        1.2618,
+        1.2713
+      ],
+      "median": 1.2618,
+      "evaluations": 40
+    }
+  ],
+  "notes": "Python NumPy/SciPy float64; same full joint PV P/Q capability check; a nonpassing numerical bound is not a physical unsafe witness; timings measured on one runtime environment."
+}
