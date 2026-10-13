@@ -10,7 +10,7 @@ The equation is
 
 At \((A,B,\mu)=(9,3/2,181363/100000)\), we certify **at least seven distinct isolated periodic orbits**. This contradicts the conjectural maximum five discussed by Bravo, Carmona, Fernández and Ojeda, [arXiv:2507.06705](https://arxiv.org/abs/2507.06705). It does **not** establish an upper bound of seven.
 
-**New rigorous consequences:** for **every** `|A-9|, |B-1.5|, |mu-1.81363| < 1e-12` there are at least seven **isolated** periodic cycles, including **four locally attracting and three locally repelling** cycles. Directed-interval grazing barriers are `>3e-4`, while their perturbation is `<1.501e-6`. The central Floquet logarithm stays `>0.0043`. The ordered response zeros force three distinct critical residence-time profiles. Noncentral hyperbolicity and a global seven-cycle upper bound are not claimed.
+**New rigorous consequences:** for **every** `|A-9|, |B-1.5|, |mu-1.81363| < 1e-12` there are at least seven **isolated** periodic cycles, including **four locally attracting and three locally repelling** cycles. Directed-interval grazing barriers are `>3e-4`, while their perturbation is `<1.505e-6`. The central Floquet logarithm stays `>0.0043`. The ordered response zeros force three distinct critical residence-time profiles. Noncentral hyperbolicity and a global seven-cycle upper bound are not claimed.
 
 ## Mathematical idea
 
