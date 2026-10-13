@@ -1,0 +1,58 @@
+\section{Introduction and research objective}
+Electric-vehicle charging, electrified heating and flexible industrial demand require a feeder operator to decide how much new load can be admitted in the presence of uncertain renewable power. A nominal power-flow solution is not enough: the acceptance must remain secure against all specified injections, and safety at a single upper load does not establish safety during the entire increase from the present operating point.
+
+Sou, Khong and Sandberg~\cite{sou2026} study worst-case voltages and line currents for uncertain injections in nonlinear radial DistFlow. Pantazis and Chong~\cite{pantazis2026} obtain all-time certificates and coordinated droop design with a linearized dynamic feeder model. This paper addresses a complementary, deliberately narrower problem: \emph{nonlinear steady-state admission of a connected interval of additional load}, including the full inverter apparent-power disk. We do not claim to invent support functions, implicit differentiation, Hessian bounds or interval techniques; the algorithmic contribution is to combine them in a cell-wide, structure-aware and capacity-oriented design procedure.
+
+\section{System model and safe capacity}\label{sec:model}
+We consider a balanced radial feeder with $n$ non-slack buses and $n$ active branches. Squared bus voltages are $\nu\in\R^n$ and squared branch currents are $\ell\in\R^n$. The descendant matrix $D$, resistance matrix $D_r=\operatorname{diag}(r)$, and reactance matrix $D_x=\operatorname{diag}(x)$ yield
+\begin{align}
+H_r&=(D-I)D_r,&H_x&=(D-I)D_x,\\
+a&=Dp-H_r\ell,&b&=Dq-H_x\ell.
+\end{align}
+The receiving-end nonlinear DistFlow equations used in our previous experiments are
+\begin{align}
+\nu &=\nu_s\mathbf1+2Rp+2Xq+M\ell,\label{eq:nu}\\
+\ell &=(a\odot a+b\odot b)\oslash\nu.\label{eq:ell}
+\end{align}
+Here $R,X,M$ denote network matrices determined by $D,r,x$, and $\odot,\oslash$ are componentwise multiplication and division. We denote the residual system by $F(z,\lambda,\bm g,w)=0$ with $z=(\nu,\ell)$.
+
+The controllable incremental load $\lambda\ge0$ is distributed by a fixed nonnegative pattern $d$ (measured in consistent per-unit coordinates), with optional reactive-load pattern $e$. At an unsaturated inverter operating point,
+\begin{equation}
+p=p^0-\lambda d+w_p,\quad
+q=q^0-\lambda e+w_q-G(\sqrt{\nu}-V^{\rm ref}),
+\label{eq:droop}
+\end{equation}
+where $G$ contains the PV Volt/VAR gains. For inverter $j$ the actual physical reactive output is
+\begin{equation}
+Q_j=\clip\bigl(w_{q,j}-g_j(V_j-V_j^{\rm ref}),-c_j,+c_j\bigr),
+\qquad c_j=\sqrt{S_j^2-(P_j^0+w_{p,j})^2}.
+\label{eq:physical}
+\end{equation}
+In particular, the apparent-power limit is on \emph{total} PV output, not only the droop correction. A smooth-cell certificate will be admitted only when the raw command is proven to remain inside the disk $P_j^2+Q_j^2\le S_j^2$ throughout the cell. Cells crossing clip transitions are marked UNKNOWN by the present implementation; a separate piecewise model is needed for their admission.
+
+Each PV uncertainty $(w_{p,j},w_{q,j})$ is in a right half-disc
+\begin{equation}
+\U_j=\{(u,v):u\ge0,\quad u^2+v^2\le C_j^2\},
+\quad \U=\prod_{j=1}^m\U_j .
+\label{eq:U}
+\end{equation}
+The right-half-disc shape is an explicit research modeling assumption, not an assertion about every physical PV forecast.
+
+Let all voltage limits, thermal limits, and nameplate constraints be aggregated into signed safety violations
+\begin{align}
+\phi_i^-&=V_{\min}^2-\nu_i,&
+\phi_i^+&=\nu_i-V_{\max}^2, \nonumber\\
+\phi_l^I&=\ell_l-(I_l^{\max})^2,&
+\phi_j^S&=P_j^2+Q_j^2-S_j^2.
+\label{eq:violations}
+\end{align}
+A parameter pair $(\lambda,w)$ is secure if the designated normal steady-state physical solution exists and all violations are nonpositive. For fixed $\bm g$ we define the \emph{connected safe admission capacity}
+\begin{equation}
+\Lambda_{\rm conn}(\bm g)=\sup\{L\ge0:
+\text{every }(\lambda,w)\in[0,L]\times\U
+\text{ is secure}\}.
+\label{eq:conn}
+\end{equation}
+It is deliberately not the largest isolated passing load. In feeders with reverse power flow, the physical safe load set need not be globally monotone in $\lambda$.
+
+Our central goal is an implementable \emph{sufficient} test returning a passing connected prefix $\widehat\Lambda(\bm g)$, with the optional design layer choosing gains $\bm g\in\mathcal G=[0,4]^m$ that improve this computed admission value. Neither global-optimal gain design nor all-time dynamic stability is a requirement for the core method.
