@@ -68,7 +68,7 @@ For the exact finite-decimal model, fix
 \lambda=1.1795\ {\rm MW},\quad
 (w_{p,j},w_{q,j})=(0,-0.0125)\ \text{pu}\quad(j=9,18,24,33).
 \]
-These are all feasible right-half-disc disturbances. The independent script \`verify_joint_witness_interval.py\` constructs a 64-dimensional closed state box with radius \(10^{-6}\), verifies the **physical** Q clip mode (all four strictly **unsaturated** throughout that specific box), and uses 60-decimal-digit interval evaluations with exact rational comparisons of interval endpoints to check the preconditioned Banach self-mapping and contraction bounds:
+These are all feasible right-half-disc disturbances. The independent script `verify_joint_witness_interval.py` constructs a 64-dimensional closed state box with radius \(10^{-6}\), verifies the **physical** Q clip mode (all four strictly **unsaturated** throughout that specific box), and uses 60-decimal-digit interval evaluations with exact rational comparisons of interval endpoints to check the preconditioned Banach self-mapping and contraction bounds:
 
 \[
 \rho_\infty < 1.956\cdot10^{-4}<1,\qquad
@@ -108,13 +108,13 @@ thus proving a physical control improvement of at least 6.78 kW. Certifying the 
 ## 6. Code and limitations
 
 The independently runnable experiment archive (with the old 33-bus Python dependency closure) contains:
-- Modified \`safe_load_capacity.py\` to accept scalar or buswise 4-vector gains.
-- Modified \`hessian_phasor_capacity.py\` to use each bus's own gain in the *existing* full PV capability envelope.
-- Modified \`saturated_capacity_witnesses.py\` to use the physical clipped law with bus-specific gains.
-- \`optimize_individual_gains.py\` for a transparent, **finite set** of gain choices, connected capacity evaluation from zero, and five feasible-disturbance physical witness probes.
-- \`test_joint_gain.py\` backward compatibility and physical-solve sample regression.
-- \`verify_joint_witness_interval.py\` interval certificate for the explicit selected upper witness.
-- \`coordinated_gain_optimization_results.json\` and \`joint_witness_interval.log\`.
+- Modified `safe_load_capacity.py` to accept scalar or buswise 4-vector gains.
+- Modified `hessian_phasor_capacity.py` to use each bus's own gain in the *existing* full PV capability envelope.
+- Modified `saturated_capacity_witnesses.py` to use the physical clipped law with bus-specific gains.
+- `optimize_individual_gains.py` for a transparent, **finite set** of gain choices, connected capacity evaluation from zero, and five feasible-disturbance physical witness probes.
+- `test_joint_gain.py` backward compatibility and physical-solve sample regression.
+- `verify_joint_witness_interval.py` interval certificate for the explicit selected upper witness.
+- `coordinated_gain_optimization_results.json` and `joint_witness_interval.log`.
 
 The source archive is downloadable in the conversation, but the restored experiment dependency tree is **not yet in this GitHub PR**. Hence these numerical experiments are not currently independently runnable solely by cloning this PR. The PR remains a mathematical research record and must not be presented as self-contained validated IEEE33 code.
 
