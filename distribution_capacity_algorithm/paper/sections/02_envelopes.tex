@@ -1,29 +1,25 @@
-\section{Structure-aware nonlinear safety envelopes}\label{sec:method}
+\section{结构化非线性安全上界}\label{sec:method}
 
-\subsection{Implicit derivatives and a separated Hessian}\label{sec:hess}
-Fix an inverter-gain vector $\bm g$ and a load interval
-$I=[\lambda_0-h,\lambda_0+h]$. On the parameter cell
-$\mathcal C=I\times\U$, suppose a designated \emph{unsaturated} nonlinear DistFlow branch $z(t)$ exists with positive squared voltages, $t=(\lambda,w)$, and admits verified first and second derivatives. With $J=F_z$ nonsingular on the cell, implicit differentiation gives
+\subsection{隐函数灵敏度与分块 Hessian}\label{sec:hess}
+固定逆变器增益 $\bm g$，取负荷区间 $I=[\lambda_0-h,\lambda_0+h]$ 和完整参数单元 $\mathcal C=I\times\U$。假设其上存在正电压的正常、未限幅 DistFlow 解分支 $z(t)$，且可以验证雅可比矩阵 $J=F_z$ 在整个单元内非奇异。令 $t=(\lambda,w)$，则隐函数求导得到
 \begin{align}
 z_t&=-J^{-1}F_t,\label{eq:zt}\\
-z_{t_at_b}&=-J^{-1}D^2F[
-(z_{t_a},e_a),(z_{t_b},e_b)] .
+z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
 \label{eq:ztt}
 \end{align}
-The second expression is the \emph{total} second directional derivative of the residual $F$ in state and parameter coordinates. It includes the mixed terms $F_{zt}$ and $F_{tt}$, as well as $F_{zz}$. Dropping these terms invalidates the certificate. In an interval implementation the inverse-Jacobian majorants and all derivative constants must hold uniformly on $\mathcal C$.
+式~\eqref{eq:ztt} 的二阶项是包含状态与参数的\emph{总二阶导数}，其中具有 $F_{zz},F_{zt},F_{tt}$ 等混合项；不能只对标称线性潮流求二阶导数。
 
-For any scalar signed safety violation $\phi(\lambda,w)$ from \eqref{eq:violations}, suppose
+对电压下限、上限或电流约束对应的任意标量违反函数 $\phi(\lambda,w)$，假设在整个 $\mathcal C$ 上成立
 \begin{equation}
-|\phi_{\lambda\lambda}|\le B_{\lambda\lambda},\quad
-\norm{\nabla_w\phi_\lambda}_2\le B_{\lambda w},\quad
-\norm{\nabla_w^2\phi}_2\le B_{ww}
-\quad\text{throughout }\mathcal C.
+|\phi_{\lambda\lambda}|\le B_{\lambda\lambda},\qquad
+\norm{\nabla_w\phi_\lambda}_2\le B_{\lambda w},\qquad
+\norm{\nabla_w^2\phi}_2\le B_{ww}.
 \label{eq:blocks}
 \end{equation}
-These three \emph{separate} nonnegative constants distinguish load curvature, load--disturbance coupling and pure disturbance curvature. A single joint Hessian norm discards this structure and can be substantially more conservative.
+与使用单一整体 Hessian 范数不同，这里分别保留负荷--负荷、负荷--光伏和光伏--光伏三组曲率。各节点和各约束可以采用不同的上界常数。
 
-\subsection{Half-disc support and voltage-cell test}
-For any pair $(a,b)$, the exact support of the right half-disc \eqref{eq:U} is
+\subsection{半圆支撑函数与电压安全判据}
+右半圆集合~\eqref{eq:U} 对线性函数 $au+bv$ 的精确支撑函数是
 \begin{equation}
 \supp_{\U_j}(a,b)=C_j
 \begin{cases}
@@ -32,68 +28,69 @@ For any pair $(a,b)$, the exact support of the right half-disc \eqref{eq:U} is
 \end{cases}
 \label{eq:support}
 \end{equation}
-For $a\ge0$, the unconstrained circular maximizer has a nonnegative first coordinate. For $a<0$, the optimum lies on the boundary diameter $u=0$ and chooses the sign of $v$. This eliminates the need to enumerate disturbance samples.
+当 $a\ge0$ 时圆周上的最大方向可行；当 $a<0$ 时最优点在直径 $u=0$ 上。因此不必用完整圆盘或矩形替代真实不确定集，也不必对扰动进行大量枚举采样。
 
-Set $R_w=(\sum_jC_j^2)^{1/2}$ and $s=\lambda-\lambda_0$. Taylor's theorem on the \emph{complete} cell, together with \eqref{eq:blocks} and the independent supports, gives
+记 $R_w=(\sum_jC_j^2)^{1/2}$、$s=\lambda-\lambda_0$。将完整参数单元上的 Taylor 余项以式~\eqref{eq:blocks} 控制，再分别最大化一阶扰动项，得到
 \begin{align}
-\phi(\lambda_0+s,w)\le\Phi_\phi(s)
-:={}&\phi_0+\phi_\lambda s
-+\sum_{j=1}^m
-\supp_{\U_j}(\phi_{w_{p,j}},\phi_{w_{q,j}})
+\phi(\lambda_0+s,w)\le\Phi_\phi(s):={}&
+\phi_0+\phi_\lambda s+
+\sum_{j=1}^{m}\supp_{\U_j}(\phi_{w_{p,j}},\phi_{w_{q,j}})
 \nonumber\\
-&+\tfrac12 B_{\lambda\lambda}s^2
+&+\tfrac12B_{\lambda\lambda}s^2
 +B_{\lambda w}R_w|s|
-+\tfrac12 B_{ww}R_w^2.
++\tfrac12B_{ww}R_w^2.
 \label{eq:Vbound}
 \end{align}
-All $\phi_0$ and derivative coefficients are evaluated at $(\lambda_0,0)$, whereas $B$ coefficients are uniform over $\mathcal C$. The right-hand side is convex in $s$. Therefore the sufficient cell-wide voltage acceptance condition is simply
+这里 $\phi_0$ 与一阶导数取自 $(\lambda_0,0)$，三个 $B$ 必须是整个单元上的有效上界。$\Phi_\phi(s)$ 是凸函数，因此其在区间 $[-h,h]$ 上的最大值取于端点。每个节点的充分电压安全判据为
 \begin{equation}
-\boxed{\max\{\Phi_{\phi_i^-}(-h),\Phi_{\phi_i^-}(h),
-\Phi_{\phi_i^+}(-h),\Phi_{\phi_i^+}(h)\}\le0}
+\max\{\Phi_{\phi_i^-}(-h),\Phi_{\phi_i^-}(h),
+\Phi_{\phi_i^+}(-h),\Phi_{\phi_i^+}(h)\}\le0.
 \label{eq:voltage_accept}
 \end{equation}
-for every bus $i$. When the target interval begins or ends asymmetrically around the expansion center, replace $\pm h$ by the actual two offsets.
+若单元不是以 $\lambda_0$ 对称，使用实际两个端点偏移量即可。
 
-\subsection{Complex-power angular current envelope}
-A scalar Hessian on $\ell_l$ can be needlessly conservative because the current square is the magnitude of a two-dimensional complex-power numerator divided by squared voltage. For branch $l$ let $y_l=(a_l,b_l)$ from \eqref{eq:ell}. On a whole load cell construct
+\subsection{复功率几何电流上界}
+直接对标量 $\ell_l$ 使用整体二阶余项可能过于保守，因为线路电流平方具有复功率模长形式 $\ell_l=(a_l^2+b_l^2)/\nu_l$。令 $y_l=(a_l,b_l)$，在整个单元上构造仿射展开
 \begin{equation}
 y_l(s,w)=y_l^0+t_ls+\sum_jT_{lj}w_j+r_l(s,w),
-\qquad\norm{r_l(s,w)}_2\le\eta_l.
+\qquad \norm{r_l(s,w)}_2\le\eta_l .
 \label{eq:affine}
 \end{equation}
-The affine norm is maximized exactly by one angular variable. With $e_\theta=(\cos\theta,\sin\theta)$,
+记 $e_\theta=(\cos\theta,\sin\theta)$。根据 $\norm{y}_2=\max_{\theta}e_\theta^\top y$，可将仿射部分对所有负荷和光伏扰动的最大模长\emph{精确}化为一维角度优化：
 \begin{equation}
 A_l=\max_{\theta\in[0,2\pi]}
-\left[e_\theta^\top y_l^0+h|e_\theta^\top t_l|
-+\sum_j\supp_{\U_j}(T_{lj}^\top e_\theta)\right].
+\left[
+e_\theta^\top y_l^0+
+h|e_\theta^\top t_l|+
+\sum_j\supp_{\U_j}(T_{lj}^\top e_\theta)
+\right].
 \label{eq:angular}
 \end{equation}
-Indeed $\norm{x}_2=\max_\theta e_\theta^\top x$ and maxima over the compact angular, load and uncertainty sets may be interchanged. Denote the bracketed function by $f_l(\theta)$ and let $N_\theta$ be the number of equispaced angular directions. The constant
+将括号内记为 $f_l(\theta)$，其全局 Lipschitz 常数可取
 \begin{equation}
 K_l=\norm{y_l^0}_2+h\norm{t_l}_2+
-\sum_j C_j\norm{T_{lj}}_{\mathrm F}
+\sum_jC_j\norm{T_{lj}}_{\mathrm F}.
 \label{eq:lip}
 \end{equation}
-bounds $|f_l'(\theta)|$ wherever the derivative exists and is a global Lipschitz constant across nondifferentiable support directions. Consequently,
+用 $N_\theta$ 个等距角度采样时，必须加入漏采校正：
 \begin{equation}
-A_l\le \max_{0\le k<N_\theta}
+A_l\le\max_{0\le k<N_\theta}
 f_l(2\pi k/N_\theta)+\pi K_l/N_\theta.
 \label{eq:gridsafe}
 \end{equation}
-The $\pi K_l/N_\theta$ allowance is indispensable: sampling angles without it provides a \emph{lower} estimate of the maximum.
-
-If a validated lower squared-voltage bound $\underline\nu_l>0$ is available on the cell, then
+只取角度采样最大值是对真实最大值的\emph{下界}，不能单独作为安全证明。若已经验证该线路接收端电压平方满足 $\nu_l\ge\underline\nu_l>0$，则
 \begin{equation}
-\boxed{\ell_l\le U_l^{\rm phasor}:=
-\frac{\left[\max\{0,\max_kf_l(2\pi k/N_\theta)
+\ell_l\le
+U_l^{\rm phasor}:=
+\frac{\left[\max\{0,\max_k f_l(2\pi k/N_\theta)
 +\pi K_l/N_\theta+\eta_l\}\right]^2}
-{\underline\nu_l}}
+{\underline\nu_l}.
 \label{eq:phasor_bound}
 \end{equation}
-is sufficient to check $\ell_l\le(I_l^{\max})^2$. The outer $\max\{0,\cdot\}$ is harmless because the true norm cannot be negative. If an independently validated scalar current Hessian bound $U_l^H$ is also available on the same whole cell, $\min\{U_l^{\rm phasor},U_l^H\}$ remains an upper bound. The proposed implementation uses the geometric current envelope and the block Hessian chiefly for voltage.
+这给出整个单元上的电流平方安全上界。若另有同一单元上有效的 Hessian 电流上界 $U_l^H$，可以取 $\min\{U_l^H,U_l^{\rm phasor}\}$，仍为上界。本文采用分块 Hessian 重点处理电压、复功率几何重点处理电流，两种工具互补而不互相替代。
 
-\subsection{Full inverter capability consistency}
-For each PV inverter let
+\subsection{光伏有功--无功耦合容量检查}
+逆变器 $j$ 在未限幅公式下的\emph{原始总输出}写为
 \begin{equation}
 y_j^{PV}(s,w)=
 \begin{pmatrix}
@@ -101,16 +98,16 @@ P_j^0+w_{p,j}\\
 w_{q,j}-g_j(V_j(s,w)-V_j^{\rm ref})
 \end{pmatrix}.
 \end{equation}
-Taylor expansion and the same angular support construction produce an affine norm majorant $\overline A_j^{PV}$, with a validated remainder $\eta_j^{PV}$. The voltage Hessian necessary for the remainder follows from
+对该二维向量同样使用式~\eqref{eq:angular} 的半圆几何支撑函数，并加入非线性余项 $\eta_j^{PV}$。余项可以从平方电压 Hessian 得到，因为
 \begin{equation}
-\nabla^2V_j=
-\frac{\nabla^2\nu_j}{2\sqrt{\nu_j}}-
-\frac{\nabla\nu_j\nabla\nu_j^\top}{4\nu_j^{3/2}}.
+\nabla^2 V_j=
+\frac{\nabla^2\nu_j}{2\sqrt{\nu_j}}
+-\frac{\nabla\nu_j\nabla\nu_j^\top}{4\nu_j^{3/2}}.
 \end{equation}
-The entire-cell check is
+记仿射部分的可验证模长上界为 $\overline A_j^{PV}$，整个单元的逆变器一致性条件为
 \begin{equation}
-\boxed{\overline A_j^{PV}+\eta_j^{PV}\le S_j
-\qquad(j=1,\ldots,m).}
+\overline A_j^{PV}+\eta_j^{PV}\le S_j,\qquad
+j=1,\ldots,m .
 \label{eq:PVpass}
 \end{equation}
-This maintains the \emph{correlation} between active and reactive PV output rather than adding independent worst-case scalar magnitudes. Once \eqref{eq:PVpass} holds for every PV, the unsaturated model \eqref{eq:droop} agrees with the physical clipped control law \eqref{eq:physical} for the complete cell. A failed check is UNKNOWN, not proof of unsafe physical operation. The algorithm does not differentiate through a clipping kink.
+该判据直接保留 $P_j$ 与 $Q_j$ 的相关性，避免分别取极大值后过度保守。只要全部逆变器通过，光滑方程的输出始终落在功率圆内，因而与实际带限幅控制方程一致。未通过只表示当前光滑证书无法接受这个单元，不等同于真实电网越限。
