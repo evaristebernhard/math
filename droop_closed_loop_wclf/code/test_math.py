@@ -56,5 +56,11 @@ class HalfDiscTests(unittest.TestCase):
             self.assertLessEqual(math.hypot(*value),hi+1e-12)
 
 
+class SaturationCapacityTests(unittest.TestCase):
+    def test_exact_rational_saturation_capacity_bracket(self):
+        from saturation_vi_toy import test as saturation_capacity_test
+        saturation_capacity_test()
+
+
 if __name__ == "__main__":
     unittest.main()
