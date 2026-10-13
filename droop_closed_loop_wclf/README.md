@@ -58,3 +58,10 @@ Run: `python3 code/one_line_capacity_hessian.py`.
 - code/certified_capacity_interval.py: standard-library calculator for the fixed-g certified inner interval, with an exactly solvable line-current toy.
 
 Run: `python3 code/certified_capacity_interval.py`.
+
+## Further capacity control: blockwise Hessian (2026-10-13)
+
+- notes/10_blockwise_hessian_capacity.md: block-Hessian sufficient robust capacity theorem, fixed-g convex safe interval and exact thermal toy.
+- code/blockwise_capacity_demo.py: dependency-free proof-formula regression; compare isotropic Hessian, block-Hessian and exact robust toy capacity.
+
+Run: `python3 code/blockwise_capacity_demo.py`.
