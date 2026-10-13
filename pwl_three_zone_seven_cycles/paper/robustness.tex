@@ -1,0 +1,137 @@
+% Included from main.tex after the rational witness proof.
+\section{Persistence, stability, and critical residence}\label{sec:consequences}
+Write $\theta=(A,B,\mu)$ and $\theta_0=(9,3/2,181363/100000)$.
+Use subscripts $\theta$ for the flow $x_\theta(t;y)$ and the
+return displacement $D_\theta(y)=x_\theta(2\pi;y)-y$.
+
+\begin{proposition}[Explicit parameter cube preserving six signs]
+\label{prop:quantitative}
+For every triple satisfying
+\begin{equation}\label{eq:param-cube}
+ |A-9|<10^{-12},\quad |B-3/2|<10^{-12},\quad
+ |\mu-181363/100000|<10^{-12},
+\end{equation}
+all six displacement signs of Table~\ref{tab:signs} remain strict,
+and there are at least seven distinct $2\pi$-periodic trajectories.
+This statement alone does not certify isolation throughout the
+whole explicit cube.
+\end{proposition}
+\begin{proof}
+Put $f_\theta(x,t)=-Ax+(A+B)\sat(x)+\mu\sin t$.
+The reference field $f_{\theta_0}$ points inward at $x=\pm2$,
+as $15/2-\mu_0>0$. Therefore $|x_{\theta_0}(t;y)|\le2$
+for $|y|\le2$ and $t\ge0$. Each secant slope of
+$f_\theta(\cdot,t)$ is at most $B<2$; its affine slopes
+are $-A$ and $B$. Along $x_0=x_{\theta_0}(t;y)$,
+\[
+ |f_\theta(x_0,t)-f_{\theta_0}(x_0,t)|
+ \le |\Delta A|(|x_0|+|\sat(x_0)|)
+ +|\Delta B|\,|\sat(x_0)|+|\Delta\mu|
+ <5\cdot10^{-12}.
+\]
+The one-sided Gronwall inequality between the two trajectories,
+started at the same $y$, gives
+\begin{equation}\label{eq:uniform-parameter}
+ |x_\theta(t;y)-x_{\theta_0}(t;y)|
+ \le5\cdot10^{-12}\frac{e^{2t}-1}{2}
+ <1.5\cdot10^{-6},\quad 0\le t\le2\pi,\quad |y|\le2.
+\end{equation}
+Here $\pi<13/4$ and $e<11/4$ imply
+$e^{4\pi}<e^{13}<(11/4)^{13}<600000$.
+The smallest absolute displacement margin in
+Table~\ref{tab:signs} exceeds $4.96788\cdot10^{-6}$,
+so all six signs survive. By continuity the three intervals
+\eqref{eq:intervals} retain fixed points.
+
+Half-period reflection still gives a unique central solution.
+Since $Q_{\theta_0}(-0.571)>0.01911577$ by
+\eqref{eq:Qbound}, the bound at $t=\pi$ implies
+$Q_\theta(-0.571)>0$, placing the central initial value
+below $I_1$. Reflection supplies three distinct companions
+below it, for a total of at least seven periodic trajectories.
+\end{proof}
+
+\begin{theorem}[Robust isolation and alternating stability]
+\label{thm:robust}
+There is $\varepsilon_*\in(0,10^{-12}]$ such that
+\[
+ |A-9|,\quad |B-3/2|,\quad|\mu-\mu_0|<\varepsilon_*,
+ \qquad \mu_0=181363/100000,
+\]
+implies at least seven isolated periodic orbits, of which
+at least four are locally attracting and at least three
+are locally repelling. This does not assert hyperbolicity
+of the selected noncentral orbits.
+\end{theorem}
+\begin{proof}
+At $\theta_0$ the strict grazing barriers in
+Section~\ref{sec:proof} exclude tangencies for all
+$y\in I_1\cup I_2\cup I_3$; the crossings are transverse,
+and no endpoint lies on a switching level.
+By compactness and continuous dependence, these uniform
+strict conditions persist for sufficiently small perturbations
+of $\theta$. Hence $D_\theta$ is real analytic in $y$
+on neighborhoods of each closed interval $I_j$.
+Strict opposite endpoint signs prevent it from being
+identically zero. Its zeros in each $I_j$ are finite
+and isolated.
+
+An analytic displacement starting positive and ending
+negative has at least one zero changing sign from
+positive to negative. The scalar return map is strictly
+increasing, so iterates of nearby states converge
+monotonically to this fixed point: it is attracting.
+Likewise a negative-to-positive change yields a
+repelling fixed point. The patterns in
+Table~\ref{tab:signs} are $(+,-)$, $(-,+)$, $(+,-)$,
+giving two attracting and one repelling cycles above
+the central solution.
+
+The central solution is hyperbolic repelling at
+$\theta_0$ by \eqref{eq:centerhyper}. Its initial value
+is the unique zero of the strictly increasing
+$Q_\theta(y)=x_\theta(\pi;y)+y$ and depends continuously
+on the parameters. The central transverse itinerary
+and its multiplier persist on a smaller neighborhood,
+so it remains repelling and isolated.
+The half-period symmetry $x(t)\mapsto-x(t+\pi)$ preserves
+local stability and yields distinct reflected orbits
+below the central solution. Altogether this selects
+four attracting and three repelling isolated orbits.
+\end{proof}
+
+\begin{corollary}[Three critical residence-time profiles]
+\label{cor:critical}
+At the witness parameters the biased mean response
+has at least three distinct positive-mean stationary
+profiles satisfying
+\[
+ \Lambda_\xi(\xi,\mu_0)=0,\qquad T(\xi,\mu_0)=\rho.
+\]
+The conclusion persists in a sufficiently small
+parameter neighborhood, with the quantities evaluated
+at the perturbed parameters.
+\end{corollary}
+\begin{proof}
+Theorem~\ref{thm:seven} supplies ordered solutions above
+the antisymmetric central solution, with means
+$0<\xi_1<\xi_2<\xi_3$. The central mean is zero,
+and $\Lambda(0,\mu_0)=\Lambda(\xi_i,\mu_0)=0$.
+Rolle's theorem on $(0,\xi_1)$, $(\xi_1,\xi_2)$
+and $(\xi_2,\xi_3)$ gives three distinct stationary
+responses. Equation~\eqref{eq:key}, including its
+continuous extension at isolated grazings, gives
+$T=\rho$ for each. The same argument applies to
+Theorem~\ref{thm:robust} at nearby parameters.
+No nondegeneracy or exact global fold count follows.
+\end{proof}
+
+Proposition~\ref{prop:quantitative} certifies an explicit
+cube for distinct periodic trajectories. The neighborhood
+of isolated cycles in Theorem~\ref{thm:robust} is existential:
+an explicit uniform box for the grazing barriers and central
+multiplier remains to be computed.
+The script \texttt{proof/certify\_parameter\_persistence.py}
+checks the elementary parameter estimate against the
+original interval endpoint certificate; it is not
+an independent second interval-arithmetic backend.
