@@ -84,3 +84,8 @@ Run: `python3 code/dynamic_ramp_demo.py`. Assumes absolutely continuous renewabl
 - code/capacity_gap_toy.py: self-contained analytic reverse-PV current toy checking the capacity-gap inequality.
 
 Run: `python3 code/capacity_gap_toy.py`. IEEE-33-bus capacity gap remains *unverified*.
+
+## Two-sided IEEE-33 capacity bracket (2026-10-13)
+
+- notes/14_two_sided_capacity_bracket_ieee33.md: complements the certified inner capacity with a physically feasible PV disturbance witness and a componentwise interval-Jacobian sign test of squared-voltage derivative to exclude larger loads on a specified unsaturated branch.
+- On fixed g=1.85 in the tested 0–1.25 MW domain, the float-based exploratory bracket is about 1.032555–1.065 MW. Not directed-rounded or verified for saturated control.
