@@ -1,29 +1,30 @@
-# Reproducibility and evidence ledger
+# 算法论文复现和证据说明
 
-## Mathematical claims proved conditional on validated enclosure hypotheses
-- Exact right-half-disc support of any linear response.
-- Norm-of-affine-complex-power one-angle support formula.
-- Block-Hessian Taylor upper bound for signed nonlinear voltage violations.
-- Sufficient full-cell connected-load-prefix admission theorem.
+## 已有的数学结论
 
-A pass is **rigorous only if** the required nonlinear branch existence/uniqueness, joint Hessian bounds, angular-grid correction, phasor remainder and PV disk tests use verified outward-enclosing arithmetic over the whole input cell.
+- 右半圆不确定集对任意线性函数的解析支撑函数；
+- 非线性 DistFlow 隐函数导数及其负荷--扰动分块 Hessian Taylor 上界；
+- 复功率模长的角度最大化公式，以及有限角度网格必须添加的 Lipschitz 余量；
+- **条件安全性定理**：如在全部负荷单元和不确定集上验证了解分支、导数、余项及电压、电流和逆变器功率圆上界，那么算法接受的整个连续负荷前缀是稳态安全的。
 
-## IEEE 33 numerical inner candidates — FLOAT ONLY
-Recorded target prefixes (MW) and cell counts from max_safe_design_results.json:
-- uniform (1.92,1.92,1.92,1.92): 1.0586 MW / 58 whole load cells.
-- prior coordinated (3.70,1.92,2.12,2.52): 1.1363 MW / 62 cells.
-- latest coordinated (3.80105,1.89598,2.39520,4.0): 1.1500 MW / 60 cells.
+数学定理本身严格成立，但要应用于 IEEE 33 节点，必须用可信的区间数值程序验证定理条件。
 
-These are double-precision implementations of conservative real-arithmetic formulas. They do not count as formal IEEE33 safety proofs.
+## IEEE 33 安全容量：尚未正式认证
 
-## Independently certified *unsafe* witness
-Previous notebook record notes/20 on sibling project: exact fixed feasible PV disturbance (wp,wq)=(0,-0.0125) pu on each PV, selected gains (3.80105,1.89598,2.39520,4.0), load=1.1870 MW. Local 64-state interval Banach existence plus switch-mode consistency yields 0.94993228<V18<0.94993334 pu. This excludes the fixed design from safe connected prefixes extending through that load, but does not certify inner capacity or global AC solution uniqueness.
+统一增益 (1.92,1.92,1.92,1.92) 的双精度候选容量为 1.0586 MW；协调增益 (3.70,1.92,2.12,2.52) 为 1.1363 MW；改进协调增益 (3.80105,1.89598,2.39520,4.0) 为 1.1500 MW。已存储完整负荷分段通过次数分别为 58、62 和 60。
 
-## Baselines that must be implemented for journal submission
-- full isotropic Hessian bound with identical feeder/control/uncertainty;
-- load/uncertainty block Hessian without phasor refinement;
-- block Hessian plus phasor current bound;
-- same plus correlated PV output cap (the final method);
-- compare with realistic line-specific ampacity and at least one additional feeder, runtime vs Ntheta and load-cell width, and conservatism compared to direct adversarial search.
+这些数字都是采用保守实数公式但用普通双精度计算的结果，没有对完整光伏不确定集做向外舍入的安全侧验证，**不可写成严格已证安全容量**。
 
-Do not fill missing measurements by extrapolation or mix different control/uncertainty models. Sou et al. (IEEE TPWRS 2026) addresses nonlinear WCLF, while Pantazis and Chong (arXiv:2608.11141) addresses dynamic linearized droop certificates. Those are related but **not matched computational baselines** for the present algorithm until actually run on the same setup.
+## 独立的越限证据
+
+对于最后一组固定增益，取全部光伏扰动 (wp,wq)=(0,-0.0125) pu、新增负荷 1.1870 MW。先前研究用局部区间不动点法验证了一个物理稳态解，其 18 号节点电压落在 (0.94993228,0.94993334) pu，低于 0.95 pu；因此它是固定设计的真实越限证据。但这不能证明任意较低负荷在全部扰动下安全，也不能证明容量最优。
+
+## 需要的补充实验
+
+1. 在同一物理模型下分别比较整体 Hessian、分块 Hessian、分块 Hessian + 复功率几何界，以及加入光伏功率圆后的完整算法。
+2. 完整导入 IEEE 33 原始 Python 依赖，提供一条命令即可复现的数据及算例。
+3. 完成安全内界的向外舍入区间证明，严格记录负荷区间覆盖。
+4. 补充运行时间、角度分辨率、单元细分敏感性、第二馈线及真实逐线路限流数据。
+5. 说明本算法的稳态属性，不直接推出动态稳定、负荷快速爬坡的安全保证。
+
+论文目前是可编译的**中文研究初稿**；正式投稿前要完成上述安全证明与实验。
