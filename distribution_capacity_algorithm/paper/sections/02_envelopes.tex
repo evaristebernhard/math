@@ -7,7 +7,7 @@ z_t&=-J^{-1}F_t,\label{eq:zt}\\
 z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
 \label{eq:ztt}
 \end{align}
-式~\eqref{eq:ztt} 的二阶项是包含状态与参数的\emph{总二阶导数}，其中具有 $F_{zz},F_{zt},F_{tt}$ 等混合项；不能只对标称线性潮流求二阶导数。
+式~\eqref{eq:ztt} 的\emph{总二阶导数}同时包含 $F_{zz},F_{zt},F_{tt}$ 等项，用于描述负荷与光伏扰动之间的非线性耦合。
 
 对节点电压上下限对应的任意标量违反函数 $\phi(\lambda,w)$，假设在整个 $\mathcal C$ 上成立
 \begin{equation}
@@ -20,7 +20,7 @@ z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
 
 \subsection{半圆支撑函数与电压安全判据}
 
-光伏不确定性不是在每个分量上独立取上下限，而是受二维半圆几何限制。与直接枚举大量随机场景相比，解析支撑函数可直接计算一阶最坏扰动的贡献，随后仅需处理非线性余项。
+光伏扰动采用二维半圆几何模型。由解析支撑函数计算一阶最坏扰动贡献，再通过 Hessian 控制非线性余项。
 右半圆集合~\eqref{eq:U} 对线性函数 $au+bv$ 的精确支撑函数是
 \begin{equation}
 \supp_{\U_j}(a,b)=C_j
@@ -30,7 +30,7 @@ z_{t_at_b}&=-J^{-1}D^2F[(z_{t_a},e_a),(z_{t_b},e_b)] .
 \end{cases}
 \label{eq:support}
 \end{equation}
-当 $a\ge0$ 时圆周上的最大方向可行；当 $a<0$ 时最优点在直径 $u=0$ 上。因此不必用完整圆盘或矩形替代真实不确定集，也不必对扰动进行大量枚举采样。
+当 $a\ge0$ 时圆周上的最大方向可行；当 $a<0$ 时最优点在直径 $u=0$ 上。由此可直接求出模型中各光伏半圆集合的线性支撑值。
 
 记 $R_w=(\sum_jC_j^2)^{1/2}$、$s=\lambda-\lambda_0$。将完整参数单元上的 Taylor 余项以式~\eqref{eq:blocks} 控制，再分别最大化一阶扰动项，得到
 \begin{align}
@@ -80,7 +80,7 @@ A_l\le\max_{0\le k<N_\theta}
 f_l(2\pi k/N_\theta)+\pi K_l/N_\theta.
 \label{eq:gridsafe}
 \end{equation}
-只取角度采样最大值是对真实最大值的\emph{下界}，不能单独作为安全证明。若已经验证该线路接收端电压平方满足 $\nu_l\ge\underline\nu_l>0$，则
+加入式~\eqref{eq:gridsafe} 的角度漏采修正，并设线路接收端电压平方满足 $\nu_l\ge\underline\nu_l>0$，可得到
 \begin{equation}
 \ell_l\le
 U_l^{\rm phasor}:=
@@ -89,7 +89,7 @@ U_l^{\rm phasor}:=
 {\underline\nu_l}.
 \label{eq:phasor_bound}
 \end{equation}
-这给出整个单元上的线路电流平方安全上界。\textbf{本文线路电流约束只采用式~\eqref{eq:phasor_bound} 的复功率几何上界}，不再对线路电流构造标量 Hessian 上界，也不再计算两种电流上界的最小值。分块 Hessian 继续用于节点电压和逆变器容量的非线性余项，两者计算对象明确分离。
+式~\eqref{eq:phasor_bound} 即本文采用的线路电流平方上界。至此，分块 Hessian 用于电压及逆变器容量余项，复功率几何法用于线路电流，形成分工明确的安全裕度计算方法。
 
 \subsection{光伏有功--无功耦合容量检查}
 逆变器 $j$ 在未限幅公式下的\emph{原始总输出}写为
@@ -112,4 +112,4 @@ w_{q,j}-g_j(V_j(s,w)-V_j^{\rm ref})
 j=1,\ldots,m .
 \label{eq:PVpass}
 \end{equation}
-该判据直接保留 $P_j$ 与 $Q_j$ 的相关性，避免分别取极大值后过度保守。只要全部逆变器通过，光滑方程的输出始终落在功率圆内，因而与实际带限幅控制方程一致。未通过只表示当前光滑证书无法接受这个单元，不等同于真实电网越限。
+该判据保留 $P_j$ 与 $Q_j$ 的相关性，按照完整视在功率圆检查逆变器容量。通过测试的运行单元满足实际逆变器控制约束，并参与下一步安全容量搜索。
