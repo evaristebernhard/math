@@ -59,14 +59,6 @@
       "target_115": "pass",
       "evaluations_at_115": 62,
       "wall_time_at_115_s": 1.7808
-    },
-    {
-      "method": "block_min",
-      "target_08": "pass",
-      "target_10": "pass",
-      "target_115": "pass",
-      "evaluations_at_115": 62,
-      "wall_time_at_115_s": 2.1072
     }
   ],
   "runtime_08_mw_three_repeats": [
@@ -99,17 +91,9 @@
       ],
       "median": 1.1622,
       "evaluations": 40
-    },
-    {
-      "method": "block_min",
-      "seconds": [
-        1.2548,
-        1.2618,
-        1.2713
-      ],
-      "median": 1.2618,
-      "evaluations": 40
     }
   ],
-  "notes": "Python NumPy/SciPy float64; same full joint PV P/Q capability check; a nonpassing numerical bound is not a physical unsafe witness; timings measured on one runtime environment."
+  "notes": "Python NumPy/SciPy float64; same full joint PV P/Q capability check; a nonpassing numerical bound is not a physical unsafe witness; timings measured on one runtime environment.",
+  "current_upper_for_production": "block_phasor_only",
+  "removed_branch": "block_min (the minimum of scalar and phasor current bounds) deleted from method set"
 }
