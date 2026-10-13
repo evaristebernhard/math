@@ -1,45 +1,43 @@
-\section{Capacity admission and gain-design algorithms}\label{sec:algorithm}
-The centerpiece is a \emph{cell-wide robust feasibility oracle}
-$\mathsf{CellSafe}(\bm g,I)$. Given gains $\bm g$ and a nonempty load cell $I$, it either returns PASS, meaning that the mathematical upper enclosures are valid over the \emph{entire} $I\times\U$ and all security tests pass, or returns UNKNOWN. In particular, nonconvergence of a nonlinear interval enclosure, crossing a PV Q-clip surface, or exceeding the chosen subdivision budget is never misreported as an actual physical violation.
+\section{安全容量准入与增益设计算法}\label{sec:algorithm}
+算法的核心是完整单元判定器 $\mathsf{CellSafe}(\bm g,I)$：输入固定增益 $\bm g$ 和负荷区间 $I=[a,b]$，只有验证整个 $I\times\U$ 上全部电压、电流及光伏功率约束后才返回 \textsf{PASS}；如果状态盒验证失败、导数上界过松、可能触及限幅或达到细分预算，统一返回 \textsf{UNKNOWN}。这种失败不能当作物理越限证据。
 
-\paragraph{Algorithm 1: adaptive connected robust capacity acceptance.}
+\subsection{算法一：连续安全容量的自适应区间检查}
 \begin{enumerate}[leftmargin=8mm,itemsep=3pt]
-\item \textbf{Input:} feeder and inverter data, half-disc radii $(C_j)$, gain vector $\bm g$, candidate admission $L$, initial load width $\Delta$, smallest allowed width $\delta$, and angular resolution $N_\theta$.
-\item Partition $[0,L]$ into a finite queue of \emph{contiguous} cells, each no wider than $\Delta$. Initialize accepted-cell set $\mathcal A=\varnothing$.
-\item Pop cell $I=[a,b]$; locate and \emph{enclose} its designated normal unsaturated nonlinear DistFlow branch for every $(\lambda,w)\in I\times\U$. If the branch cannot be validated, mark the cell UNKNOWN.
-\item Where branch validation succeeds, compute the nominal first derivatives and validated load/disturbance Hessian blocks \eqref{eq:zt}--\eqref{eq:blocks}. Test all bus voltage constraints by \eqref{eq:voltage_accept}; all line-current limits by \eqref{eq:phasor_bound}; and all PV apparent-power conditions by \eqref{eq:PVpass}. Return PASS \emph{only if every bound holds on all inputs in the cell}.
-\item If PASS, insert $I$ into $\mathcal A$. Otherwise, when $b-a>\delta$ and refinement budget remains, subdivide $I$ into $[a,(a+b)/2]$ and $[(a+b)/2,b]$ and continue. If refinement is exhausted, terminate with UNKNOWN and report the location of the unresolved gap.
-\item Sort $\mathcal A$ and verify \emph{exact contiguous coverage} of $[0,L]$ with no unresolved cell. Return PASS and the accepted interval collection if and only if the whole prefix is covered; otherwise return UNKNOWN. Save per-cell margins and the numerical precision used.
+\item \textbf{输入：}网络、半圆扰动集、逆变器增益 $\bm g$、目标容量 $L$、初始步长 $\Delta$、最小单元宽度 $\delta$ 和角度网格数 $N_\theta$。
+\item 将 $[0,L]$ 分为相邻完整单元，放入队列；初始化已通过集合 $\mathcal A=\varnothing$。
+\item 取出单元 $I=[a,b]$，对所有 $(\lambda,w)\in I\times\U$ 验证正常、未限幅的非线性 DistFlow 解分支、正电压状态盒及导数上界。若无法验证，则本单元暂记 \textsf{UNKNOWN}。
+\item 通过式~\eqref{eq:zt}--\eqref{eq:blocks} 计算分块 Hessian；用式~\eqref{eq:voltage_accept} 检查全部节点电压，用式~\eqref{eq:phasor_bound} 检查全部线路电流，用式~\eqref{eq:PVpass} 检查每台逆变器的总视在功率。只有全部\emph{完整单元上界}满足要求才记 \textsf{PASS}。
+\item 通过的单元加入 $\mathcal A$。其余单元若宽度大于 $\delta$ 且预算允许，则二等分后继续检查；否则记录无法认证的区间并返回 \textsf{UNKNOWN}。
+\item 对 $\mathcal A$ 按端点排序，只有通过单元无间隙、无遗漏地覆盖整个 $[0,L]$ 时，才接受容量 $L$ 并输出各单元的裕度与认证记录。
 \end{enumerate}
+当前 IEEE 33 节点计算使用双精度近似上界，因此通过记录是\emph{浮点候选}。只有状态、Jacobian、Hessian、复功率余项和最终不等式均经过向外舍入或等价的严格验证，才能称为数值安全证书。
 
-In floating-point prototypes, step 3 is an \emph{approximate enclosure check} and an Algorithm 1 PASS should be labeled a \emph{numerical candidate}. A rigorous PASS requires outward-rounded interval validation of step 3, derivatives, remainders and inequality comparisons in steps 4--6.
-
-\paragraph{Algorithm 2: capacity-oriented gain selection (optional outer loop).}
+\subsection{算法二：增益协调设计（可选）}
 \begin{enumerate}[leftmargin=8mm,itemsep=2pt]
-\item Initialize a finite design pool with uniform gains and any previously passing heterogeneous gains from $\mathcal G=[0,4]^m$.
-\item For each design, apply Algorithm 1 to progressively larger capacity targets. Preserve the largest \emph{fully covered PASS target}; an UNKNOWN target is not a physical infeasibility witness and cannot justify a globally monotone capacity bisection.
-\item Propose further gain vectors with coordinate changes or a local constrained optimizer using the binding envelope margins as guidance. Repeat full-prefix tests; retain the best confirmed PASS target and its gain vector.
-\item Return the best tested gain vector, accepted load prefix and all cell certificates. Do not label it the global physical optimum unless a separate design-wide upper-bound proof is available.
+\item 从统一增益及已有可行异构增益出发，在 $\mathcal G=[0,4]^m$ 内构造有限候选集。
+\item 对每个候选增益调用算法一检查若干目标容量，只保留整个负荷前缀均通过的设计；\textsf{UNKNOWN} 不能作为单调二分搜索的物理不可行证明。
+\item 结合活跃约束的裕度，以坐标搜索或局部优化生成新增益；每个候选仍需重复完整前缀验证。
+\item 输出有限测试中取得最大\emph{可认证容量}的增益配置与逐单元记录，不宣称全局最优。
 \end{enumerate}
-This deliberately separates \emph{feasibility assurance} from \emph{design search}. Algorithm 1 is useful with fixed gains even without Algorithm 2; nothing in its guarantee depends on the outer optimizer reaching a global solution.
+算法一可独立用于固定控制增益的负荷准入；算法二不改变底层安全判据，也不要求引入新的动态控制律。
 
-\begin{theorem}[Conditional safety of a connected capacity prefix]\label{thm:sound}
-Fix a gain vector $\bm g$, a proposed target $L$ and the uncertainty product \eqref{eq:U}. Suppose Algorithm 1 admits a gap-free finite partition $[0,L]=\bigcup_{k=1}^{K}I_k$ and, for every cell $I_k$:
+\begin{theorem}[连续安全容量的条件保证]\label{thm:sound}
+固定 $\bm g$、$L$ 与不确定集 $\U$。设算法一完成一个无间隙有限覆盖 $[0,L]=\bigcup_{k=1}^{K}I_k$，并且对每个单元 $I_k$：
 \begin{enumerate}[label=(\roman*),leftmargin=9mm,itemsep=1pt]
-\item the intended normal unsaturated nonlinear DistFlow solution exists on $I_k\times\U$, has strictly positive squared voltages, and is contained in a verified state enclosure;
-\item all implicit derivative, block-Hessian, phasor-remainder, angular grid and lower-voltage bounds used in Section~\ref{sec:method} hold uniformly on $I_k\times\U$;
-\item the upper constraints \eqref{eq:voltage_accept}, \eqref{eq:phasor_bound} and the correlated inverter capability conditions \eqref{eq:PVpass} pass for the \emph{complete} cell.
+\item 指定正常、未限幅 DistFlow 解分支存在于整个 $I_k\times\U$，其正电压状态包含于经过验证的状态盒；
+\item 式~\eqref{eq:zt}--\eqref{eq:phasor_bound} 所用的隐函数导数、分块 Hessian、复功率余项、角度网格修正与电压下界均在整个单元有效；
+\item 电压判据~\eqref{eq:voltage_accept}、线路电流界~\eqref{eq:phasor_bound} 及全部逆变器容量测试~\eqref{eq:PVpass} 均通过。
 \end{enumerate}
-Then on the designated steady-state branch, the \emph{physical} clipped-control model \eqref{eq:physical} satisfies every voltage, thermal and inverter rating limit for all $(\lambda,w)\in[0,L]\times\U$. Thus $\Lambda_{\rm conn}(\bm g)\ge L$.
+则指定的实际带限幅稳态控制模型，对全部 $(\lambda,w)\in[0,L]\times\U$ 均满足电压、电流与逆变器功率约束，因而 $\Lambda_{\rm conn}(\bm g)\ge L$。
 \end{theorem}
 \begin{proof}
-Take any $(\lambda,w)$ in the proposed prefix, and choose a cell $I_k$ that contains $\lambda$. By (i) its nonlinear solution exists on the intended smooth branch. Taylor's theorem and (ii) imply the load/disturbance block-Hessian upper bound \eqref{eq:Vbound}, and (iii) makes both signed voltage violations nonpositive. The exact half-disc support reformulation \eqref{eq:angular}, its corrected angular discretization \eqref{eq:gridsafe}, and the validated complex-power remainder prove \eqref{eq:phasor_bound}; thus all line-current limits hold. Finally, \eqref{eq:PVpass} places the \emph{total} PV output of the unsaturated solution within the physical apparent-power disk, so the physical clipping operator leaves every reactive command unchanged and all inverter ratings hold. This argument holds for every cell. Gap-free coverage proves the result for every intermediate load and uncertainty point.
+任取区间中的负荷与扰动，必属于一个已通过的 $I_k\times\U$。由条件 (i) 得到对应的正常稳态分支。Taylor 定理、条件 (ii) 和半圆精确支撑函数给出式~\eqref{eq:Vbound}，条件 (iii) 因而使各电压违反量非正。复功率角度支持式~\eqref{eq:angular}、漏采修正~\eqref{eq:gridsafe} 及余项上界给出线路电流界~\eqref{eq:phasor_bound}，故热约束满足。由~\eqref{eq:PVpass}，原始有功无功总输出始终处于逆变器功率圆内，限幅算子不改变该光滑稳态解，容量限制同样成立。有限单元无间隙覆盖全部负荷区间，故结论对任意中间负荷和任意允许扰动成立。
 \end{proof}
 
-\begin{remark}[Certificate and physical security are different statements]
-A failed test in Algorithm 1 may mean a loose bound, a numerical failure or a Q-limit switch; it does \emph{not} establish that the physical feeder is unsafe. The theorem is sufficient, not necessary, and it does not establish uniqueness of AC power-flow solutions outside the verified branch. Its conclusion concerns steady-state security, not dynamic tracking of a rapidly changing load.
+\begin{remark}[充分条件与实际可行性]
+认证单元失败可能仅由上界过于保守、区间细分不足或碰到未处理的无功限幅造成，不代表物理馈线必然不安全。定理仅保证指定稳态分支的安全，不排除状态盒外其他潮流根，也不提供控制暂态或负荷爬坡速度保证。
 \end{remark}
 
-\begin{remark}[Practical accuracy knobs]
-The initial load step $\Delta$, minimum cell width $\delta$ and angular resolution $N_\theta$ trade runtime for enclosure sharpness. The margin $\pi K_l/N_\theta$ must decrease with angular refinement, while load partitioning generally reduces local Taylor remainder size. Neither refinement guarantees success where the full PV capability constraint actually switches modes.
+\begin{remark}[精度--代价权衡]
+细化负荷宽度通常可降低局部 Taylor 余项；提高角度网格分辨率可减小式~\eqref{eq:gridsafe} 的 $\pi K_l/N_\theta$ 修正，但都会增加计算量。对于确实跨越限幅切换的区域，单靠提高精度不能代替分模式物理验证。
 \end{remark}
