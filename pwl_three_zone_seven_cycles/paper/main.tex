@@ -3,564 +3,510 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,microtype}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage{booktabs,tabularx}
-\usepackage{graphicx}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
+\usepackage{booktabs,longtable}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
-\newtheorem{remark}{Remark}
-\newtheorem{corollary}{Corollary}
 \newcommand{\sat}{\operatorname{sat}}
-\newcommand{\sgn}{\operatorname{sgn}}
-\newcommand{\R}{\mathbb{R}}
-\title{Competing Residence Times and Seven Limit Cycles\\[3pt]\large in a Periodically Forced Three-Zone Equation}
-\author{Chaoyu Hu \and Tianrun Yu}
-\date{Research manuscript --- 10 October 2026}
+\title{Seven Limit Cycles in a Periodically Forced\\Three-Zone Equation}
+\author{Chaoyu Hu\thanks{School of Automation, Hangzhou Dianzi University, Hangzhou, Zhejiang 310018, People's Republic of China. Email: \texttt{evaristebernhardwiener@gmail.com}.}
+\and Jizheng Chen\thanks{Department of Mathematics, Chang'an University, Xi'an, Shaanxi 710064, People's Republic of China. Email: \texttt{1253183582@qq.com}.}}
+\date{}
 \begin{document}
 \maketitle
 \begin{abstract}
-A periodically forced three-zone scalar equation has explicit solutions on each
-linear region, yet the switching durations can generate a complicated return map.
-For the symmetric saturation equation
-$\dot x=ax+(b-a)\operatorname{sat}(x)+\mu\sin t$, $ab<0$,
-a universal maximum of five limit cycles had been conjectured. We construct
-at least seven isolated periodic solutions at the rational parameter triple
-$(a,b,\mu)=(-9,3/2,181363/100000)$. The construction is guided by a
-residence-time identity for the mean-parametrized biased response: its
-slope is determined by the time spent in the expanding middle zone.
-Raising the mean reduces the lower exterior visit but enlarges the upper
-one; these contributions compete, and the loss of a lower visit at a
-nondegenerate grazing obeys a square-root law. The resulting additional
-turning of the response curve explains how the candidate was found.
-The existence proof itself does not rely on the observed folds: exact
-piecewise flow formulas enclose three independent sign changes of the
-Poincar\'e displacement; scalar order and half-period symmetry then give
-seven isolated cycles. A quantitative perturbation argument and
-strict grazing barriers prove that at least seven \emph{isolated}
-cycles persist throughout an explicit $10^{-12}$ parameter cube.
-At least four are attracting and three repelling; moreover, three
-distinct stationary residence-time profiles follow from the ordered
-response zeros. Thus five is not a universal upper bound,
-but the sharp global upper bound remains unknown.
+We study a periodically forced scalar equation with a continuous three-zone
+piecewise-linear nonlinearity. For the fixed rational parameters
+$(A,B,\mu)=(9,3/2,181363/100000)$, we prove the existence of at least seven
+distinct isolated periodic orbits on the phase cylinder. The argument uses
+explicit affine flows to obtain three sign changes of the return
+displacement. Strict scalar order, analyticity along transverse switching
+itineraries, and half-period reflection give three pairs of isolated
+periodic orbits and one antisymmetric central orbit. All estimates needed
+for this fixed-parameter construction are stated as rational inequalities
+with finite Taylor remainder bounds. The competing durations of the two
+exterior visits provide a geometric interpretation of the construction.
 \end{abstract}
-\noindent\textbf{Keywords:} piecewise-linear differential equations; limit cycles; residence time; grazing bifurcations; periodic solutions. \quad
-\textbf{MSC 2020:} 34C25, 34A34, 37C27.
+\noindent\textbf{Keywords:} piecewise-linear equation; periodic orbit; return map;
+residence time; grazing.\quad\textbf{MSC 2020:} 34C25, 34A34, 37C27.
 
-\section{Introduction: a simple equation with an unexpected number of cycles}\label{sec:intro}
-Consider the periodic scalar equation
-\begin{equation}\label{eq:main}
- \dot x=ax+(b-a)\sat(x)+\mu\sin t,\qquad ab<0,\quad\mu>0,
- \qquad
- \sat(x)=\begin{cases}-1,&x<-1,\\x,&|x|\le1,\\1,&x>1.\end{cases}
+\section{The equation and the fixed-parameter result}
+Consider
+\begin{equation}\label{eq:family}
+ \dot x=-Ax+(A+B)\sat(x)+\mu\sin t,\qquad A,B,\mu>0,
 \end{equation}
-A periodic solution determines a closed curve on the cylinder
-$(t\bmod2\pi,x)$. We count \emph{isolated} $2\pi$-periodic curves, rather than
-zeros of a numerical discretization. Each of the three affine vector fields
-in \eqref{eq:main} can be integrated explicitly. Nevertheless, the times spent
-in the three zones are themselves unknown, and the combinatorics of switching
-changes when a trajectory touches $x=\pm1$ without crossing it.
-
-Bravo, Carmona, Fern\'andez and Ojeda \cite{Bravo2025} established a
-parameter-independent finite upper bound and constructed parameter regimes
-with five cycles. They also highlighted the conjecture that five is the largest
-possible number. In contrast, the general sparse-flight estimate of
-\cite{HuYuBound} gives an explicit, but much larger, upper bound. Neither
-result settles the small sharp count.
-
-Our result changes its known lower bound. For the \emph{rational} parameters
-\begin{equation}\label{eq:witness-intro}
-  (a,b,\mu)=\left(-9,\frac32,\frac{181363}{100000}\right),
-\end{equation}
-there are at least seven distinct isolated periodic responses. In particular,
-five is not a universal upper bound for \eqref{eq:main}. We do not claim seven
-is the global maximum.
-
-The interesting point is \emph{why} seven can occur. The middle zone expands
-perturbations, while both exterior zones contract them. Raising the mean of a
-periodic response suppresses a visit to the lower exterior zone but prolongs
-a visit to the upper exterior zone. These changes have opposite effects on the
-residence time in the expanding middle zone. Close to a grazing transition,
-the shorter exterior visit collapses at square-root order, giving this
-competition a singular sensitivity. The resulting response curve can bend
-back an additional time. That geometric observation led us to
-\eqref{eq:witness-intro}; the proof of seven cycles then uses exact flights
-and strict signs of a one-dimensional return map.
-
-The distinction matters: the response-curve picture explains the
-\emph{discovery}, whereas the fixed-point inequalities below prove the
-\emph{existence}. Our logical path is
+where
 \[
-\begin{gathered}
- \text{residence-time balance}\ \longrightarrow\ \text{response turning},\\
- \text{three ordered return-map zeros}\ \longrightarrow\ \text{seven cycles by symmetry}.
-\end{gathered}
+ \sat(x)=\begin{cases}-1,&x<-1,\\x,&-1\le x\le1,\\1,&x>1.\end{cases}
 \]
-A second implementation of the interval arithmetic would be valuable before
-journal submission; we explicitly distinguish this software-audit task from
-the analytic deductions.
+A periodic solution gives a closed orbit on the cylinder
+$(t\bmod 2\pi,x)$. An isolated such orbit is called a limit cycle.
+The exterior vector fields contract perturbations at rate $A$, whereas
+the middle vector field expands them at rate $B$. Although each affine
+flow is explicit, its switching times depend on the initial condition.
 
-\section{The geometry behind the extra periodic responses}\label{sec:response}
-We work in the orientation $a=-A<0<b=B$, where $A,B>0$, and write
-\begin{equation}\label{eq:g}
-  \dot x+g(x)=\mu\sin t,\qquad
-  g(x)=Ax-(A+B)\sat(x).
+The three-zone family has been studied by Bravo, Carmona, Fern\'andez and
+Ojeda \cite{Bravo2025}, who discuss a conjectural maximum of five limit
+cycles. We give a fixed-parameter example with a larger number.
+\begin{theorem}\label{thm:seven}
+The equation
+\begin{equation}\label{eq:witness}
+ \boxed{\dot x=-9x+\frac{21}{2}\sat(x)+\frac{181363}{100000}\sin t}
 \end{equation}
-The outer regions have $g'=A>0$, hence perturbations decay at rate $A$;
-the middle region has $g'=-B<0$, hence they grow at rate $B$.
-A single flight therefore tells us nothing decisive about the full-period
-response: its total amplification depends on how long it spends in each zone.
+has at least seven distinct isolated $2\pi$-periodic orbits on the phase cylinder.
+\end{theorem}
+Thus five cannot be a universal upper bound for \eqref{eq:family}.
+The theorem concerns only the parameter triple displayed in
+\eqref{eq:witness}; its assertion is a lower bound on the number of cycles.
 
-\subsection{A response curve whose slope is a time balance}
-To vary periodic solutions continuously without restricting ourselves to
-actual zeros of the original equation, introduce an auxiliary bias:
-\begin{equation}\label{eq:bias}
- \dot x+g(x)=\mu\sin t+\lambda,
- \qquad x(t+2\pi)=x(t).
+Write $x(t;y)$ for the solution with $x(0;y)=y$, and set
+\begin{equation}\label{eq:map}
+ P(y)=x(2\pi;y),\qquad D(y)=P(y)-y.
 \end{equation}
-The periodic solutions of this auxiliary family admit a global mean
-parametrization, as established in \cite[Section~2]{HuYuBound}:
-\[
- \xi=\frac1{2\pi}\int_0^{2\pi}x(t)\,dt,
- \qquad \lambda=\Lambda(\xi,\mu),
- \qquad z(t)=\partial_\xi x(t;\xi,\mu)>0.
-\]
-In this parametrization the original equation is simply the horizontal
-section $\Lambda=0$. The half-period odd symmetry implies
-\begin{equation}\label{eq:odd}
- \Lambda(-\xi,\mu)=-\Lambda(\xi,\mu),\qquad\Lambda(0,\mu)=0.
-\end{equation}
-The central orbit is always present; other zeros, if any, occur in
-opposite-mean pairs.
+The vector field is continuous and globally Lipschitz in $x$, so solutions
+exist uniquely and depend continuously on $y$. Scalar uniqueness gives
+strict order: if $y_1<y_2$, then $x(t;y_1)<x(t;y_2)$ at every common time.
+The proof finds three isolated zeros of $D$ above the antisymmetric
+solution and uses reflection to obtain three more below it.
 
-Define the middle-zone residence time
-\begin{equation}\label{eq:T}
- T(\xi,\mu)=\operatorname{meas}\{t\in[0,2\pi):|x(t;\xi,\mu)|<1\}
-\end{equation}
-and the critical duration $\rho=2\pi A/(A+B)$.
-Differentiating \eqref{eq:bias} with respect to $\xi$ at transverse
-crossings gives $\dot z+g'(x)z=\Lambda_\xi$. Because $z>0$, division by $z$
-and integration around the periodic orbit yield
-\begin{equation}\label{eq:key}
-\boxed{\quad
- \Lambda_\xi J=(A+B)(\rho-T),\qquad
- J=\int_0^{2\pi}\frac{dt}{z(t)}>0.
-\quad}
-\end{equation}
-Indeed, the integral of $\dot z/z$ vanishes, while
-$\int g'(x)\,dt=A(2\pi-T)-BT$. The identity extends across isolated
-grazing contacts by continuity \cite{HuYuBound}.
-
-This identity is the basic reason to study durations rather than explicitly
-solve every periodic boundary-value problem: the sign of
-$\Lambda_\xi$ depends \emph{only} on whether the residence time is above or
-below $\rho$. At $T>\rho$ the response curve descends; at $T<\rho$
-it ascends. A five-cycle upper bound would follow from a sufficiently simple
-shape of these sign regions. Our example violates that shape.
-
-There is an independent dynamical interpretation. At a genuine periodic
-solution of the original equation, the Floquet multiplier of the return map
-$P(y)=x(2\pi;0,y)$ is
+\section{Residence times and switching geometry}
+For a periodic trajectory with transverse crossings, let $s$ and $v$ be
+the times spent below $-1$ and above $1$, respectively, and let
+$T=2\pi-s-v$ be its middle-zone residence time. The return multiplier is
 \begin{equation}\label{eq:multiplier}
-\boxed{\quad P'(y)
- =\exp\!\left(-\int_0^{2\pi}g'(x(t))\,dt\right)
- =\exp\bigl((A+B)(T-\rho)\bigr).\quad}
+ P'(y)=\exp\bigl(BT-A(s+v)\bigr)
+      =\exp\bigl((A+B)T-2\pi A\bigr).
 \end{equation}
-The same critical duration $T=\rho$ therefore separates contraction from
-expansion of the full-period map. It is not necessary to numerically solve a
-separate variational equation after the switching durations have been found.
+Indeed, the variational equation has coefficient $B$ in the middle zone
+and $-A$ in the exterior zones. Continuity of the vector field makes the
+variation continuous at a transverse switching event.
 
-\subsection{The lower and upper visits push in opposite directions}
-Suppose a positive-mean trajectory visits both exterior regions. Denote by
-$s$ its total time below $-1$ and by $v$ its total time above $1$.
-Then identically
-\begin{equation}\label{eq:compete}
- T=2\pi-s-v,\qquad T_\xi=-s_\xi-v_\xi.
-\end{equation}
-Strict order $z>0$ means that raising $\xi$ lifts the entire graph of the
-orbit. Thus the time below $-1$ decreases while the time above $1$
-increases:
-\begin{equation}\label{eq:opposed}
- s_\xi<0,\qquad v_\xi>0
-\end{equation}
-on a transverse four-crossing itinerary. Consequently $-s_\xi>0$ and
-$-v_\xi<0$ compete. No sign follows for their sum. This is the precise
-obstruction to a global monotonicity argument for the residence time.
-
-The contribution from the lower exterior visit becomes particularly sharp
-as that visit disappears. This can be quantified without a complete
-classification of periodic solutions.
-
-\begin{proposition}[Square-root loss of the lower exterior visit]\label{prop:grazing}
-Fix $A,B,\mu>0$. Suppose the mean-parametrized periodic family
-\eqref{eq:bias} has a nondegenerate lower grazing at $(t_g,\xi_g)$:
+Raising the initial value lifts the entire trajectory. On a transverse
+itinerary with both exterior visits, the lower visit shortens and the
+upper visit lengthens. More explicitly, if $t_d$ and $t_u$ are the
+descending and ascending lower crossings, then
 \[
- x(t_g;\xi_g,\mu)=-1,\qquad
- x_t(t_g;\xi_g,\mu)=0,\qquad
- \gamma:=x_{tt}(t_g;\xi_g,\mu)=\mu\cos t_g>0.
+ (t_d)_y=-\frac{x_y(t_d;y)}{x_t(t_d;y)}>0,
+ \qquad
+ (t_u)_y=-\frac{x_y(t_u;y)}{x_t(t_u;y)}<0.
 \]
-Assume the upper exterior visit is present with transverse crossings and
-this is the only lower grazing in a neighborhood. With
-$z_g=\partial_\xi x(t_g;\xi_g,\mu)>0$, the duration of the disappearing
-lower visit satisfies
-\begin{equation}\label{eq:sqrt}
- \boxed{\quad
- s(\xi)=2\sqrt{\frac{2z_g}{\gamma}}\,
-          \sqrt{\xi_g-\xi}+o\bigl(\sqrt{\xi_g-\xi}\bigr)
- \quad}\qquad(\xi\uparrow\xi_g).
+Hence $s_y<0$. The corresponding calculation at the upper crossings gives
+$v_y>0$. Therefore
+\begin{equation}\label{eq:competition}
+ T_y=-s_y-v_y
 \end{equation}
-In particular, the middle residence time has a strict local maximum at
-the grazing fibre.
+is a sum of terms of opposite signs. The middle-zone residence time need
+not be monotone even though the trajectories themselves are strictly ordered.
+
+The disappearance of a lower visit has a useful local description.
+\begin{proposition}\label{prop:grazing}
+Suppose a local family of trajectories has a nondegenerate lower contact
+at $(t_g,y_g)$, with
+\[
+ x(t_g;y_g)=-1,\qquad x_t(t_g;y_g)=0,\qquad
+ \gamma=\mu\cos t_g>0.
+\]
+Assume this is the only lower contact in the neighborhood, and put
+$z_g=x_y(t_g;y_g)>0$. The duration of the nearby lower visit satisfies
+\begin{equation}\label{eq:sqrt}
+ s(y)=2\sqrt{\frac{2z_g}{\gamma}}\sqrt{y_g-y}
+       +o(\sqrt{y_g-y})\qquad(y\uparrow y_g).
+\end{equation}
 \end{proposition}
 \begin{proof}
-Since the vector field is continuous across $x=-1$, and the velocity
-vanishes at the contact, both one-sided second derivatives agree and equal
-$\mu\cos t_g=\gamma$. The family is differentiable in its mean at the
-contact. For $\delta=\xi_g-\xi\downarrow0$ and
-$\tau=t-t_g$, the local expansion is
+At the contact, the two one-sided second time derivatives agree because
+the velocity vanishes and the vector field is continuous. They equal
+$\mu\cos t_g$. Dependence on $y$ is differentiable at this isolated
+contact: difference quotients satisfy the scalar variational equation
+away from the switching times, and the bounded coefficients converge
+almost everywhere. Thus, for $\delta=y_g-y$ and $\tau=t-t_g$,
 \[
- x(t_g+\tau;\xi_g-\delta,\mu)+1
-   =-z_g\delta+\frac\gamma2\tau^2
-     +o(\delta+\tau^2).
+ x(t_g+\tau;y_g-\delta)+1
+ =-z_g\delta+\frac\gamma2\tau^2+o(\delta+\tau^2).
 \]
-The two neighboring intersections with $-1$ therefore occur at
-$\tau_\pm=\pm\sqrt{2z_g\delta/\gamma}+o(\sqrt\delta)$, and their
-time separation is \eqref{eq:sqrt}.
-The upper-zone duration $v(\xi)$ is differentiable near the contact,
-with $v_\xi>0$ by strict pointwise order and transverse crossings.
-For $\xi<\xi_g$ close to the contact, 
-$T(\xi)=2\pi-v(\xi)-s(\xi)$ lies below
-$T(\xi_g)=2\pi-v(\xi_g)$ because the square-root loss dominates the
-$O(\delta)$ upper-duration change. For $\xi>\xi_g$ the lower visit is absent,
-so $T(\xi)=2\pi-v(\xi)<T(\xi_g)$. Hence the grazing fibre is a
-strict local maximum of the residence time.
+The neighboring roots have
+$\tau_\pm=\pm\sqrt{2z_g\delta/\gamma}+o(\sqrt\delta)$.
+Their separation gives \eqref{eq:sqrt}.
 \end{proof}
+This square-root sensitivity explains how the two exterior contributions
+in \eqref{eq:competition} can compete strongly. The existence proof below
+uses the return displacement directly.
 
-\begin{remark}
-The proposition establishes a \emph{local cusp in $T$ at a generic grazing},
-not an automatic additional periodic orbit. Zeros of the original equation
-still require $\Lambda=0$, and response extrema require $T=\rho$.
-What the cusp supplies is a geometric way for $T$ to turn sharply, and
-therefore a reason that multiple crossings of the critical level $\rho$
-can occur when the exterior damping is sufficiently asymmetric.
-\end{remark}
-
-\section{From an unsuccessful monotonicity proof to the witness}\label{sec:discovery}
-Our search began with the question whether the three-zone residence time
-could obey a sign constraint strong enough to force only two noncentral
-response zeros. The square-root mechanism suggests why such a constraint is
-fragile. We made the obstruction computable through the switching geometry.
-
-\subsection{A four-crossing sign formula}
-Take successive switching times $t_1<t_2<t_3<t_4$, in the order
-$+1,-1,-1,+1$, and let
-\begin{equation}\label{eq:durations}
- r=t_2-t_1,\quad s=t_3-t_2,\quad
- u=t_4-t_3,\quad v=t_1+2\pi-t_4.
-\end{equation}
-The intervals alternate between middle, lower, middle, and upper zones.
-Here $T=r+u$ and $s+v=2\pi-T$. On a response critical orbit
-$T=\rho$, so $u=\rho-r$ and $v=2\pi-\rho-s$: the four durations reduce to
-two free variables.
-
-Implicit differentiation of each transverse crossing equation gives
-\begin{equation}\label{eq:crossdiff}
- t_{i,\xi}=-\frac{z(t_i)}{x_t(t_i)}.
-\end{equation}
-Along middle flights $z$ is multiplied by $e^{B\ell}$, whereas along
-exterior flights it is multiplied by $e^{-A\ell}$, at each critical fibre
-where $\Lambda_\xi=0$. Set $w_i=x_t(t_i)\ne0$, $z_1=z(t_1)>0$.
-The identity $T=t_2-t_1+t_4-t_3$ then gives the explicit four-speed test
-\begin{equation}\label{eq:H}
-\boxed{\quad
- T_\xi=z_1\mathcal H,\qquad
- \mathcal H=\frac1{w_1}-\frac{e^{Br}}{w_2}
- +\frac{e^{Br-As}}{w_3}-\frac{e^{B(r+u)-As}}{w_4}.
- \quad}
-\end{equation}
-The sign of the residence derivative has now become the sign of a finite
-expression in the four crossing velocities. Using the flight matching
-relations of \cite[Section~3]{HuYuBound}, admissible critical trajectories
-can be parametrized by a compatibility curve in $(r,s)$. The search is thus
-for a change of sign on a physically admissible curve, not a blind search
-for zeros of the full-period map.
-
-\subsection{Why $A=9$, $B=3/2$ and $\mu=1.81363$?}
-Initial numerical tests with weak exterior damping suggested a simple sign
-for $\mathcal H$, but that sign failed for stronger damping. A physical
-negative value arose with the convenient rational slopes
-\[
- A=9,\qquad B=\frac32.
-\]
-Following the associated response-critical curve numerically then revealed
-a shallow \emph{valley} in the required forcing amplitude. Its minimum was
-near $\mu_{\min}\simeq1.813584$, while the symmetric critical fibre
-occurred at $\mu_c\simeq1.81363456$. The narrow strip
-$\mu_{\min}<\mu<\mu_c$ is precisely where a fixed-amplitude level can
-intersect the three-zone critical curve twice. We selected the simple
-rational value
-\begin{equation}\label{eq:mu}
- \mu=\frac{181363}{100000}=1.81363
-\end{equation}
-in that strip. The two threshold values are exploratory numerical
-approximations, not rigorously enclosed bifurcation parameters.
-
-At this amplitude, the numerical response has the following three turning
-points on the positive-mean half-line:
-\begin{table}[ht]
-\centering
-\caption{Numerical response extrema; these values motivated the witness but are not proof inputs.}\label{tab:turns}
-\begin{tabular}{@{}r r l l@{}}\toprule
-Mean $\xi$ & $\Lambda(\xi)$ & Type & Itinerary\\\midrule
-$0.00427530$ & $-5.83\cdot10^{-7}$ & local minimum & four crossings\\
-$0.02615002$ & $+1.20\cdot10^{-5}$ & local maximum & four crossings\\
-$0.04964750$ & $-2.30\cdot10^{-5}$ & local minimum & two crossings\\\bottomrule
-\end{tabular}
-\end{table}
-Beginning from $\Lambda(0)=0$, the graph descends, rises, descends,
-and rises again. This is exactly the pattern needed for \emph{three positive
-response zeros}, rather than the two allowed by the old five-cycle guess.
-The first two extrema belong to the genuine three-zone regime; the third
-is the ordinary two-zone minimum after the lower exterior visit vanishes.
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=.94\linewidth,height=6.4cm,grid=major,
- grid style={gray!18},xmin=0,xmax=.08,
- xlabel={Mean $\xi$},ylabel={$10^5\Lambda(\xi,\mu)$},
- scaled x ticks=false,xtick={0,.02,.04,.06,.08},
- label style={font=\small},tick label style={font=\small}]
-\addplot[very thick,blue!65!black,mark=none]
- table[x=xi,y=scaled_lambda,col sep=comma]{figures/response_data.csv};
-\addplot[dashed,black!70] coordinates {(0,0)(.08,0)};
-\addplot[only marks,mark=x,mark size=3pt,very thick,red!75!black]
- coordinates {(.007659607,0) (.037207634,0) (.065677290,0)};
-\end{axis}
-\end{tikzpicture}
-\caption{Exploratory response curve at the rational witness parameters.
-Its three positive zeros are verified \emph{independently} by the strict
-return-map signs in Table~\ref{tab:signs}. The plotted data are not used
-as a mathematical certificate.}\label{fig:response}
-\end{figure}
-
-The geometry serves a different purpose from the proof. It tells us
-\emph{where} to look and what crossing structure to expect. Near grazing,
-however, the first response extremum is tiny, and ordinary time stepping
-can give false fixed points. To prove the claim we abandon the plotted
-response values and return to the original unbiased equation.
-
-\section{A concrete, rational seven-cycle witness}\label{sec:witness}
-Our witness is
-\begin{equation}\label{eq:witness}
-\boxed{\ \dot x=-9x+\frac{21}{2}\sat(x)+\frac{181363}{100000}\sin t.\ }
-\end{equation}
-Equivalently, $\dot x+g(x)=\mu\sin t$ with
-\begin{equation}\label{eq:gparts}
-g(x)=\begin{cases}9x+21/2,&x<-1,\\-3x/2,&|x|\le1,\\9x-21/2,&x>1.\end{cases}
-\end{equation}
-Note that the vector field is continuous and globally Lipschitz even at $x=\pm1$; existence, uniqueness, and continuous dependence are therefore immediate. For initial value $x(0)=y$, put
-\begin{equation}\label{eq:P}
-P(y)=x(2\pi;0,y),\qquad D(y)=P(y)-y.
-\end{equation}
-Fixed points of $P$ are precisely the required periodic solutions.
-
-\begin{theorem}[At least seven isolated periodic solutions]\label{thm:seven}
-Equation \eqref{eq:witness} admits at least seven distinct isolated $2\pi$-periodic solutions on the phase cylinder. Consequently five is not a universal upper bound for the family \eqref{eq:main}.
-\end{theorem}
-
-For orientation only, an independent high-precision computation gives three initial values above the antisymmetric center and their characteristic multipliers:
-\begin{table}[ht]
-\centering
-\caption{Numerical approximations (not used in the proof).}\label{tab:roots}
-\begin{tabular}{@{}r r l@{}}\toprule
-$x(0)$ & $P'(x(0))$ & Qualitative stability \\\midrule
-$-0.569203954368034$ & $0.9914612791$ & attracting \\
-$-0.556760196081272$ & $1.5169801260$ & repelling \\
-$-0.555155990304937$ & $0.3330479441$ & attracting \\\bottomrule
-\end{tabular}
-\end{table}
-The second solution approaches $-1$ very closely at its minimum, while the third stays above it and has only two threshold crossings. The mathematical problem is to prove that these are \emph{three genuine and distinct} zeros, not numerical artifacts caused by near-grazing.
-
-\section{Proof: six sign tests, first-hit control, and symmetry}\label{sec:proof}
-\subsection{Exact flights, not a numerical time-step approximation}
-In a region where $g(x)=cx+d$, the flow from $x(t_0)=y_0$ is
+\section{Proof of the seven-cycle theorem}
+From now on fix $A=9$, $B=3/2$, and $\mu=181363/100000$.
+In a zone where
+$\dot x+cx+d=\mu\sin t$, the exact flow is
 \begin{align}\label{eq:flight}
-\Phi_{c,d}(t;t_0,y_0)={}&e^{-c(t-t_0)}y_0-\frac dc\bigl(1-e^{-c(t-t_0)}\bigr)\\
-&+\frac{\mu}{1+c^2}\Bigl[c\sin t-\cos t
--e^{-c(t-t_0)}(c\sin t_0-\cos t_0)\Bigr].\notag
+ \Phi_{c,d}(t;t_0,y_0)
+ ={}&e^{-c(t-t_0)}y_0-\frac dc\bigl(1-e^{-c(t-t_0)}\bigr)\\
+ &+\frac{\mu}{1+c^2}
+ \left[c\sin t-\cos t
+ -e^{-c(t-t_0)}(c\sin t_0-\cos t_0)\right].\notag
 \end{align}
-Here $c=-3/2$ for the middle zone and $c=9$ for the outer zones. An exact orbit is obtained by joining these flows at the \emph{first} hitting times of $\pm1$. Only the transcendental evaluations and hitting-time brackets need interval enclosures.
+The pairs $(c,d)$ in the middle, lower, and upper zones are
+$(-3/2,0)$, $(9,21/2)$, and $(9,-21/2)$, respectively.
+We join these flows at their first encounters with the switching levels.
 
-There is a particularly simple observation that makes the event audit understandable.
-\begin{lemma}[A threshold cannot be crossed repeatedly]\label{lem:cross}
-Fix a threshold $\ell\in\{-1,1\}$ and a trajectory of \eqref{eq:witness}. At every transverse encounter with $x=\ell$,
-\begin{equation}\label{eq:threshold}
-\dot x=\mu\sin t-g(\ell)=\mu\sin t+\frac32\ell.
+\subsection{Three intervals with strict displacement signs}
+\begin{lemma}\label{lem:bounds}
+The displacement $D$ has the bounds in Table~\ref{tab:signs}.
+On each of
+\begin{equation}\label{eq:intervals}
+ I_1=[-0.571,-0.567],\quad
+ I_2=[-0.55677,-0.55675],\quad
+ I_3=[-0.55517,-0.55514],
 \end{equation}
-For a \emph{periodic} trajectory, the level has at most one upward and one downward transverse crossing per period. For an arbitrary shooting trajectory, any change in the number of level crossings as the initial value varies can occur only at a tangency $\dot x=0$ at that level.
+all switching encounters are transverse. The itineraries are
+middle--lower--middle--upper--middle on $I_1,I_2$ and
+middle--upper--middle on $I_3$.
 \end{lemma}
-\begin{proof}
-The times on the phase circle where the right side of \eqref{eq:threshold} is positive form one connected arc (or the empty set); the negative times form the complementary connected arc. Upward and downward level crossings of a continuous scalar trajectory necessarily alternate. On a periodic trajectory the crossings alternate cyclically; two upward crossings would require a downward crossing within the connected positive arc, which is impossible. The same applies to downward crossings. For an arbitrary shooting trajectory, transverse crossings persist under a small variation in the initial state by the implicit function theorem. A change of their number away from the endpoints of the time interval therefore requires a nontransverse encounter. In our shooting brackets, the end states at $t=0$ and $t=2\pi$ remain strictly away from both switching levels, so endpoint loss is also excluded.
-\end{proof}
-
-A second useful shape identity holds within each affine zone. If $\dot x+cx+d=\mu\sin t$ and $w(t)=e^{c(t-t_0)}\dot x(t)$, then
-\begin{equation}\label{eq:shape}
-\boxed{\ w'(t)=\mu e^{c(t-t_0)}\cos t.\ }
-\end{equation}
-Thus the velocity cannot develop a hidden oscillation inside a flight: it has a known monotonicity pattern on the arcs determined by $\pi/2$ and $3\pi/2$. The two identities also make it possible to check the absence of tangencies across an entire interval of initial values, rather than merely accepting the crossings returned by a numerical event detector.
-
-\subsection{Three disjoint intervals on the Poincar\'e section}
-The six initial values are rational decimal numbers. Table~\ref{tab:signs} gives deliberately widened enclosures for their full-period displacements. The enclosures contain the raw intervals produced by the script \texttt{proof/certify\_seven.py}; no numerical root estimates are used.
 \begin{table}[ht]
 \centering
-\caption{Strict outward bounds for $D(y)=P(y)-y$. Positive/negative endpoints occur in three disjoint pairs.}\label{tab:signs}
-\begin{tabular}{@{}r r c@{}}\toprule
-Initial value $y$ & Certified enclosure for $D(y)$ & Sign \\\midrule
-$-0.571$ & $[1.13334,\ 1.13357]\cdot10^{-5}$ & $+$ \\
-$-0.567$ & $[-2.57304,\ -2.57281]\cdot10^{-5}$ & $-$ \\
-\addlinespace[2pt]
-$-0.55677$ & $[-4.97010,\ -4.96788]\cdot10^{-6}$ & $-$ \\
-$-0.55675$ & $[5.38442,\ 5.38665]\cdot10^{-6}$ & $+$ \\
-\addlinespace[2pt]
-$-0.55517$ & $[9.31073,\ 9.31075]\cdot10^{-6}$ & $+$ \\
-$-0.55514$ & $[-1.07074,\ -1.07072]\cdot10^{-5}$ & $-$ \\\bottomrule
+\caption{Rational bounds for the return displacement. All decimal endpoints are exact rationals.}\label{tab:signs}
+\begin{tabular}{@{}rc@{}}\toprule
+$y$ & Interval containing $D(y)$\\\midrule
+$-0.571$ & $[1.13334,1.13357]\cdot10^{-5}$\\
+$-0.567$ & $[-2.57304,-2.57281]\cdot10^{-5}$\\
+$-0.55677$ & $[-4.97010,-4.96788]\cdot10^{-6}$\\
+$-0.55675$ & $[5.38442,5.38665]\cdot10^{-6}$\\
+$-0.55517$ & $[9.31073,9.31075]\cdot10^{-6}$\\
+$-0.55514$ & $[-1.07074,-1.07072]\cdot10^{-5}$\\\bottomrule
 \end{tabular}
 \end{table}
-Since $D$ is continuous, each interval
-\begin{equation}\label{eq:intervals}
-I_1=[-0.571,-0.567],\quad
-I_2=[-0.55677,-0.55675],\quad
-I_3=[-0.55517,-0.55514]
-\end{equation}
-contains at least one fixed point. The three intervals do not overlap.
+\begin{proof}
+The finite rational estimates for the six endpoint trajectories are
+given in Appendix~\ref{app:bounds}. We explain why these affine segments
+are the physical trajectories and why the itineraries persist between endpoints.
 
-For the first two pairs the certified zone sequence is
-\[
-\underbrace{\mathrm{middle}\to\mathrm{lower}\to\mathrm{middle}}_{\text{two $-1$ crossings}}
-\to\underbrace{\mathrm{upper}\to\mathrm{middle}}_{\text{two $+1$ crossings}};
-\]
-for the last pair it is $\mathrm{middle}\to\mathrm{upper}\to\mathrm{middle}$. Each event is enclosed between rational decimal times at which the exact flight lies on opposite sides of the threshold; the crossing speed has a strict sign. The last interval has, additionally, a certified initial minimum strictly \emph{above} $-1$. The shape formula \eqref{eq:shape} rules out an earlier encounter at the endpoint trajectories.
-
-The remaining concern is a possible hidden change of itinerary \emph{between} the rational shooting endpoints. This can now be excluded by a finite argument. A grazing at the level $\ell\in\{-1,1\}$ can occur only at one of the two phases solving
-\begin{equation}\label{eq:grazingphases}
-\mu\sin t+\tfrac32\ell=0.
+Inside an affine zone, the weighted velocity obeys
+\begin{equation}\label{eq:shape}
+ \frac d{dt}\left(e^{c(t-t_0)}\dot x(t)\right)
+       =\mu e^{c(t-t_0)}\cos t.
 \end{equation}
-For the chosen $\mu$, the four candidate phases, rounded here for readability, are
-\[
-0.9738759264,\quad2.1677167272\quad(\ell=-1),\qquad
-4.1154685800,\quad5.3093093808\quad(\ell=+1).
-\]
-The interval checker first certifies each phase by bracketing the root of \eqref{eq:grazingphases}; it then evaluates $x(t;y)-\ell$ at that phase for \emph{both} rational endpoints of each $I_j$. The strict signs are
+It increases up to $\pi/2$, decreases from $\pi/2$ to $3\pi/2$, and
+increases from $3\pi/2$ to $2\pi$. For the four-crossing endpoint
+trajectories, the first two events precede $\pi/2$, the third follows
+$\pi$, and the fourth precedes $3\pi/2$. Their velocities have signs
+$(-,+,+,-)$. Consequently the first middle flight decreases to its first
+lower encounter; the lower flight has a single minimum; the next middle
+flight increases to its first upper encounter; and the upper flight has
+a single maximum. The last middle flight has negative velocity at both
+ends and remains decreasing. Its final value is greater than $-1$.
+For the two-crossing trajectories, the initial middle flight has one
+minimum, whose value is strictly greater than $-1$, and then reaches the
+upper level. The upper and terminal middle flights have the same shape
+as above. These observations exclude any omitted first encounter.
+
+A tangency at $\ell\in\{-1,1\}$ can occur only when
+\begin{equation}\label{eq:phase}
+ \mu\sin t+\frac32\ell=0.
+\end{equation}
+There are four candidate phases per period. In their chronological order,
+the signs of $x(t;y)-\ell$ at both endpoints of each interval are
 \begin{center}
 \begin{tabular}{@{}lcccc@{}}\toprule
-Shooting interval & lower phase 1 & lower phase 2 & upper phase 1 & upper phase 2\\\midrule
+ & lower 1 & lower 2 & upper 1 & upper 2\\\midrule
 $I_1$ & $-$ & $+$ & $+$ & $-$\\
 $I_2$ & $-$ & $+$ & $+$ & $-$\\
 $I_3$ & $+$ & $+$ & $+$ & $-$\\\bottomrule
 \end{tabular}
 \end{center}
-Here each entry holds at both endpoints, not just at one sampled orbit. Since $x(t;y)$ is strictly increasing in $y$ at every fixed time, each strict phase-level sign remains unchanged for all $y\in I_j$. No grazing is possible anywhere in these intervals, and no crossing can be lost at $t=0$ or $2\pi$, where the states are strictly inside the middle region. Thus all three intervals retain their certified transverse itineraries. The crossing times, and therefore $D$, are real analytic on a neighborhood of every $I_j$.
+Each absolute gap exceeds $3\cdot10^{-4}$ by the rational estimates
+in the appendix. Strict scalar order keeps these signs unchanged
+throughout each $I_j$. Thus no trajectory in these intervals can graze
+a switching level. The initial and final values remain inside $(-1,1)$,
+so no encounter can enter or leave through a temporal endpoint.
+Transverse encounters persist by the implicit function theorem; hence
+their number and ordering are constant on each connected interval.
+Finally, substituting the event enclosures in \eqref{eq:flight} gives
+Table~\ref{tab:signs}.
+\end{proof}
 
-It follows that the zero set of $D$ within each $I_j$ is discrete: an analytic function with two nonzero endpoint values cannot vanish identically. We therefore obtain \emph{three distinct isolated fixed points}, not just three zeros belonging to a possible continuum of fixed points.
+The continuous function $D$ changes sign on every $I_j$, so it has a zero
+on each interval. Each zero is isolated. Indeed, transverse crossing
+times depend real analytically on $y$ by \eqref{eq:flight} and the
+implicit function theorem. Hence $D$ is real analytic in a neighborhood
+of each $I_j$. Its nonzero endpoint values exclude an identically
+vanishing analytic germ. We obtain three distinct isolated periodic solutions.
 
-\subsection{Why they give seven rather than only three}
-The forcing possesses the half-period reversal symmetry
-\begin{equation}\label{eq:sym}
-\mathcal Sx(t)=-x(t+\pi).
-\end{equation}
-The oddness of $g$ implies that $\mathcal S$ carries any periodic solution to another periodic solution. There is exactly one solution fixed by $\mathcal S$: the antisymmetric (central) solution.
-
-To see existence and uniqueness directly, define
+\subsection{The central orbit and reflection}
+Define
 \[
-Q(y)=x(\pi;0,y)+y.
+ Q(y)=x(\pi;y)+y.
 \]
-Scalar order makes $Q$ strictly increasing. Since $g(x)=9x+O(1)$ at both ends, $x(\pi;0,y)=e^{-9\pi}y+O(1)$ as $y\to\pm\infty$, so $Q$ has exactly one zero $y_c$. For that initial value, uniqueness and symmetry give $x_c(t+\pi)=-x_c(t)$ and therefore $2\pi$-periodicity. Our interval certificate gives
-\begin{equation}\label{eq:Qbound}
-Q(-0.571)>0.01911577,
+Strict scalar order makes $Q$ strictly increasing. Variation of constants
+in the form $\dot x=-9x+O(1)$ gives
+$x(\pi;y)=e^{-9\pi}y+O(1)$ as $y\to\pm\infty$, uniformly in $y$.
+Thus $Q$ has exactly one zero $y_c$.
+Oddness of the spatial vector field and
+$\sin(t+\pi)=-\sin t$ then imply
+\begin{equation}\label{eq:anti}
+ x_c(t+\pi)=-x_c(t),\qquad x_c(t)=x(t;y_c).
 \end{equation}
-so $y_c<-0.571$, below all three intervals in \eqref{eq:intervals}. By scalar order, the corresponding three periodic solutions lie strictly \emph{above} $x_c$ at every common phase. Their three reflections under $\mathcal S$ lie strictly \emph{below} $x_c$, and they are distinct from one another because the flow preserves strict initial-value order. Hence we have $3+1+3$ distinct periodic orbits.
+In particular, $x_c$ is $2\pi$-periodic.
 
-It remains to check that the central orbit itself is isolated; otherwise it would not count as a limit cycle. The interval computation additionally proves
-\begin{equation}\label{eq:centerbracket}
--0.579022471<y_c<-0.579022470
+The additional rational bounds in Appendix~\ref{app:center} give
+\begin{equation}\label{eq:center}
+ -0.579022471<y_c<-0.579022470
 \end{equation}
-and bounds the lower-zone residence $s$ during $[0,\pi]$ by
-\begin{equation}\label{eq:sbound}
-s<0.448589954<\frac\pi7.
+and show that its half-period lower-zone residence $s_c$ obeys
+\begin{equation}\label{eq:sc}
+ s_c<0.448589954<\frac\pi7.
 \end{equation}
-Half-period antisymmetry makes its total exterior residence $2s$. The exact multiplier formula \eqref{eq:multiplier} therefore yields
-\begin{equation}\label{eq:centerhyper}
-\log P'(y_c)=\frac32(2\pi-2s)-9(2s)=3\pi-21s>0.
-\end{equation}
-Thus $P'(y_c)>1$; the central fixed point is hyperbolic and isolated. The symmetry map preserves isolation of each noncentral fixed point, completing the proof of Theorem~\ref{thm:seven}. \qed
+By \eqref{eq:anti}, its full-period exterior residence is $2s_c$.
+Equation~\eqref{eq:multiplier} yields
+\[
+ \log P'(y_c)=3\pi-21s_c>0.
+\]
+Therefore the central orbit is isolated.
 
-\input{robustness.tex}
-
-\section{What has and has not been established}
-The proof does not require numerically counting the turning points in Figure~\ref{fig:response}; those estimates were only a guide for locating the parameters. The numerical response curve exhibits an additional reversal near lower-level grazing. Proposition~\ref{prop:grazing} proves the local residence-time singularity that makes this geometry possible, but it does not prove the number of global response extrema. The reason we can \emph{prove} their existence is independent and simpler: three verified Poincar\'e sign changes and the half-period reflection symmetry.
-
-There is an important limitation. The theorem proves
-$L(-9,3/2,1.81363)\ge7$ but does \emph{not} prove that seven is the
-global maximum. Theorem~\ref{thm:quantitative} now gives a quantitative
-parameter cube with seven \emph{isolated} cycles and a rigorous
-stability classification. The proof uses explicit grazing barriers
-and a lower bound on the central Floquet exponent; it does not
-establish that seven is the sharp global maximum.
-Determining the sharp bound remains open. The previously established general upper bound
-\cite{HuYuBound} is unchanged.
-
-The computations deserve independent scrutiny before journal submission. The current sign certificate relies on a standard-conforming Python \texttt{Decimal} implementation with correctly directed rounding; it is not a formally verified proof kernel. A second implementation based on Arb/FLINT or exact rational intervals would be a valuable independent audit. We separate this software-level qualification from the mathematical implication of the displayed strict bounds.
-
-\section*{Code and data availability}
-The public source repository contains this manuscript, the exact-flow interval checker, the exploratory response data, and independent high-precision and ODE checks. From the project directory run
-\begin{verbatim}
-python3 proof/certify_seven.py
-python3 proof/certify_parameter_persistence.py
-python3 -m unittest discover -s tests -v
-\end{verbatim}
-The certificate requires only the Python standard library. The file \texttt{response\_data.csv}, stored in \texttt{paper/figures/}, is a numerical plot sample, not a proof input. Neither the plot nor rounded roots are used for the existence theorem.
+Every $I_j$ lies above $y_c$. Strict scalar order puts all three selected
+periodic solutions above $x_c$ at every phase. The map
+\[
+ \mathcal Sx(t)=-x(t+\pi)
+\]
+is an involution on periodic solutions. It sends each of these three
+solutions to one below $x_c$, preserves distinctness, and preserves
+isolation. Together with $x_c$, this gives $3+1+3=7$ distinct isolated
+periodic orbits and proves Theorem~\ref{thm:seven}.\qed
 
 \appendix
-\section{How the interval sign certificate works}\label{app:certificate}
-We record the computational contract so that the argument is verifiable without trusting the location of the plotted roots.
+\section{Finite rational estimates for the affine flows}\label{app:bounds}
+We give the finite inequalities used in Lemma~\ref{lem:bounds}.
+This appendix specifies the rational inputs, the elementary function bounds,
+and the finite arithmetic yielding the displayed strict inequalities.
 
-\paragraph{Rational input and function enclosures.}
-Every shooting initial value and all parameter coefficients are exact rationals. We enclose $\pi$ using Machin's identity
+\subsection{Elementary functions and rational operations}
+For $|u|\le10$, use
+\begin{align*}
+ E(u)&=\sum_{k=0}^{160}\frac{u^k}{k!},\\
+ S(u)&=\sum_{k=0}^{80}\frac{(-1)^ku^{2k+1}}{(2k+1)!},\qquad
+ C(u)=\sum_{k=0}^{80}\frac{(-1)^ku^{2k}}{(2k)!}.
+\end{align*}
+Each polynomial differs from the corresponding exponential, sine, or
+cosine by less than $10^{-95}$. Taylor's theorem gives the common bound
 \[
-\pi=16\arctan(1/5)-4\arctan(1/239)
+ \frac{3^{10}10^{161}}{161!}<10^{-95};
 \]
-with alternating rational arctangent series and first-omitted-term bounds. The values of $e^z$, $\sin z$, and $\cos z$ appearing in \eqref{eq:flight} are evaluated by interval Taylor sums with outward rounding. In all calls, $|z|<10$; truncation at order at least $160$ admits the uniform error enclosure
-\begin{equation}\label{eq:tail}
-\bigl|\operatorname{remainder}\bigr|\le\frac{3^{10}10^{161}}{161!}<10^{-95}.
-\end{equation}
-Products use all four endpoint combinations, and interval reciprocals are allowed only when their denominator excludes zero. The actual decimal arithmetic is performed with 95 digits and separate downward and upward rounding modes.
+for the sine polynomial, whose degree is $161$, the degree-$162$
+remainder is smaller still. For rational intervals, evaluate each sum
+by its term recurrence, enclosing every operation. For example,
+$e_0=1$, $e_{k+1}=e_ku/(k+1)$, and
+$s_0=u$, $s_{k+1}=-s_ku^2/((2k+2)(2k+3))$.
+Add $[-10^{-95},10^{-95}]$ to the final polynomial interval.
 
-\paragraph{Certified event times.}
-The exploratory solver supplies decimal \emph{centers} for event times, not trusted root values. For each event, the checker tests an interval $[t_-,t_+]$ with rational endpoints. It evaluates the exact flight \eqref{eq:flight} at both endpoints and requires strict opposite signs relative to the relevant level $\ell=\pm1$; the interval crossing speed has a prescribed nonzero sign. The velocity shape identity \eqref{eq:shape} prevents a hidden earlier encounter. The four possible grazing phases \eqref{eq:grazingphases} are separately bracketed, and the signs of $x(t;y)-\ell$ at each phase are checked at both ends of every shooting interval. Scalar order then excludes grazing throughout the intervals. For two-crossing cases, the initial minimum is separately enclosed above $-1$. The exact state at the enclosed event is the known switching level $\ell$, so the next flight begins from the interval event time and that \emph{exact} state. Interval propagation continues until $2\pi$, producing Table~\ref{tab:signs}.
+One fully rational choice for all operations is the lattice $10^{-80}\mathbb Z$.
+After each operation replace a lower endpoint $r$ by
+$10^{-80}\lfloor10^{80}r\rfloor$ and an upper endpoint by
+$10^{-80}\lceil10^{80}r\rceil$. Use the minimum and maximum of the four
+endpoint products for multiplication, and reciprocal endpoints for
+division by an interval excluding zero. Unary negation is exact.
+Thus all subsequent interval endpoints are rational and include every
+rounding enlargement.
 
-\paragraph{The central orbit.}
-The same half-period algorithm evaluates $Q(y)=x(\pi;0,y)+y$ at the rational endpoints of \eqref{eq:centerbracket}, with opposite certified signs. After checking the two transverse lower crossings, it encloses their time separation at the lower endpoint of the center bracket. Monotonic order of the first descending and second ascending crossing times shows that this is an upper bound for the central lower-zone residence $s$. The strict rational comparison $s<\pi/7$ gives \eqref{eq:centerhyper}.
+To enclose $\pi$, let
+\[
+ a_n(k)=\sum_{j=0}^{n-1}\frac{(-1)^j}{(2j+1)k^{2j+1}}.
+\]
+For $n=65$, the alternating-series bounds give
+\[
+ a_{65}(k)-\frac1{131k^{131}}
+ <\arctan(1/k)<a_{65}(k),\qquad k=5,239.
+\]
+Apply $\pi=16\arctan(1/5)-4\arctan(1/239)$ with these rational bounds.
+All arguments in the following affine-flow evaluations have modulus
+less than $10$.
 
-\paragraph{Logical dependencies.}
-There are only three points at which the executable output is used in the mathematical proof: (i) the strict six endpoint signs, (ii) the strict crossing/minimum inequalities ensuring the three analytic itinerary intervals, and (iii) the center bracket and $s<\pi/7$. The robustness results use
-the six same sign margins together with an analytic parameter
-perturbation inequality and the order structure of the return map,
-not the rounded multipliers in Table~\ref{tab:roots}.
-Every other mathematical step---intermediate value, strict scalar order, symmetry, analyticity across transverse events, and Floquet's formula---is analytic and independent of the numerical method.
+\subsection{Switching brackets and endpoint signs}
+Every decimal in Table~\ref{tab:events} denotes an exact rational.
+For four-event rows put
+\[
+ h_1=10^{-27},\quad h_2=10^{-22},\quad
+ h_3=10^{-19},\quad h_4=10^{-12};
+\]
+for two-event rows put $h_1=10^{-27}$, $h_2=10^{-19}$.
+The event interval is $H_j=[a_j-h_j,a_j+h_j]$.
+Start with $(H_0,X_0)=(\{0\},\{y\})$. At each step evaluate
+\[
+ F_j^\pm=\Phi_{c_j,d_j}(a_j\pm h_j;H_{j-1},X_{j-1})-\ell_j,
+ \qquad V_j=\mu\sin H_j+\tfrac32\ell_j.
+\]
+Here $\Phi$ on intervals means substitution in \eqref{eq:flight} using
+the rational operations above. For four-event rows use the incoming
+zones middle, lower, middle, upper and levels $(-1,-1,1,1)$.
+For two-event rows use middle, upper and levels $(1,1)$.
+Their finite rational inequalities are
+\[
+\begin{array}{c|cccc}
+j&1&2&3&4\\\hline
+\text{four events: }(\operatorname{sgn}F_j^-,\operatorname{sgn}F_j^+,
+ \operatorname{sgn}V_j)&(+,-,-)&(-,+,+)&(-,+,+)&(+,-,-)
+\end{array}
+\]
+and $(-,+,+),(+,-,-)$ for the two-event rows.
+Set $X_j=\{\ell_j\}$ after each crossing. The terminal middle flight
+$\Phi_{-3/2,0}(2\pi;H_k,X_k)-y$ then has the enclosures in
+Table~\ref{tab:signs}. Its final state is in $(-1,1)$ and its final
+velocity is negative in every row.
+{\small
+\begin{longtable}{@{}rrl@{}}
+\caption{Exact rational centers of the switching brackets.}\label{tab:events}\\
+\toprule $y$ & $j$ & $a_j$\\\midrule\endfirsthead
+\toprule $y$ & $j$ & $a_j$\\\midrule\endhead
+$-0.571$ & $1$ & $0.690900167350795596241598610060$\\
+$-0.571$ & $2$ & $1.078135763256395127520565407613$\\
+$-0.571$ & $3$ & $3.717538493711361911132150876164$\\
+$-0.571$ & $4$ & $4.228305204642255023584881326373$\\
+\addlinespace[2pt]
+$-0.567$ & $1$ & $0.727167718353076856080532101227$\\
+$-0.567$ & $2$ & $1.073698524509500870150051069731$\\
+$-0.567$ & $3$ & $3.677514848910453028389655375076$\\
+$-0.567$ & $4$ & $4.230022149628273629974937792239$\\
+\addlinespace[2pt]
+$-0.55677$ & $1$ & $0.943026106870525525503040801495$\\
+$-0.55677$ & $2$ & $1.000234039978349548083465355225$\\
+$-0.55677$ & $3$ & $3.432412794615143204771577791489$\\
+$-0.55677$ & $4$ & $4.234378779776890243529064894432$\\
+\addlinespace[2pt]
+$-0.55675$ & $1$ & $0.945709233396853423992784093457$\\
+$-0.55675$ & $2$ & $0.998251562666127082230286839438$\\
+$-0.55675$ & $3$ & $3.430444659672579159693512100466$\\
+$-0.55675$ & $4$ & $4.234391508369720611532563245294$\\
+\addlinespace[2pt]
+$-0.55517$ & $1$ & $3.234089094501122628580828533598$\\
+$-0.55517$ & $2$ & $4.235054342221641269610541466055$\\
+\addlinespace[2pt]
+$-0.55514$ & $1$ & $3.231221607277306682192172796767$\\
+$-0.55514$ & $2$ & $4.235058511047931109063368566348$\\
+\addlinespace[2pt]
+\bottomrule
+\end{longtable}}
+For clarity, we detail the substitution for $y=-571/1000$. The first
+crossing equation reduces to
+\[
+ F_1(t)=1-\frac{1053}{81250}e^{3t/2}
+ -\frac{181363}{325000}\left(\frac32\sin t+\cos t\right)=0.
+\]
+Insert $t=a_1\pm10^{-27}$ from Table~\ref{tab:events}, bound the
+three elementary functions by the polynomials above, and collect the
+rational terms. This gives
+\[
+ F_1(a_1-10^{-27})\in[3.4452,3.4453]\cdot10^{-28},\qquad
+ F_1(a_1+10^{-27})\in[-3.4408,-3.4407]\cdot10^{-28}.
+\]
+The remaining substitutions for this shooting value are displayed below.
+The intervals in the second and third columns are to be multiplied by
+the scale in the last column.
+\begin{center}
+\begin{tabular}{@{}rlll@{}}\toprule
+$j$ & $F_j^-$ & $F_j^+$ & Scale\\\midrule
+2 & $[-10.464,-9.126]$ & $[9.126,10.464]$ & $10^{-24}$\\
+3 & $[-7.796,-2.449]$ & $[2.449,7.796]$ & $10^{-20}$\\
+4 & $[1.0504,1.0545]$ & $[-1.0545,-1.0504]$ & $10^{-13}$\\\bottomrule
+\end{tabular}
+\end{center}
+The crossing-speed bounds, in order, are
+\[
+ [-0.34430,-0.34429],\quad[0.09794,0.09795],\quad
+ [0.51224,0.51225],\quad[-0.10525,-0.10524].
+\]
+After the fourth crossing the terminal middle flight gives
+\[
+ P(-0.571)\in[-0.57098866660,-0.57098866437].
+\]
+Subtracting $-0.571$ proves the first row of Table~\ref{tab:signs}.
+The other five rows follow by the same substitutions with their listed
+rational centers. In each case the task is a finite comparison of
+rational numbers, using the stated Taylor remainder bounds.
+
+For the two-event rows, the initial middle-flight minimum is bracketed
+by the following centers with radius $10^{-22}$:
+\[
+\begin{array}{c|l}
+y&m_y\\\hline
+-0.55517&0.964606148956481813734238900023\\
+-0.55514&0.964421114280833615237799576884.
+\end{array}
+\]
+The velocity at the two bracket endpoints has signs $(-,+)$, and
+\[
+ \Phi_{-3/2,0}([m_y-10^{-22},m_y+10^{-22}];0,y)>-1.
+\]
+Together with \eqref{eq:shape}, these inequalities justify the first-hit
+interpretation of all segments.
+
+\subsection{Excluding grazing on the complete shooting intervals}
+Bracket the four roots of \eqref{eq:phase} using the exact centers
+\[
+\begin{array}{c|l}
+\ell&a\\\hline
+-1&0.973875926376460045824009680088\\
+-1&2.167716727213333192638633703191\\
+ 1&4.115468579966253284286653063368\\
+ 1&5.309309380803126431101277086471
+\end{array}
+\]
+and radius $10^{-25}$. The level velocity has opposite signs at the
+two endpoints of each phase bracket. Use the already enclosed switching
+times to select the affine segment containing that bracket and evaluate
+$\Phi_{c,d}(H;H_j,X_j)-\ell$ there. The gap magnitudes exceed
+$3\cdot10^{-4}$ for all six shooting endpoints, with signs as displayed
+in the proof of Lemma~\ref{lem:bounds}. Thus the same strict signs hold
+at the exact roots of \eqref{eq:phase}.
+
+\subsection{The antisymmetric orbit}\label{app:center}
+For the two rational initial values in Table~\ref{tab:center-events},
+join middle, lower, and middle flights up to $\pi$. The two event
+radii are $10^{-27}$ and $10^{-22}$, respectively. Both levels are $-1$;
+their crossing directions are downward and upward.
+{\small
+\begin{longtable}{@{}rrl@{}}
+\caption{Half-period event centers for the central bracket.}\label{tab:center-events}\\
+\toprule $y$ & $j$ & $a_j$\\\midrule\endfirsthead
+\toprule $y$ & $j$ & $a_j$\\\midrule\endhead
+$-0.579022471$ & $1$ & $0.634581372314921880292542675282205728$\\
+$-0.579022471$ & $2$ & $1.083171326123873562346343278450922288$\\
+$-0.579022470$ & $1$ & $0.634581378413117209211221821647541674$\\
+$-0.579022470$ & $2$ & $1.083171325676822885739904090457136619$\\
+\bottomrule\end{longtable}}
+The same rational substitutions give
+\begin{align*}
+ Q(-0.579022471)&\in[-5.768,-5.767]\cdot10^{-10},\\
+ Q(-0.579022470)&\in[1.4254,1.4255]\cdot10^{-9}.
+\end{align*}
+Strict monotonicity of $Q$ proves \eqref{eq:center}.
+For the complete bracket between these initial values, no upper crossing
+occurs on $[0,\pi]$: at the upper level the velocity is strictly positive,
+so an orbit could not return to its terminal value below $1$ after an
+upper crossing. The lower level has at most one downward and one upward
+crossing on this half-period, since its threshold velocity is negative,
+then positive, then negative; a further downward crossing would leave
+the orbit below $-1$ at $\pi$, contrary to the endpoint bounds and order.
+At the first lower candidate tangency phase both bracket trajectories
+are strictly below $-1$, and at the second both are above $-1$.
+These signs follow from the same flight substitutions, and exclude a
+grazing throughout the central bracket.
+
+Increasing $y$ moves the downward crossing to the right and the upward
+crossing to the left, by the crossing derivative formula in Section~2.
+Thus the lower-zone duration is largest at $y=-0.579022471$. Its upper bound is
+\[
+\begin{split}
+ s_c<&\;1.083171326123873562346343278450922288+10^{-22}\\
+ &-0.634581372314921880292542675282205728+10^{-27}\\
+ <&\;0.448589954<\pi/7.
+\end{split}
+\]
+The last comparison follows already from the elementary bound
+$\pi>3.14159$. This proves \eqref{eq:sc} and completes the finite estimates.
 
 \begin{thebibliography}{9}
 \bibitem{Bravo2025}
 J.~L. Bravo, V.~Carmona, M.~Fern\'andez and I.~Ojeda,
-\emph{Upper bound of the number of limit cycles for symmetric scalar piecewise linear differential equations with three zones}, arXiv:2507.06705 (2025).
-\bibitem{BravoTrinidad2026}
-J.~L. Bravo and R.~Trinidad-Forte,
-\emph{Finitude of limit cycles of linear piecewise ODEs in the cylinder}, arXiv:2605.05805 (2026).
-\bibitem{HuYuBound}
-C.~Hu and T.~Yu,
-\emph{Sparse Toric Flight Encoding for Constant-Slope Scalar Periodic Piecewise-Linear Equations, with an Explicit Three-Zone Limit-Cycle Bound}, manuscript (2026).
+\emph{Upper bound for the number of limit cycles for symmetric
+piecewise linear differential equations with three zones},
+arXiv:2507.06705 (2025).
 \end{thebibliography}
 \end{document}

@@ -1,75 +1,52 @@
-# Competing Residence Times and Seven Limit Cycles
+# Seven Limit Cycles in a Periodically Forced Three-Zone Equation
 
-The manuscript **Competing Residence Times and Seven Limit Cycles in a Periodically Forced Three-Zone Equation** presents a geometrically motivated seven-cycle counterexample.
-
-The equation is
+论文研究固定方程
 
 \[
-\dot x=-Ax+(A+B)\operatorname{sat}(x)+\mu\sin t,\qquad A,B,\mu>0.
+\dot x=-9x+\frac{21}{2}\operatorname{sat}(x)
+       +\frac{181363}{100000}\sin t.
 \]
 
-At \((A,B,\mu)=(9,3/2,181363/100000)\), we certify **at least seven distinct isolated periodic orbits**. This contradicts the conjectural maximum five discussed by Bravo, Carmona, Fernández and Ojeda, [arXiv:2507.06705](https://arxiv.org/abs/2507.06705). It does **not** establish an upper bound of seven.
+主定理：这个方程在相位圆柱上有**至少七个不同的孤立周期轨道**。
 
-**New rigorous consequences:** for **every** `|A-9|, |B-1.5|, |mu-1.81363| < 1e-12` there are at least seven **isolated** periodic cycles, including **four locally attracting and three locally repelling** cycles. Directed-interval grazing barriers are `>3e-4`, while their perturbation is `<1.505e-6`. The central Floquet logarithm stays `>0.0043`. The ordered response zeros force three distinct critical residence-time profiles. Noncentral hyperbolicity and a global seven-cycle upper bound are not claimed.
+作者为 **Chaoyu Hu**（杭州电子科技大学自动化学院）和 **Jizheng Chen**（长安大学数学系）。英文单位、地址和邮箱沿用本仓库其他论文中的作者信息。
 
-## Mathematical idea
+## 论文的证明
 
-A three-zone affine ODE has explicit flights but unknown switching times. The mean-parametrized biased periodic response satisfies
+[paper/main.tex](paper/main.tex) 包含完整论证：
 
-\[
-\Lambda_\xi J=(A+B)(\rho-T),\qquad
-\rho=2\pi A/(A+B),\quad J>0,
-\]
+1. 给出三个分区的显式解。
+2. 用有理初值、切换时刻的有理区间和带余项界的有限 Taylor 展开，证明返回位移在三个不相交区间上变号。
+3. 排除擦碰，证明返回映射在这些区间上解析，进而得到三个孤立周期轨道。
+4. 构造唯一的半周期反对称轨道，并用停留时间界证明它孤立。
+5. 半周期反射给出另外三个孤立周期轨道，总共至少七个。
 
-where \(T\) is time spent in the expanding middle zone. If \(s\) and \(v\) denote the lower and upper exterior visits, then \(T=2\pi-s-v\), with \(s_\xi<0\), \(v_\xi>0\): they compete.
+附录列出全部有理输入、区间运算规则、严格符号界，并展开 `y=-0.571` 的完整代入算例。论文中的证明不要求读者运行 Python，也不把程序输出作为证明前提。
 
-At a nondegenerate lower grazing, the disappearing lower visit follows the square-root law
+本稿只陈述这组固定参数的存在性结果。“至少七个”不等于“恰好七个”；后者还需要排除其他周期轨道。
 
-\[
-s(\xi)\sim2\sqrt{2z_g/(\mu\cos t_g)}\,\sqrt{\xi_g-\xi}.
-\]
+## 编译
 
-The paper derives this local law and explains why it makes an extra response bend possible. It describes how a negative residence derivative on a physical critical flight led to the rational witness. The existence proof does not assume the numerical response graph is exact.
+在本目录运行：
 
-## Project map
+    make paper
 
-- [Revised mathematical paper](paper/main.tex) — idea, response identity, local grazing law, parameter discovery and rigorous construction.
-- [Rigorous persistence and stability section](paper/robustness.tex) — explicit cube of isolated cycles, verified grazing barriers, central multiplier bound, and three critical residence profiles.
-- [Analytic persistence certificate](proof/certify_parameter_persistence.py) — checks six signs, four grazing barriers at each shooting endpoint, and central orbit stability; **not** an independent interval-arithmetic backend.
-- [Discovery record](notes_discovery.md) — how the seven-cycle example was found.
-- [Interval certificate](proof/certify_seven.py) — six Poincaré displacement sign checks, first-hit and grazing barriers, central hyperbolicity.
-- [Exploratory response data](paper/figures/response_data.csv) — illustration, not proof data.
-- [Independent ODE cross-check](experiments/independent_ode.py) and [high-precision roots](experiments/high_precision_roots.py).
-- [Separate upper-bound research](research/L7_UPPER_BOUND_PROGRAM.md) — a conditional program, not a proof of a global upper bound.
+或进入 `paper`，逐次运行：
 
-## Reproducibility
-
-From this folder:
-
-    python3 proof/certify_seven.py
-    python3 proof/certify_parameter_persistence.py
-    python3 -m unittest discover -s tests -v
-
-Optional experiments:
-
-    python3 -m pip install -r requirements-experiments.txt
-    python3 experiments/independent_ode.py
-    python3 experiments/high_precision_roots.py
-    python3 experiments/plot_mechanism.py
-
-To compile the manuscript, use TeX Live with pgfplots:
-
-    cd paper
     pdflatex -interaction=nonstopmode -halt-on-error main.tex
     pdflatex -interaction=nonstopmode -halt-on-error main.tex
 
-The public repository contains editable LaTeX and plot data. The PDF can be obtained by compiling the source; a compiled copy is attached in the associated ChatGPT discussion.
+## 辅助核算与研究记录
 
-## Proof status
+[proof/rational_bounds.py](proof/rational_bounds.py) 用精确有理数和整数取整核算论文的界；浮点数只用于显示结果。它与旧脚本共用切换结构和有理输入，因此不是独立的轨道结构证明。
 
-The certificate uses exact affine flights and directed Decimal interval arithmetic, including rational Taylor remainders and first-hit checks. A second independently implemented interval backend (for example Arb/FLINT) would be desirable before formal publication. Numerical response extrema are exploratory only. The explicit `1e-12` cube now controls all grazing barriers and the central multiplier, yielding a **numerically specified cube of isolated cycles**. No global bound of seven has been proved.
+    python3 proof/rational_bounds.py
 
-## Literature
+[proof/certify_seven.py](proof/certify_seven.py) 保留原有 Decimal 核算；实验代码和数据保留在 `experiments` 与 `paper/figures` 中。它们用于辅助检查和研究。
 
-- [Bravo et al., arXiv:2507.06705](https://arxiv.org/abs/2507.06705).
-- [Bravo and Trinidad-Forte, arXiv:2605.05805](https://arxiv.org/abs/2605.05805).
+`paper/robustness.tex` 及 `proof/certify_parameter_persistence.py` 保留此前参数邻域的扩展研究，**不再纳入本稿**。主定理的证明不依赖这部分内容。
+
+[notes_discovery.md](notes_discovery.md) 记录发现过程；`research` 目录保存数量上界的后续研究。
+
+相关文献：[Bravo et al., arXiv:2507.06705](https://arxiv.org/abs/2507.06705)。
+
