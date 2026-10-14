@@ -92,7 +92,7 @@ has at least seven distinct isolated $2\pi$-periodic orbits on the phase cylinde
 This example exceeds the conjectured five-cycle bound for \eqref{eq:family}.
 \begin{corollary}\label{cor:stability}
 The seven cycles in Theorem~\ref{thm:seven} can be chosen so that four
-are locally asymptotically stable and three are repelling. The unique
+are locally orbitally asymptotically stable and three are repelling. The unique
 antisymmetric cycle is hyperbolic and repelling.
 \end{corollary}
 
@@ -289,8 +289,14 @@ Let $\eta(t)$ be the derivative of the local periodic response with
 respect to $y$. Order gives $\eta\geq0$, and
 $\dot\eta+g'(x)\eta=\lambda_y$, with $\eta(0)=\eta(2\pi)=1$.
 If $\lambda_y=0$, this homogeneous equation gives $\eta>0$.
-If $\lambda_y\ne0$, a zero of $\eta$ would have derivative
-$\lambda_y\ne0$, contradicting nonnegativity. Thus $\eta>0$, and the mean
+If $\lambda_y\ne0$ and $\eta(t_*)=0$, the integral form of the variational
+equation and the boundedness of $g'$ give
+\[
+ \eta(t_*+h)=\lambda_y h+o(|h|).
+\]
+This also holds when $x(t_*)$ is a switching level, since
+$g'(x(t))\eta(t)\to0$ as $t\to t_*$. It contradicts nonnegativity
+on both sides of $t_*$. Thus $\eta>0$, and the mean
 \[
  \xi=\frac1{2\pi}\int_0^{2\pi}X(t;y,\lambda(y))\,dt
 \]
@@ -336,6 +342,14 @@ three flights. Therefore
 \end{equation}
 The sign of $\mathcal H$ measures the balance between the shortening
 lower visit and the lengthening upper visit at a critical response.
+On a transverse response chart, differentiation of
+\eqref{eq:response-identity} at $\Lambda_\xi=0$ gives
+\begin{equation}\label{eq:response-curvature}
+ \Lambda_{\xi\xi}=-\frac{A+B}{J}T_\xi
+ =-\frac{(A+B)z_1}{J}\mathcal H.
+\end{equation}
+Thus $\mathcal H<0$ gives a strict local minimum of the response,
+whereas $\mathcal H>0$ gives a strict local maximum.
 
 \subsection{Four-flight matching and critical durations}
 The four affine segments join at their switching levels. At a critical
@@ -448,8 +462,9 @@ matches have approximately
 \text{second}&2.90517603&0.18921685&80.43176.
 \end{array}
 \]
-The opposite signs in \eqref{eq:H-test} explain the extra reversal of
-the residence time on this branch.
+By \eqref{eq:response-curvature}, these signs identify the first profile
+as a response minimum and the second as a response maximum. They also
+explain the extra reversal of the residence time on this branch.
 
 At this amplitude, continuation of the affine matching equations gives
 the approximate turning profiles in Table~\ref{tab:construction-turns}. The first two
@@ -674,7 +689,10 @@ local asymptotic stability. At $y_2$ the inequalities are reversed,
 and nearby points move away from the fixed point under iteration.
 Equivalently, the local inverse iterates converge to $y_2$, so this
 cycle is repelling. Continuous dependence during each period transfers
-these properties to the periodic trajectories.
+these properties to orbital stability or repulsion on the phase cylinder.
+Indeed, the section $t=0\bmod 2\pi$ is transverse to the cylinder flow,
+and continuous dependence controls the portions of each orbit between
+successive returns.
 
 For the reflected cycles, \eqref{eq:half-map} shows that the
 homeomorphism $R$ conjugates $P$ to itself and preserves attracting
