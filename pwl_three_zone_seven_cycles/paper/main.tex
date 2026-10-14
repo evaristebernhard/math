@@ -20,22 +20,20 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-We study a periodically forced scalar equation with a continuous three-zone
-piecewise-linear nonlinearity. For the fixed rational parameters
-$(A,B,\mu)=(9,3/2,181363/100000)$, we prove the existence of at least seven
-distinct isolated periodic orbits on the phase cylinder. The argument uses
-explicit affine flows to obtain three sign changes of the return
-displacement. Strict scalar order, analyticity along transverse switching
-itineraries, and half-period reflection give three pairs of isolated
-periodic orbits and one antisymmetric central orbit. All estimates needed
-for this fixed-parameter construction are stated as rational inequalities
-with finite Taylor remainder bounds. The competing durations of the two
-exterior visits guide the construction: a four-flight matching system
-locates an additional turn of the critical response, from which the
-rational parameter example is selected.
+We construct a seven-cycle example for a periodically forced scalar
+equation with a continuous three-zone piecewise-linear nonlinearity.
+Symbolic integration and linear elimination reduce the four-flight
+matching conditions to two equations in the residence times. The
+competing exterior visits produce an additional turn of the critical
+response and lead to the rational parameters
+$(A,B,\mu)=(9,3/2,181363/100000)$. At these parameters, finite Taylor
+estimates give three sign changes of the return displacement. Scalar
+order, analyticity along transverse itineraries, and half-period
+reflection then establish at least seven distinct isolated periodic
+orbits on the phase cylinder.
 \end{abstract}
-\noindent\textbf{Keywords:} piecewise-linear equation; periodic orbit; return map;
-residence time; grazing.\quad\textbf{MSC 2020:} 34C25, 34A34, 37C27.
+\noindent\textbf{Keywords:} symbolic computation; piecewise-linear equation;
+limit cycle; residence time; grazing.\quad\textbf{MSC 2020:} 34C25, 34A34, 37C27.
 
 \section{The equation and the fixed-parameter result}
 Consider
@@ -49,8 +47,8 @@ where
 A periodic solution gives a closed orbit on the cylinder
 $(t\bmod 2\pi,x)$. An isolated such orbit is called a limit cycle.
 The exterior vector fields contract perturbations at rate $A$, whereas
-the middle vector field expands them at rate $B$. Although each affine
-flow is explicit, its switching times depend on the initial condition.
+the middle vector field expands them at rate $B$. The switching times
+determine how these three explicit affine flows compose over a period.
 
 Periodically forced scalar piecewise equations arise in reductions of
 three-dimensional piecewise-linear systems. Carmona, Freire, Ponce and
@@ -66,17 +64,16 @@ regimes with one, three, and five cycles using a small-slope deformation.
 They discuss a conjectural maximum of five. The present example has
 strong exterior contraction and gives a larger fixed-parameter count.
 
-Related scalar counting results concern different structural assumptions.
+Several related results address the number of periodic solutions.
 Bravo, Fern\'andez and Ojeda \cite{Bravo2024} bound the Hilbert number
 of a two-zone equation with degree-one trigonometric coefficients.
 Gasull and Zhao \cite{Gasull2023} obtain a sharp two-cycle bound for
 $x'=a(t)+b(t)|x|$ when one coefficient has constant sign.
 Bravo and Trinidad-Forte \cite{BravoTrinidad2026} establish finiteness
 for multi-zone equations with trigonometric coefficients. Their work on
-global centers \cite{Centers2026} also emphasizes the distinction
-between isolated cycles and continua of periodic solutions.
-These results motivate a construction that controls switching itineraries
-and proves isolation as well as existence.
+global centers \cite{Centers2026} characterizes periodic families in a
+two-zone equation. Here we construct seven isolated cycles in the
+three-zone saturation family.
 \begin{theorem}\label{thm:seven}
 The equation
 \begin{equation}\label{eq:witness}
@@ -84,9 +81,14 @@ The equation
 \end{equation}
 has at least seven distinct isolated $2\pi$-periodic orbits on the phase cylinder.
 \end{theorem}
-Thus five cannot be a universal upper bound for \eqref{eq:family}.
-The theorem concerns only the parameter triple displayed in
-\eqref{eq:witness}; its assertion is a lower bound on the number of cycles.
+This example exceeds the conjectured five-cycle bound for \eqref{eq:family}.
+
+The construction combines symbolic computation with scalar dynamics.
+Exact integration gives the flight maps; trigonometric expansion makes
+the matching equations linear in the bias and two phase variables.
+Determinant elimination then leaves two equations in the residence
+times. These formulas locate the parameter example and supply the
+expressions used in the rational estimates of the return displacement.
 
 Write $x(t;y)$ for the solution with $x(0;y)=y$, and set
 \begin{equation}\label{eq:map}
@@ -164,9 +166,8 @@ The neighboring roots have
 $\tau_\pm=\pm\sqrt{2z_g\delta/\gamma}+o(\sqrt\delta)$.
 Their separation gives \eqref{eq:sqrt}.
 \end{proof}
-This square-root sensitivity explains how the two exterior contributions
-in \eqref{eq:competition} can compete strongly. The existence proof below
-uses the return displacement directly.
+The square-root dependence makes the shrinking lower visit particularly
+sensitive near grazing, sharpening the competition in \eqref{eq:competition}.
 
 \section{Locating the rational parameter example}\label{sec:construction}
 We now describe the construction leading to the coefficients in
@@ -228,13 +229,12 @@ three flights. Therefore
        +\frac{e^{Br-As}}{w_3}
        -\frac{e^{B\rho-As}}{w_4}.}
 \end{equation}
-This is an explicit test for the direction in which a critical profile
-crosses the residence level. The two exterior visits contribute with
-opposite signs; a negative value of $\mathcal H$ is therefore possible
-without violating scalar order.
+The sign of $\mathcal H$ measures the balance between the shortening
+lower visit and the lengthening upper visit at a critical response.
 
-\subsection{A two-duration matching system}
-The critical profiles can be located directly from affine matching.
+\subsection{Symbolic reduction of the matching equations}
+We integrate the four affine segments and eliminate their common bias
+and forcing phase. The resulting system has only two duration variables.
 Let the first crossing phase be $\phi=t_1$ and set
 \[
  q_0=0,\quad q_1=r,\quad q_2=r+s,\quad
@@ -261,7 +261,8 @@ conditions become the linear equations
  \alpha_j\lambda+\beta_jU+\gamma_jV=k_j,
  \qquad j=1,2,3,4.
 \end{equation}
-Indeed, integrating $x'+c_jx+d_j=\lambda+\mu\sin t$ gives
+The angle-addition formulas separate $\phi$ from the relative times $q_j$.
+Integrating $x'+c_jx+d_j=\lambda+\mu\sin t$ gives
 $b_j=E_jb_{j-1}+\alpha_j(\lambda-d_j)+\beta_jU+\gamma_jV$.
 Thus every four-crossing critical profile satisfies the compatibility equation
 \begin{equation}\label{eq:compatibility}
@@ -273,20 +274,30 @@ Thus every four-crossing critical profile satisfies the compatibility equation
  \alpha_4&\beta_4&\gamma_4&k_4
  \end{pmatrix}=0.
 \end{equation}
-On any chart with a nonzero $3\times3$ coefficient minor, solve three
-rows for $(\lambda,U,V)$; the fourth is then equivalent to
-\eqref{eq:compatibility}. Recover
+Choose three coefficient rows with determinant $\Delta\ne0$, and let
+$\Delta_\lambda,\Delta_U,\Delta_V$ be the determinants obtained by
+replacing the corresponding column with the right-hand side.
+Cramer's rule gives
+\[
+ \lambda=\frac{\Delta_\lambda}{\Delta},\qquad
+ U=\frac{\Delta_U}{\Delta},\qquad V=\frac{\Delta_V}{\Delta}.
+\]
+The fourth row gives \eqref{eq:compatibility}, and a prescribed amplitude
+gives the second equation
+\begin{equation}\label{eq:symbolic-amplitude}
+ \mathcal G(r,s;\mu):=\Delta_U^2+\Delta_V^2-\mu^2\Delta^2=0.
+\end{equation}
+Thus symbolic elimination reduces the critical matching problem to
+$\mathcal F=\mathcal G=0$. The coefficients are explicit expressions
+in exponentials, sines, and cosines of the two residence variables.
+The phase and amplitude are reconstructed by
 \begin{equation}\label{eq:amplitude-recovery}
  \mu=\sqrt{U^2+V^2},\qquad
  \sin\phi=U/\mu,\quad\cos\phi=V/\mu.
 \end{equation}
-The admissible domain has $0<r<\rho$ and $0<s<2\pi-\rho$.
-Only matches with the prescribed crossing directions and first encounters
-represent physical profiles. This last check uses the weighted-velocity
-identity \eqref{eq:shape} and the crossing speeds $w_i$.
-Equations~\eqref{eq:matching-coefficients}--\eqref{eq:amplitude-recovery}
-give the explicit construction equations: two duration variables replace
-a full periodic boundary-value search.
+Physical profiles satisfy $0<r<\rho$, $0<s<2\pi-\rho$, and the prescribed
+crossing directions. The weighted-velocity identity \eqref{eq:shape}
+and the speeds $w_i$ determine the first encounters on each flight.
 
 \subsection{Selecting the slopes, amplitude, and shooting intervals}
 The derivative test \eqref{eq:H-test} led us to profiles with strong
@@ -296,10 +307,9 @@ exterior contraction. The simple rational slopes
 \]
 give such a critical branch. Continuing the physical solutions of
 \eqref{eq:compatibility} and reconstructing the amplitude by
-\eqref{eq:amplitude-recovery} reveals a shallow valley: its lower
-amplitude is approximately $1.813584$, while the symmetric critical
-profile occurs near $1.81363456$. This suggests choosing a fixed
-amplitude between the valley floor and the symmetric threshold.
+\eqref{eq:amplitude-recovery} gives a critical-amplitude curve with a
+local minimum near $1.813584$. The symmetric critical profile occurs
+near $1.81363456$. We choose a fixed amplitude between these two values.
 The latter value comes from the symmetric matching conditions
 $r=u=\rho/2$, $s=v=(2\pi-\rho)/2$, and $\lambda=0$ in
 \eqref{eq:linear-matching}. A stationary amplitude along a regular
@@ -309,12 +319,10 @@ compatibility chart is located by the two equations
  \mathcal F_r\mu_s-\mathcal F_s\mu_r=0,
 \]
 where $\mu(r,s)$ is reconstructed from the chosen coefficient minor.
-We select the short rational number
+This gives the rational choice
 \begin{equation}\label{eq:selected-amplitude}
  \mu=\frac{181363}{100000}=1.81363.
 \end{equation}
-The quoted threshold values are continuation estimates used to locate
-this candidate.
 At the selected amplitude, the two positive-mean three-zone critical
 matches have approximately
 \[
@@ -345,7 +353,7 @@ Starting at the symmetric profile $(\xi,\Lambda)=(0,0)$, the response
 descends, rises, descends, and rises again. This is the geometry that
 suggests three positive-mean zeros. On a right two-zone branch,
 strict order makes the upper exterior visit longer as the mean rises,
-so $T=2\pi-v$ decreases. In the genuine three-zone part,
+so $T=2\pi-v$ decreases. In the three-zone part,
 the shrinking lower visit adds the opposing contribution in
 \eqref{eq:competition}. Near its loss, the square-root law
 \eqref{eq:sqrt} accounts for the sharp residence-time turn.
@@ -369,10 +377,9 @@ the shrinking lower visit adds the opposing contribution in
 \addplot[dashed] coordinates {(0,0)(.08,0)};
 \end{groupplot}
 \end{tikzpicture}
-\caption{Continued response and residence-time profile at the selected
-parameters. The plotted samples illustrate the construction; the strict
-return-displacement bounds in Table~\ref{tab:signs} establish the zeros
-used in the theorem.}\label{fig:construction}
+\caption{Sampled response and residence-time profiles at
+$(A,B,\mu)=(9,3/2,1.81363)$. Crosses mark the three positive-mean
+responses.}\label{fig:construction}
 \end{figure}
 
 Finally, solving the unbiased affine matching equations gives approximate
@@ -383,10 +390,8 @@ shooting values
 These guide the rational endpoint choices in \eqref{eq:intervals}.
 The second interval is narrow because its trajectory nearly grazes the
 lower level; the first and third can be bracketed more broadly.
-Once these six rational endpoints are chosen, Section~4 proves their
-strict displacement signs, controls the complete itineraries, and
-establishes isolation. Thus the construction explains the parameter
-choice, while the finite inequalities prove the fixed-parameter theorem.
+Section~4 derives the displacement signs at these rational endpoints
+and uses scalar order and reflection to prove the seven-cycle theorem.
 
 \section{Proof of the seven-cycle theorem}
 From now on fix $A=9$, $B=3/2$, and $\mu=181363/100000$.
@@ -430,9 +435,9 @@ $-0.55514$ & $[-1.07074,-1.07072]\cdot10^{-5}$\\\bottomrule
 \end{tabular}
 \end{table}
 \begin{proof}
-The finite rational estimates for the six endpoint trajectories are
-given in Appendix~\ref{app:bounds}. We explain why these affine segments
-are the physical trajectories and why the itineraries persist between endpoints.
+Appendix~\ref{app:bounds} gives the rational estimates for the six
+endpoint trajectories. The weighted velocity determines their first
+encounters and the persistence of their itineraries between endpoints.
 
 Inside an affine zone, the weighted velocity obeys
 \begin{equation}\label{eq:shape}
@@ -551,7 +556,7 @@ $e_0=1$, $e_{k+1}=e_ku/(k+1)$, and
 $s_0=u$, $s_{k+1}=-s_ku^2/((2k+2)(2k+3))$.
 Add $[-10^{-95},10^{-95}]$ to the final polynomial interval.
 
-One fully rational choice for all operations is the lattice $10^{-80}\mathbb Z$.
+For interval arithmetic, use the rational lattice $10^{-80}\mathbb Z$.
 After each operation replace a lower endpoint $r$ by
 $10^{-80}\lfloor10^{80}r\rfloor$ and an upper endpoint by
 $10^{-80}\lceil10^{80}r\rceil$. Use the minimum and maximum of the four
@@ -637,7 +642,7 @@ $-0.55514$ & $2$ & $4.235058511047931109063368566348$\\
 \addlinespace[2pt]
 \bottomrule
 \end{longtable}}
-For clarity, we detail the substitution for $y=-571/1000$. The first
+For $y=-571/1000$, the first
 crossing equation reduces to
 \[
  F_1(t)=1-\frac{1053}{81250}e^{3t/2}
