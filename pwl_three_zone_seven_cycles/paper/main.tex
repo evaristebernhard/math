@@ -12,33 +12,40 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
 \newcommand{\sat}{\operatorname{sat}}
 \title{Seven Limit Cycles in a Periodically Forced\\Three-Zone Equation}
-\author{Chaoyu Hu\thanks{School of Automation, Hangzhou Dianzi University, Hangzhou, Zhejiang 310018, People's Republic of China. Email: \texttt{evaristebernhardwiener@gmail.com}.}
+\author{Chaoyu Hu\thanks{Corresponding author. School of Automation, Hangzhou Dianzi University, Hangzhou, Zhejiang 310018, People's Republic of China. Email: \texttt{evaristebernhardwiener@gmail.com}.}
 \and Jizheng Chen\thanks{Department of Mathematics, Chang'an University, Xi'an, Shaanxi 710064, People's Republic of China. Email: \texttt{1253183582@qq.com}.}}
 \date{}
 \begin{document}
 \maketitle
 \begin{abstract}
-We prove that a periodically forced scalar equation with a continuous
-three-zone piecewise-linear nonlinearity admits at least seven distinct
-isolated periodic orbits at the rational parameters
-$(A,B,\mu)=(9,3/2,181363/100000)$. This gives a counterexample to the
-conjectured upper bound of five limit cycles for the saturation family.
-The construction is guided by the competition between the lower and
-upper exterior residence times and by the square-root loss of an
-exterior visit at grazing. A residence-time identity and four-flight
-matching equations locate the parameter example. Exact affine flows
-and finite Taylor estimates then establish three sign changes of the
-Poincar\'e displacement. Analyticity along transverse itineraries,
-strict scalar order, and half-period reflection yield three pairs of
-isolated periodic orbits together with the antisymmetric central orbit.
+We study the periodic orbits of a sinusoidally forced scalar equation
+with a continuous three-zone piecewise-linear saturation nonlinearity.
+At the rational parameters $(A,B,\mu)=(9,3/2,181363/100000)$, we prove
+the existence of at least seven distinct isolated periodic orbits on
+the phase cylinder. This provides a counterexample to the conjectured
+upper bound of five limit cycles for this family. The construction
+uses the competition between the lower and upper exterior residence
+times. A residence-time identity relates the slope of an auxiliary
+periodic response to the return multiplier, while four-flight matching
+conditions locate profiles where that slope vanishes. A local
+square-root law describes the disappearance of an exterior visit at
+grazing. For the selected equation, explicit affine flows and finite
+Taylor estimates establish three sign changes of the Poincar\'e
+displacement on disjoint rational intervals. Transverse switching
+makes the return map analytic on these intervals. Scalar order and
+half-period reflection then give three pairs of isolated periodic
+orbits and a unique antisymmetric central orbit. The seven orbits can
+be chosen as four attracting cycles and three repelling cycles; the
+central cycle is hyperbolic and repelling.
 \end{abstract}
 \noindent\textbf{Keywords:} periodically forced equation; limit cycle;
 Poincar\'e map; residence time; grazing.\quad
 \textbf{MSC 2020:} 34C25, 34A34, 37C27.
 
-\section{The equation and the fixed-parameter result}
+\section{Introduction and main results}
 Consider
 \begin{equation}\label{eq:family}
  \dot x=-Ax+(A+B)\sat(x)+\mu\sin t,\qquad A,B,\mu>0,
@@ -56,12 +63,14 @@ determine how these three explicit affine flows compose over a period.
 Periodically forced scalar piecewise equations arise in reductions of
 three-dimensional piecewise-linear systems. Carmona, Freire, Ponce and
 Torres \cite{Carmona2004} studied such a reduction for a two-zone system;
-the three-zone saturation family above is treated in \cite{Bravo2025}.
+the three-zone saturation family above is treated in the preprint of
+Bravo, Carmona, Fern\'andez and Ojeda
+\href{https://arxiv.org/abs/2507.06705}{arXiv:2507.06705} (2025; revised 2026).
 Regularity and the organization of periodic solutions across switching
 levels were developed in \cite{Bravo2007}. The surrounding theory of
 piecewise-smooth flows is presented in \cite{diBernardo2008}.
 
-Bravo, Carmona, Fern\'andez and Ojeda \cite{Bravo2025} establish
+In that preprint, Bravo, Carmona, Fern\'andez and Ojeda establish
 parameter-uniform finiteness for the saturation family and describe
 regimes with one, three, and five cycles using a small-slope deformation.
 They discuss a conjectural maximum of five. The present example has
@@ -72,8 +81,9 @@ Bravo, Fern\'andez and Ojeda \cite{Bravo2024} bound the Hilbert number
 of a two-zone equation with degree-one trigonometric coefficients.
 Gasull and Zhao \cite{Gasull2023} obtain a sharp two-cycle bound for
 $x'=a(t)+b(t)|x|$ when one coefficient has constant sign.
-Bravo and Trinidad-Forte \cite{BravoTrinidad2026} establish finiteness
-for multi-zone equations with trigonometric coefficients. Their work on
+Bravo and Trinidad-Forte establish finiteness for multi-zone equations
+with trigonometric coefficients in their preprint
+\href{https://arxiv.org/abs/2605.05805}{arXiv:2605.05805} (2026). Their work on
 global centers \cite{Centers2026} characterizes periodic families in a
 two-zone equation. Here we construct seven isolated cycles in the
 three-zone saturation family.
@@ -85,6 +95,11 @@ The equation
 has at least seven distinct isolated $2\pi$-periodic orbits on the phase cylinder.
 \end{theorem}
 This example exceeds the conjectured five-cycle bound for \eqref{eq:family}.
+\begin{corollary}\label{cor:stability}
+The seven cycles in Theorem~\ref{thm:seven} can be chosen so that four
+are locally asymptotically stable and three are repelling. The unique
+antisymmetric cycle is hyperbolic and repelling.
+\end{corollary}
 
 The mechanism lies in the geometry of the return map. Raising an
 ordered periodic response shortens its lower exterior visit and
@@ -102,6 +117,10 @@ exist uniquely and depend continuously on $y$. Scalar uniqueness gives
 strict order: if $y_1<y_2$, then $x(t;y_1)<x(t;y_2)$ at every common time.
 The proof finds three isolated zeros of $D$ above the antisymmetric
 solution and uses reflection to obtain three more below it.
+The signs of $D$ on either side of the selected zeros determine their
+stability. Section~2 develops the residence-time geometry, Section~3
+explains the parameter construction, and Section~4 proves the theorem
+and its stability corollary. The appendix supplies the rational estimates.
 
 \section{Residence times and switching geometry}
 For a periodic trajectory with transverse crossings, let $s$ and $v$ be
@@ -115,7 +134,7 @@ Indeed, the variational equation has coefficient $B$ in the middle zone
 and $-A$ in the exterior zones. Continuity of the vector field makes the
 variation continuous at a transverse switching event.
 This residence-time form of the multiplier is also recorded in
-\cite[Proposition~2.2]{Bravo2025}; differentiability for continuous scalar
+Proposition~2.2 of the above preprint by Bravo et al.; differentiability for continuous scalar
 piecewise equations is treated in \cite{Bravo2007}.
 
 Raising the initial value lifts the entire trajectory. On a transverse
@@ -393,10 +412,10 @@ shooting values
 These guide the rational endpoint choices in \eqref{eq:intervals}.
 The second interval is narrow because its trajectory nearly grazes the
 lower level; the first and third can be bracketed more broadly.
-Section~4 derives the displacement signs at these rational endpoints
+Section~\ref{sec:proof} derives the displacement signs at these rational endpoints
 and uses scalar order and reflection to prove the seven-cycle theorem.
 
-\section{Proof of the seven-cycle theorem}
+\section{Existence, isolation, and stability}\label{sec:proof}
 From now on fix $A=9$, $B=3/2$, and $\mu=181363/100000$.
 In a zone where
 $\dot x+cx+d=\mu\sin t$, the exact flow is
@@ -533,6 +552,56 @@ is an involution on periodic solutions. It sends each of these three
 solutions to one below $x_c$, preserves distinctness, and preserves
 isolation. Together with $x_c$, this gives $3+1+3=7$ distinct isolated
 periodic orbits and proves Theorem~\ref{thm:seven}.\qed
+
+\subsection{Attracting and repelling cycles}
+\begin{proof}[Proof of Corollary~\ref{cor:stability}]
+The zeros of $D$ on each $I_j$ are finite: $D$ is analytic on a
+neighborhood of the compact interval and is not identically zero.
+The endpoint signs in Table~\ref{tab:signs} therefore give a zero
+$y_1\in I_1$ and a zero $y_3\in I_3$ at which $D$ changes from
+positive to negative, and a zero $y_2\in I_2$ at which it changes from
+negative to positive. Choose these three zeros in the proof of
+Theorem~\ref{thm:seven}.
+
+Since $P$ is strictly increasing, near $y_1$ or $y_3$ a point to the
+left satisfies $y<P(y)<y_j$, and a point to the right satisfies
+$y_j<P(y)<y$. The iterates converge monotonically to $y_j$, giving
+local asymptotic stability. At $y_2$ the inequalities are reversed,
+and nearby points move away from the fixed point under iteration.
+Equivalently, the local inverse iterates converge to $y_2$, so this
+cycle is repelling. Continuous dependence during each period transfers
+these properties to the periodic trajectories.
+
+For the reflected cycles, define the half-period map
+$R(y)=-x(\pi;y)$. The symmetry of the equation gives
+$R^2=P$, and hence $RP=PR$. The map $R$ is a strictly decreasing
+homeomorphism of the line: order gives strict monotonicity, and
+$R(y)=-e^{-9\pi}y+O(1)$ gives surjectivity. It thus conjugates $P$
+to itself and preserves attracting and repelling fixed points.
+The reflected partners of $y_1$ and $y_3$ are attracting, and the
+partner of $y_2$ is repelling. Finally, $P'(y_c)>1$ makes the central
+cycle hyperbolic and repelling. This gives four attracting and three
+repelling cycles.
+\end{proof}
+
+\section{Discussion}
+The example shows that strong exterior contraction can coexist with
+seven isolated periodic responses in the saturation family. The
+relevant quantity is the total middle-zone residence time, which
+controls the return multiplier. Although scalar order lifts an entire
+trajectory, it changes its two exterior visits in opposite directions.
+This provides a way to locate additional turns of the biased response
+within a fixed three-zone equation.
+
+The selected cycles have two different switching patterns. Two of
+the positive-mean cycles visit all three zones, while the third visits
+only the middle and upper zones. Their reflected partners have the
+corresponding lower itineraries. The transition between these patterns
+is organized by grazing, whose local residence-time law was derived
+in Proposition~\ref{prop:grazing}. The matching equations expose this
+geometry, and the displacement inequalities establish the cycle count
+at the chosen rational parameters. A natural further problem is to
+determine a sharp parameter-uniform upper bound for this family.
 
 \appendix
 \section{Finite rational estimates for the affine flows}\label{app:bounds}
@@ -764,58 +833,59 @@ Thus the lower-zone duration is largest at $y=-0.579022471$. Its upper bound is
 The last comparison follows already from the elementary bound
 $\pi>3.14159$. This proves \eqref{eq:sc} and completes the finite estimates.
 
-\section*{Use of AI tools}
+\section*{Statements and Declarations}
+\paragraph{Funding.}
+The authors received no specific funding for this work.
+\paragraph{Competing interests.}
+The authors declare no competing interests.
+\paragraph{Author contributions.}
+Chaoyu Hu and Jizheng Chen jointly contributed to the construction,
+verification of the mathematical proofs, and revision of the manuscript.
+\paragraph{Data availability.}
+The rational inputs and estimates used in the proof are included in
+the article. The sampled data for Figure~\ref{fig:construction} are
+provided in \texttt{figures/response\_data.csv} with the manuscript source.
+\paragraph{Use of AI tools.}
 AI assistance was used to write the programs for parameter searches and
 related computations, and to help draft the manuscript. The authors
 checked the mathematical arguments and proofs presented in this paper.
 
 \clearpage
 \begin{thebibliography}{99}
-\bibitem{Bravo2025}
-J.~L. Bravo, V.~Carmona, M.~Fern\'andez and I.~Ojeda,
-\emph{Upper bound for the number of limit cycles for symmetric
-piecewise linear differential equations with three zones},
-arXiv:2507.06705 (2025), version 2 (2026).
-\href{https://arxiv.org/abs/2507.06705}{arXiv:2507.06705}.
 \bibitem{Carmona2004}
 V.~Carmona, E.~Freire, E.~Ponce and F.~Torres,
 \emph{Invariant manifolds of periodic orbits for piecewise linear
 three-dimensional systems}, IMA J. Appl. Math. \textbf{69} (2004), 71--91.
-\href{https://doi.org/10.1093/imamat/69.1.71}{doi:10.1093/imamat/69.1.71}.
+\href{https://doi.org/10.1093/imamat/69.1.71}{https://doi.org/10.1093/imamat/69.1.71}.
 \bibitem{Bravo2007}
 J.~L. Bravo, M.~Fern\'andez and A.~Tineo,
 \emph{Periodic solutions of a periodic scalar piecewise ODE},
 Commun. Pure Appl. Anal. \textbf{6} (2007), 213--228.
-\href{https://doi.org/10.3934/cpaa.2007.6.213}{doi:10.3934/cpaa.2007.6.213}.
+\href{https://doi.org/10.3934/cpaa.2007.6.213}{https://doi.org/10.3934/cpaa.2007.6.213}.
 \bibitem{diBernardo2008}
 M.~di Bernardo, C.~J. Budd, A.~R. Champneys and P.~Kowalczyk,
 \emph{Piecewise-smooth Dynamical Systems: Theory and Applications},
 Applied Mathematical Sciences 163, Springer, London, 2008.
-\href{https://doi.org/10.1007/978-1-84628-708-4}{doi:10.1007/978-1-84628-708-4}.
+\href{https://doi.org/10.1007/978-1-84628-708-4}{https://doi.org/10.1007/978-1-84628-708-4}.
 \bibitem{Bravo2024}
 J.~L. Bravo, M.~Fern\'andez and I.~Ojeda,
 \emph{Hilbert number for a family of piecewise nonautonomous equations},
 Qual. Theory Dyn. Syst. \textbf{23} (2024), article 119.
-\href{https://doi.org/10.1007/s12346-023-00922-9}{doi:10.1007/s12346-023-00922-9}.
+\href{https://doi.org/10.1007/s12346-023-00922-9}{https://doi.org/10.1007/s12346-023-00922-9}.
 \bibitem{Gasull2023}
 A.~Gasull and Y.~Zhao,
 \emph{Existence of at most two limit cycles for some non-autonomous
 differential equations}, Commun. Pure Appl. Anal. \textbf{22} (2023), 970--982.
-\href{https://doi.org/10.3934/cpaa.2023016}{doi:10.3934/cpaa.2023016}.
-\bibitem{BravoTrinidad2026}
-J.~L. Bravo and R.~Trinidad-Forte,
-\emph{Finitude of limit cycles of linear piecewise ODEs in the cylinder},
-arXiv:2605.05805 (2026).
-\href{https://arxiv.org/abs/2605.05805}{arXiv:2605.05805}.
+\href{https://doi.org/10.3934/cpaa.2023016}{https://doi.org/10.3934/cpaa.2023016}.
 \bibitem{Centers2026}
 J.~L. Bravo and R.~Trinidad-Forte,
 \emph{Global centers in piecewise linear equations in the cylinder},
 Qual. Theory Dyn. Syst. \textbf{25} (2026), article 26.
-\href{https://doi.org/10.1007/s12346-025-01425-5}{doi:10.1007/s12346-025-01425-5}.
+\href{https://doi.org/10.1007/s12346-025-01425-5}{https://doi.org/10.1007/s12346-025-01425-5}.
 \bibitem{Nordmark1991}
 A.~B. Nordmark,
 \emph{Non-periodic motion caused by grazing incidence in an impact oscillator},
 J. Sound Vib. \textbf{145} (1991), 279--297.
-\href{https://doi.org/10.1016/0022-460X(91)90592-8}{doi:10.1016/0022-460X(91)90592-8}.
+\href{https://doi.org/10.1016/0022-460X(91)90592-8}{https://doi.org/10.1016/0022-460X(91)90592-8}.
 \end{thebibliography}
 \end{document}
