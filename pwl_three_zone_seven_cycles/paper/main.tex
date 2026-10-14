@@ -4,6 +4,9 @@
 \usepackage{lmodern,microtype}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs,longtable}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 \newtheorem{theorem}{Theorem}
@@ -27,7 +30,9 @@ itineraries, and half-period reflection give three pairs of isolated
 periodic orbits and one antisymmetric central orbit. All estimates needed
 for this fixed-parameter construction are stated as rational inequalities
 with finite Taylor remainder bounds. The competing durations of the two
-exterior visits provide a geometric interpretation of the construction.
+exterior visits guide the construction: a four-flight matching system
+locates an additional turn of the critical response, from which the
+rational parameter example is selected.
 \end{abstract}
 \noindent\textbf{Keywords:} piecewise-linear equation; periodic orbit; return map;
 residence time; grazing.\quad\textbf{MSC 2020:} 34C25, 34A34, 37C27.
@@ -47,9 +52,31 @@ The exterior vector fields contract perturbations at rate $A$, whereas
 the middle vector field expands them at rate $B$. Although each affine
 flow is explicit, its switching times depend on the initial condition.
 
-The three-zone family has been studied by Bravo, Carmona, Fern\'andez and
-Ojeda \cite{Bravo2025}, who discuss a conjectural maximum of five limit
-cycles. We give a fixed-parameter example with a larger number.
+Periodically forced scalar piecewise equations arise in reductions of
+three-dimensional piecewise-linear systems. Carmona, Freire, Ponce and
+Torres \cite{Carmona2004} studied such a reduction for a two-zone system;
+the three-zone saturation family above is treated in \cite{Bravo2025}.
+Regularity and the organization of periodic solutions across switching
+levels were developed in \cite{Bravo2007}. The surrounding theory of
+piecewise-smooth flows is presented in \cite{diBernardo2008}.
+
+Bravo, Carmona, Fern\'andez and Ojeda \cite{Bravo2025} establish
+parameter-uniform finiteness for the saturation family and describe
+regimes with one, three, and five cycles using a small-slope deformation.
+They discuss a conjectural maximum of five. The present example has
+strong exterior contraction and gives a larger fixed-parameter count.
+
+Related scalar counting results concern different structural assumptions.
+Bravo, Fern\'andez and Ojeda \cite{Bravo2024} bound the Hilbert number
+of a two-zone equation with degree-one trigonometric coefficients.
+Gasull and Zhao \cite{Gasull2023} obtain a sharp two-cycle bound for
+$x'=a(t)+b(t)|x|$ when one coefficient has constant sign.
+Bravo and Trinidad-Forte \cite{BravoTrinidad2026} establish finiteness
+for multi-zone equations with trigonometric coefficients. Their work on
+global centers \cite{Centers2026} also emphasizes the distinction
+between isolated cycles and continua of periodic solutions.
+These results motivate a construction that controls switching itineraries
+and proves isolation as well as existence.
 \begin{theorem}\label{thm:seven}
 The equation
 \begin{equation}\label{eq:witness}
@@ -82,6 +109,9 @@ $T=2\pi-s-v$ be its middle-zone residence time. The return multiplier is
 Indeed, the variational equation has coefficient $B$ in the middle zone
 and $-A$ in the exterior zones. Continuity of the vector field makes the
 variation continuous at a transverse switching event.
+This residence-time form of the multiplier is also recorded in
+\cite[Proposition~2.2]{Bravo2025}; differentiability for continuous scalar
+piecewise equations is treated in \cite{Bravo2007}.
 
 Raising the initial value lifts the entire trajectory. On a transverse
 itinerary with both exterior visits, the lower visit shortens and the
@@ -101,6 +131,10 @@ is a sum of terms of opposite signs. The middle-zone residence time need
 not be monotone even though the trajectories themselves are strictly ordered.
 
 The disappearance of a lower visit has a useful local description.
+Grazing singularities are a familiar organizing mechanism in
+piecewise-smooth and impact dynamics \cite{diBernardo2008,Nordmark1991}.
+Here the quantity of interest is the duration of the exterior visit,
+whose local law can be derived directly.
 \begin{proposition}\label{prop:grazing}
 Suppose a local family of trajectories has a nondegenerate lower contact
 at $(t_g,y_g)$, with
@@ -133,6 +167,226 @@ Their separation gives \eqref{eq:sqrt}.
 This square-root sensitivity explains how the two exterior contributions
 in \eqref{eq:competition} can compete strongly. The existence proof below
 uses the return displacement directly.
+
+\section{Locating the rational parameter example}\label{sec:construction}
+We now describe the construction leading to the coefficients in
+Theorem~\ref{thm:seven}. It begins with the critical residence time,
+reduces the four-flight matching conditions to two duration variables,
+and then converts the selected periodic profiles into rational shooting
+intervals.
+
+\subsection{A biased response and its critical duration}
+Put $g(x)=Ax-(A+B)\sat(x)$ and introduce the auxiliary periodic problem
+\begin{equation}\label{eq:biased}
+ \dot x+g(x)=\mu\sin t+\lambda,\qquad x(t+2\pi)=x(t).
+\end{equation}
+The original equation is its slice $\lambda=0$. On a transverse
+itinerary, let $X(t;y,\lambda)$ be the solution starting from $y$.
+Differentiation with respect to the bias gives
+\[
+ X_\lambda(2\pi;y,\lambda)
+ =\int_0^{2\pi}\exp\left(-\int_s^{2\pi}g'(X(\tau))\,d\tau\right)ds>0.
+\]
+Consequently the periodicity equation
+$X(2\pi;y,\lambda)-y=0$ locally determines $\lambda$ as a function of $y$.
+At a response critical point, its derivative vanishes precisely when
+$X_y(2\pi;y,\lambda)=1$. At such a point the periodic variation in $y$
+is strictly positive, so the mean
+\[
+ \xi=\frac1{2\pi}\int_0^{2\pi}X(t;y,\lambda(y))\,dt
+\]
+is a valid local coordinate. Write $\lambda=\Lambda(\xi,\mu)$ and
+$z(t)=x_\xi(t;\xi,\mu)$. Then $z>0$ on a neighborhood of the critical
+profile and $\dot z+g'(x)z=\Lambda_\xi$. Dividing by $z$ and integrating
+over a period gives
+\begin{equation}\label{eq:response-identity}
+ \boxed{\Lambda_\xi J=(A+B)(\rho-T),\qquad
+ J=\int_0^{2\pi}\frac{dt}{z(t)}>0,\qquad
+ \rho=\frac{2\pi A}{A+B}.}
+\end{equation}
+Thus the response descends when $T>\rho$ and ascends when $T<\rho$.
+At a critical profile, $T=\rho$. This reduces the search for changes in
+the response slope to a question about flight durations.
+
+\subsection{The four-crossing derivative test}
+Take the switching levels in cyclic order $+1,-1,-1,+1$ at
+$t_1<t_2<t_3<t_4$, and put
+\begin{equation}\label{eq:construction-durations}
+ r=t_2-t_1,\quad s=t_3-t_2,\quad
+ u=t_4-t_3,\quad v=t_1+2\pi-t_4.
+\end{equation}
+The zones are middle, lower, middle, upper, so $T=r+u$.
+At a critical profile, $u=\rho-r$ and $v=2\pi-\rho-s$.
+Let $w_i=x_t(t_i)\ne0$ and $z_1=z(t_1)>0$.
+Implicit differentiation of a crossing gives
+$t_{i,\xi}=-z(t_i)/w_i$. Since $\Lambda_\xi=0$, the variation
+is multiplied by $e^{Br}$, $e^{-As}$, and $e^{Bu}$ on the first
+three flights. Therefore
+\begin{equation}\label{eq:H-test}
+ \boxed{T_\xi=z_1\mathcal H,\qquad
+ \mathcal H=\frac1{w_1}-\frac{e^{Br}}{w_2}
+       +\frac{e^{Br-As}}{w_3}
+       -\frac{e^{B\rho-As}}{w_4}.}
+\end{equation}
+This is an explicit test for the direction in which a critical profile
+crosses the residence level. The two exterior visits contribute with
+opposite signs; a negative value of $\mathcal H$ is therefore possible
+without violating scalar order.
+
+\subsection{A two-duration matching system}
+The critical profiles can be located directly from affine matching.
+Let the first crossing phase be $\phi=t_1$ and set
+\[
+ q_0=0,\quad q_1=r,\quad q_2=r+s,\quad
+ q_3=\rho+s,\quad q_4=2\pi.
+\]
+The endpoint levels are
+$(b_0,b_1,b_2,b_3,b_4)=(1,-1,-1,1,1)$.
+For the four flights use
+\[
+ (c_j,d_j)=(-B,0),\ (A,A+B),\ (-B,0),\ (A,-A-B).
+\]
+Put $L_j=q_j-q_{j-1}$, $E_j=e^{-c_jL_j}$, and
+\begin{align}
+ \alpha_j&=\frac{1-E_j}{c_j},\notag\\
+ \beta_j&=\frac{c_j\cos q_j+\sin q_j
+       -E_j(c_j\cos q_{j-1}+\sin q_{j-1})}{1+c_j^2},\notag\\
+ \gamma_j&=\frac{c_j\sin q_j-\cos q_j
+       -E_j(c_j\sin q_{j-1}-\cos q_{j-1})}{1+c_j^2},\label{eq:matching-coefficients}\\
+ k_j&=b_j-E_jb_{j-1}+d_j\alpha_j.\notag
+\end{align}
+With $U=\mu\sin\phi$ and $V=\mu\cos\phi$, the four endpoint
+conditions become the linear equations
+\begin{equation}\label{eq:linear-matching}
+ \alpha_j\lambda+\beta_jU+\gamma_jV=k_j,
+ \qquad j=1,2,3,4.
+\end{equation}
+Indeed, integrating $x'+c_jx+d_j=\lambda+\mu\sin t$ gives
+$b_j=E_jb_{j-1}+\alpha_j(\lambda-d_j)+\beta_jU+\gamma_jV$.
+Thus every four-crossing critical profile satisfies the compatibility equation
+\begin{equation}\label{eq:compatibility}
+ \mathcal F(A,B,r,s):=
+ \det\begin{pmatrix}
+ \alpha_1&\beta_1&\gamma_1&k_1\\
+ \alpha_2&\beta_2&\gamma_2&k_2\\
+ \alpha_3&\beta_3&\gamma_3&k_3\\
+ \alpha_4&\beta_4&\gamma_4&k_4
+ \end{pmatrix}=0.
+\end{equation}
+On any chart with a nonzero $3\times3$ coefficient minor, solve three
+rows for $(\lambda,U,V)$; the fourth is then equivalent to
+\eqref{eq:compatibility}. Recover
+\begin{equation}\label{eq:amplitude-recovery}
+ \mu=\sqrt{U^2+V^2},\qquad
+ \sin\phi=U/\mu,\quad\cos\phi=V/\mu.
+\end{equation}
+The admissible domain has $0<r<\rho$ and $0<s<2\pi-\rho$.
+Only matches with the prescribed crossing directions and first encounters
+represent physical profiles. This last check uses the weighted-velocity
+identity \eqref{eq:shape} and the crossing speeds $w_i$.
+Equations~\eqref{eq:matching-coefficients}--\eqref{eq:amplitude-recovery}
+give the explicit construction equations: two duration variables replace
+a full periodic boundary-value search.
+
+\subsection{Selecting the slopes, amplitude, and shooting intervals}
+The derivative test \eqref{eq:H-test} led us to profiles with strong
+exterior contraction. The simple rational slopes
+\[
+ A=9,\qquad B=\frac32,\qquad \rho=\frac{12\pi}{7}
+\]
+give such a critical branch. Continuing the physical solutions of
+\eqref{eq:compatibility} and reconstructing the amplitude by
+\eqref{eq:amplitude-recovery} reveals a shallow valley: its lower
+amplitude is approximately $1.813584$, while the symmetric critical
+profile occurs near $1.81363456$. This suggests choosing a fixed
+amplitude between the valley floor and the symmetric threshold.
+The latter value comes from the symmetric matching conditions
+$r=u=\rho/2$, $s=v=(2\pi-\rho)/2$, and $\lambda=0$ in
+\eqref{eq:linear-matching}. A stationary amplitude along a regular
+compatibility chart is located by the two equations
+\[
+ \mathcal F=0,\qquad
+ \mathcal F_r\mu_s-\mathcal F_s\mu_r=0,
+\]
+where $\mu(r,s)$ is reconstructed from the chosen coefficient minor.
+We select the short rational number
+\begin{equation}\label{eq:selected-amplitude}
+ \mu=\frac{181363}{100000}=1.81363.
+\end{equation}
+The quoted threshold values are continuation estimates used to locate
+this candidate.
+At the selected amplitude, the two positive-mean three-zone critical
+matches have approximately
+\[
+\begin{array}{c|rrr}
+ &r&s&\mathcal H\\\hline
+\text{first}&2.73100378&0.40448498&-3.31230\\
+\text{second}&2.90517603&0.18921685&80.43176.
+\end{array}
+\]
+The opposite signs in \eqref{eq:H-test} explain the extra reversal of
+the residence time on this branch.
+
+At this amplitude, the continued biased response has the three turning
+profiles shown in Table~\ref{tab:construction-turns}. The first two
+visit all three zones; the third lies on the right two-zone branch after
+the lower exterior visit disappears.
+\begin{table}[ht]
+\centering
+\caption{Rounded continuation values guiding the construction.}\label{tab:construction-turns}
+\begin{tabular}{@{}rrl@{}}\toprule
+Mean $\xi$ & Bias $\Lambda$ & Profile\\\midrule
+$0.00427486$ & $-5.84\cdot10^{-7}$ & three-zone minimum\\
+$0.02615026$ & $1.20\cdot10^{-5}$ & three-zone maximum\\
+$0.04964750$ & $-2.30\cdot10^{-5}$ & two-zone minimum\\\bottomrule
+\end{tabular}
+\end{table}
+Starting at the symmetric profile $(\xi,\Lambda)=(0,0)$, the response
+descends, rises, descends, and rises again. This is the geometry that
+suggests three positive-mean zeros. On a right two-zone branch,
+strict order makes the upper exterior visit longer as the mean rises,
+so $T=2\pi-v$ decreases. In the genuine three-zone part,
+the shrinking lower visit adds the opposing contribution in
+\eqref{eq:competition}. Near its loss, the square-root law
+\eqref{eq:sqrt} accounts for the sharp residence-time turn.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1,horizontal sep=1.6cm},
+ width=.43\linewidth,height=5cm,xmin=0,xmax=.08,
+ xlabel={Mean $\xi$},grid=major,grid style={gray!20},
+ tick label style={font=\scriptsize},label style={font=\small},
+ xtick={0,.02,.04,.06,.08},scaled x ticks=false,
+ xticklabel style={/pgf/number format/fixed,/pgf/number format/precision=2}]
+\nextgroupplot[ylabel={$10^5\Lambda$}]
+\addplot[blue!65!black,thick] table[x=xi,y=scaled_lambda,col sep=comma]{figures/response_data.csv};
+\addplot[dashed] coordinates {(0,0)(.08,0)};
+\addplot[only marks,mark=x,red!70!black] coordinates
+ {(.007659607,0)(.037207634,0)(.065677290,0)};
+\nextgroupplot[ylabel={$10^3(T-\rho)$}]
+\addplot[teal!70!black,thick] table[x=xi,y expr=1000*\thisrow{T_minus_rho},col sep=comma]{figures/response_data.csv};
+\addplot[dashed] coordinates {(0,0)(.08,0)};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Continued response and residence-time profile at the selected
+parameters. The plotted samples illustrate the construction; the strict
+return-displacement bounds in Table~\ref{tab:signs} establish the zeros
+used in the theorem.}\label{fig:construction}
+\end{figure}
+
+Finally, solving the unbiased affine matching equations gives approximate
+shooting values
+\[
+ -0.5692039544,\qquad -0.5567601961,\qquad -0.5551559903.
+\]
+These guide the rational endpoint choices in \eqref{eq:intervals}.
+The second interval is narrow because its trajectory nearly grazes the
+lower level; the first and third can be bracketed more broadly.
+Once these six rational endpoints are chosen, Section~4 proves their
+strict displacement signs, controls the complete itineraries, and
+establishes isolation. Thus the construction explains the parameter
+choice, while the finite inequalities prove the fixed-parameter theorem.
 
 \section{Proof of the seven-cycle theorem}
 From now on fix $A=9$, $B=3/2$, and $\mu=181363/100000$.
@@ -502,11 +756,53 @@ Thus the lower-zone duration is largest at $y=-0.579022471$. Its upper bound is
 The last comparison follows already from the elementary bound
 $\pi>3.14159$. This proves \eqref{eq:sc} and completes the finite estimates.
 
-\begin{thebibliography}{9}
+\clearpage
+\begin{thebibliography}{99}
 \bibitem{Bravo2025}
 J.~L. Bravo, V.~Carmona, M.~Fern\'andez and I.~Ojeda,
 \emph{Upper bound for the number of limit cycles for symmetric
 piecewise linear differential equations with three zones},
-arXiv:2507.06705 (2025).
+arXiv:2507.06705 (2025), version 2 (2026).
+\href{https://arxiv.org/abs/2507.06705}{arXiv:2507.06705}.
+\bibitem{Carmona2004}
+V.~Carmona, E.~Freire, E.~Ponce and F.~Torres,
+\emph{Invariant manifolds of periodic orbits for piecewise linear
+three-dimensional systems}, IMA J. Appl. Math. \textbf{69} (2004), 71--91.
+\href{https://doi.org/10.1093/imamat/69.1.71}{doi:10.1093/imamat/69.1.71}.
+\bibitem{Bravo2007}
+J.~L. Bravo, M.~Fern\'andez and A.~Tineo,
+\emph{Periodic solutions of a periodic scalar piecewise ODE},
+Commun. Pure Appl. Anal. \textbf{6} (2007), 213--228.
+\href{https://doi.org/10.3934/cpaa.2007.6.213}{doi:10.3934/cpaa.2007.6.213}.
+\bibitem{diBernardo2008}
+M.~di Bernardo, C.~J. Budd, A.~R. Champneys and P.~Kowalczyk,
+\emph{Piecewise-smooth Dynamical Systems: Theory and Applications},
+Applied Mathematical Sciences 163, Springer, London, 2008.
+\href{https://doi.org/10.1007/978-1-84628-708-4}{doi:10.1007/978-1-84628-708-4}.
+\bibitem{Bravo2024}
+J.~L. Bravo, M.~Fern\'andez and I.~Ojeda,
+\emph{Hilbert number for a family of piecewise nonautonomous equations},
+Qual. Theory Dyn. Syst. \textbf{23} (2024), article 119.
+\href{https://doi.org/10.1007/s12346-023-00922-9}{doi:10.1007/s12346-023-00922-9}.
+\bibitem{Gasull2023}
+A.~Gasull and Y.~Zhao,
+\emph{Existence of at most two limit cycles for some non-autonomous
+differential equations}, Commun. Pure Appl. Anal. \textbf{22} (2023), 970--982.
+\href{https://doi.org/10.3934/cpaa.2023016}{doi:10.3934/cpaa.2023016}.
+\bibitem{BravoTrinidad2026}
+J.~L. Bravo and R.~Trinidad-Forte,
+\emph{Finitude of limit cycles of linear piecewise ODEs in the cylinder},
+arXiv:2605.05805 (2026).
+\href{https://arxiv.org/abs/2605.05805}{arXiv:2605.05805}.
+\bibitem{Centers2026}
+J.~L. Bravo and R.~Trinidad-Forte,
+\emph{Global centers in piecewise linear equations in the cylinder},
+Qual. Theory Dyn. Syst. \textbf{25} (2026), article 26.
+\href{https://doi.org/10.1007/s12346-025-01425-5}{doi:10.1007/s12346-025-01425-5}.
+\bibitem{Nordmark1991}
+A.~B. Nordmark,
+\emph{Non-periodic motion caused by grazing incidence in an impact oscillator},
+J. Sound Vib. \textbf{145} (1991), 279--297.
+\href{https://doi.org/10.1016/0022-460X(91)90592-8}{doi:10.1016/0022-460X(91)90592-8}.
 \end{thebibliography}
 \end{document}
