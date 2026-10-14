@@ -20,20 +20,23 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-We construct a seven-cycle example for a periodically forced scalar
-equation with a continuous three-zone piecewise-linear nonlinearity.
-Symbolic integration and linear elimination reduce the four-flight
-matching conditions to two equations in the residence times. The
-competing exterior visits produce an additional turn of the critical
-response and lead to the rational parameters
-$(A,B,\mu)=(9,3/2,181363/100000)$. At these parameters, finite Taylor
-estimates give three sign changes of the return displacement. Scalar
-order, analyticity along transverse itineraries, and half-period
-reflection then establish at least seven distinct isolated periodic
-orbits on the phase cylinder.
+We prove that a periodically forced scalar equation with a continuous
+three-zone piecewise-linear nonlinearity admits at least seven distinct
+isolated periodic orbits at the rational parameters
+$(A,B,\mu)=(9,3/2,181363/100000)$. This gives a counterexample to the
+conjectured upper bound of five limit cycles for the saturation family.
+The construction is guided by the competition between the lower and
+upper exterior residence times and by the square-root loss of an
+exterior visit at grazing. A residence-time identity and four-flight
+matching equations locate the parameter example. Exact affine flows
+and finite Taylor estimates then establish three sign changes of the
+Poincar\'e displacement. Analyticity along transverse itineraries,
+strict scalar order, and half-period reflection yield three pairs of
+isolated periodic orbits together with the antisymmetric central orbit.
 \end{abstract}
-\noindent\textbf{Keywords:} symbolic computation; piecewise-linear equation;
-limit cycle; residence time; grazing.\quad\textbf{MSC 2020:} 34C25, 34A34, 37C27.
+\noindent\textbf{Keywords:} periodically forced equation; limit cycle;
+Poincar\'e map; residence time; grazing.\quad
+\textbf{MSC 2020:} 34C25, 34A34, 37C27.
 
 \section{The equation and the fixed-parameter result}
 Consider
@@ -83,12 +86,12 @@ has at least seven distinct isolated $2\pi$-periodic orbits on the phase cylinde
 \end{theorem}
 This example exceeds the conjectured five-cycle bound for \eqref{eq:family}.
 
-The construction combines symbolic computation with scalar dynamics.
-Exact integration gives the flight maps; trigonometric expansion makes
-the matching equations linear in the bias and two phase variables.
-Determinant elimination then leaves two equations in the residence
-times. These formulas locate the parameter example and supply the
-expressions used in the rational estimates of the return displacement.
+The mechanism lies in the geometry of the return map. Raising an
+ordered periodic response shortens its lower exterior visit and
+lengthens its upper visit. Their competing effects on the middle-zone
+residence time allow the response curve to turn again near grazing.
+We use this geometry to select the parameters, then prove the existence
+and isolation of the cycles from strict displacement inequalities.
 
 Write $x(t;y)$ for the solution with $x(0;y)=y$, and set
 \begin{equation}\label{eq:map}
@@ -232,9 +235,10 @@ three flights. Therefore
 The sign of $\mathcal H$ measures the balance between the shortening
 lower visit and the lengthening upper visit at a critical response.
 
-\subsection{Symbolic reduction of the matching equations}
-We integrate the four affine segments and eliminate their common bias
-and forcing phase. The resulting system has only two duration variables.
+\subsection{Four-flight matching and critical durations}
+The four affine segments join at their switching levels. At a critical
+response the relation $T=\rho$ leaves two independent residence times,
+which determine the matching equations below.
 Let the first crossing phase be $\phi=t_1$ and set
 \[
  q_0=0,\quad q_1=r,\quad q_2=r+s,\quad
@@ -284,12 +288,11 @@ Cramer's rule gives
 \]
 The fourth row gives \eqref{eq:compatibility}, and a prescribed amplitude
 gives the second equation
-\begin{equation}\label{eq:symbolic-amplitude}
+\begin{equation}\label{eq:critical-amplitude}
  \mathcal G(r,s;\mu):=\Delta_U^2+\Delta_V^2-\mu^2\Delta^2=0.
 \end{equation}
-Thus symbolic elimination reduces the critical matching problem to
-$\mathcal F=\mathcal G=0$. The coefficients are explicit expressions
-in exponentials, sines, and cosines of the two residence variables.
+The system $\mathcal F=\mathcal G=0$ determines the critical responses
+at a prescribed amplitude in terms of the two residence times.
 The phase and amplitude are reconstructed by
 \begin{equation}\label{eq:amplitude-recovery}
  \mu=\sqrt{U^2+V^2},\qquad
