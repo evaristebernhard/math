@@ -61,7 +61,10 @@ the middle vector field expands them at rate $B$. The switching times
 determine how these three explicit affine flows compose over a period.
 
 Periodically forced scalar piecewise equations arise in reductions of
-three-dimensional piecewise-linear systems. Carmona, Freire, Ponce and
+three-dimensional piecewise-linear systems. Structural classifications
+and canonical reductions for such systems were developed by
+Carmona, Freire, Ponce and Torres \cite{Carmona2002}.
+Carmona, Freire, Ponce and
 Torres \cite{Carmona2004} studied such a reduction for a two-zone system;
 the three-zone saturation family above is treated in the preprint of
 Bravo, Carmona, Fern\'andez and Ojeda
@@ -79,17 +82,6 @@ $x'=ax+(b-a)\sat(x)+\mu\sin t$, so our family corresponds to
 $a=-A$ and $b=B$. The present example has strong exterior contraction
 and gives a larger fixed-parameter count in that same family.
 
-Several related results address the number of periodic solutions.
-Bravo, Fern\'andez and Ojeda \cite{Bravo2024} bound the Hilbert number
-of a two-zone equation with degree-one trigonometric coefficients.
-Gasull and Zhao \cite{Gasull2023} obtain a sharp two-cycle bound for
-$x'=a(t)+b(t)|x|$ when one coefficient has constant sign.
-Bravo and Trinidad-Forte establish finiteness for multi-zone equations
-with trigonometric coefficients in their preprint
-\href{https://arxiv.org/abs/2605.05805}{arXiv:2605.05805} (2026). Their work on
-global centers \cite{Centers2026} characterizes periodic families in a
-two-zone equation. Here we construct seven isolated cycles in the
-three-zone saturation family.
 \begin{theorem}\label{thm:seven}
 The equation
 \begin{equation}\label{eq:witness}
@@ -103,6 +95,30 @@ The seven cycles in Theorem~\ref{thm:seven} can be chosen so that four
 are locally asymptotically stable and three are repelling. The unique
 antisymmetric cycle is hyperbolic and repelling.
 \end{corollary}
+
+Classical existence theory for periodic differential equations includes
+the work of Massera \cite{Massera1950}. Mawhin \cite{Mawhin1987}
+studied parameter-dependent multiplicity for scalar first-order problems
+using upper and lower solutions and convexity. Strict scalar order alone
+permits many isolated periodic responses: Coll, Gasull and Prohens
+\cite{Coll2008} constructed equations with arbitrarily many cycles in
+the two-zone family $x'=a(t)+b(t)|x|$ when the periodic coefficients are
+unrestricted. Thus finite cycle bounds depend on the structure of the
+chosen family. The connection between periodic Abel equations and
+cycle counts for planar polynomial systems is surveyed by Gasull
+\cite{Gasull2024}.
+
+Several related results address the number of periodic solutions.
+Bravo, Fern\'andez and Ojeda \cite{Bravo2024} bound the Hilbert number
+of a two-zone equation with degree-one trigonometric coefficients.
+Gasull and Zhao \cite{Gasull2023} obtain a sharp two-cycle bound for
+$x'=a(t)+b(t)|x|$ when one coefficient has constant sign.
+Bravo and Trinidad-Forte establish finiteness for multi-zone equations
+with trigonometric coefficients in their preprint
+\href{https://arxiv.org/abs/2605.05805}{arXiv:2605.05805} (2026). Their work on
+global centers \cite{Centers2026} characterizes periodic families in a
+two-zone equation. Here we construct seven isolated cycles in the
+three-zone saturation family.
 
 The mechanism lies in the geometry of the return map. Raising an
 ordered periodic response shortens its lower exterior visit and
@@ -118,6 +134,10 @@ Write $x(t;y)$ for the solution with $x(0;y)=y$, and set
 The vector field is continuous and globally Lipschitz in $x$, so solutions
 exist uniquely and depend continuously on $y$. Scalar uniqueness gives
 strict order: if $y_1<y_2$, then $x(t;y_1)<x(t;y_2)$ at every common time.
+Consequently $P$ is strictly increasing and has no periodic points
+of period greater than one: $P(y)>y$ makes its iterates increase,
+and $P(y)<y$ makes them decrease. Every closed orbit on the phase
+cylinder therefore corresponds to a $2\pi$-periodic solution.
 The proof finds three isolated zeros of $D$ above the antisymmetric
 solution and uses reflection to obtain three more below it.
 The signs of $D$ on either side of the selected zeros determine their
@@ -126,23 +146,26 @@ explains the parameter construction, and Section~4 proves the theorem
 and its stability corollary. The appendix supplies the rational estimates.
 
 \section{Residence times and switching geometry}
-For a periodic trajectory with transverse crossings, let $s$ and $v$ be
-the times spent below $-1$ and above $1$, respectively, and let
-$T=2\pi-s-v$ be its middle-zone residence time. The return multiplier is
+For a trajectory on $[0,2\pi]$ with transverse crossings, let $s(y)$
+and $v(y)$ be the measures of the sets where $x(t;y)<-1$ and $x(t;y)>1$,
+respectively. Put $T(y)=2\pi-s(y)-v(y)$ for its middle-zone residence time.
+The derivative of the return map is
 \begin{equation}\label{eq:multiplier}
  P'(y)=\exp\bigl(BT-A(s+v)\bigr)
       =\exp\bigl((A+B)T-2\pi A\bigr).
 \end{equation}
+For a periodic trajectory, this derivative is its return multiplier.
 Indeed, the variational equation has coefficient $B$ in the middle zone
 and $-A$ in the exterior zones. Continuity of the vector field makes the
 variation continuous at a transverse switching event.
 This residence-time form of the multiplier is also recorded in
-Proposition~2.2 of the above preprint by Bravo et al.; differentiability for continuous scalar
+Proposition~2.2 of the three-zone preprint by Bravo, Carmona, Fern\'andez
+and Ojeda; differentiability for continuous scalar
 piecewise equations is treated in \cite{Bravo2007}.
 
-Raising the initial value lifts the entire trajectory. Choose a section
-in the middle zone on a transverse four-crossing itinerary, so both
-exterior visits have their entry and exit times inside one period.
+Raising the initial value lifts the entire trajectory. On a transverse
+four-crossing itinerary that starts in the middle zone, both exterior
+visits have their entry and exit times inside one period.
 The lower visit shortens and the upper visit lengthens as the initial
 value rises. More explicitly, if $t_d$ and $t_u$ are the
 descending and ascending lower crossings, then
@@ -162,10 +185,12 @@ not be monotone even though the trajectories themselves are strictly ordered.
 The loss of a lower exterior visit occurs when a trajectory becomes
 tangent to $x=-1$. Such grazing contacts are a standard organizing
 mechanism in piecewise-smooth dynamics \cite{diBernardo2008,Nordmark1991}.
+Normal-form maps for grazing in continuous and discontinuous fields
+were developed by di Bernardo, Budd and Champneys \cite{diBernardo2001}.
 For the continuous equation considered here, we derive a local law
 for the duration of the disappearing visit.
 \begin{proposition}\label{prop:grazing}
-Let $x(t;p)$ solve \eqref{eq:family} with an added constant bias
+Fix $A,B,\mu>0$. Let $x(t;p)$ solve \eqref{eq:family} with an added constant bias
 $\lambda(p)$, where the initial value and $\lambda$ depend $C^1$ on $p$.
 Suppose the trajectory at $p=p_g$ has finitely many switching encounters,
 all transverse except for a nondegenerate lower contact at $t=t_g$, with
@@ -181,15 +206,25 @@ lower visit in a sufficiently small neighborhood of $t_g$ satisfies
 \end{equation}
 \end{proposition}
 \begin{proof}
-Write $f(x)=-Ax+(A+B)\sat(x)$. The difference quotient of two nearby
-solutions satisfies a linear equation whose coefficient is a secant
-slope of $f$, bounded in absolute value by $\max\{A,B\}$, and whose
-forcing is the corresponding difference quotient of $\lambda$.
-Away from the finitely many switching encounters of the reference
-trajectory, these coefficients converge to $f'(x(t;p_g))$.
-Dominated convergence and variation of constants give uniform
-convergence of the solution difference quotients on compact time
-intervals. Thus $x_p(t;p_g)$ exists and is continuous in $t$.
+Write $f(x)=-Ax+(A+B)\sat(x)$ and put
+\[
+ w_h(t)=\frac{x(t;p_g+h)-x(t;p_g)}h,\qquad
+ b_h=\frac{\lambda(p_g+h)-\lambda(p_g)}h.
+\]
+The quotient satisfies $\dot w_h=a_h(t)w_h+b_h$, where $a_h$ is
+a secant slope of $f$, extended by its derivative inside an affine zone
+when the two states agree. Its values at switching levels are immaterial
+for integration. We have $|a_h|\leq\max\{A,B\}$ and
+$a_h(t)\to f'(x(t;p_g))$ away from the finitely many reference encounters.
+Set $K_h(t)=\int_0^t a_h(s)\,ds$. Variation of constants gives
+\[
+ w_h(t)=e^{K_h(t)}
+ \left(w_h(0)+b_h\int_0^t e^{-K_h(s)}\,ds\right).
+\]
+Dominated convergence makes $K_h$ converge uniformly on compact time
+intervals. Since the initial value and bias are $C^1$, the formula
+gives uniform convergence of $w_h$. Thus $x_p(t;p_g)$ exists and is
+continuous in $t$.
 The same argument gives continuity of these derivatives as the
 reference initial value and bias vary near the isolated contact.
 
@@ -214,6 +249,9 @@ Other transverse visits vary differentiably with the parameter. Formula
 to the total lower residence time $s$. It applies both to the original
 initial-value family, with $p=y$ and $\lambda=0$, and to the biased
 periodic response used below.
+The continuous matching preserves the $C^1$ parameter dependence of
+the state flow established in the proof. The square-root law concerns
+the duration of the exterior visit.
 
 \section{Construction of the parameter choice}\label{sec:construction}
 We now describe the construction leading to the coefficients in
@@ -258,6 +296,9 @@ $\lambda_y\ne0$, contradicting nonnegativity. Thus $\eta>0$, and the mean
 \]
 is a valid local coordinate throughout a transverse response chart.
 Write $\lambda=\Lambda(\xi,\mu)$ and $z(t)=x_\xi(t;\xi,\mu)>0$.
+Use $s,v,T$ for the residence times of this biased periodic profile.
+The crossing-time calculation in Section~2 applies to the ordered
+response with $\xi$ in place of $y$.
 The variation satisfies $\dot z+g'(x)z=\Lambda_\xi$. Dividing by $z$ and integrating
 over a period gives
 \begin{equation}\label{eq:response-identity}
@@ -663,6 +704,14 @@ geometry, and the displacement inequalities establish the cycle count
 at the chosen rational parameters. A natural further problem is to
 determine a sharp parameter-uniform upper bound for this family.
 
+Return-map derivatives have also been used to obtain cycle bounds
+for nonsmooth planar systems, including the method based on the Schwarzian derivative
+of Coll, Gasull and Prohens \cite{Coll1996}. In the present
+scalar equation, \eqref{eq:multiplier} expresses the first derivative
+directly in terms of residence time. The competing contributions in
+\eqref{eq:competition} identify the geometric quantity whose global
+variation would need to be controlled in an argument for an upper bound.
+
 \appendix
 \section{Finite rational estimates for the affine flows}\label{app:bounds}
 We give the finite inequalities used in Lemma~\ref{lem:bounds}.
@@ -920,6 +969,11 @@ checked the mathematical arguments and proofs presented in this paper.
 
 \clearpage
 \begin{thebibliography}{99}
+\bibitem{Carmona2002}
+V.~Carmona, E.~Freire, E.~Ponce and F.~Torres,
+\emph{On simplifying and classifying piecewise-linear systems},
+IEEE Trans. Circuits Syst. I: Fundam. Theory Appl. \textbf{49} (2002), 609--620.
+\href{https://doi.org/10.1109/TCSI.2002.1001950}{https://doi.org/10.1109/TCSI.2002.1001950}.
 \bibitem{Carmona2004}
 V.~Carmona, E.~Freire, E.~Ponce and F.~Torres,
 \emph{Invariant manifolds of periodic orbits for piecewise linear
@@ -935,6 +989,25 @@ M.~di Bernardo, C.~J. Budd, A.~R. Champneys and P.~Kowalczyk,
 \emph{Piecewise-smooth Dynamical Systems: Theory and Applications},
 Applied Mathematical Sciences 163, Springer, London, 2008.
 \href{https://doi.org/10.1007/978-1-84628-708-4}{https://doi.org/10.1007/978-1-84628-708-4}.
+\bibitem{Massera1950}
+J.~L. Massera,
+\emph{The existence of periodic solutions of systems of differential equations},
+Duke Math. J. \textbf{17} (1950), 457--475.
+\href{https://doi.org/10.1215/S0012-7094-50-01741-8}{https://doi.org/10.1215/S0012-7094-50-01741-8}.
+\bibitem{Mawhin1987}
+J.~Mawhin,
+\emph{First order ordinary differential equations with several periodic solutions},
+Z. Angew. Math. Phys. \textbf{38} (1987), 257--265.
+\href{https://doi.org/10.1007/BF00945410}{https://doi.org/10.1007/BF00945410}.
+\bibitem{Coll2008}
+B.~Coll, A.~Gasull and R.~Prohens,
+\emph{Simple non-autonomous differential equations with many limit cycles},
+Commun. Appl. Nonlinear Anal. \textbf{15} (2008), no.~1, 29--34.
+\bibitem{Gasull2024}
+A.~Gasull,
+\emph{From Abel's differential equations to Hilbert's 16th problem},
+S\~ao Paulo J. Math. Sci. \textbf{18} (2024), 1342--1379.
+\href{https://doi.org/10.1007/s40863-024-00471-2}{https://doi.org/10.1007/s40863-024-00471-2}.
 \bibitem{Bravo2024}
 J.~L. Bravo, M.~Fern\'andez and I.~Ojeda,
 \emph{Hilbert number for a family of piecewise nonautonomous equations},
@@ -955,5 +1028,16 @@ A.~B. Nordmark,
 \emph{Non-periodic motion caused by grazing incidence in an impact oscillator},
 J. Sound Vib. \textbf{145} (1991), 279--297.
 \href{https://doi.org/10.1016/0022-460X(91)90592-8}{https://doi.org/10.1016/0022-460X(91)90592-8}.
+\bibitem{diBernardo2001}
+M.~di Bernardo, C.~J. Budd and A.~R. Champneys,
+\emph{Normal form maps for grazing bifurcations in $n$-dimensional
+piecewise-smooth dynamical systems},
+Phys. D \textbf{160} (2001), 222--254.
+\href{https://doi.org/10.1016/S0167-2789(01)00349-9}{https://doi.org/10.1016/S0167-2789(01)00349-9}.
+\bibitem{Coll1996}
+B.~Coll, A.~Gasull and R.~Prohens,
+\emph{Limit cycles for non smooth differential equations via Schwarzian derivative},
+J. Differential Equations \textbf{132} (1996), 203--221.
+\href{https://doi.org/10.1006/jdeq.1996.0177}{https://doi.org/10.1006/jdeq.1996.0177}.
 \end{thebibliography}
 \end{document}
