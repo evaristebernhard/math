@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Optional exact-rational audit of printed manuscript inequalities
+        run: python3 pwl_three_zone_seven_cycles/proof/rational_bounds.py
       - name: Strict base witness signs and central orbit
         run: python3 pwl_three_zone_seven_cycles/proof/certify_seven.py
       - name: Analytic parameter cube certificate
@@ -36,3 +38,4 @@ jobs:
         with:
           name: seven-cycle-revised-paper
           path: pwl_three_zone_seven_cycles/paper/main.pdf
+
