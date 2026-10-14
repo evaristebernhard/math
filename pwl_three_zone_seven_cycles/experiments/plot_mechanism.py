@@ -1,7 +1,6 @@
-"""Replot the exploratory data shipped with the paper.
+"""Replot the approximate affine-matching data shipped with the paper.
 
-The CSV is numerical continuation data, NOT an interval certificate.
-The rigorous proof uses proof/certify_seven.py.
+The proof estimates are given in the manuscript appendix.
 """
 from pathlib import Path
 import csv
@@ -15,8 +14,8 @@ rows = list(csv.DictReader(datafile.open(encoding="utf-8")))
 xi = [float(x["xi"]) for x in rows]
 lam = [float(x["scaled_lambda"]) for x in rows]
 res = [float(x["T_minus_rho"]) for x in rows]
-roots = [0.007659607, 0.037207634, 0.065677290]
-turns = [0.00427530, 0.02615002, 0.04964750]
+roots = [0.007659607, 0.037207634, 0.065677289]
+turns = [0.00427486, 0.02615026, 0.04964750]
 outdir = ROOT / "paper" / "figures"
 outdir.mkdir(parents=True, exist_ok=True)
 fig, ax = plt.subplots(figsize=(9,4.2))
@@ -39,3 +38,4 @@ fig.tight_layout()
 fig.savefig(outdir/"residence.png",dpi=180)
 plt.close(fig)
 print("Saved exploratory plots to",outdir)
+

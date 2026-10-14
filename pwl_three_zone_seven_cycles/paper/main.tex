@@ -71,10 +71,13 @@ levels were developed in \cite{Bravo2007}. The surrounding theory of
 piecewise-smooth flows is presented in \cite{diBernardo2008}.
 
 In that preprint, Bravo, Carmona, Fern\'andez and Ojeda establish
-parameter-uniform finiteness for the saturation family and describe
+a uniform finite upper bound on the cycle count for the saturation family and describe
 regimes with one, three, and five cycles using a small-slope deformation.
-They discuss a conjectural maximum of five. The present example has
-strong exterior contraction and gives a larger fixed-parameter count.
+They recall the five-cycle conjecture of Carmona, Freire, Ponce and
+Torres (2003) for the opposite-sign slope case. Their notation is
+$x'=ax+(b-a)\sat(x)+\mu\sin t$, so our family corresponds to
+$a=-A$ and $b=B$. The present example has strong exterior contraction
+and gives a larger fixed-parameter count in that same family.
 
 Several related results address the number of periodic solutions.
 Bravo, Fern\'andez and Ojeda \cite{Bravo2024} bound the Hilbert number
@@ -137,9 +140,11 @@ This residence-time form of the multiplier is also recorded in
 Proposition~2.2 of the above preprint by Bravo et al.; differentiability for continuous scalar
 piecewise equations is treated in \cite{Bravo2007}.
 
-Raising the initial value lifts the entire trajectory. On a transverse
-itinerary with both exterior visits, the lower visit shortens and the
-upper visit lengthens. More explicitly, if $t_d$ and $t_u$ are the
+Raising the initial value lifts the entire trajectory. Choose a section
+in the middle zone on a transverse four-crossing itinerary, so both
+exterior visits have their entry and exit times inside one period.
+The lower visit shortens and the upper visit lengthens as the initial
+value rises. More explicitly, if $t_d$ and $t_u$ are the
 descending and ascending lower crossings, then
 \[
  (t_d)_y=-\frac{x_y(t_d;y)}{x_t(t_d;y)}>0,
@@ -154,44 +159,63 @@ $v_y>0$. Therefore
 is a sum of terms of opposite signs. The middle-zone residence time need
 not be monotone even though the trajectories themselves are strictly ordered.
 
-The disappearance of a lower visit has a useful local description.
-Grazing singularities are a familiar organizing mechanism in
-piecewise-smooth and impact dynamics \cite{diBernardo2008,Nordmark1991}.
-Here the quantity of interest is the duration of the exterior visit,
-whose local law can be derived directly.
+The loss of a lower exterior visit occurs when a trajectory becomes
+tangent to $x=-1$. Such grazing contacts are a standard organizing
+mechanism in piecewise-smooth dynamics \cite{diBernardo2008,Nordmark1991}.
+For the continuous equation considered here, we derive a local law
+for the duration of the disappearing visit.
 \begin{proposition}\label{prop:grazing}
-Suppose a local family of trajectories has a nondegenerate lower contact
-at $(t_g,y_g)$, with
+Let $x(t;p)$ solve \eqref{eq:family} with an added constant bias
+$\lambda(p)$, where the initial value and $\lambda$ depend $C^1$ on $p$.
+Suppose the trajectory at $p=p_g$ has finitely many switching encounters,
+all transverse except for a nondegenerate lower contact at $t=t_g$, with
 \[
- x(t_g;y_g)=-1,\qquad x_t(t_g;y_g)=0,\qquad
+ x(t_g;p_g)=-1,\qquad x_t(t_g;p_g)=0,\qquad
  \gamma=\mu\cos t_g>0.
 \]
-Assume this is the only lower contact in the neighborhood, and put
-$z_g=x_y(t_g;y_g)>0$. The duration of the nearby lower visit satisfies
+Assume $z_g=x_p(t_g;p_g)>0$. The duration $s_{\mathrm{loc}}(p)$ of the
+lower visit in a sufficiently small neighborhood of $t_g$ satisfies
 \begin{equation}\label{eq:sqrt}
- s(y)=2\sqrt{\frac{2z_g}{\gamma}}\sqrt{y_g-y}
-       +o(\sqrt{y_g-y})\qquad(y\uparrow y_g).
+ s_{\mathrm{loc}}(p)=2\sqrt{\frac{2z_g}{\gamma}}\sqrt{p_g-p}
+       +o(\sqrt{p_g-p})\qquad(p\uparrow p_g).
 \end{equation}
 \end{proposition}
 \begin{proof}
-At the contact, the two one-sided second time derivatives agree because
-the velocity vanishes and the vector field is continuous. They equal
-$\mu\cos t_g$. Dependence on $y$ is differentiable at this isolated
-contact: difference quotients satisfy the scalar variational equation
-away from the switching times, and the bounded coefficients converge
-almost everywhere. Thus, for $\delta=y_g-y$ and $\tau=t-t_g$,
+Write $f(x)=-Ax+(A+B)\sat(x)$. The difference quotient of two nearby
+solutions satisfies a linear equation whose coefficient is a secant
+slope of $f$, bounded in absolute value by $\max\{A,B\}$, and whose
+forcing is the corresponding difference quotient of $\lambda$.
+Away from the finitely many switching encounters of the reference
+trajectory, these coefficients converge to $f'(x(t;p_g))$.
+Dominated convergence and variation of constants give uniform
+convergence of the solution difference quotients on compact time
+intervals. Thus $x_p(t;p_g)$ exists and is continuous in $t$.
+The same argument gives continuity of these derivatives as the
+reference initial value and bias vary near the isolated contact.
+
+At the contact, the one-sided second time derivatives agree: the term
+$f'(x)x_t$ vanishes, leaving $\mu\cos t_g=\gamma$.
+For $\delta=p_g-p$ and $\tau=t-t_g$, the uniform parameter expansion
+and the time expansion of the reference trajectory give
 \[
- x(t_g+\tau;y_g-\delta)+1
+ x(t_g+\tau;p_g-\delta)+1
  =-z_g\delta+\frac\gamma2\tau^2+o(\delta+\tau^2).
 \]
+In a small neighborhood the velocity is strictly increasing, since
+$x_{tt}=f'(x)x_t+\mu\cos t>0$ almost everywhere there.
+The perturbed trajectory therefore has a unique local minimum and
+exactly two neighboring lower crossings for small $\delta>0$.
 The neighboring roots have
 $\tau_\pm=\pm\sqrt{2z_g\delta/\gamma}+o(\sqrt\delta)$.
 Their separation gives \eqref{eq:sqrt}.
 \end{proof}
-The square-root dependence makes the shrinking lower visit particularly
-sensitive near grazing, sharpening the competition in \eqref{eq:competition}.
+Other transverse visits vary differentiably with the parameter. Formula
+\eqref{eq:sqrt} describes the contribution of the disappearing visit
+to the total lower residence time $s$. It applies both to the original
+initial-value family, with $p=y$ and $\lambda=0$, and to the biased
+periodic response used below.
 
-\section{Locating the rational parameter example}\label{sec:construction}
+\section{Construction of the parameter choice}\label{sec:construction}
 We now describe the construction leading to the coefficients in
 Theorem~\ref{thm:seven}. It begins with the critical residence time,
 reduces the four-flight matching conditions to two duration variables,
@@ -212,15 +236,29 @@ Differentiation with respect to the bias gives
 \]
 Consequently the periodicity equation
 $X(2\pi;y,\lambda)-y=0$ locally determines $\lambda$ as a function of $y$.
-At a response critical point, its derivative vanishes precisely when
-$X_y(2\pi;y,\lambda)=1$. At such a point the periodic variation in $y$
-is strictly positive, so the mean
+The difference-quotient argument in Proposition~\ref{prop:grazing}
+also gives $C^1$ dependence on initial data and bias at an isolated
+nondegenerate contact. Since $X_\lambda>0$, the local periodic branch
+extends $C^1$ through such a contact.
+These periodic responses are strictly ordered even when their biases
+differ. Indeed, if two responses meet and their biases differ, the
+derivative of their difference at every meeting has the same nonzero
+sign. A periodic difference cannot have only crossings of that sign.
+If their biases agree, uniqueness prevents a meeting. The order of
+their initial values is therefore their pointwise order.
+
+Let $\eta(t)$ be the derivative of the local periodic response with
+respect to $y$. Order gives $\eta\geq0$, and
+$\dot\eta+g'(x)\eta=\lambda_y$, with $\eta(0)=\eta(2\pi)=1$.
+If $\lambda_y=0$, this homogeneous equation gives $\eta>0$.
+If $\lambda_y\ne0$, a zero of $\eta$ would have derivative
+$\lambda_y\ne0$, contradicting nonnegativity. Thus $\eta>0$, and the mean
 \[
  \xi=\frac1{2\pi}\int_0^{2\pi}X(t;y,\lambda(y))\,dt
 \]
-is a valid local coordinate. Write $\lambda=\Lambda(\xi,\mu)$ and
-$z(t)=x_\xi(t;\xi,\mu)$. Then $z>0$ on a neighborhood of the critical
-profile and $\dot z+g'(x)z=\Lambda_\xi$. Dividing by $z$ and integrating
+is a valid local coordinate throughout a transverse response chart.
+Write $\lambda=\Lambda(\xi,\mu)$ and $z(t)=x_\xi(t;\xi,\mu)>0$.
+The variation satisfies $\dot z+g'(x)z=\Lambda_\xi$. Dividing by $z$ and integrating
 over a period gives
 \begin{equation}\label{eq:response-identity}
  \boxed{\Lambda_\xi J=(A+B)(\rho-T),\qquad
@@ -230,6 +268,10 @@ over a period gives
 Thus the response descends when $T>\rho$ and ascends when $T<\rho$.
 At a critical profile, $T=\rho$. This reduces the search for changes in
 the response slope to a question about flight durations.
+Differentiating the periodicity equation also gives
+$\lambda_y=(1-X_y(2\pi;y,\lambda))/X_\lambda(2\pi;y,\lambda)$.
+Since $\xi_y>0$, a response critical point occurs precisely when the
+return multiplier for the fixed-bias equation equals one.
 
 \subsection{The four-crossing derivative test}
 Take the switching levels in cyclic order $+1,-1,-1,+1$ at
@@ -300,6 +342,7 @@ Thus every four-crossing critical profile satisfies the compatibility equation
 Choose three coefficient rows with determinant $\Delta\ne0$, and let
 $\Delta_\lambda,\Delta_U,\Delta_V$ be the determinants obtained by
 replacing the corresponding column with the right-hand side.
+For the numerical values below, the chosen rows are $1,2,3$.
 Cramer's rule gives
 \[
  \lambda=\frac{\Delta_\lambda}{\Delta},\qquad
@@ -310,16 +353,24 @@ gives the second equation
 \begin{equation}\label{eq:critical-amplitude}
  \mathcal G(r,s;\mu):=\Delta_U^2+\Delta_V^2-\mu^2\Delta^2=0.
 \end{equation}
-The system $\mathcal F=\mathcal G=0$ determines the critical responses
+The system $\mathcal F=\mathcal G=0$ gives candidate critical profiles
 at a prescribed amplitude in terms of the two residence times.
 The phase and amplitude are reconstructed by
 \begin{equation}\label{eq:amplitude-recovery}
  \mu=\sqrt{U^2+V^2},\qquad
  \sin\phi=U/\mu,\quad\cos\phi=V/\mu.
 \end{equation}
-Physical profiles satisfy $0<r<\rho$, $0<s<2\pi-\rho$, and the prescribed
-crossing directions. The weighted-velocity identity \eqref{eq:shape}
-and the speeds $w_i$ determine the first encounters on each flight.
+Integrating the equation on a matched segment gives
+\begin{align}\label{eq:matched-mean}
+ c_j\int_{\phi+q_{j-1}}^{\phi+q_j}x(t)\,dt
+ ={}&(\lambda-d_j)L_j-(b_j-b_{j-1})\\
+ &+\mu\bigl[\cos(\phi+q_{j-1})-\cos(\phi+q_j)\bigr].\notag
+\end{align}
+Adding the four integrals and dividing by $2\pi$ gives the mean $\xi$.
+Admissible profiles satisfy $0<r<\rho$, $0<s<2\pi-\rho$, and the prescribed
+crossing directions. Each segment must also stay in its prescribed zone
+until its endpoint. This first-encounter condition is checked from the
+weighted-velocity identity \eqref{eq:shape} and the crossing speeds $w_i$.
 
 \subsection{Selecting the slopes, amplitude, and shooting intervals}
 The derivative test \eqref{eq:H-test} led us to profiles with strong
@@ -327,7 +378,7 @@ exterior contraction. The simple rational slopes
 \[
  A=9,\qquad B=\frac32,\qquad \rho=\frac{12\pi}{7}
 \]
-give such a critical branch. Continuing the physical solutions of
+give such a critical branch. Continuing the admissible solutions of
 \eqref{eq:compatibility} and reconstructing the amplitude by
 \eqref{eq:amplitude-recovery} gives a critical-amplitude curve with a
 local minimum near $1.813584$. The symmetric critical profile occurs
@@ -341,7 +392,9 @@ compatibility chart is located by the two equations
  \mathcal F_r\mu_s-\mathcal F_s\mu_r=0,
 \]
 where $\mu(r,s)$ is reconstructed from the chosen coefficient minor.
-This gives the rational choice
+The resulting stationary profile has rounded durations
+$(r,s)=(2.85527529,0.25499306)$ and amplitude $1.8135839791$.
+We select the rational amplitude
 \begin{equation}\label{eq:selected-amplitude}
  \mu=\frac{181363}{100000}=1.81363.
 \end{equation}
@@ -357,8 +410,8 @@ matches have approximately
 The opposite signs in \eqref{eq:H-test} explain the extra reversal of
 the residence time on this branch.
 
-At this amplitude, the continued biased response has the three turning
-profiles shown in Table~\ref{tab:construction-turns}. The first two
+At this amplitude, continuation of the affine matching equations gives
+the approximate turning profiles in Table~\ref{tab:construction-turns}. The first two
 visit all three zones; the third lies on the right two-zone branch after
 the lower exterior visit disappears.
 \begin{table}[ht]
@@ -393,7 +446,7 @@ the shrinking lower visit adds the opposing contribution in
 \addplot[blue!65!black,thick] table[x=xi,y=scaled_lambda,col sep=comma]{figures/response_data.csv};
 \addplot[dashed] coordinates {(0,0)(.08,0)};
 \addplot[only marks,mark=x,red!70!black] coordinates
- {(.007659607,0)(.037207634,0)(.065677290,0)};
+ {(.007659607,0)(.037207634,0)(.065677289,0)};
 \nextgroupplot[ylabel={$10^3(T-\rho)$}]
 \addplot[teal!70!black,thick] table[x=xi,y expr=1000*\thisrow{T_minus_rho},col sep=comma]{figures/response_data.csv};
 \addplot[dashed] coordinates {(0,0)(.08,0)};
@@ -508,25 +561,34 @@ Table~\ref{tab:signs}.
 The continuous function $D$ changes sign on every $I_j$, so it has a zero
 on each interval. Each zero is isolated. Indeed, transverse crossing
 times depend real analytically on $y$ by \eqref{eq:flight} and the
-implicit function theorem. Hence $D$ is real analytic in a neighborhood
-of each $I_j$. Its nonzero endpoint values exclude an identically
-vanishing analytic germ. We obtain three distinct isolated periodic solutions.
+implicit function theorem. Hence $D$ is real analytic on a connected
+open interval containing each $I_j$. The nonzero endpoint values and
+the identity theorem exclude an identically vanishing germ at any zero
+in that interval. We obtain three distinct isolated periodic solutions.
 
 \subsection{The central orbit and reflection}
-Define
+Define the half-period map and its fixed-point displacement by
 \[
- Q(y)=x(\pi;y)+y.
+ R(y)=-x(\pi;y),\qquad Q(y)=y-R(y)=x(\pi;y)+y.
 \]
 Strict scalar order makes $Q$ strictly increasing. Variation of constants
 in the form $\dot x=-9x+O(1)$ gives
 $x(\pi;y)=e^{-9\pi}y+O(1)$ as $y\to\pm\infty$, uniformly in $y$.
 Thus $Q$ has exactly one zero $y_c$.
-Oddness of the spatial vector field and
-$\sin(t+\pi)=-\sin t$ then imply
+The map $R$ is a strictly decreasing homeomorphism of the line; its
+surjectivity follows from $R(y)=-e^{-9\pi}y+O(1)$.
+Oddness of the spatial vector field and $\sin(t+\pi)=-\sin t$ give
+$-x(t+\pi;y)=x(t;R(y))$, and hence
+\begin{equation}\label{eq:half-map}
+ R^2=P,\qquad RP=PR.
+\end{equation}
+At the fixed point $R(y_c)=y_c$ this identity gives
 \begin{equation}\label{eq:anti}
  x_c(t+\pi)=-x_c(t),\qquad x_c(t)=x(t;y_c).
 \end{equation}
 In particular, $x_c$ is $2\pi$-periodic.
+Its mean is zero by antisymmetry, so every periodic response strictly
+above it has positive mean.
 
 The additional rational bounds in Appendix~\ref{app:center} give
 \begin{equation}\label{eq:center}
@@ -550,7 +612,8 @@ periodic solutions above $x_c$ at every phase. The map
 \]
 is an involution on periodic solutions. It sends each of these three
 solutions to one below $x_c$, preserves distinctness, and preserves
-isolation. Together with $x_c$, this gives $3+1+3=7$ distinct isolated
+isolation, since the initial-value action is the homeomorphism $R$
+commuting with $P$. Together with $x_c$, this gives $3+1+3=7$ distinct isolated
 periodic orbits and proves Theorem~\ref{thm:seven}.\qed
 
 \subsection{Attracting and repelling cycles}
@@ -572,12 +635,9 @@ Equivalently, the local inverse iterates converge to $y_2$, so this
 cycle is repelling. Continuous dependence during each period transfers
 these properties to the periodic trajectories.
 
-For the reflected cycles, define the half-period map
-$R(y)=-x(\pi;y)$. The symmetry of the equation gives
-$R^2=P$, and hence $RP=PR$. The map $R$ is a strictly decreasing
-homeomorphism of the line: order gives strict monotonicity, and
-$R(y)=-e^{-9\pi}y+O(1)$ gives surjectivity. It thus conjugates $P$
-to itself and preserves attracting and repelling fixed points.
+For the reflected cycles, \eqref{eq:half-map} shows that the
+homeomorphism $R$ conjugates $P$ to itself and preserves attracting
+and repelling fixed points.
 The reflected partners of $y_1$ and $y_3$ are attracting, and the
 partner of $y_2$ is repelling. Finally, $P'(y_c)>1$ makes the central
 cycle hyperbolic and repelling. This gives four attracting and three
@@ -808,6 +868,14 @@ The same rational substitutions give
  Q(-0.579022470)&\in[1.4254,1.4255]\cdot10^{-9}.
 \end{align*}
 Strict monotonicity of $Q$ proves \eqref{eq:center}.
+The endpoint trajectories have their first two events before $\pi/2$,
+with crossing velocities of signs $(-,+)$. Their terminal states lie
+in $(0,1)$, so their terminal middle-zone velocities at $\pi$ are positive.
+By \eqref{eq:shape}, the first middle flight is decreasing, the lower
+flight has exactly one minimum, and the last middle flight is increasing
+up to $\pi$. Thus the listed crossings are the first encounters on
+their respective flights, and the joined profiles are the actual
+endpoint trajectories.
 For the complete bracket between these initial values, no upper crossing
 occurs on $[0,\pi]$: at the upper level the velocity is strictly positive,
 so an orbit could not return to its terminal value below $1$ after an
